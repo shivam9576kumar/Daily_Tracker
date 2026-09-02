@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users ───
+model User {
+  id        String   @id @default(uuid())
+  googleId  String   @unique @map("google_id")
+  email     String   @unique
+  name      String   @default("")
+  avatarUrl String?  @map("avatar_url")
+  coins     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  plans        Plan[]
+  tasks        Task[]
+  assignments  Assignment[]
+  notes        Note[]
+  timetables   Timetable[]
+
+  @@map("users")
+}
+
+// ─── Plans ───
+model Plan {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  name            String
+  source          String   @default("custom")
+  startDate       DateTime @map("start_date")
+  endDate         DateTime @map("end_date")
+  status          String   @default("active") // active | completed | archived
+  weekdayCapacity Int      @default(2) @map("weekday_capacity")
+  weekendCapacity Int      @default(3) @map("weekend_capacity")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@map("plans")
+}
+
+// ─── Tasks ───
+model Task {
+  id               String    @id @default(uuid())
+  userId           String    @map("user_id")
+  planId           String?   @map("plan_id")
+  parentTaskId     String?   @map("parent_task_id")
+  title            String    @default("Untitled")
+  topic            String    @default("General")
+  difficulty       String?   @default("medium") // easy | medium | hard
+  platform         String?   @default("custom") // coderarmy | striver | neetcode | leetcode | etc.
+  problemUrl       String?   @map("problem_url")
+  taskType         String    @default("new") @map("task_type") // new | revision | assignment
+  status           String    @default("pending") // pending | completed | backlog | expired
+  scheduledDate    DateTime  @default(now()) @map("scheduled_date")
+  originalSolveDate DateTime? @map("original_solve_date")
+  completedAt      DateTime? @map("completed_at")
+  rating           String?   // easy | medium | hard
+  revisionNumber   Int       @default(0) @map("revision_number")
+  isBacklog        Boolean   @default(false) @map("is_backlog")
+  backlogSince     DateTime? @map("backlog_since")
+  isExpired        Boolean   @default(false) @map("is_expired")
+  notes            String?
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @default(now()) @updatedAt @map("updated_at")
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan       Plan?      @relation(fields: [planId], references: [id], onDelete: SetNull)
+  parentTask Task?      @relation("TaskRevisions", fields: [parentTaskId], references: [id], onDelete: SetNull)
+  revisions  Task[]     @relation("TaskRevisions")
+  taskNotes  Note[]
+  revisionRecords Revision[] @relation("RevisionParent")
+  revisionTasks   Revision[] @relation("RevisionTask")
+
+  @@index([userId, scheduledDate])
+  @@index([userId, status])
+  @@index([parentTaskId])
+  @@map("tasks")
+}
+
+// ─── Revisions ───
+model Revision {
+  id              String    @id @default(uuid())
+  parentTaskId    String    @map("parent_task_id")
+  revisionTaskId  String    @map("revision_task_id")
+  revisionNumber  Int       @map("revision_number")
+  scheduledDate   DateTime  @map("scheduled_date")
+  status          String    @default("pending") // pending | completed | expired
+  completedAt     DateTime? @map("completed_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  parentTask   Task @relation("RevisionParent", fields: [parentTaskId], references: [id], onDelete: Cascade)
+  revisionTask Task @relation("RevisionTask", fields: [revisionTaskId], references: [id], onDelete: Cascade)
+
+  @@index([parentTaskId])
+  @@map("revisions")
+}
+
+// ─── Assignments ───
+model Assignment {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  title       String
+  description String?
+  deadline    DateTime
+  status      String    @default("pending") // pending | completed
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, deadline])
+  @@map("assignments")
+}
+
+// ─── Notes ───
+model Note {
+  id        String   @id @default(uuid())
+  taskId    String   @map("task_id")
+  userId    String   @map("user_id")
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@map("notes")
+}
+
+// ─── Timetables ───
+model Timetable {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  fileName   String   @map("file_name")
+  fileUrl    String   @map("file_url")
+  uploadedAt DateTime @default(now()) @map("uploaded_at")
+  status     String   @default("processing") // processing | parsed | error
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classSchedules ClassSchedule[]
+
+  @@map("timetables")
+}
+
+// ─── Class Schedules ───
+model ClassSchedule {
+  id          String @id @default(uuid())
+  timetableId String @map("timetable_id")
+  userId      String @map("user_id")
+  dayOfWeek   Int    @map("day_of_week") // 0=Sun, 1=Mon, ..., 6=Sat
+  subject     String
+  startTime   String @map("start_time") // HH:MM
+  endTime     String @map("end_time")   // HH:MM
+  location    String?
+
+  timetable Timetable @relation(fields: [timetableId], references: [id], onDelete: Cascade)
+
+  @@index([userId, dayOfWeek])
+  @@map("class_schedules")
+}
