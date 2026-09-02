@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { env } from './config/env';
 import { errorMiddleware } from './middleware/errorMiddleware';
+import { timezoneMiddleware } from './middleware/timezoneMiddleware';
 import { sendSuccess } from './utils/response';
 
 // Route imports
@@ -12,6 +13,10 @@ import taskRoutes from './routes/taskRoutes';
 import notesRoutes from './routes/notesRoutes';
 import assignmentRoutes from './routes/assignmentRoutes';
 import dashboardRoutes from './routes/dashboardRoutes';
+import notificationRoutes from './routes/notificationRoutes';
+import debugRoutes from './routes/debugRoutes';
+import planRoutes from './routes/planRoutes';
+import progressRoutes from './routes/progressRoutes';
 
 const app = express();
 
@@ -24,13 +29,16 @@ app.use(
     origin: env.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Timezone'],
   })
 );
 
 // ─── Body Parsing ───
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
+// ─── Timezone Middleware ───
+app.use(timezoneMiddleware);
 
 // ─── Request Logging ───
 if (env.isDev) {
@@ -52,6 +60,10 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/tasks', notesRoutes); // Notes nested under /api/tasks/:id/notes
 app.use('/api/assignments', assignmentRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/debug', debugRoutes);
+app.use('/api/plans', planRoutes);
+app.use('/api/progress', progressRoutes);
 
 // ─── 404 Handler ───
 app.use((_req, res) => {

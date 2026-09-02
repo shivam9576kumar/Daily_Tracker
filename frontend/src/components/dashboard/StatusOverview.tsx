@@ -1,38 +1,31 @@
+import type { StatusOverview as SO } from '../../types';
 import './dashboard.css';
 
-interface Props {
-  totalQuestions: number;
-  streak: number;
-  backlog: number;
-  expired: number;
-  coins: number;
-}
+const CARDS = [
+  { key: 'totalQuestions', label: 'Total Questions', icon: '', cls: 'sc-total' },
+  { key: 'streak', label: 'Streak', icon: '🔥', cls: 'sc-streak' },
+  { key: 'backlog', label: 'Backlog', icon: '⚠️', cls: 'sc-backlog' },
+  { key: 'expired', label: 'Expired', icon: '💀', cls: 'sc-expired' },
+  { key: 'coins', label: 'Coins', icon: '🪙', cls: 'sc-coins' },
+] as const;
 
-export default function StatusOverview({
-  totalQuestions, streak, backlog, expired, coins,
-}: Props) {
+export default function StatusOverview({ data }: { data: SO }) {
   return (
-    <div className="status-overview" id="status-overview">
-      <div className="status-card">
-        <div className="status-card__label">Total Questions</div>
-        <div className="status-card__value">{totalQuestions}</div>
-      </div>
-      <div className="status-card status-card--streak">
-        <div className="status-card__label">🔥 Streak</div>
-        <div className="status-card__value">{streak}</div>
-      </div>
-      <div className="status-card status-card--backlog">
-        <div className="status-card__label">⚠️ Backlog</div>
-        <div className="status-card__value">{backlog}</div>
-      </div>
-      <div className="status-card status-card--expired">
-        <div className="status-card__label">💀 Expired</div>
-        <div className="status-card__value">{expired}</div>
-      </div>
-      <div className="status-card status-card--coins">
-        <div className="status-card__label">🪙 Coins</div>
-        <div className="status-card__value">{coins}</div>
-      </div>
+    <div className="status-overview">
+      {CARDS.map((c) => (
+        <div key={c.key} className={`status-card ${c.cls}`}>
+          <div className="status-card-label">
+            {c.icon && <span>{c.icon}</span>}
+            {c.label}
+          </div>
+          <div className="status-card-value">{data[c.key]}</div>
+          {c.key === 'streak' && data.streak > 0 && data.streakActiveToday === false && (
+            <div style={{ fontSize: 11, color: '#fcd34d', marginTop: 6 }}>
+              Solve one today to keep it
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

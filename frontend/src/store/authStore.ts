@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import api from '../services/api';
+import { tokenStorage } from '../services/tokenStorage';
 
 interface User {
   id: string;
@@ -23,12 +24,12 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
-  token: localStorage.getItem('token'),
+  token: tokenStorage.get(),
   isLoading: true,
   isAuthenticated: false,
 
   setToken: (token: string) => {
-    localStorage.setItem('token', token);
+    tokenStorage.set(token);
     set({ token, isAuthenticated: true });
   },
 
@@ -37,19 +38,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const res = await api.get('/auth/me');
       set({ user: res.data.data, isAuthenticated: true, isLoading: false });
     } catch {
-      localStorage.removeItem('token');
+      tokenStorage.clear();
       set({ user: null, token: null, isAuthenticated: false, isLoading: false });
     }
   },
 
   logout: () => {
-    localStorage.removeItem('token');
+    tokenStorage.clear();
     set({ user: null, token: null, isAuthenticated: false });
     window.location.href = '/login';
   },
 
   initialize: async () => {
-    const token = localStorage.getItem('token');
+    const token = tokenStorage.get();
     if (token) {
       set({ token });
       await get().fetchUser();

@@ -1,0 +1,257 @@
+/* ─── Rating buttons ─── */
+.rating-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.rating-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 18px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.16s ease;
+  width: 100%;
+}
+
+.rating-btn:hover {
+  transform: translateY(-2px);
+}
+
+.rating-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.rating-btn.easy:hover {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.rating-btn.medium:hover {
+  border-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.rating-btn.hard:hover {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.rating-btn.selected.easy {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.14);
+}
+
+.rating-btn.selected.medium {
+  border-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.14);
+}
+
+.rating-btn.selected.hard {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.rating-emoji {
+  font-size: 24px;
+}
+
+.rating-text {
+  flex: 1;
+}
+
+.rating-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin-bottom: 3px;
+}
+
+.rating-desc {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ─── Task drawer ─── */
+.drawer-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin: 0 0 9px;
+  line-height: 1.35;
+}
+
+.drawer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 22px;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  font-size: 13.5px;
+}
+
+.meta-key {
+  color: #8b90a0;
+  font-weight: 500;
+}
+
+.meta-val {
+  color: #e5e7eb;
+  font-weight: 600;
+}
+
+.rev-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rev-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 13px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 13px;
+}
+
+.rev-num {
+  color: #d8b4fe;
+  font-weight: 700;
+}
+
+.rev-date {
+  color: #9ca3af;
+}
+
+.rev-done {
+  color: #86efac;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rev-pending {
+  color: #fcd34d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.drawer-section-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 24px 0 11px;
+}
+
+.revision-summary {
+  margin: 18px 0;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.22);
+}
+
+.revision-summary-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d8b4fe;
+  margin-bottom: 6px;
+}
+
+.revision-summary-text {
+  font-size: 13px;
+  color: #c4b5fd;
+}
+
+.revision-parent-note {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.revision-empty {
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.notes-editor {
+  margin-top: 14px;
+}
+
+.notes-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.notes-save-state {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.notes-save-state.is-saving {
+  color: #a5b4fc;
+}
+
+.notes-save-state.is-saved {
+  color: #86efac;
+}
+
+.notes-save-state.is-error {
+  color: #fca5a5;
+}
+
+.notes-textarea {
+  width: 100%;
+  min-height: 160px;
+  resize: vertical;
+  padding: 12px 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e5e7eb;
+  font-family: inherit;
+  font-size: 13.5px;
+  line-height: 1.55;
+  box-sizing: border-box;
+}
+
+.notes-textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+

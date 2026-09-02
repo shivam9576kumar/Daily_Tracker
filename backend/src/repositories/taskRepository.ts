@@ -37,22 +37,28 @@ export const taskRepository = {
   async getTodaysTasks(userId: string) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const endOfToday = new Date();
+
+    const endOfToday = new Date(today);
     endOfToday.setHours(23, 59, 59, 999);
 
     return prisma.task.findMany({
       where: {
         userId,
         OR: [
-          // Tasks scheduled for today
           {
-            scheduledDate: { gte: today, lte: endOfToday },
+            scheduledDate: {
+              gte: today,
+              lte: endOfToday,
+            },
+            status: {
+              in: ['pending', 'completed', 'backlog'],
+            },
+            isExpired: false,
           },
-          // Backlog tasks (overdue but not expired)
           {
             isBacklog: true,
             isExpired: false,
-            status: 'pending',
+            status: 'backlog',
           },
         ],
       },
@@ -185,7 +191,10 @@ export const taskRepository = {
         status: 'pending',
         isBacklog: false,
         isExpired: false,
-        scheduledDate: { lt: today },
+        completedAt: null,
+        scheduledDate: {
+          lt: today,
+        },
       },
     });
   },
@@ -196,15 +205,52 @@ export const taskRepository = {
    */
   async findExpiredBacklogTasks(expiryDays: number) {
     const cutoff = new Date();
+    cutoff.setHours(0, 0, 0, 0);
     cutoff.setDate(cutoff.getDate() - expiryDays);
 
     return prisma.task.findMany({
       where: {
         isBacklog: true,
         isExpired: false,
-        backlogSince: { lte: cutoff },
+        status: {
+          not: 'completed',
+        },
+        backlogSince: {
+          lte: cutoff,
+        },
       },
     });
+  },
+
+  /**
+   * Get revision progress summary for a parent task.
+   */
+  async getRevisionProgress(parentTaskId: string) {
+    const total = await prisma.revision.count({
+      where: { parentTaskId },
+    });
+
+    const completed = await prisma.revision.count({
+      where: {
+        parentTaskId,
+        status: 'completed',
+      },
+    });
+
+    const pending = await prisma.revision.count({
+      where: {
+        parentTaskId,
+        status: {
+          not: 'completed',
+        },
+      },
+    });
+
+    return {
+      total,
+      completed,
+      pending,
+    };
   },
 
   /**
@@ -229,42 +275,5 @@ export const taskRepository = {
       },
     });
   },
-
-  /**
-   * Get streak — consecutive days with completions going back from today.
-   */
-  async getStreak(userId: string): Promise<number> {
-    // Get all distinct completion dates, ordered descending
-    const completions = await prisma.$queryRaw<{ date: Date }[]>`
-      SELECT DISTINCT DATE(completed_at) as date
-      FROM tasks
-      WHERE user_id = ${userId}
-        AND status = 'completed'
-        AND completed_at IS NOT NULL
-      ORDER BY date DESC
-    `;
-
-    if (completions.length === 0) return 0;
-
-    let streak = 0;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    for (let i = 0; i < completions.length; i++) {
-      const expected = new Date(today);
-      expected.setDate(expected.getDate() - i);
-      expected.setHours(0, 0, 0, 0);
-
-      const actual = new Date(completions[i].date);
-      actual.setHours(0, 0, 0, 0);
-
-      if (actual.getTime() === expected.getTime()) {
-        streak++;
-      } else {
-        break;
-      }
-    }
-
-    return streak;
-  },
 };
+

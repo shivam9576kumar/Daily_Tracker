@@ -1,270 +1,358 @@
-import { useState, useEffect } from 'react';
-import { useTaskStore } from '../../store/taskStore';
+import { useEffect, useState } from 'react';
+import Drawer from '../common/Drawer';
+import Button from '../common/Button';
+import Spinner from '../common/Spinner';
+import RatingModal from './RatingModal';
+import NotesEditor from './NotesEditor';
 import { taskApi } from '../../services/taskApi';
-import '../dashboard/dashboard.css';
+import { getErrorMessage } from '../../services/api';
+import { useUIStore } from '../../store/uiStore';
+import type { Rating, Task } from '../../types';
+import './task.css';
 
-interface Props {
-  onUpdate: () => void;
+function fmt(d: string | null | undefined) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
-export default function TaskDrawer({ onUpdate }: Props) {
-  const {
-    selectedTask, isDrawerOpen, isRatingModalOpen,
-    closeDrawer, openRatingModal, closeRatingModal,
-  } = useTaskStore();
+interface Props {
+  taskId: string | null;
+  onClose: () => void;
+  onChanged: () => void;
+}
 
-  const [notes, setNotes] = useState('');
-  const [notesSaved, setNotesSaved] = useState(true);
-  const [isProcessing, setIsProcessing] = useState(false);
+export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
+  const toast = useUIStore((s) => s.toast);
+  const [task, setTask] = useState<Task | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [ratingOpen, setRatingOpen] = useState(false);
+  const [rerating, setRerating] = useState(false);
 
-  // Load notes when task changes
+  const load = async (id: string) => {
+    setLoading(true);
+    try {
+      setTask(await taskApi.getById(id));
+    } catch (err) {
+      toast(getErrorMessage(err), 'error');
+      onClose();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (selectedTask) {
-      setNotes(selectedTask.notes || '');
-      setNotesSaved(true);
+    if (taskId) load(taskId);
+    else setTask(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskId]);
+
+  if (!taskId) return null;
+
+  const completed = task?.status === 'completed';
+  const isNew = task?.taskType === 'new';
+
+  const revisionTotal = task?.revisions?.length || 0;
+  const revisionCompleted =
+    task?.revisions?.filter((r) => r.status === 'completed').length || 0;
+  const revisionPending = revisionTotal - revisionCompleted;
+
+  /** Mark done: new tasks open rating modal, revisions complete instantly. */
+  const handleMarkDone = async () => {
+    if (!task) return;
+    if (isNew) {
+      setRerating(false);
+      setRatingOpen(true);
+      return;
     }
-  }, [selectedTask]);
-
-  if (!selectedTask) return null;
-
-  const isCompleted = selectedTask.status === 'completed';
-  const isNewTask = selectedTask.taskType === 'new';
-  const isRevision = selectedTask.taskType === 'revision';
-
-  const handleSaveNotes = async () => {
-    setIsProcessing(true);
+    setBusy(true);
     try {
-      await taskApi.saveNotes(selectedTask.id, notes);
-      setNotesSaved(true);
+      await taskApi.complete(task.id);
+      toast('Revision completed! +5 coins', 'success');
+      await load(task.id);
+      onChanged();
     } catch (err) {
-      console.error('Failed to save notes:', err);
+      toast(getErrorMessage(err), 'error');
     } finally {
-      setIsProcessing(false);
+      setBusy(false);
     }
   };
 
-  const handleMarkDone = () => {
-    if (isNewTask) {
-      openRatingModal();
-    } else {
-      // Revision tasks: just complete, no rating
-      handleComplete();
-    }
-  };
-
-  const handleComplete = async (rating?: string) => {
-    setIsProcessing(true);
+  const handleRatingSubmit = async (rating: Rating) => {
+    if (!task) return;
+    setBusy(true);
     try {
-      await taskApi.complete(selectedTask.id, rating);
-      closeRatingModal();
-      closeDrawer();
-      onUpdate();
+      if (rerating) {
+        await taskApi.rerate(task.id, rating);
+        toast(`Re-rated as ${rating} — revisions rescheduled`, 'success');
+      } else {
+        await taskApi.complete(task.id, rating);
+        toast(`Completed as ${rating}! Revisions scheduled 🔁`, 'success');
+      }
+      setRatingOpen(false);
+      await load(task.id);
+      onChanged();
     } catch (err) {
-      console.error('Failed to complete task:', err);
+      toast(getErrorMessage(err), 'error');
     } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  const handleRerate = async (rating: string) => {
-    setIsProcessing(true);
-    try {
-      await taskApi.rate(selectedTask.id, rating);
-      closeDrawer();
-      onUpdate();
-    } catch (err) {
-      console.error('Failed to re-rate:', err);
-    } finally {
-      setIsProcessing(false);
+      setBusy(false);
     }
   };
 
   const handleUndo = async () => {
-    setIsProcessing(true);
+    if (!task) return;
+    setBusy(true);
     try {
-      await taskApi.undo(selectedTask.id);
-      closeDrawer();
-      onUpdate();
+      await taskApi.undo(task.id);
+      toast('Completion undone', 'info');
+      await load(task.id);
+      onChanged();
     } catch (err) {
-      console.error('Failed to undo:', err);
+      toast(getErrorMessage(err), 'error');
     } finally {
-      setIsProcessing(false);
+      setBusy(false);
     }
   };
 
-  const formatDate = (d: string | null) => {
-    if (!d) return '—';
-    return new Date(d).toLocaleDateString('en-US', {
-      month: 'short', day: 'numeric', year: 'numeric',
-    });
+  const handleDelete = async () => {
+    if (!task) return;
+    if (!window.confirm(`Delete "${task.title}"? This cannot be undone.`))
+      return;
+    setBusy(true);
+    try {
+      await taskApi.remove(task.id);
+      toast('Task deleted', 'info');
+      onChanged();
+      onClose();
+    } catch (err) {
+      toast(getErrorMessage(err), 'error');
+    } finally {
+      setBusy(false);
+    }
   };
+
+  const header = (
+    <div style={{ flex: 1, minWidth: 0 }}>
+      <h3 className="drawer-title">{task?.title || 'Loading…'}</h3>
+      {task && (
+        <div className="drawer-tags">
+          <span className="tag tag-topic">{task.topic}</span>
+          {task.difficulty && (
+            <span className={`tag tag-${task.difficulty}`}>
+              {task.difficulty}
+            </span>
+          )}
+          {task.taskType === 'revision' && (
+            <span className="tag tag-revision">
+              Revision #{task.revisionNumber}
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+
+  const footer = task && (
+    <>
+      {task.problemUrl && (
+        <Button
+          variant="secondary"
+          block
+          onClick={() => window.open(task.problemUrl!, '_blank')}
+        >
+          🔗 Solve on {task.platform}
+        </Button>
+      )}
+
+      {!completed && (
+        <Button block loading={busy} onClick={handleMarkDone}>
+          ✓ Mark as Done
+        </Button>
+      )}
+
+      {completed && (
+        <>
+          {isNew && (
+            <Button
+              variant="secondary"
+              block
+              disabled={busy}
+              onClick={() => {
+                setRerating(true);
+                setRatingOpen(true);
+              }}
+            >
+              ⭐ Change Rating
+            </Button>
+          )}
+          <Button
+            variant="secondary"
+            block
+            loading={busy}
+            onClick={handleUndo}
+          >
+            ↩ Undo Completion
+          </Button>
+        </>
+      )}
+
+      <Button
+        variant="danger"
+        block
+        disabled={busy}
+        onClick={handleDelete}
+      >
+        🗑 Delete Task
+      </Button>
+    </>
+  );
 
   return (
     <>
-      {/* Overlay */}
-      <div
-        className={`drawer-overlay ${isDrawerOpen ? 'open' : ''}`}
-        onClick={closeDrawer}
-      />
-
-      {/* Drawer */}
-      <div className={`drawer ${isDrawerOpen ? 'open' : ''}`} id="task-drawer">
-        <div className="drawer-header">
-          <h3 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-semibold)' }}>
-            Task Details
-          </h3>
-          <button className="drawer-close" onClick={closeDrawer} id="drawer-close">×</button>
-        </div>
-
-        <div className="drawer-body">
-          {/* Task Info */}
-          <div className="drawer-section">
-            <h4 style={{
-              fontSize: 'var(--font-size-xl)',
-              fontWeight: 'var(--font-weight-bold)',
-              marginBottom: 'var(--space-2)',
-            }}>
-              {selectedTask.title}
-            </h4>
-            <div className="drawer-meta">
-              <div className="drawer-meta__item">
-                <div className="drawer-meta__label">Topic</div>
-                <div className="drawer-meta__value">{selectedTask.topic}</div>
-              </div>
-              <div className="drawer-meta__item">
-                <div className="drawer-meta__label">Difficulty</div>
-                <div className="drawer-meta__value" style={{
-                  color: selectedTask.difficulty === 'easy' ? 'var(--color-success)' :
-                         selectedTask.difficulty === 'medium' ? 'var(--color-warning)' :
-                         'var(--color-danger)',
-                }}>
-                  {selectedTask.difficulty}
+      <Drawer
+        open={!!taskId}
+        onClose={onClose}
+        header={header}
+        footer={footer}
+      >
+        {loading || !task ? (
+          <Spinner large />
+        ) : (
+          <>
+            {task.taskType === 'revision' && task.parentTask && (
+              <div className="revision-summary">
+                <div className="revision-summary-title">
+                  Revision #{task.revisionNumber}
+                </div>
+                <div className="revision-summary-text">
+                  Original problem: {task.parentTask.title}
+                </div>
+                <div className="revision-parent-note">
+                  Complete this revision to strengthen long-term memory.
                 </div>
               </div>
-              <div className="drawer-meta__item">
-                <div className="drawer-meta__label">Scheduled</div>
-                <div className="drawer-meta__value">{formatDate(selectedTask.scheduledDate)}</div>
-              </div>
-              <div className="drawer-meta__item">
-                <div className="drawer-meta__label">Platform</div>
-                <div className="drawer-meta__value">{selectedTask.platform}</div>
-              </div>
-              {isRevision && selectedTask.originalSolveDate && (
-                <div className="drawer-meta__item">
-                  <div className="drawer-meta__label">Original Solve</div>
-                  <div className="drawer-meta__value">{formatDate(selectedTask.originalSolveDate)}</div>
-                </div>
-              )}
-              {isCompleted && (
-                <>
-                  <div className="drawer-meta__item">
-                    <div className="drawer-meta__label">Completed</div>
-                    <div className="drawer-meta__value">{formatDate(selectedTask.completedAt)}</div>
-                  </div>
-                  {selectedTask.rating && (
-                    <div className="drawer-meta__item">
-                      <div className="drawer-meta__label">Rating</div>
-                      <div className="drawer-meta__value">{selectedTask.rating}</div>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Solve Link */}
-          {selectedTask.problemUrl && (
-            <div className="drawer-section">
-              <a
-                href={selectedTask.problemUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-full"
-                id="solve-link"
-              >
-                🔗 Solve on {selectedTask.platform}
-              </a>
-            </div>
-          )}
-
-          {/* Notes */}
-          <div className="drawer-section">
-            <div className="drawer-section__title">📝 Notes</div>
-            <textarea
-              className="notes-textarea"
-              value={notes}
-              onChange={(e) => { setNotes(e.target.value); setNotesSaved(false); }}
-              placeholder="Add your notes here..."
-              id="notes-textarea"
-            />
-            <button
-              className={`btn ${notesSaved ? 'btn-secondary' : 'btn-primary'} btn-full`}
-              onClick={handleSaveNotes}
-              disabled={notesSaved || isProcessing}
-              id="save-notes-btn"
-            >
-              {notesSaved ? '✏️ Edit Notes' : '💾 Save Notes'}
-            </button>
-          </div>
-
-          {/* Actions */}
-          <div className="drawer-section" style={{ marginTop: 'auto' }}>
-            {!isCompleted && (
-              <button
-                className="btn btn-primary btn-full"
-                onClick={handleMarkDone}
-                disabled={isProcessing}
-                id="mark-done-btn"
-              >
-                {isProcessing ? 'Processing...' : '✅ Mark as Done'}
-              </button>
             )}
 
-            {isCompleted && isNewTask && (
+            {task.taskType === 'new' && revisionTotal > 0 && (
+              <div className="revision-summary">
+                <div className="revision-summary-title">
+                  Revision Progress
+                </div>
+                <div className="revision-summary-text">
+                  {revisionCompleted} of {revisionTotal} revisions completed.
+                  {revisionPending > 0
+                    ? ` ${revisionPending} remaining.`
+                    : ' All done.'}
+                </div>
+                <div className="revision-parent-note">
+                  Undoing this problem will delete unfinished revisions, but completed revisions are preserved.
+                </div>
+              </div>
+            )}
+
+            {task.taskType === 'new' &&
+              task.status === 'completed' &&
+              revisionTotal === 0 && (
+                <div className="revision-empty">
+                  No pending revision schedule exists for this task.
+                </div>
+              )}
+
+            <div className="meta-list">
+              <div className="meta-row">
+                <span className="meta-key">Status</span>
+                <span className="meta-val">
+                  {completed
+                    ? '✅ Completed'
+                    : task.isBacklog
+                    ? '⚠️ Backlog'
+                    : '⏳ Pending'}
+                </span>
+              </div>
+              <div className="meta-row">
+                <span className="meta-key">Type</span>
+                <span className="meta-val">{task.taskType}</span>
+              </div>
+              <div className="meta-row">
+                <span className="meta-key">Platform</span>
+                <span className="meta-val">{task.platform || '—'}</span>
+              </div>
+              <div className="meta-row">
+                <span className="meta-key">Scheduled</span>
+                <span className="meta-val">{fmt(task.scheduledDate)}</span>
+              </div>
+              {task.rating && (
+                <div className="meta-row">
+                  <span className="meta-key">Your Rating</span>
+                  <span
+                    className="meta-val"
+                    style={{ textTransform: 'capitalize' }}
+                  >
+                    {task.rating}
+                  </span>
+                </div>
+              )}
+              {task.completedAt && (
+                <div className="meta-row">
+                  <span className="meta-key">Completed On</span>
+                  <span className="meta-val">{fmt(task.completedAt)}</span>
+                </div>
+              )}
+              {task.originalSolveDate && task.taskType === 'revision' && (
+                <div className="meta-row">
+                  <span className="meta-key">First Solved</span>
+                  <span className="meta-val">
+                    {fmt(task.originalSolveDate)}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {task.revisions && task.revisions.length > 0 && (
               <>
-                <div className="drawer-section__title">Change Rating</div>
-                <div className="rating-buttons">
-                  <button className="rating-btn rating-btn--easy" onClick={() => handleRerate('easy')}>✅ Easy</button>
-                  <button className="rating-btn rating-btn--medium" onClick={() => handleRerate('medium')}>⚡ Medium</button>
-                  <button className="rating-btn rating-btn--hard" onClick={() => handleRerate('hard')}>🔥 Hard</button>
+                <div className="drawer-section-title">
+                  🔁 Scheduled Revisions ({task.revisions.length})
+                </div>
+                <div className="rev-list">
+                  {task.revisions.map((r) => (
+                    <div key={r.id} className="rev-item">
+                      <span className="rev-num">#{r.revisionNumber}</span>
+                      <span className="rev-date">{fmt(r.scheduledDate)}</span>
+                      <span
+                        className={
+                          r.status === 'completed' ? 'rev-done' : 'rev-pending'
+                        }
+                      >
+                        {r.status === 'completed' ? 'DONE' : 'PENDING'}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </>
             )}
 
-            {isCompleted && (
-              <button
-                className="btn btn-danger btn-full"
-                onClick={handleUndo}
-                disabled={isProcessing}
-                id="undo-btn"
-                style={{ marginTop: 'var(--space-2)' }}
-              >
-                ↩️ Undo (Mark as Pending)
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+            <NotesEditor
+              key={task.id}
+              taskId={task.id}
+              initialContent={task.notes || ''}
+            />
+          </>
+        )}
+      </Drawer>
 
-      {/* Rating Modal */}
-      {isRatingModalOpen && (
-        <div className="rating-modal-overlay" onClick={closeRatingModal}>
-          <div className="rating-modal" onClick={(e) => e.stopPropagation()} id="rating-modal">
-            <h3>How did it go?</h3>
-            <p>Rate your performance to generate the right revision schedule</p>
-            <div className="rating-buttons">
-              <button className="rating-btn rating-btn--easy" onClick={() => handleComplete('easy')}>
-                ✅ Easy
-              </button>
-              <button className="rating-btn rating-btn--medium" onClick={() => handleComplete('medium')}>
-                ⚡ Medium
-              </button>
-              <button className="rating-btn rating-btn--hard" onClick={() => handleComplete('hard')}>
-                🔥 Hard
-              </button>
-            </div>
-          </div>
-        </div>
+      {task && (
+        <RatingModal
+          open={ratingOpen}
+          taskTitle={task.title}
+          currentRating={task.rating}
+          submitting={busy}
+          onClose={() => setRatingOpen(false)}
+          onSubmit={handleRatingSubmit}
+        />
       )}
     </>
   );

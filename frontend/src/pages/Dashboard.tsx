@@ -1,75 +1,73 @@
-import { useEffect, useCallback } from 'react';
-import { useTaskStore } from '../store/taskStore';
-import { taskApi } from '../services/taskApi';
-import AppLayout from '../components/layout/AppLayout';
+import { useEffect, useState } from 'react';
+import { useDashboardStore } from '../store/dashboardStore';
 import StatusOverview from '../components/dashboard/StatusOverview';
 import VibeBanner from '../components/dashboard/VibeBanner';
-import PendingAssignments from '../components/dashboard/PendingAssignments';
+import PendingAssignments from '../components/assignments/PendingAssignments';
 import TodaysHitlist from '../components/dashboard/TodaysHitlist';
 import TaskDrawer from '../components/task/TaskDrawer';
+import AddTaskModal from '../components/task/AddTaskModal';
+import Spinner from '../components/common/Spinner';
+import Button from '../components/common/Button';
+import type { Task } from '../types';
+import '../components/dashboard/dashboard.css';
 
 export default function Dashboard() {
-  const { dashboard, setDashboard, isLoading, setLoading } = useTaskStore();
-
-  const fetchDashboard = useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await taskApi.getDashboard();
-      setDashboard(data);
-    } catch (err) {
-      console.error('Failed to fetch dashboard:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [setDashboard, setLoading]);
+  const { data, loading, error, fetch } = useDashboardStore();
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
-    fetchDashboard();
-  }, [fetchDashboard]);
+    fetch();
+  }, [fetch]);
 
-  if (isLoading && !dashboard) {
+  const refresh = () => fetch(true);
+
+  if (loading && !data) {
     return (
-      <AppLayout>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '60vh',
-        }}>
-          <div className="spinner" />
-        </div>
-      </AppLayout>
+      <div className="dashboard">
+        <Spinner large />
+      </div>
     );
   }
 
-  if (!dashboard) {
+  if (error && !data) {
     return (
-      <AppLayout>
+      <div className="dashboard">
         <div className="empty-state">
-          <div className="empty-state__emoji">📭</div>
-          <div className="empty-state__text">
-            Could not load dashboard. Please try again.
-          </div>
+          <div className="empty-emoji">😵</div>
+          <div className="empty-text">{error}</div>
+          <Button onClick={() => fetch()}>Retry</Button>
         </div>
-      </AppLayout>
+      </div>
     );
   }
+
+  if (!data) return null;
 
   return (
-    <AppLayout>
-      <div className="dashboard-grid">
-        <StatusOverview {...dashboard.statusOverview} />
-        <VibeBanner {...dashboard.vibe} />
-        <PendingAssignments
-          assignments={dashboard.pendingAssignments}
-          onUpdate={fetchDashboard}
-        />
-        <TodaysHitlist
-          pendingTasks={dashboard.todaysHitlist.pending}
-          completedTasks={dashboard.todaysHitlist.completed}
-        />
-      </div>
-      <TaskDrawer onUpdate={fetchDashboard} />
-    </AppLayout>
+    <div className="dashboard">
+      <StatusOverview data={data.statusOverview} />
+      <VibeBanner vibe={data.vibe} />
+      <PendingAssignments
+        pending={data.pendingAssignments || []}
+        onChanged={refresh}
+      />
+      <TodaysHitlist
+        pending={data.todaysHitlist.pending}
+        completed={data.todaysHitlist.completed}
+        onTaskClick={(t: Task) => setSelectedTaskId(t.id)}
+        onAddTask={() => setAddOpen(true)}
+      />
+      <TaskDrawer
+        taskId={selectedTaskId}
+        onClose={() => setSelectedTaskId(null)}
+        onChanged={refresh}
+      />
+      <AddTaskModal
+        open={addOpen}
+        onClose={() => setAddOpen(false)}
+        onCreated={refresh}
+      />
+    </div>
   );
 }

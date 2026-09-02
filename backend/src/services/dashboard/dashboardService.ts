@@ -1,29 +1,42 @@
 import { taskRepository } from '../../repositories/taskRepository';
 import prisma from '../../config/database';
-import logger from '../../utils/logger';
+import { streakService } from '../progress/streakService';
 
 /**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
  * in a single call, avoiding 10+ separate API requests from the frontend.
  */
 export const dashboardService = {
-  async getDashboardData(userId: string) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const endOfToday = new Date();
-    endOfToday.setHours(23, 59, 59, 999);
-
+  async getDashboardData(userId: string, tz: string) {
     // Run all queries in parallel
     const [
       todaysTasks,
-      statusCounts,
-      streak,
+      totalQuestions,
+      backlogCount,
+      expiredCount,
+      streaks,
       pendingAssignments,
       user,
     ] = await Promise.all([
       taskRepository.getTodaysTasks(userId),
-      taskRepository.countByStatus(userId),
-      taskRepository.getStreak(userId),
+      // Total unique problems actually solved (new tasks only, not revisions)
+      prisma.task.count({
+        where: { userId, taskType: 'new', status: 'completed' },
+      }),
+      // Backlog: flagged as backlog, not expired, not completed
+      prisma.task.count({
+        where: {
+          userId,
+          isBacklog: true,
+          isExpired: false,
+          status: { not: 'completed' },
+        },
+      }),
+      // Expired: flagged expired
+      prisma.task.count({
+        where: { userId, isExpired: true },
+      }),
+      streakService.getStreaks(userId, tz),
       prisma.assignment.findMany({
         where: { userId, status: 'pending' },
         orderBy: { deadline: 'asc' },
@@ -38,9 +51,6 @@ export const dashboardService = {
     const pendingTasks = todaysTasks.filter((t) => t.status !== 'completed');
     const completedTasks = todaysTasks.filter((t) => t.status === 'completed');
 
-    // Calculate totals
-    const totalQuestions = Object.values(statusCounts).reduce((a, b) => a + b, 0);
-
     // Generate vibe
     const vibe = getVibe(pendingTasks.length, todaysTasks);
 
@@ -53,9 +63,10 @@ export const dashboardService = {
     return {
       statusOverview: {
         totalQuestions,
-        streak,
-        backlog: statusCounts.backlog || 0,
-        expired: statusCounts.expired || 0,
+        streak: streaks.current,
+        streakActiveToday: streaks.activeToday,
+        backlog: backlogCount,
+        expired: expiredCount,
         coins: user?.coins || 0,
       },
       vibe,
@@ -76,23 +87,50 @@ function getVibe(
   tasks: { difficulty: string | null; taskType: string; status: string }[]
 ) {
   if (pendingCount === 0) {
-    return { emoji: '🎉', message: 'All clear! No tasks today. Enjoy your day!', intensity: 'none' as const };
+    const completedCount = tasks.filter(
+      (t) => t.status === 'completed'
+    ).length;
+
+    if (completedCount > 0) {
+      return {
+        emoji: '🎉',
+        message: 'All tasks completed for today. Great work!',
+        intensity: 'none' as const,
+      };
+    }
+
+    return {
+      emoji: '🎉',
+      message: 'All clear! No tasks today. Enjoy your day!',
+      intensity: 'none' as const,
+    };
   }
 
   const hardCount = tasks.filter(
     (t) => t.difficulty === 'hard' && t.status !== 'completed'
   ).length;
-  const totalPending = pendingCount;
 
-  if (hardCount >= 3 || totalPending >= 6) {
-    return { emoji: '⚔️', message: 'Grind Day! Heavy load ahead. Stay focused!', intensity: 'high' as const };
+  if (hardCount >= 3 || pendingCount >= 6) {
+    return {
+      emoji: '⚔️',
+      message: 'Grind Day! Heavy load ahead. Stay focused!',
+      intensity: 'high' as const,
+    };
   }
 
-  if (totalPending >= 3) {
-    return { emoji: '💪', message: 'Solid day! A good mix of challenges awaits.', intensity: 'medium' as const };
+  if (pendingCount >= 3) {
+    return {
+      emoji: '💪',
+      message: 'Solid day! A good mix of challenges awaits.',
+      intensity: 'medium' as const,
+    };
   }
 
-  return { emoji: '🌤️', message: 'Light day! Quick and easy. Keep the streak alive!', intensity: 'low' as const };
+  return {
+    emoji: '🌤️',
+    message: 'Light day! Quick and easy. Keep the streak alive!',
+    intensity: 'low' as const,
+  };
 }
 
 /**

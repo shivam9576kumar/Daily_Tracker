@@ -1,31 +1,33 @@
 import { runBacklogCron } from './backlogCron';
 import { runExpiryCron } from './expiryCron';
+import { cronRunService } from '../services/cron/cronRunService';
 import logger from '../utils/logger';
 
 /**
- * Initialize all cron jobs.
- * Uses setInterval for simplicity — runs midnight checks every 60 seconds
- * and executes at the first check after midnight.
+ * Initializes daily cron jobs.
+ *
+ * CronRun table prevents duplicate daily runs.
+ * Individual cron jobs are also idempotent.
  */
-let lastRunDate = '';
-
 export function initCronJobs() {
-  logger.info('⏰ Cron jobs initialized');
+  logger.info('⏰ Cron scheduler initialized');
 
-  // Check every 60 seconds if we've crossed midnight
-  setInterval(async () => {
-    const today = new Date().toISOString().split('T')[0];
-
-    if (today !== lastRunDate) {
-      lastRunDate = today;
-      logger.info('🌙 Midnight cron triggered');
-
+  const runDailyMaintenance = async () => {
+    await cronRunService.runOncePerDay('daily-maintenance', async () => {
       await runBacklogCron();
       await runExpiryCron();
-    }
-  }, 60_000);
+    });
+  };
 
-  // Also run immediately on startup to catch any missed midnight
-  runBacklogCron();
-  runExpiryCron();
+  // Run once on startup.
+  runDailyMaintenance().catch((err) => {
+    logger.error('Startup daily maintenance failed:', err);
+  });
+
+  // Check every minute if a new day has started.
+  setInterval(() => {
+    runDailyMaintenance().catch((err) => {
+      logger.error('Scheduled daily maintenance failed:', err);
+    });
+  }, 60_000);
 }

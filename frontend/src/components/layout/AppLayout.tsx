@@ -1,8 +1,9 @@
+import { Outlet } from 'react-router-dom';
 import TopBar from './TopBar';
 import './layout.css';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function AppLayout({ children }: Props) {
@@ -10,7 +11,7 @@ export default function AppLayout({ children }: Props) {
     <div className="app-layout">
       <TopBar />
       <main className="app-content">
-        {children}
+        {children || <Outlet />}
       </main>
     </div>
   );

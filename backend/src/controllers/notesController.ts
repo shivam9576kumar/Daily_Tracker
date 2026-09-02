@@ -2,7 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import prisma from '../config/database';
 import { getAuthUser } from '../middleware/authMiddleware';
 import { sendSuccess, sendCreated } from '../utils/response';
-import { NotFoundError } from '../utils/error';
+import { NotFoundError, ValidationError } from '../utils/error';
+
+/** Ensure the task exists AND belongs to this user. */
+async function assertTaskOwnership(taskId: string, userId: string) {
+  const task = await prisma.task.findFirst({
+    where: { id: taskId, userId },
+  });
+  if (!task) throw new NotFoundError('Task');
+  return task;
+}
 
 export const notesController = {
   /** GET /api/tasks/:id/notes */
@@ -10,12 +19,16 @@ export const notesController = {
     try {
       const user = getAuthUser(req);
       const taskId = req.params.id as string;
+      await assertTaskOwnership(taskId, user.id);
+
       const notes = await prisma.note.findMany({
         where: { taskId, userId: user.id },
         orderBy: { updatedAt: 'desc' },
       });
       sendSuccess(res, notes);
-    } catch (err) { next(err); }
+    } catch (err) {
+      next(err);
+    }
   },
 
   /** POST /api/tasks/:id/notes */
@@ -25,11 +38,14 @@ export const notesController = {
       const taskId = req.params.id as string;
       const { content } = req.body;
 
-      // Check task ownership
-      const task = await prisma.task.findFirst({
-        where: { id: taskId, userId: user.id },
-      });
-      if (!task) throw new NotFoundError('Task');
+      if (typeof content !== 'string') {
+        throw new ValidationError('content must be a string');
+      }
+      if (content.length > 20000) {
+        throw new ValidationError('Notes must be under 20,000 characters');
+      }
+
+      await assertTaskOwnership(taskId, user.id);
 
       const note = await prisma.note.create({
         data: {
@@ -39,51 +55,58 @@ export const notesController = {
         },
       });
 
-      // Also update the task's inline notes field
       await prisma.task.update({
         where: { id: taskId },
         data: { notes: content },
       });
 
       sendCreated(res, note);
-    } catch (err) { next(err); }
+    } catch (err) {
+      next(err);
+    }
   },
 
-  /** PUT /api/tasks/:id/notes */
+  /** PUT /api/tasks/:id/notes (upsert) */
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
       const taskId = req.params.id as string;
       const { content } = req.body;
 
-      // Upsert: find existing note or create new
+      if (typeof content !== 'string') {
+        throw new ValidationError('content must be a string');
+      }
+      if (content.length > 20000) {
+        throw new ValidationError('Notes must be under 20,000 characters');
+      }
+
+      await assertTaskOwnership(taskId, user.id);
+
       const existing = await prisma.note.findFirst({
         where: { taskId, userId: user.id },
       });
 
-      let note;
-      if (existing) {
-        note = await prisma.note.update({
-          where: { id: existing.id },
-          data: { content },
-        });
-      } else {
-        note = await prisma.note.create({
-          data: {
-            taskId,
-            userId: user.id,
-            content,
-          },
-        });
-      }
+      const note = existing
+        ? await prisma.note.update({
+            where: { id: existing.id },
+            data: { content },
+          })
+        : await prisma.note.create({
+            data: {
+              taskId,
+              userId: user.id,
+              content,
+            },
+          });
 
-      // Also update the task's inline notes field
       await prisma.task.update({
         where: { id: taskId },
         data: { notes: content },
       });
 
       sendSuccess(res, note);
-    } catch (err) { next(err); }
+    } catch (err) {
+      next(err);
+    }
   },
 };

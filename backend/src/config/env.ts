@@ -31,6 +31,9 @@ export const env = {
   // CORS
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',
 
+  // Timezone used when the client does not send X-Timezone
+  DEFAULT_TIMEZONE: process.env.DEFAULT_TIMEZONE || 'Asia/Kolkata',
+
   // Helpers
   isDev: (process.env.NODE_ENV || 'development') === 'development',
   isProd: process.env.NODE_ENV === 'production',

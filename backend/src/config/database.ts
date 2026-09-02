@@ -8,7 +8,7 @@ const globalForPrisma = globalThis as unknown as {
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: env.isDev ? ['query', 'error', 'warn'] : ['error'],
+    log: env.isDev ? ['error', 'warn'] : ['error'],
   });
 
 if (env.isDev) {

@@ -1,14 +1,11 @@
-interface Props {
-  emoji: string;
-  message: string;
-  intensity: 'none' | 'low' | 'medium' | 'high';
-}
+import type { Vibe } from '../../types';
+import './dashboard.css';
 
-export default function VibeBanner({ emoji, message, intensity }: Props) {
+export default function VibeBanner({ vibe }: { vibe: Vibe }) {
   return (
-    <div className={`vibe-banner vibe-banner--${intensity}`} id="vibe-banner">
-      <span className="vibe-emoji">{emoji}</span>
-      <span className="vibe-text">{message}</span>
+    <div className={`vibe-banner vibe-${vibe.intensity}`}>
+      <span className="vibe-emoji">{vibe.emoji}</span>
+      <span>{vibe.message}</span>
     </div>
   );
 }

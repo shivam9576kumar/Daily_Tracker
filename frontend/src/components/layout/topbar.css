@@ -1,0 +1,116 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 64px;
+  padding: 0 24px;
+  background: rgba(10, 10, 16, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.topbar-logo {
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: #9ca3af;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.nav-link:hover {
+  color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Exactly ONE link gets this class at any time — driven by the URL */
+.nav-link.active {
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.15);
+  font-weight: 600;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.topbar-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.topbar-name {
+  color: #e5e7eb;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.topbar-logout {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.topbar-logout:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    row-gap: 8px;
+  }
+  .topbar-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .topbar-name {
+    display: none;
+  }
+}

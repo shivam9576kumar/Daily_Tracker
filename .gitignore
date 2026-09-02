@@ -7,6 +7,8 @@ build/
 .env
 .env.local
 .env.production
+backend/.env
+frontend/.env
 
 # Prisma
 prisma/*.db
