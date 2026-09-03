@@ -123,7 +123,7 @@ export interface AppNotification {
   createdAt: string;
 }
 
-export type PlanSource = 'neetcode150';
+export type PlanSource = 'neetcode150' | 'coderarmy';
 export type PlanPace = 'relaxed' | 'moderate' | 'intensive' | 'custom';
 
 export interface BusyDayInput {

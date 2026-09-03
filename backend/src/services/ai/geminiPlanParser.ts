@@ -135,8 +135,14 @@ function heuristicParse(prompt: string): ParsedPlanSettings {
     }
   }
 
+  // Source detection
+  let source = 'neetcode150';
+  if (lower.includes('coder army') || lower.includes('coderarmy') || lower.includes('army')) {
+    source = 'coderarmy';
+  }
+
   return {
-    source: 'neetcode150',
+    source,
     durationDays,
     pace,
     weekdayLoad,
@@ -167,6 +173,7 @@ Return ONLY valid JSON. No markdown. No explanation.
 
 Supported source:
 - neetcode150
+- coderarmy
 
 Supported pace:
 - relaxed
@@ -225,7 +232,7 @@ Return JSON in this shape:
       const parsed = JSON.parse(cleaned);
 
       return {
-        source: 'neetcode150',
+        source: parsed.source === 'coderarmy' ? 'coderarmy' : 'neetcode150',
         durationDays: Math.min(180, Math.max(7, Number(parsed.durationDays) || 30)),
         pace: ['relaxed', 'moderate', 'intensive'].includes(parsed.pace) ? parsed.pace : 'moderate',
         weekdayLoad: Number(parsed.weekdayLoad) || 2.0,

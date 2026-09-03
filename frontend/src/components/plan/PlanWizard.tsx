@@ -14,6 +14,7 @@ import { useUIStore } from '../../store/uiStore';
 import type {
   GeneratePlanPayload,
   PlanPace,
+  PlanSource,
   PlanPreviewData,
   BusyDayInput,
 } from '../../types';
@@ -29,7 +30,7 @@ export default function PlanWizard() {
   const [archiveModalOpen, setArchiveModalOpen] = useState(false);
 
   // Form state
-  const [source, setSource] = useState<'neetcode150'>('neetcode150');
+  const [source, setSource] = useState<PlanSource>('neetcode150');
   const [startDate, setStartDate] = useState(
     new Date().toISOString().split('T')[0]
   );
@@ -49,6 +50,7 @@ export default function PlanWizard() {
     setAiLoading(true);
     try {
       const parsed = await planApi.aiParse(prompt);
+      if (parsed.source) setSource(parsed.source as PlanSource);
       if (parsed.durationDays) setDurationDays(parsed.durationDays);
       if (parsed.pace) setPace(parsed.pace);
       if (parsed.weekdayLoad) setWeekdayLoad(parsed.weekdayLoad);
@@ -96,8 +98,9 @@ export default function PlanWizard() {
   const handleCommit = async (archiveExisting = false) => {
     setCommitting(true);
     try {
+      const sourceTitle = source === 'coderarmy' ? 'Coder Army' : 'NeetCode 150';
       const payload: GeneratePlanPayload = {
-        name: `NeetCode 150 - ${durationDays} Day Plan`,
+        name: `${sourceTitle} - ${durationDays} Day Plan`,
         source,
         startDate,
         durationDays,

@@ -1,8 +1,9 @@
+import type { PlanSource } from '../../types';
 import './plan.css';
 
 interface Props {
-  source: string;
-  onChange: (source: 'neetcode150') => void;
+  source: PlanSource;
+  onChange: (source: PlanSource) => void;
 }
 
 export default function StepSourceSelect({ source, onChange }: Props) {
@@ -21,7 +22,18 @@ export default function StepSourceSelect({ source, onChange }: Props) {
             20 essential curated DSA patterns (Arrays, Two Pointers, Trees, Sliding Window, DP, etc.)
           </div>
         </div>
+
+        <div
+          className={`pace-card ${source === 'coderarmy' ? 'active' : ''}`}
+          onClick={() => onChange('coderarmy')}
+        >
+          <div className="pace-card-title">⚔️ Coder Army Sheet</div>
+          <div className="pace-card-desc">
+            715 comprehensive DSA problems across 17 topics (Arrays, DP, Graphs, Trees, Heaps, Backtracking, etc.)
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+

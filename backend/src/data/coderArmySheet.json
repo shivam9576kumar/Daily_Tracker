@@ -1,0 +1,7867 @@
+[
+  {
+    "id": "ca-001",
+    "title": "Sum",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/2-sum?utm=codolio",
+    "order": 1,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-002",
+    "title": "Sum - All Quadruples",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-all-four-sum-numbers1732/1?utm=codolio",
+    "order": 2,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-003",
+    "title": "Array Search",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/search-an-element-in-an-array-1587115621/1?utm=codolio",
+    "order": 3,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-004",
+    "title": "Check Equal Arrays",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/check-if-two-arrays-are-equal-or-not3847/1?utm=codolio",
+    "order": 4,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-005",
+    "title": "Missing element of AP",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/missing-element-of-ap2228/1?utm=codolio",
+    "order": 5,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-006",
+    "title": "Rotate Array by One",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/cyclically-rotate-an-array-by-one2614/1?utm=codolio",
+    "order": 6,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-007",
+    "title": "Min and Max in Array",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-minimum-and-maximum-element-in-an-array4428/1?utm=codolio",
+    "order": 7,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-008",
+    "title": "Binary Array Sorting",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/binary-array-sorting-1587115620/1?utm=codolio",
+    "order": 8,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-009",
+    "title": "Move all negative elements to end",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/move-all-negative-elements-to-end1813/1?utm=codolio",
+    "order": 9,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-010",
+    "title": "Missing number",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/missing-number4257/1?utm=codolio",
+    "order": 10,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-011",
+    "title": "Search a 2D Matrix",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/search-a-2d-matrix?utm=codolio",
+    "order": 11,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-012",
+    "title": "Find the fine",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-fine4353/1?utm=codolio",
+    "order": 12,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-013",
+    "title": "Greatest on Right Side",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/greater-on-right-side4305/1?utm=codolio",
+    "order": 13,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-014",
+    "title": "Remove Duplicates Sorted Array",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/remove-duplicate-elements-from-sorted-array/1?utm=codolio",
+    "order": 14,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-015",
+    "title": "Indexes of Subarray Sum",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?utm=codolio",
+    "order": 15,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-016",
+    "title": "Sort 0s, 1s and 2s",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sort-an-array-of-0s-1s-and-2s4231/1?utm=codolio",
+    "order": 16,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-017",
+    "title": "Equilibrium Point",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/equilibrium-point-1587115620/1?utm=codolio",
+    "order": 17,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-018",
+    "title": "Peak element",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/peak-element/1?utm=codolio",
+    "order": 18,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-019",
+    "title": "Find Transition Point",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/find-transition-point-1587115620/1?utm=codolio",
+    "order": 19,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-020",
+    "title": "Alternate Positive Negative",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/array-of-alternate-ve-and-ve-nos1401/1?utm=codolio",
+    "order": 20,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-021",
+    "title": "Union of 2 Sorted Arrays",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/union-of-two-sorted-arrays-1587115621/1?utm=codolio",
+    "order": 21,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-022",
+    "title": "Three way partitioning",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/three-way-partitioning/1?utm=codolio",
+    "order": 22,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-023",
+    "title": "Game",
+    "topic": "Arrays",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/24-game?utm=codolio",
+    "order": 23,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-024",
+    "title": "Frogs and Jumps",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/frogs-and-jumps--170647/1?utm=codolio",
+    "order": 24,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-025",
+    "title": "Min Subsets with Consecutive Numbers",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/min-subsets-with-consecutive-numbers0601/1?utm=codolio",
+    "order": 25,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-026",
+    "title": "Missing And Repeating",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/find-missing-and-repeating2512/1?utm=codolio",
+    "order": 26,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-027",
+    "title": "Rearrange Array Alternately",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/-rearrange-array-alternately-1587115620/1?utm=codolio",
+    "order": 27,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-028",
+    "title": "Pythagorean Triplet",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/pythagorean-triplet3018/1?utm=codolio",
+    "order": 28,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-029",
+    "title": "Transform Array In-Place",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/rearrange-an-array-with-o1-extra-space3142/1?utm=codolio",
+    "order": 29,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-030",
+    "title": "Triplets with Smaller Sum",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-triplets-with-sum-smaller-than-x5549/1?utm=codolio",
+    "order": 30,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-031",
+    "title": "Boolean Matrix",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/boolean-matrix-problem-1587115620/1?utm=codolio",
+    "order": 31,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-032",
+    "title": "Row with Max 1s in Rowwise Sorted",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/row-with-max-1s0023/1?utm=codolio",
+    "order": 32,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-033",
+    "title": "Container With Most Water",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/container-with-most-water0535/1?utm=codolio",
+    "order": 33,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-034",
+    "title": "Maximum Triplet product",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-triplet-product--170647/1?utm=codolio",
+    "order": 34,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-035",
+    "title": "Max Sum Square Sub-Matrix of Size k",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/coins-of-geekland--141631/1?utm=codolio",
+    "order": 35,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-036",
+    "title": "Next Permutation",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/next-permutation?utm=codolio",
+    "order": 36,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-037",
+    "title": "Rotate Image",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/rotate-image?utm=codolio",
+    "order": 37,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-038",
+    "title": "Count Primes",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-primes?utm=codolio",
+    "order": 38,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-039",
+    "title": "Watering Plants",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/watering-plants?utm=codolio",
+    "order": 39,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-040",
+    "title": "Arithmetic Subarrays",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/arithmetic-subarrays?utm=codolio",
+    "order": 40,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-041",
+    "title": "Majority Element",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/majority-element/?utm=codolio",
+    "order": 41,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-042",
+    "title": "Max Circular Subarray Sum",
+    "topic": "Arrays",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/max-circular-subarray-sum-1587115620/1?utm=codolio",
+    "order": 42,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-043",
+    "title": "Subarrays Product Less than K",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-the-subarrays-having-product-less-than-k1708/1?utm=codolio",
+    "order": 43,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-044",
+    "title": "Maximum Subset XOR",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-subset-xor/1?utm=codolio",
+    "order": 44,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-045",
+    "title": "Next Smallest Palindrome",
+    "topic": "Arrays",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/next-smallest-palindrome4740/1?utm=codolio",
+    "order": 45,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-046",
+    "title": "Subarrays with Sum in Range",
+    "topic": "Arrays",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/count-the-number-of-subarrays/1?utm=codolio",
+    "order": 46,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-047",
+    "title": "Largest Rectangle with Column Swaps",
+    "topic": "Arrays",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-largest-rectangle-of-1s-with-swapping-of-columns-allowed0243/1?utm=codolio",
+    "order": 47,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-048",
+    "title": "N/3 Repeat Number",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/n3-repeat-number?utm=codolio",
+    "order": 48,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-049",
+    "title": "Reverse a String",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-string/1?utm=codolio",
+    "order": 49,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-050",
+    "title": "Strings Rotations of Each Other",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/check-if-strings-are-rotations-of-each-other-or-not-1587115620/1?utm=codolio",
+    "order": 50,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-051",
+    "title": "Most Frequent Character",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-occuring-character-1587115620/1?utm=codolio",
+    "order": 51,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-052",
+    "title": "Binary Substrings with Corners as 1",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/binary-string-1587115620/1?utm=codolio",
+    "order": 52,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-053",
+    "title": "Make Anagram with Removals",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/anagram-of-string/1?utm=codolio",
+    "order": 53,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-054",
+    "title": "Alternate Merge Two Strings",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/merge-two-strings2736/1?utm=codolio",
+    "order": 54,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-055",
+    "title": "Reverse Words",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-words-in-a-given-string5459/1?utm=codolio",
+    "order": 55,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-056",
+    "title": "Palindrome String",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/palindrome-string0817/1?utm=codolio",
+    "order": 56,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-057",
+    "title": "Longest Common Prefix of Strings",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/longest-common-prefix-in-an-array5129/1?utm=codolio",
+    "order": 57,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-058",
+    "title": "Roman to Integer",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/roman-number-to-integer3201/1?utm=codolio",
+    "order": 58,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-059",
+    "title": "Length of Last Word",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/length-of-last-word?utm=codolio",
+    "order": 59,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-060",
+    "title": "Longest Substring with Distinct Characters",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-distinct-characters-in-string5848/1?utm=codolio",
+    "order": 60,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-061",
+    "title": "String Duplicates Removal",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/remove-all-duplicates-from-a-given-string4321/1?utm=codolio",
+    "order": 61,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-062",
+    "title": "Min Number of Flips",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/min-number-of-flips3210/1?utm=codolio",
+    "order": 62,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-063",
+    "title": "Meta Strings",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/meta-strings5713/1?utm=codolio",
+    "order": 63,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-064",
+    "title": "Smallest window containing 0, 1 and 2",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-window-containing-0-1-and-2--170637/1?utm=codolio",
+    "order": 64,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-065",
+    "title": "Generate Grey Code Sequences",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/generate-grey-code-sequences/1?utm=codolio",
+    "order": 65,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-066",
+    "title": "Sum Two Large Numbers",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-numbers-or-number1219/1?utm=codolio",
+    "order": 66,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-067",
+    "title": "Length of the longest substring",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/length-of-the-longest-substring3036/1?utm=codolio",
+    "order": 67,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-068",
+    "title": "Longest Prefix Suffix",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/longest-prefix-suffix2527/1?utm=codolio",
+    "order": 68,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-069",
+    "title": "Smallest distinct window",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-distant-window3132/1?utm=codolio",
+    "order": 69,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-070",
+    "title": "Case-specific Sorting of Strings",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/case-specific-sorting-of-strings4845/1?utm=codolio",
+    "order": 70,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-071",
+    "title": "Excel Column Name from Number",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/excel-sheet5448/1?utm=codolio",
+    "order": 71,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-072",
+    "title": "Transform String",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/transform-string5648/1?utm=codolio",
+    "order": 72,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-073",
+    "title": "Remove and Reverse",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/remove-and-reverse--170634/1?utm=codolio",
+    "order": 73,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-074",
+    "title": "String formation from substring",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/string-formation-from-substring2734/1?utm=codolio",
+    "order": 74,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-075",
+    "title": "Minimum Days",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-days--170646/1?utm=codolio",
+    "order": 75,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-076",
+    "title": "Remove Consecutive Characters",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/remove-consecutive-characters?utm=codolio",
+    "order": 76,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-077",
+    "title": "Bulls and Cows",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/bulls-and-cows?utm=codolio",
+    "order": 77,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-078",
+    "title": "Atoi",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/atoi?utm=codolio",
+    "order": 78,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-079",
+    "title": "Valid Ip Addresses",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/valid-ip-addresses?utm=codolio",
+    "order": 79,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-080",
+    "title": "Integer To Roman",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/integer-to-roman?utm=codolio",
+    "order": 80,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-081",
+    "title": "Min Chars to Add for Palindrome",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-characters-to-be-added-at-front-to-make-string-palindrome/1?utm=codolio",
+    "order": 81,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-082",
+    "title": "Wildcard string matching",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/wildcard-string-matching1126/1?utm=codolio",
+    "order": 82,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-083",
+    "title": "Longest Palindromic Substring",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-palindromic-substring-in-linear-time/1?utm=codolio",
+    "order": 83,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-084",
+    "title": "Numbers with Adjacent Digit Diff as 1",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/numbers-with-one-absolute-difference2416/1?utm=codolio",
+    "order": 84,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-085",
+    "title": "Stringoholics",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/stringoholics?utm=codolio",
+    "order": 85,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-086",
+    "title": "Power of 2",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/power-of-2?utm=codolio",
+    "order": 86,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-087",
+    "title": "Justified Text",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/justified-text?utm=codolio",
+    "order": 87,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-088",
+    "title": "Binary Search",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/who-will-win-1587115621/1?utm=codolio",
+    "order": 88,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-089",
+    "title": "Last index of One",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/last-index-of-15847/1?utm=codolio",
+    "order": 89,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-090",
+    "title": "Count Zeros in Sorted",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/count-the-zeros2550/1?utm=codolio",
+    "order": 90,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-091",
+    "title": "Elements in the Range",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/elements-in-the-range2834/1?utm=codolio",
+    "order": 91,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-092",
+    "title": "Bubble Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/bubble-sort/1?utm=codolio",
+    "order": 92,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-093",
+    "title": "Insertion Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/insertion-sort/1?utm=codolio",
+    "order": 93,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-094",
+    "title": "First and Last in Sorted",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/first-and-last-occurrences-of-x2041/1?utm=codolio",
+    "order": 94,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-095",
+    "title": "Count zeros in a sorted matrix",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-zeros-in-a-sorted-matrix/1?utm=codolio",
+    "order": 95,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-096",
+    "title": "Array Subset",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/array-subset-of-another-array2317/1?utm=codolio",
+    "order": 96,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-097",
+    "title": "Selection Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/selection-sort/1?utm=codolio",
+    "order": 97,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-098",
+    "title": "Floor in a Sorted Array",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1?utm=codolio",
+    "order": 98,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-099",
+    "title": "Radix Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/radix-sort/1?utm=codolio",
+    "order": 99,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-100",
+    "title": "Search in a Row-Column Sorted",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/search-in-a-matrix17201720/1?utm=codolio",
+    "order": 100,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-101",
+    "title": "Bitonic Point",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-value-in-a-bitonic-array3001/1?utm=codolio",
+    "order": 101,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-102",
+    "title": "Two Repeated Elements",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/two-repeated-elements-1587115621/1?utm=codolio",
+    "order": 102,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-103",
+    "title": "Count Frequent Elements",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/count-element-occurences/1?utm=codolio",
+    "order": 103,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-104",
+    "title": "Number and the Digit Sum",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/number-and-the-digit-sum4021/1?utm=codolio",
+    "order": 104,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-105",
+    "title": "Find triplets with zero sum",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-triplets-with-zero-sum/1?utm=codolio",
+    "order": 105,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-106",
+    "title": "Sort Array",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/sort-the-array0055/1?utm=codolio",
+    "order": 106,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-107",
+    "title": "Sort in specific order",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sort-in-specific-order2422/1?utm=codolio",
+    "order": 107,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-108",
+    "title": "Sort a String",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sort-a-string2943/1?utm=codolio",
+    "order": 108,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-109",
+    "title": "Triplet Family",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/triplet-family/1?utm=codolio",
+    "order": 109,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-110",
+    "title": "Merge and Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/merge-and-sort5821/1?utm=codolio",
+    "order": 110,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-111",
+    "title": "Merge two Unsorted Arrays",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/merging-two-unsorted-arrays-in-sorted-order1020/1?utm=codolio",
+    "order": 111,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-112",
+    "title": "Rope Cutting",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/rope-cutting3334/1?utm=codolio",
+    "order": 112,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-113",
+    "title": "Make array elements unique",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/make-array-elements-unique--170645/1?utm=codolio",
+    "order": 113,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-114",
+    "title": "Kth Smallest",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/kth-smallest-element5635/1?utm=codolio",
+    "order": 114,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-115",
+    "title": "Smallest Positive Missing",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-positive-missing-number-1587115621/1?utm=codolio",
+    "order": 115,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-116",
+    "title": "Sort according to an Array",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/relative-sorting4323/1?utm=codolio",
+    "order": 116,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-117",
+    "title": "Square Root",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/square-root/1?utm=codolio",
+    "order": 117,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-118",
+    "title": "Search in a sorted Matrix",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/search-in-a-matrix-1587115621/1?utm=codolio",
+    "order": 118,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-119",
+    "title": "Smallest number with at least n trailing zeroes in factorial",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-factorial-number5929/1?utm=codolio",
+    "order": 119,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-120",
+    "title": "Merge Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/merge-sort/1?utm=codolio",
+    "order": 120,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-121",
+    "title": "Quick Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/quick-sort/1?utm=codolio",
+    "order": 121,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-122",
+    "title": "Count Inversions",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1?utm=codolio",
+    "order": 122,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-123",
+    "title": "Minimum Swaps to Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-swaps/1?utm=codolio",
+    "order": 123,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-124",
+    "title": "Count Power Pairs from Two Arrays",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-pairs3422/1?utm=codolio",
+    "order": 124,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-125",
+    "title": "Sort an Array",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/sort-an-array?utm=codolio",
+    "order": 125,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-126",
+    "title": "Sort Elements by Decreasing Frequency",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sorting-elements-of-an-array-by-frequency-1587115621/1?utm=codolio",
+    "order": 126,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-127",
+    "title": "Overlapping Intervals",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/overlapping-intervals--170633/1?utm=codolio",
+    "order": 127,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-128",
+    "title": "Find minimum number of Laptops required",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-minimum-number-of-laptops-required--170645/1?utm=codolio",
+    "order": 128,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-129",
+    "title": "Reach a Number",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/reach-a-number?utm=codolio",
+    "order": 129,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-130",
+    "title": "Heaters",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/heaters?utm=codolio",
+    "order": 130,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-131",
+    "title": "Friends Of Appropriate Ages",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/friends-of-appropriate-ages?utm=codolio",
+    "order": 131,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-132",
+    "title": "Koko Eating Bananas",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/koko-eating-bananas?utm=codolio",
+    "order": 132,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-133",
+    "title": "3Sum",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/3sum?utm=codolio",
+    "order": 133,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-134",
+    "title": "3Sum Closest",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/3sum-closest?utm=codolio",
+    "order": 134,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-135",
+    "title": "Nth Digit",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/nth-digit?utm=codolio",
+    "order": 135,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-136",
+    "title": "Sort Matrix Diagonally",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/diagonal-morning-assembly0028/1?utm=codolio",
+    "order": 136,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-137",
+    "title": "Maximum Intersecting Lines",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-intersecting-lines--170647/1?utm=codolio",
+    "order": 137,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-138",
+    "title": "Merge Without Extra Space",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/merge-two-sorted-arrays-1587115620/1?utm=codolio",
+    "order": 138,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-139",
+    "title": "Count Subarrays with Given Median",
+    "topic": "Sorting & Searching",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/median-of-the-subarrays--170647/1?utm=codolio",
+    "order": 139,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-140",
+    "title": "Median of Array",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/median-of-array?utm=codolio",
+    "order": 140,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-141",
+    "title": "Implement Power Function",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/implement-power-function?utm=codolio",
+    "order": 141,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-142",
+    "title": "WoodCutting Made Easy!",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/woodcutting-made-easy?utm=codolio",
+    "order": 142,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-143",
+    "title": "Matrix Median",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/matrix-median?utm=codolio",
+    "order": 143,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-144",
+    "title": "Allocate Books",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/allocate-books?utm=codolio",
+    "order": 144,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-145",
+    "title": "Painter's Partition Problem",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/painters-partition-problem?utm=codolio",
+    "order": 145,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-146",
+    "title": "Red Zone",
+    "topic": "Sorting & Searching",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/red-zone?utm=codolio",
+    "order": 146,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-147",
+    "title": "Max Sum of Rectangle No Larger Than K",
+    "topic": "Sorting & Searching",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k?utm=codolio",
+    "order": 147,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-148",
+    "title": "Smallest Good Base",
+    "topic": "Sorting & Searching",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/smallest-good-base?utm=codolio",
+    "order": 148,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-149",
+    "title": "House Robber IV",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/house-robber-iv?utm=codolio",
+    "order": 149,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-150",
+    "title": "Maximum Gap",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/maximum-gap?utm=codolio",
+    "order": 150,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-151",
+    "title": "Print Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/print-linked-list-elements/1?utm=codolio",
+    "order": 151,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-152",
+    "title": "Linked List End Insertion",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/linked-list-insertion-1587115620/1?utm=codolio",
+    "order": 152,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-153",
+    "title": "Length of Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-nodes-of-linked-list/1?utm=codolio",
+    "order": 153,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-154",
+    "title": "Check If Circular Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/circular-linked-list/1?utm=codolio",
+    "order": 154,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-155",
+    "title": "Identical Linked Lists",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/identical-linked-lists/1?utm=codolio",
+    "order": 155,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-156",
+    "title": "Insert in a Sorted List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/insert-in-a-sorted-list/1?utm=codolio",
+    "order": 156,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-157",
+    "title": "Insert at Middle of Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/insert-in-middle-of-linked-list/1?utm=codolio",
+    "order": 157,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-158",
+    "title": "Delete in a Doubly Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/delete-node-in-doubly-linked-list/1?utm=codolio",
+    "order": 158,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-159",
+    "title": "Reverse a Doubly Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-doubly-linked-list/1?utm=codolio",
+    "order": 159,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-160",
+    "title": "Delete Alternate Nodes",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/delete-alternate-nodes/1?utm=codolio",
+    "order": 160,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-161",
+    "title": "Sum of Last n Nodes of a Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-sum-of-last-n-nodes-of-the-linked-list/1?utm=codolio",
+    "order": 161,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-162",
+    "title": "Find n/k th in Linked list",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/find-nk-th-node-in-linked-list/1?utm=codolio",
+    "order": 162,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-163",
+    "title": "Detect Loop in linked list",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/detect-loop-in-linked-list/1?utm=codolio",
+    "order": 163,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-164",
+    "title": "Move Last to Front of a Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/move-last-element-to-front-of-a-linked-list/1?utm=codolio",
+    "order": 164,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-165",
+    "title": "Kth from End of Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/nth-node-from-end-of-linked-list/1?utm=codolio",
+    "order": 165,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-166",
+    "title": "Middle of a Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/finding-middle-element-in-a-linked-list/1?utm=codolio",
+    "order": 166,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-167",
+    "title": "Reverse a Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-linked-list/1?utm=codolio",
+    "order": 167,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-168",
+    "title": "Remove Duplicates from a Sorted Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/remove-duplicate-element-from-sorted-linked-list/1?utm=codolio",
+    "order": 168,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-169",
+    "title": "Delete Node Without Linked List Head",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/delete-without-head-pointer/1?utm=codolio",
+    "order": 169,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-170",
+    "title": "Remove Duplicates from Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/remove-duplicates-from-an-unsorted-linked-list/1?utm=codolio",
+    "order": 170,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-171",
+    "title": "Linked List Delete at Position",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/delete-a-node-in-single-linked-list/1?utm=codolio",
+    "order": 171,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-172",
+    "title": "Sort a linked list of 0s, 1s and 2s",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1?utm=codolio",
+    "order": 172,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-173",
+    "title": "Cycle Length in Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-length-of-loop/1?utm=codolio",
+    "order": 173,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-174",
+    "title": "Intersection Sorted Linked Lists",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/intersection-of-two-sorted-linked-lists/1?utm=codolio",
+    "order": 174,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-175",
+    "title": "Pairwise Swap in Linked List",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data/1?utm=codolio",
+    "order": 175,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-176",
+    "title": "Insert in Sorted Circular Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sorted-insert-for-circular-linked-list/1?utm=codolio",
+    "order": 176,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-177",
+    "title": "Pair Sum Count in Two Linked Lists",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/count-pairs-whose-sum-is-equal-to-x/1?utm=codolio",
+    "order": 177,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-178",
+    "title": "Intersection of Two Linked Lists",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/intersection-of-two-linked-list/1?utm=codolio",
+    "order": 178,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-179",
+    "title": "Split a Linked List Into Halves",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/split-a-circular-linked-list-into-two-halves/1?utm=codolio",
+    "order": 179,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-180",
+    "title": "Union of Two Linked Lists",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/union-of-two-linked-list/1?utm=codolio",
+    "order": 180,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-181",
+    "title": "Linked List Representation of a Matrix",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/linked-list-matrix/1?utm=codolio",
+    "order": 181,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-182",
+    "title": "Reverse Alternate K in Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/xor-linked-list/1?utm=codolio",
+    "order": 182,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-183",
+    "title": "Remove Cycle in Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/remove-loop-in-linked-list/1?utm=codolio",
+    "order": 183,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-184",
+    "title": "Intersection in Y Shaped Lists",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1?utm=codolio",
+    "order": 184,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-185",
+    "title": "Palindrome Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1?utm=codolio",
+    "order": 185,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-186",
+    "title": "Rotate a Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/rotate-a-linked-list/1?utm=codolio",
+    "order": 186,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-187",
+    "title": "Merge two sorted linked lists",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/merge-two-sorted-linked-lists/1?utm=codolio",
+    "order": 187,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-188",
+    "title": "Delete Nodes with Greater on Right",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/delete-nodes-having-greater-value-on-right/1?utm=codolio",
+    "order": 188,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-189",
+    "title": "Merge Sort for Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sort-a-linked-list/1?utm=codolio",
+    "order": 189,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-190",
+    "title": "Rearrange a linked list",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/rearrange-a-linked-list/1?utm=codolio",
+    "order": 190,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-191",
+    "title": "Prime List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/prime-list--170646/1?utm=codolio",
+    "order": 191,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-192",
+    "title": "Longest Palindrome in Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/length-of-longest-palindrome-in-linked-list/1?utm=codolio",
+    "order": 192,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-193",
+    "title": "Reverse Alternate in Link List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/given-a-linked-list-reverse-alternate-nodes-and-append-at-the-end/1?utm=codolio",
+    "order": 193,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-194",
+    "title": "Merge Sort on Doubly Linked List",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/merge-sort-on-doubly-linked-list/1?utm=codolio",
+    "order": 194,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-195",
+    "title": "Quick Sort on Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/quick-sort-on-linked-list/1?utm=codolio",
+    "order": 195,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-196",
+    "title": "QuickSort on Doubly Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/quicksort-on-doubly-linked-list/1?utm=codolio",
+    "order": 196,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-197",
+    "title": "Remove All  Duplicates in a Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/remove-all-occurences-of-duplicates-in-a-linked-list/1?utm=codolio",
+    "order": 197,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-198",
+    "title": "Sort Singly Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/insertion-sort-for-singly-linked-list/1?utm=codolio",
+    "order": 198,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-199",
+    "title": "Reverse Alternate K Nodes",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/reverse-alternate-k-nodes?utm=codolio",
+    "order": 199,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-200",
+    "title": "Linked List Cycle II",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "order": 200,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-201",
+    "title": "LRU Cache",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/lru-cache?utm=codolio",
+    "order": 201,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-202",
+    "title": "Flatten a Multilevel Doubly Linked List",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list?utm=codolio",
+    "order": 202,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-203",
+    "title": "Clone List with Next and Random",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/clone-a-linked-list-with-next-and-random-pointer/1?utm=codolio",
+    "order": 203,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-204",
+    "title": "Reorder List",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/reorder-list/1?utm=codolio",
+    "order": 204,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-205",
+    "title": "Reverse a sublist of a linked list",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-a-sublist-of-a-linked-list/1?utm=codolio",
+    "order": 205,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-206",
+    "title": "LFU Cache",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/lfu-cache?utm=codolio",
+    "order": 206,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-207",
+    "title": "Reverse Nodes in k-Group",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/reverse-nodes-in-k-group?utm=codolio",
+    "order": 207,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-208",
+    "title": "Design Skiplist",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/design-skiplist?utm=codolio",
+    "order": 208,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-209",
+    "title": "Subtraction in Linked List",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/subtraction-in-linked-list/1?utm=codolio",
+    "order": 209,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-210",
+    "title": "Next Smaller Element",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/immediate-smaller-element1142/1?utm=codolio",
+    "order": 210,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-211",
+    "title": "Implement stack using array",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/implement-stack-using-array/1?utm=codolio",
+    "order": 211,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-212",
+    "title": "Stack using Linked List",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/implement-stack-using-linked-list/1?utm=codolio",
+    "order": 212,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-213",
+    "title": "Pairwise Consecutive Elements",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/pairwise-consecutive-elements/1?utm=codolio",
+    "order": 213,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-214",
+    "title": "Parenthesis Checker",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/parenthesis-checker2744/1?utm=codolio",
+    "order": 214,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-215",
+    "title": "Sort a stack",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sort-a-stack/1?utm=codolio",
+    "order": 215,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-216",
+    "title": "Delete Mid of a Stack",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/delete-middle-element-of-a-stack/1?utm=codolio",
+    "order": 216,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-217",
+    "title": "Maximum Difference",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-difference-1587115620/1?utm=codolio",
+    "order": 217,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-218",
+    "title": "Print Bracket Number",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/print-bracket-number4058/1?utm=codolio",
+    "order": 218,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-219",
+    "title": "Max Sum of 2 Smallest Across Subarrays",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/max-sum-in-sub-arrays0824/1?utm=codolio",
+    "order": 219,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-220",
+    "title": "Remove Two Consecutive Same",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/string-manipulation3706/1?utm=codolio",
+    "order": 220,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-221",
+    "title": "Make the array beautiful",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/make-the-array-beautiful--170647/1?utm=codolio",
+    "order": 221,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-222",
+    "title": "Next Greater Element I",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/next-greater-element-i?utm=codolio",
+    "order": 222,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-223",
+    "title": "Baseball Game",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/baseball-game?utm=codolio",
+    "order": 223,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-224",
+    "title": "Backspace String Compare",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/backspace-string-compare?utm=codolio",
+    "order": 224,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-225",
+    "title": "Next Greater Element",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1?utm=codolio",
+    "order": 225,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-226",
+    "title": "Get Min from Stack",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/get-minimum-element-from-stack/1?utm=codolio",
+    "order": 226,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-227",
+    "title": "The Celebrity Problem",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/the-celebrity-problem/1?utm=codolio",
+    "order": 227,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-228",
+    "title": "Previous Smaller Element",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-number-on-left3403/1?utm=codolio",
+    "order": 228,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-229",
+    "title": "Remove K Digits",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/remove-k-digits/1?utm=codolio",
+    "order": 229,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-230",
+    "title": "Valid Expression",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/valid-expression1025/1?utm=codolio",
+    "order": 230,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-231",
+    "title": "Max Equal Sum in 3 Stacks",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-maximum-equal-sum-of-three-stacks/1?utm=codolio",
+    "order": 231,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-232",
+    "title": "MAXSPPROD",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/maxspprod?utm=codolio",
+    "order": 232,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-233",
+    "title": "Decode String",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/decode-string?utm=codolio",
+    "order": 233,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-234",
+    "title": "Evaluate Expression",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/evaluate-expression?utm=codolio",
+    "order": 234,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-235",
+    "title": "Redundant Braces",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/redundant-braces?utm=codolio",
+    "order": 235,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-236",
+    "title": "Next Greater Element II",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/next-greater-element-ii?utm=codolio",
+    "order": 236,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-237",
+    "title": "Clumsy Factorial",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/clumsy-factorial?utm=codolio",
+    "order": 237,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-238",
+    "title": "Histogram Max Rectangular Area",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram-1587115620/1?utm=codolio",
+    "order": 238,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-239",
+    "title": "Max of Min for Every Window Size",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-of-minimum-for-every-window-size3453/1?utm=codolio",
+    "order": 239,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-240",
+    "title": "IPL 2021 - Final",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/ipl-2021-final--141634/1?utm=codolio",
+    "order": 240,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-241",
+    "title": "Make Prefix Repetition Concise",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/ipl-2021-match-day-6-semi-final--141634/1?utm=codolio",
+    "order": 241,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-242",
+    "title": "Rain Water Trapped",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/rain-water-trapped?utm=codolio",
+    "order": 242,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-243",
+    "title": "Simplify Directory Path",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/simplify-directory-path?utm=codolio",
+    "order": 243,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-244",
+    "title": "Basic Calculator",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/basic-calculator?utm=codolio",
+    "order": 244,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-245",
+    "title": "Create Maximum Number",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/create-maximum-number?utm=codolio",
+    "order": 245,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-246",
+    "title": "Tag Validator",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/tag-validator?utm=codolio",
+    "order": 246,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-247",
+    "title": "Max Chunks To Make Sorted II",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/max-chunks-to-make-sorted-ii?utm=codolio",
+    "order": 247,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-248",
+    "title": "Queue Push & Pop",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/queue-designer/1?utm=codolio",
+    "order": 248,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-249",
+    "title": "Queue Reversal",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/queue-reversal/1?utm=codolio",
+    "order": 249,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-250",
+    "title": "Queue Using Array",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/implement-queue-using-array/1?utm=codolio",
+    "order": 250,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-251",
+    "title": "Queue using Linked List",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/implement-queue-using-linked-list/1?utm=codolio",
+    "order": 251,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-252",
+    "title": "Generate Binary Numbers",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/generate-binary-numbers-1587115620/1?utm=codolio",
+    "order": 252,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-253",
+    "title": "Stack using Queue",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/stack-using-two-queues/1?utm=codolio",
+    "order": 253,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-254",
+    "title": "Queue using two Stacks",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/queue-using-two-stacks/1?utm=codolio",
+    "order": 254,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-255",
+    "title": "Reverse first K of a Queue",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/reverse-first-k-elements-of-queue/1?utm=codolio",
+    "order": 255,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-256",
+    "title": "Deque Implementation",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/deque-implementations/1?utm=codolio",
+    "order": 256,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-257",
+    "title": "Next Right Node",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/next-right-node/1?utm=codolio",
+    "order": 257,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-258",
+    "title": "First Unique Character in a String",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/first-unique-character-in-a-string?utm=codolio",
+    "order": 258,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-259",
+    "title": "Number of Recent Calls",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/number-of-recent-calls?utm=codolio",
+    "order": 259,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-260",
+    "title": "Time Needed to Buy Tickets",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/time-needed-to-buy-tickets?utm=codolio",
+    "order": 260,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-261",
+    "title": "Stream First Non-repeating",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1?utm=codolio",
+    "order": 261,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-262",
+    "title": "Gas Station",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/circular-tour-1587115620/1?utm=codolio",
+    "order": 262,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-263",
+    "title": "Minimum Bracket Reversals to Balance",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-the-reversals0401/1?utm=codolio",
+    "order": 263,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-264",
+    "title": "Validate Stack Operations",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/stack-permutations/1?utm=codolio",
+    "order": 264,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-265",
+    "title": "Operations on PriorityQueue",
+    "topic": "Queue",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/operations-on-priorityqueue/1?utm=codolio",
+    "order": 265,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-266",
+    "title": "Design Circular Deque",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/design-circular-deque?utm=codolio",
+    "order": 266,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-267",
+    "title": "First non-repeating character in a stream of characters",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/first-non-repeating-character-in-a-stream-of-characters?utm=codolio",
+    "order": 267,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-268",
+    "title": "Sliding Window Maximum",
+    "topic": "Queue",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/sliding-window-maximum?utm=codolio",
+    "order": 268,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-269",
+    "title": "Stamping The Sequence",
+    "topic": "Queue",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/stamping-the-sequence?utm=codolio",
+    "order": 269,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-270",
+    "title": "Minimum Number of K Consecutive Bit Flips",
+    "topic": "Queue",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimum-number-of-k-consecutive-bit-flips?utm=codolio",
+    "order": 270,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-271",
+    "title": "Count Subarrays With Fixed Bounds",
+    "topic": "Queue",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/count-subarrays-with-fixed-bounds?utm=codolio",
+    "order": 271,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-272",
+    "title": "Inorder Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/inorder-traversal/1?utm=codolio",
+    "order": 272,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-273",
+    "title": "Preorder Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/preorder-traversal/1?utm=codolio",
+    "order": 273,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-274",
+    "title": "Postorder Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/postorder-traversal/1?utm=codolio",
+    "order": 274,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-275",
+    "title": "Count Leaves in Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-leaves-in-binary-tree/1?utm=codolio",
+    "order": 275,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-276",
+    "title": "Size of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/size-of-binary-tree/1?utm=codolio",
+    "order": 276,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-277",
+    "title": "Sum of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-binary-tree/1?utm=codolio",
+    "order": 277,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-278",
+    "title": "Count Internal Nodes in Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-non-leaf-nodes-in-tree/1?utm=codolio",
+    "order": 278,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-279",
+    "title": "Left View of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/left-view-of-binary-tree/1?utm=codolio",
+    "order": 279,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-280",
+    "title": "Right View of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/right-view-of-binary-tree/1?utm=codolio",
+    "order": 280,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-281",
+    "title": "Height of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/height-of-binary-tree/1?utm=codolio",
+    "order": 281,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-282",
+    "title": "Root to Leaf Paths Sum",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/root-to-leaf-paths-sum/1?utm=codolio",
+    "order": 282,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-283",
+    "title": "Balanced Tree Check",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/check-for-balanced-tree/1?utm=codolio",
+    "order": 283,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-284",
+    "title": "Identical Trees",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/determine-if-two-trees-are-identical/1?utm=codolio",
+    "order": 284,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-285",
+    "title": "Level Order Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/level-order-traversal/1?utm=codolio",
+    "order": 285,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-286",
+    "title": "ZigZag Tree Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/level-order-traversal-in-spiral-form/1?utm=codolio",
+    "order": 286,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-287",
+    "title": "Mirror Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/mirror-tree/1?utm=codolio",
+    "order": 287,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-288",
+    "title": "Nodes Without Sibling",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/print-all-nodes-that-dont-have-sibling/1?utm=codolio",
+    "order": 288,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-289",
+    "title": "Maximum Depth Of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-depth-of-binary-tree/1?utm=codolio",
+    "order": 289,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-290",
+    "title": "Shortest distance in infinite tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-distance-between-two-nodes4402/1?utm=codolio",
+    "order": 290,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-291",
+    "title": "Largest Value of Every Level",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/largest-value-in-each-level/1?utm=codolio",
+    "order": 291,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-292",
+    "title": "Perfect Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/perfect-binary-tree/1?utm=codolio",
+    "order": 292,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-293",
+    "title": "Nodes at Odd Levels",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/nodes-at-odd-levels/1?utm=codolio",
+    "order": 293,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-294",
+    "title": "Remove Half Nodes",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/remove-half-nodes/1?utm=codolio",
+    "order": 294,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-295",
+    "title": "Parent of Siblings with Maximum GCD",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-node-with-maximum-gcd-of-the-siblings-of-a-binary-tree/1?utm=codolio",
+    "order": 295,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-296",
+    "title": "Maximum Node Level",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-node-level/1?utm=codolio",
+    "order": 296,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-297",
+    "title": "Deletion in a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/deletion-in-a-binary-tree/1?utm=codolio",
+    "order": 297,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-298",
+    "title": "Check if two Nodes are Cousins",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/check-if-two-nodes-are-cousins/1?utm=codolio",
+    "order": 298,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-299",
+    "title": "Vertical Order traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/vertical-order-traversal-of-binary-tree?utm=codolio",
+    "order": 299,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-300",
+    "title": "Diagonal Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/diagonal-traversal?utm=codolio",
+    "order": 300,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-301",
+    "title": "Flatten Binary Tree to Linked List",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/flatten-binary-tree-to-linked-list?utm=codolio",
+    "order": 301,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-302",
+    "title": "Merge two Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/merge-two-binary-tree?utm=codolio",
+    "order": 302,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-303",
+    "title": "Maximum Edge Removal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/maximum-edge-removal?utm=codolio",
+    "order": 303,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-304",
+    "title": "Populate Next Right Pointers Tree",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/populate-next-right-pointers-tree?utm=codolio",
+    "order": 304,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-305",
+    "title": "Burn a Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/burn-a-tree?utm=codolio",
+    "order": 305,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-306",
+    "title": "Tree Boundary Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1?utm=codolio",
+    "order": 306,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-307",
+    "title": "Diameter of a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/diameter-of-binary-tree/1?utm=codolio",
+    "order": 307,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-308",
+    "title": "Sum Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/sum-tree/1?utm=codolio",
+    "order": 308,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-309",
+    "title": "Top View of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1?utm=codolio",
+    "order": 309,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-310",
+    "title": "Bottom View of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1?utm=codolio",
+    "order": 310,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-311",
+    "title": "LCA in  Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1?utm=codolio",
+    "order": 311,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-312",
+    "title": "Node and Ancestor Max Diff",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-difference-between-node-and-its-ancestor/1?utm=codolio",
+    "order": 312,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-313",
+    "title": "Serialize and Deserialize a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/serialize-and-deserialize-a-binary-tree/1?utm=codolio",
+    "order": 313,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-314",
+    "title": "Maximum Non-Adjacent Nodes Sum",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-sum-of-non-adjacent-nodes/1?utm=codolio",
+    "order": 314,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-315",
+    "title": "Foldable Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/foldable-binary-tree/1?utm=codolio",
+    "order": 315,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-316",
+    "title": "Construct Binary Tree from Parent Array",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/construct-binary-tree-from-parent-array/1?utm=codolio",
+    "order": 316,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-317",
+    "title": "Linked List to Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/make-binary-tree/1?utm=codolio",
+    "order": 317,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-318",
+    "title": "Check Mirror in N-ary tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/check-mirror-in-n-ary-tree1528/1?utm=codolio",
+    "order": 318,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-319",
+    "title": "Iterative Inorder",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/inorder-traversal-iterative/1?utm=codolio",
+    "order": 319,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-320",
+    "title": "Iterative Postorder",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/postorder-traversal-iterative/1?utm=codolio",
+    "order": 320,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-321",
+    "title": "Print Nodes having K leaves",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/print-nodes-having-k-leaves/1?utm=codolio",
+    "order": 321,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-322",
+    "title": "Complete Binary Tree Traversal with Array Input",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/print-binary-tree-levels-in-sorted-order3241/1?utm=codolio",
+    "order": 322,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-323",
+    "title": "Nodes at Distance in Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/nodes-at-given-distance-in-binary-tree/1?utm=codolio",
+    "order": 323,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-324",
+    "title": "Burning Tree",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/burning-tree/1?utm=codolio",
+    "order": 324,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-325",
+    "title": "Check Level Anagrams in Binary Trees",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/check-if-all-levels-of-two-trees-are-anagrams-or-not/1?utm=codolio",
+    "order": 325,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-326",
+    "title": "Binary Tree  to DLL",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/binary-tree-to-dll/1?utm=codolio",
+    "order": 326,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-327",
+    "title": "Max Path Sum Between Two Leaves",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-path-sum/1?utm=codolio",
+    "order": 327,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-328",
+    "title": "Scrambled String",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/scrambled-string/1?utm=codolio",
+    "order": 328,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-329",
+    "title": "Check Tree Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/check-tree-traversal--141628/1?utm=codolio",
+    "order": 329,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-330",
+    "title": "Corona Vaccine",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/corona-vaccine--141631/1?utm=codolio",
+    "order": 330,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-331",
+    "title": "Recover a Tree From Preorder Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/recover-a-tree-from-preorder-traversal?utm=codolio",
+    "order": 331,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-332",
+    "title": "Search a node in BST",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/search-a-node-in-bst/1?utm=codolio",
+    "order": 332,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-333",
+    "title": "Minimum in BST",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-element-in-bst/1?utm=codolio",
+    "order": 333,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-334",
+    "title": "Check for BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/check-for-bst/1?utm=codolio",
+    "order": 334,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-335",
+    "title": "BST Insert",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/insert-a-node-in-a-bst/1?utm=codolio",
+    "order": 335,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-336",
+    "title": "Kth Largest in BST",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/kth-largest-element-in-bst/1?utm=codolio",
+    "order": 336,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-337",
+    "title": "Inorder Traversal and BST",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/inorder-traversal-and-bst5855/1?utm=codolio",
+    "order": 337,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-338",
+    "title": "Binary Tree to BST",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/binary-tree-to-bst/1?utm=codolio",
+    "order": 338,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-339",
+    "title": "Median of BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/median-of-bst/1?utm=codolio",
+    "order": 339,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-340",
+    "title": "Kth Smallest Element In Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/kth-smallest-element-in-tree?utm=codolio",
+    "order": 340,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-341",
+    "title": "BST Iterator",
+    "topic": "BST",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/bst-iterator?utm=codolio",
+    "order": 341,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-342",
+    "title": "2-Sum Binary Tree",
+    "topic": "BST",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/2sum-binary-tree?utm=codolio",
+    "order": 342,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-343",
+    "title": "Common Nodes in Two BSTs",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/print-common-nodes-in-bst/1?utm=codolio",
+    "order": 343,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-344",
+    "title": "Array to BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/array-to-bst4443/1?utm=codolio",
+    "order": 344,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-345",
+    "title": "Inorder Successor in BST",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/inorder-successor-in-bst/1?utm=codolio",
+    "order": 345,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-346",
+    "title": "BST Keys in a Range",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/print-bst-elements-in-given-range/1?utm=codolio",
+    "order": 346,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-347",
+    "title": "BST with Dead End",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/check-whether-bst-contains-dead-end/1?utm=codolio",
+    "order": 347,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-348",
+    "title": "Sum Pairs Across Two BSTs",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/brothers-from-different-root/1?utm=codolio",
+    "order": 348,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-349",
+    "title": "Sum of k smallest in BST",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-k-smallest-elements-in-bst3029/1?utm=codolio",
+    "order": 349,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-350",
+    "title": "Minimum Distance Between BST Nodes",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/minimum-distance-between-bst-nodes?utm=codolio",
+    "order": 350,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-351",
+    "title": "Normal BST to Balanced BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/normal-bst-to-balanced-bst/1?utm=codolio",
+    "order": 351,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-352",
+    "title": "Construct BST from Postorder",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/construct-bst-from-post-order/1?utm=codolio",
+    "order": 352,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-353",
+    "title": "Recover Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/recover-binary-search-tree?utm=codolio",
+    "order": 353,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-354",
+    "title": "Valid BST from Preorder",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/valid-bst-from-preorder?utm=codolio",
+    "order": 354,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-355",
+    "title": "k-th Smallest in BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-k-th-smallest-element-in-bst/1?utm=codolio",
+    "order": 355,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-356",
+    "title": "Delete a node from BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/delete-a-node-from-bst/1?utm=codolio",
+    "order": 356,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-357",
+    "title": "Largest BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/largest-bst/1?utm=codolio",
+    "order": 357,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-358",
+    "title": "Predecessor and Successor",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/predecessor-and-successor/1?utm=codolio",
+    "order": 358,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-359",
+    "title": "Preorder to BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/preorder-to-postorder4423/1?utm=codolio",
+    "order": 359,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-360",
+    "title": "Closest in BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-closest-element-in-bst/1?utm=codolio",
+    "order": 360,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-361",
+    "title": "Ceil in BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/implementing-ceil-in-bst/1?utm=codolio",
+    "order": 361,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-362",
+    "title": "Check Preorder of BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/preorder-traversal-and-bst4006/1?utm=codolio",
+    "order": 362,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-363",
+    "title": "Sum of nodes within k distance from target",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/bheem-wants-ladoos--170647/1?utm=codolio",
+    "order": 363,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-364",
+    "title": "Minimum Absolute Difference In BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-absolute-difference-in-bst-1665139652/1?utm=codolio",
+    "order": 364,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-365",
+    "title": "Count Pairs Violating  BST Property",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/pairs-violating-bst-property--212515/1?utm=codolio",
+    "order": 365,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-366",
+    "title": "Remove BST keys outside given range",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/remove-bst-keys-outside-given-range/1?utm=codolio",
+    "order": 366,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-367",
+    "title": "Print leaf nodes from preorder traversal of BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/print-leaf-nodes-from-preorder-traversal-of-bst2657/1?utm=codolio",
+    "order": 367,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-368",
+    "title": "Delete Nodes Greater than K",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/delete-nodes-greater-than-k/1?utm=codolio",
+    "order": 368,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-369",
+    "title": "Balance a Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/balance-a-binary-search-tree?utm=codolio",
+    "order": 369,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-370",
+    "title": "Merge two BST 's",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/merge-two-bst-s/1?utm=codolio",
+    "order": 370,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-371",
+    "title": "Fixing Two Nodes of BST",
+    "topic": "BST",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/fixed-two-nodes-of-a-bst/1?utm=codolio",
+    "order": 371,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-372",
+    "title": "Fixing Two nodes of a BST",
+    "topic": "BST",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/fixing-two-swapped-nodes-of-a-bst--170646/1?utm=codolio",
+    "order": 372,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-373",
+    "title": "Sorted Linked List to BST",
+    "topic": "BST",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/sorted-list-to-bst/1?utm=codolio",
+    "order": 373,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-374",
+    "title": "Range Covering All Levels In BST",
+    "topic": "BST",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-range-in-bst--141631/1?utm=codolio",
+    "order": 374,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-375",
+    "title": "Binary Heap Operations",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/operations-on-binary-min-heap/1?utm=codolio",
+    "order": 375,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-376",
+    "title": "Height of Heap",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/height-of-heap5025/1?utm=codolio",
+    "order": 376,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-377",
+    "title": "Relative Ranks",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/relative-ranks?utm=codolio",
+    "order": 377,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-378",
+    "title": "Last Stone Weight",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/last-stone-weight?utm=codolio",
+    "order": 378,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-379",
+    "title": "Profit Maximisation",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/profit-maximisation?utm=codolio",
+    "order": 379,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-380",
+    "title": "Maximum Product of Two Elements in an Array",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array?utm=codolio",
+    "order": 380,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-381",
+    "title": "Largest Number After Digit Swaps by Parity",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/largest-number-after-digit-swaps-by-parity?utm=codolio",
+    "order": 381,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-382",
+    "title": "Minimum Amount of Time to Fill Cups",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/minimum-amount-of-time-to-fill-cups?utm=codolio",
+    "order": 382,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-383",
+    "title": "Take Gifts From the Richest Pile",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/take-gifts-from-the-richest-pile?utm=codolio",
+    "order": 383,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-384",
+    "title": "Min Cost to Connect Ropes",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-cost-of-ropes-1587115620/1?utm=codolio",
+    "order": 384,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-385",
+    "title": "Sum between k1'th and k2'th smallest",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-elements-between-k1th-and-k2th-smallest-elements3133/1?utm=codolio",
+    "order": 385,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-386",
+    "title": "Merge two binary Max heaps",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/merge-two-binary-max-heap0144/1?utm=codolio",
+    "order": 386,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-387",
+    "title": "Maximum distinct after removing K",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-distinct-elements-after-removing-k-elements5906/1?utm=codolio",
+    "order": 387,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-388",
+    "title": "Gadgets of Doraland",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/gadgets-of-doraland--141631/1?utm=codolio",
+    "order": 388,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-389",
+    "title": "Merge K sorted arrays!",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/merge-k-sorted-arrays?utm=codolio",
+    "order": 389,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-390",
+    "title": "Magician and Chocolates",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/magician-and-chocolates?utm=codolio",
+    "order": 390,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-391",
+    "title": "Heap Sort",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/heap-sort/1?utm=codolio",
+    "order": 391,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-392",
+    "title": "k Largest Elements",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/k-largest-elements4206/1?utm=codolio",
+    "order": 392,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-393",
+    "title": "Kth Largest in a Stream",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/kth-largest-element-in-a-stream2220/1?utm=codolio",
+    "order": 393,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-394",
+    "title": "Is Binary Tree Heap",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/is-binary-tree-heap/1?utm=codolio",
+    "order": 394,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-395",
+    "title": "Kth smallest element in a Matrix",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/kth-element-in-matrix/1?utm=codolio",
+    "order": 395,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-396",
+    "title": "Huffman Encoding",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/huffman-encoding3345/1?utm=codolio",
+    "order": 396,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-397",
+    "title": "K-th Smallest Prime Fraction",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/k-th-smallest-prime-fraction?utm=codolio",
+    "order": 397,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-398",
+    "title": "Exam Room",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/exam-room?utm=codolio",
+    "order": 398,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-399",
+    "title": "Rearrange To Make Adjacent Different",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/rearrange-characters4649/1?utm=codolio",
+    "order": 399,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-400",
+    "title": "BST to Special Max Heap",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/bst-to-max-heap/1?utm=codolio",
+    "order": 400,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-401",
+    "title": "Design Twitter",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/design-twitter/1?utm=codolio",
+    "order": 401,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-402",
+    "title": "Minimum Operations to Make Array Sorted",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-incrementdecrement-to-make-array-non-increasing--170637/1?utm=codolio",
+    "order": 402,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-403",
+    "title": "Find Median in a Stream",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-median-in-a-stream-1587115620/1?utm=codolio",
+    "order": 403,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-404",
+    "title": "Smallest Range in K Lists",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/find-smallest-range-containing-elements-from-k-lists/1?utm=codolio",
+    "order": 404,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-405",
+    "title": "Reachable Nodes In Subdivided Graph",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/reachable-nodes-in-subdivided-graph?utm=codolio",
+    "order": 405,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-406",
+    "title": "Ways to form Max Heap",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/ways-to-form-max-heap?utm=codolio",
+    "order": 406,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-407",
+    "title": "Maximum Sum Combinations",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/maximum-sum-combinations?utm=codolio",
+    "order": 407,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-408",
+    "title": "Dinner Plate Stacks",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/dinner-plate-stacks?utm=codolio",
+    "order": 408,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-409",
+    "title": "Construct Target Array With Multiple Sums",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/construct-target-array-with-multiple-sums?utm=codolio",
+    "order": 409,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-410",
+    "title": "Minimum Time to Visit a Cell In a Grid",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimum-time-to-visit-a-cell-in-a-grid?utm=codolio",
+    "order": 410,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-411",
+    "title": "Bulbs",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/interview-questions?utm=codolio",
+    "order": 411,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-412",
+    "title": "Last Coin in a Game of Alternates",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/ishaan-loves-chocolates2156/1?utm=codolio",
+    "order": 412,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-413",
+    "title": "Assign Mice to Holes",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/assign-mice-to-holes?utm=codolio",
+    "order": 413,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-414",
+    "title": "Highest Product",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/highest-product?utm=codolio",
+    "order": 414,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-415",
+    "title": "Maximize Adjacent Diff Sum in Circular",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/swap-and-maximize5859/1?utm=codolio",
+    "order": 415,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-416",
+    "title": "Good or Bad string",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/good-or-bad-string1417/1?utm=codolio",
+    "order": 416,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-417",
+    "title": "Activity Selection",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/n-meetings-in-one-room-1587115620/1?utm=codolio",
+    "order": 417,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-418",
+    "title": "Longest Palindrome",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/longest-palindrome?utm=codolio",
+    "order": 418,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-419",
+    "title": "Assign Cookies",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/assign-cookies?utm=codolio",
+    "order": 419,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-420",
+    "title": "Can Place Flowers",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/can-place-flowers?utm=codolio",
+    "order": 420,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-421",
+    "title": "Valid Palindrome II",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/valid-palindrome-ii?utm=codolio",
+    "order": 421,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-422",
+    "title": "Minimum Cost to Move Chips",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/minimum-cost-to-move-chips-to-the-same-position?utm=codolio",
+    "order": 422,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-423",
+    "title": "Max Missing Count with Sum Limited to K",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/raju-and-coins1932/1?utm=codolio",
+    "order": 423,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-424",
+    "title": "Huffman Decoding",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/huffman-decoding/1?utm=codolio",
+    "order": 424,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-425",
+    "title": "Huffman Decoding-1",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/huffman-decoding-1/1?utm=codolio",
+    "order": 425,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-426",
+    "title": "Largest n Digit Number with Given Digit Sum",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/largest-number-with-given-sum-1587115620/1?utm=codolio",
+    "order": 426,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-427",
+    "title": "Disjoint Intervals",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/disjoint-intervals?utm=codolio",
+    "order": 427,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-428",
+    "title": "Meeting rooms",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/meeting-rooms?utm=codolio",
+    "order": 428,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-429",
+    "title": "Minimum Jumps",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-number-of-jumps-1587115620/1?utm=codolio",
+    "order": 429,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-430",
+    "title": "Minimize the Heights I",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimize-the-heights-i/1?utm=codolio",
+    "order": 430,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-431",
+    "title": "Minimize the Heights II",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimize-the-heights3351/1?utm=codolio",
+    "order": 431,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-432",
+    "title": "Minimum Platforms",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-platforms-1587115620/1?utm=codolio",
+    "order": 432,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-433",
+    "title": "Fractional Knapsack",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1?utm=codolio",
+    "order": 433,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-434",
+    "title": "Page Faults in LRU",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/page-faults-in-lru5603/1?utm=codolio",
+    "order": 434,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-435",
+    "title": "Valid Compressed String",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/valid-compressed-string--170647/1?utm=codolio",
+    "order": 435,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-436",
+    "title": "Max Profit by Removing pr or rp",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/string-rp-or-pr--170647/1?utm=codolio",
+    "order": 436,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-437",
+    "title": "Coin Piles",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/coin-piles5152/1?utm=codolio",
+    "order": 437,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-438",
+    "title": "Police and Thieves",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/police-and-thieves--141631/1?utm=codolio",
+    "order": 438,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-439",
+    "title": "Maximum Events to be Attended",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-number-of-events-that-can-be-attended--170636/1?utm=codolio",
+    "order": 439,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-440",
+    "title": "Pair with Close Values and Indexes",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/water-the-plants--141631/1?utm=codolio",
+    "order": 440,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-441",
+    "title": "Binary Searchable Count",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/binary-searchable-elements/1?utm=codolio",
+    "order": 441,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-442",
+    "title": "Decrease Elements To Make Array Zigzag",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/decrease-elements-to-make-array-zigzag?utm=codolio",
+    "order": 442,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-443",
+    "title": "Minimum Cost to Move Chips to The Same Position",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/minimum-cost-to-move-chips-to-the-same-position?utm=codolio",
+    "order": 443,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-444",
+    "title": "Largest Permutation",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/largest-permutation?utm=codolio",
+    "order": 444,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-445",
+    "title": "Distribute Candy",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/distribute-candy?utm=codolio",
+    "order": 445,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-446",
+    "title": "Seats",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/seats?utm=codolio",
+    "order": 446,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-447",
+    "title": "Minimum Candy Distribution",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/candy/1?utm=codolio",
+    "order": 447,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-448",
+    "title": "Patching Array",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/patching-array?utm=codolio",
+    "order": 448,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-449",
+    "title": "Strong Password Checker",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/strong-password-checker?utm=codolio",
+    "order": 449,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-450",
+    "title": "IPO",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/ipo?utm=codolio",
+    "order": 450,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-451",
+    "title": "Super Washing Machines",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/super-washing-machines?utm=codolio",
+    "order": 451,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-452",
+    "title": "Course Schedule III",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/course-schedule-iii?utm=codolio",
+    "order": 452,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-453",
+    "title": "Grid Paths from Top to Bottom Corner",
+    "topic": "Backtracking",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/find-all-possible-paths-from-top-to-bottom/1?utm=codolio",
+    "order": 453,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-454",
+    "title": "Combinations",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/combinations?utm=codolio",
+    "order": 454,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-455",
+    "title": "Binary Tree Paths",
+    "topic": "Backtracking",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-paths?utm=codolio",
+    "order": 455,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-456",
+    "title": "Gray Code",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/gray-code?utm=codolio",
+    "order": 456,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-457",
+    "title": "Letter Phone",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/letter-phone?utm=codolio",
+    "order": 457,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-458",
+    "title": "Generate all Parentheses II",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/generate-all-parentheses-ii?utm=codolio",
+    "order": 458,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-459",
+    "title": "Permutation with Spaces",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/permutation-with-spaces3627/1?utm=codolio",
+    "order": 459,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-460",
+    "title": "Binary Watch",
+    "topic": "Backtracking",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-watch?utm=codolio",
+    "order": 460,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-461",
+    "title": "Generate IP Addresses",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/generate-ip-addresses/1?utm=codolio",
+    "order": 461,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-462",
+    "title": "Sudoku",
+    "topic": "Backtracking",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/sudoku?utm=codolio",
+    "order": 462,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-463",
+    "title": "Permutations",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/permutations?utm=codolio",
+    "order": 463,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-464",
+    "title": "Maximal String",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/maximal-string?utm=codolio",
+    "order": 464,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-465",
+    "title": "Kth Permutation Sequence",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/kth-permutation-sequence?utm=codolio",
+    "order": 465,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-466",
+    "title": "Palindrome Partitioning",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/palindrome-partitioning?utm=codolio",
+    "order": 466,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-467",
+    "title": "Distinct Permutations of a String",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/permutations-of-a-given-string2041/1?utm=codolio",
+    "order": 467,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-468",
+    "title": "M-Coloring Problem",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1?utm=codolio",
+    "order": 468,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-469",
+    "title": "Target Sum Combinations",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/combination-sum-1587115620/1?utm=codolio",
+    "order": 469,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-470",
+    "title": "Rat in a Maze",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/rat-in-a-maze-problem/1?utm=codolio",
+    "order": 470,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-471",
+    "title": "Largest number in K swaps",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/largest-number-in-k-swaps-1587115620/1?utm=codolio",
+    "order": 471,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-472",
+    "title": "Distinct Subsets",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/subsets-1587115621/1?utm=codolio",
+    "order": 472,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-473",
+    "title": "Generate Parentheses",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/generate-all-possible-parentheses/1?utm=codolio",
+    "order": 473,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-474",
+    "title": "Rat Maze With Multiple Jumps",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/rat-maze-with-multiple-jumps3852/1?utm=codolio",
+    "order": 474,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-475",
+    "title": "Coins and Game",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/coins-and-game4529/1?utm=codolio",
+    "order": 475,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-476",
+    "title": "NQueens",
+    "topic": "Backtracking",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/nqueens?utm=codolio",
+    "order": 476,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-477",
+    "title": "Maximum Good People Based on Statements",
+    "topic": "Backtracking",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/maximum-good-people-based-on-statements?utm=codolio",
+    "order": 477,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-478",
+    "title": "Expression Add Operators",
+    "topic": "Backtracking",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/expression-add-operators/1?utm=codolio",
+    "order": 478,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-479",
+    "title": "First Repeating element",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/first-repeating-element?utm=codolio",
+    "order": 479,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-480",
+    "title": "Union of Arrays with Duplicates",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/union-of-two-arrays3538/1?utm=codolio",
+    "order": 480,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-481",
+    "title": "At Least K Occurrences",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/first-element-to-occur-k-times5150/1?utm=codolio",
+    "order": 481,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-482",
+    "title": "Diffk II",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/diffk-ii?utm=codolio",
+    "order": 482,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-483",
+    "title": "Longest Substring Without Repeat",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/longest-substring-without-repeat?utm=codolio",
+    "order": 483,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-484",
+    "title": "Pairs With Given Xor",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/pairs-with-given-xor?utm=codolio",
+    "order": 484,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-485",
+    "title": "Sum of f(a[i], a[j]) over all pairs in an array of n integers",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/sum-of-fai-aj-over-all-pairs-in-an-array-of-n-integers4057/1?utm=codolio",
+    "order": 485,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-486",
+    "title": "Substrings with same first and last characters",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/substrings-with-similar-first-and-last-characters3644/1?utm=codolio",
+    "order": 486,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-487",
+    "title": "Largest subarray with 0 sum",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/largest-subarray-with-0-sum/1?utm=codolio",
+    "order": 487,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-488",
+    "title": "Count Distinct Elements in Every Window",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-distinct-elements-in-every-window/1?utm=codolio",
+    "order": 488,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-489",
+    "title": "Largest subarray of 0's and 1's",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/largest-subarray-of-0s-and-1s/1?utm=codolio",
+    "order": 489,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-490",
+    "title": "Longest Consecutive Subsequence",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-consecutive-subsequence2449/1?utm=codolio",
+    "order": 490,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-491",
+    "title": "Colorful Number",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/colorful-number?utm=codolio",
+    "order": 491,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-492",
+    "title": "Subarray with B odd numbers",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/subarray-with-b-odd-numbers?utm=codolio",
+    "order": 492,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-493",
+    "title": "An Increment Problem",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/an-increment-problem?utm=codolio",
+    "order": 493,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-494",
+    "title": "Substring Concatenation",
+    "topic": "Hashing",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/substring-concatenation?utm=codolio",
+    "order": 494,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-495",
+    "title": "Copy List",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/copy-list?utm=codolio",
+    "order": 495,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-496",
+    "title": "Triplet Sum in Array",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/triplet-sum-in-array-1587115621/1?utm=codolio",
+    "order": 496,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-497",
+    "title": "Nuts and Bolts Problem",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/nuts-and-bolts-problem0431/1?utm=codolio",
+    "order": 497,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-498",
+    "title": "Subarrays with equal 1s and 0s",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-subarrays-with-equal-number-of-1s-and-0s-1587115620/1?utm=codolio",
+    "order": 498,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-499",
+    "title": "Longest subarray with sum divisible by K",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-subarray-with-sum-divisible-by-k1259/1?utm=codolio",
+    "order": 499,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-500",
+    "title": "Substring with Equal 0, 1 and 2",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/equal-0-1-and-23208/1?utm=codolio",
+    "order": 500,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-501",
+    "title": "Points on the Straight Line",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/points-on-the-straight-line?utm=codolio",
+    "order": 501,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-502",
+    "title": "Fraction",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/fraction?utm=codolio",
+    "order": 502,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-503",
+    "title": "Window String",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/window-string?utm=codolio",
+    "order": 503,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-504",
+    "title": "Two out of Three",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/two-out-of-three?utm=codolio",
+    "order": 504,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-505",
+    "title": "Joey doesn't share food",
+    "topic": "Hashing",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/joey-doesnt-share-food5712/1?utm=codolio",
+    "order": 505,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-506",
+    "title": "BFS of graph",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/bfs-traversal-of-graph/1?utm=codolio",
+    "order": 506,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-507",
+    "title": "DFS of Graph",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1?utm=codolio",
+    "order": 507,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-508",
+    "title": "Shortest Path From 1 To n",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-path-from-1-to-n0156/1?utm=codolio",
+    "order": 508,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-509",
+    "title": "Graph Adjacency List Traversal",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/print-adjacency-list-1587115620/1?utm=codolio",
+    "order": 509,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-510",
+    "title": "Maximum Weight Node",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-weight-node--170645/1?utm=codolio",
+    "order": 510,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-511",
+    "title": "Disjoint set (Union-Find)",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/union-find/1?utm=codolio",
+    "order": 511,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-512",
+    "title": "Euler circuit and Path",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/eulerian-path-in-an-undirected-graph5052/1?utm=codolio",
+    "order": 512,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-513",
+    "title": "Find the Town Judge",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/find-the-town-judge?utm=codolio",
+    "order": 513,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-514",
+    "title": "Find Center of Star Graph",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/find-center-of-star-graph?utm=codolio",
+    "order": 514,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-515",
+    "title": "Path with good nodes!",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/path-with-good-nodes?utm=codolio",
+    "order": 515,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-516",
+    "title": "Largest Distance between nodes of a Tree",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/largest-distance-between-nodes-of-a-tree?utm=codolio",
+    "order": 516,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-517",
+    "title": "Two teams?",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/two-teams?utm=codolio",
+    "order": 517,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-518",
+    "title": "Region in BinaryMatrix",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/region-in-binarymatrix?utm=codolio",
+    "order": 518,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-519",
+    "title": "Level Order",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/level-order?utm=codolio",
+    "order": 519,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-520",
+    "title": "Black Shapes",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/black-shapes?utm=codolio",
+    "order": 520,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-521",
+    "title": "Undirected Graph Cycle",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?utm=codolio",
+    "order": 521,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-522",
+    "title": "Directed Graph Cycle",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1?utm=codolio",
+    "order": 522,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-523",
+    "title": "Topological Sort",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/topological-sort/1?utm=codolio",
+    "order": 523,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-524",
+    "title": "Bipartite Graph",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/bipartite-graph/1?utm=codolio",
+    "order": 524,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-525",
+    "title": "Dijkstra Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1?utm=codolio",
+    "order": 525,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-526",
+    "title": "Minimum Spanning Tree",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1?utm=codolio",
+    "order": 526,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-527",
+    "title": "Count Strongly Connected",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/strongly-connected-components-kosarajus-algo/1?utm=codolio",
+    "order": 527,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-528",
+    "title": "Bellman Ford",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/distance-from-the-source-bellman-ford-algorithm/1?utm=codolio",
+    "order": 528,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-529",
+    "title": "Euler Circuit and Path",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/euler-circuit-and-path/1?utm=codolio",
+    "order": 529,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-530",
+    "title": "Rotten Oranges",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/rotten-oranges2536/1?utm=codolio",
+    "order": 530,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-531",
+    "title": "Min Steps by Knight",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/steps-by-knight5927/1?utm=codolio",
+    "order": 531,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-532",
+    "title": "Flood fill Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/flood-fill-algorithm1856/1?utm=codolio",
+    "order": 532,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-533",
+    "title": "Count Islands",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-the-number-of-islands/1?utm=codolio",
+    "order": 533,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-534",
+    "title": "Shortest Source to Destination Path",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-source-to-destination-path3544/1?utm=codolio",
+    "order": 534,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-535",
+    "title": "Largest Region of 1's in a Binary Matrix",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/length-of-largest-region-of-1s-1587115620/1?utm=codolio",
+    "order": 535,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-536",
+    "title": "Negative Weight Cycle",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/negative-weight-cycle3504/1?utm=codolio",
+    "order": 536,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-537",
+    "title": "Circle of Strings",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/circle-of-strings4530/1?utm=codolio",
+    "order": 537,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-538",
+    "title": "Number of Connected Components",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-provinces/1?utm=codolio",
+    "order": 538,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-539",
+    "title": "Knight Walk",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/knight-walk4521/1?utm=codolio",
+    "order": 539,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-540",
+    "title": "Bridge Edge in a Graph",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/bridge-edge-in-graph/1?utm=codolio",
+    "order": 540,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-541",
+    "title": "Hamiltonian Path",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/hamiltonian-path2522/1?utm=codolio",
+    "order": 541,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-542",
+    "title": "Replace O's with X's",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/replace-os-with-xs0052/1?utm=codolio",
+    "order": 542,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-543",
+    "title": "Shortest path in Directed Acyclic Graph",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-path-in-undirected-graph/1?utm=codolio",
+    "order": 543,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-544",
+    "title": "Word Search",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/word-search/1?utm=codolio",
+    "order": 544,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-545",
+    "title": "Course Schedule II",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/course-schedule/1?utm=codolio",
+    "order": 545,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-546",
+    "title": "Maximum Bipartite Matching",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-bipartite-matching--170646/1?utm=codolio",
+    "order": 546,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-547",
+    "title": "Number of Ways to Arrive at Destination",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-ways-to-arrive-at-destination/1?utm=codolio",
+    "order": 547,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-548",
+    "title": "Water Connection Problem",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/water-connection-problem5822/1?utm=codolio",
+    "order": 548,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-549",
+    "title": "Covid Spread",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/covid-spread--141631/1?utm=codolio",
+    "order": 549,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-550",
+    "title": "Water Flow",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/water-flow?utm=codolio",
+    "order": 550,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-551",
+    "title": "Count Paths Between Two Vertices",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/possible-paths-between-2-vertices-1587115620/1?utm=codolio",
+    "order": 551,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-552",
+    "title": "Connected Groups of 1s",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/x-total-shapes3617/1?utm=codolio",
+    "order": 552,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-553",
+    "title": "Prerequisite Tasks",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/prerequisite-tasks/1?utm=codolio",
+    "order": 553,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-554",
+    "title": "Check for Path in a 2D Grid with Obstacles",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-whether-path-exist5238/1?utm=codolio",
+    "order": 554,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-555",
+    "title": "Strongly Connected Component",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/strongly-connected-component-tarjanss-algo-1587115621/1?utm=codolio",
+    "order": 555,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-556",
+    "title": "Alien Dictionary",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/alien-dictionary/1?utm=codolio",
+    "order": 556,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-557",
+    "title": "Minimum Cost Path",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-cost-path3833/1?utm=codolio",
+    "order": 557,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-558",
+    "title": "Articulation Point - I",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/articulation-point-1/1?utm=codolio",
+    "order": 558,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-559",
+    "title": "Word Ladder I",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/word-ladder-i?utm=codolio",
+    "order": 559,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-560",
+    "title": "Largest Sum Cycle",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/largest-sum-cycle--170645/1?utm=codolio",
+    "order": 560,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-561",
+    "title": "Shortest Path Using Atmost One Curved Edge",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-path-using-atmost-one-curved-edge--170647/1?utm=codolio",
+    "order": 561,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-562",
+    "title": "Word Ladder II",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/word-ladder-ii?utm=codolio",
+    "order": 562,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-563",
+    "title": "Job Assignment Problem",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/assignment-problem3016/1?utm=codolio",
+    "order": 563,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-564",
+    "title": "Articulation Point",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/articulation-point2616/1?utm=codolio",
+    "order": 564,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-565",
+    "title": "Critical Connections in Graph",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/critical-connections/1?utm=codolio",
+    "order": 565,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-566",
+    "title": "Count Groups of 1's Surrounded by 0's",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/find-number-of-closed-islands/1?utm=codolio",
+    "order": 566,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-567",
+    "title": "First n Fibonacci using Recursion",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/print-first-n-fibonacci-numbers1002/1?utm=codolio",
+    "order": 567,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-568",
+    "title": "Count Numbers with Digit 4",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/count-numbers-containing-43022/1?utm=codolio",
+    "order": 568,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-569",
+    "title": "Nth Fibonacci Number",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/nth-fibonacci-number1335/1?utm=codolio",
+    "order": 569,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-570",
+    "title": "Stock buy and sell",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/stock-buy-and-sell-1587115621/1?utm=codolio",
+    "order": 570,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-571",
+    "title": "Count ways with 3 moves",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/count-number-of-hops-1587115620/1?utm=codolio",
+    "order": 571,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-572",
+    "title": "Coin Change (Count Ways)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/coin-change2448/1?utm=codolio",
+    "order": 572,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-573",
+    "title": "Coin Change (Minimum Coins)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-coins1824/1?utm=codolio",
+    "order": 573,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-574",
+    "title": "0-1 Knapsack",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/0-1-knapsack?utm=codolio",
+    "order": 574,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-575",
+    "title": "Tushar's Birthday Party",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/tushars-birthday-party?utm=codolio",
+    "order": 575,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-576",
+    "title": "Matrix Chain Multiplication Dp 8",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/matrix-chain-multiplication-dp-8/?utm=codolio",
+    "order": 576,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-577",
+    "title": "Program Nth Catalan Number",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/program-nth-catalan-number/?utm=codolio",
+    "order": 577,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-578",
+    "title": "Kadane's Algorithm",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/kadanes-algorithm-1587115620/1?utm=codolio",
+    "order": 578,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-579",
+    "title": "Longest Common Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-common-subsequence-1587115620/1?utm=codolio",
+    "order": 579,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-580",
+    "title": "Longest Increasing Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-increasing-subsequence-1587115620/1?utm=codolio",
+    "order": 580,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-581",
+    "title": "Longest Common Substring",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-common-substring1452/1?utm=codolio",
+    "order": 581,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-582",
+    "title": "Longest Repeating Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-repeating-subsequence2004/1?utm=codolio",
+    "order": 582,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-583",
+    "title": "Longest Palindromic Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-palindromic-subsequence-1612327878/1?utm=codolio",
+    "order": 583,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-584",
+    "title": "Longest Arithmetic Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-arithmetic-progression1019/1?utm=codolio",
+    "order": 584,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-585",
+    "title": "Longest Bitonic Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-bitonic-subsequence0824/1?utm=codolio",
+    "order": 585,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-586",
+    "title": "Longest Common Increasing Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-common-increasing-subsequence1437/1?utm=codolio",
+    "order": 586,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-587",
+    "title": "Subset Sum Problem",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1?utm=codolio",
+    "order": 587,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-588",
+    "title": "Count Palindromic Subsequences",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-palindromic-subsequences/1?utm=codolio",
+    "order": 588,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-589",
+    "title": "Longest Palindrome in a String",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-palindrome-in-a-string3411/1?utm=codolio",
+    "order": 589,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-590",
+    "title": "Egg Dropping Puzzle",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1?utm=codolio",
+    "order": 590,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-591",
+    "title": "Floyd Warshall",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/implementing-floyd-warshall2042/1?utm=codolio",
+    "order": 591,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-592",
+    "title": "Word Break",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/word-break?utm=codolio",
+    "order": 592,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-593",
+    "title": "Palindrome Partitioning II",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/palindrome-partitioning-ii?utm=codolio",
+    "order": 593,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-594",
+    "title": "Shortest Common Supersequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-common-supersequence0322/1?utm=codolio",
+    "order": 594,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-595",
+    "title": "LCS of Three Strings",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/lcs-of-three-strings0028/1?utm=codolio",
+    "order": 595,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-596",
+    "title": "Box Stacking",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/box-stacking/1?utm=codolio",
+    "order": 596,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-597",
+    "title": "Count of Subarrays",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-of-subarrays5922/1?utm=codolio",
+    "order": 597,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-598",
+    "title": "Longest alternating subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/longest-alternating-subsequence5951/1?utm=codolio",
+    "order": 598,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-599",
+    "title": "Count Cyclic Paths",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-cyclic-paths--170647/1?utm=codolio",
+    "order": 599,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-600",
+    "title": "Max Sum Non-Decreasing Subsequence of Length k",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-sum-subsequence-of-length-k3053/1?utm=codolio",
+    "order": 600,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-601",
+    "title": "Find length of longest subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-length-of-longest-subsequence4905/1?utm=codolio",
+    "order": 601,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-602",
+    "title": "Count Palindromic Strings with Constraints",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-palindromic-strings2706/1?utm=codolio",
+    "order": 602,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-603",
+    "title": "Palindrome With K Insertions",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/palindromic-strings2555/1?utm=codolio",
+    "order": 603,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-604",
+    "title": "Trapping Rain Water",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/trapping-rain-water-1587115621/1?utm=codolio",
+    "order": 604,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-605",
+    "title": "Maximum Product Subarray",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-product-subarray3604/1?utm=codolio",
+    "order": 605,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-606",
+    "title": "nCr",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/ncr1019/1?utm=codolio",
+    "order": 606,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-607",
+    "title": "Maximize The Cut Segments",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/cutted-segments1642/1?utm=codolio",
+    "order": 607,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-608",
+    "title": "Edit Distance",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/edit-distance3702/1?utm=codolio",
+    "order": 608,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-609",
+    "title": "Partition Equal Subset Sum",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/subset-sum-problem2014/1?utm=codolio",
+    "order": 609,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-610",
+    "title": "Ways to Reach the n'th Stair",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-ways-to-reach-the-nth-stair-1587115620/1?utm=codolio",
+    "order": 610,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-611",
+    "title": "Stickler Thief",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/stickler-theif-1587115621/1?utm=codolio",
+    "order": 611,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-612",
+    "title": "Job Sequencing Problem",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/job-sequencing-problem-1587115620/1?utm=codolio",
+    "order": 612,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-613",
+    "title": "Count Subsets with Sum",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1?utm=codolio",
+    "order": 613,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-614",
+    "title": "Max Sum Increasing Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-sum-increasing-subsequence4749/1?utm=codolio",
+    "order": 614,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-615",
+    "title": "Sum Except First and Last",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/max-length-chain/1?utm=codolio",
+    "order": 615,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-616",
+    "title": "Maximum path sum in matrix",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/path-in-matrix3805/1?utm=codolio",
+    "order": 616,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-617",
+    "title": "Regular Expression Match",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/regular-expression-match?utm=codolio",
+    "order": 617,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-618",
+    "title": "Smallest sequence with given Primes",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/smallest-sequence-with-given-primes?utm=codolio",
+    "order": 618,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-619",
+    "title": "Wildcard Pattern Matching",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/wildcard-pattern-matching/1?utm=codolio",
+    "order": 619,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-620",
+    "title": "Tiling With Dominoes",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/tiling-with-dominoes?utm=codolio",
+    "order": 620,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-621",
+    "title": "Paint House!",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/paint-house?utm=codolio",
+    "order": 621,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-622",
+    "title": "Intersecting Chords in a Circle",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/intersecting-chords-in-a-circle?utm=codolio",
+    "order": 622,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-623",
+    "title": "N digit numbers with digit sum S",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/n-digit-numbers-with-digit-sum-s-?utm=codolio",
+    "order": 623,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-624",
+    "title": "Kth Manhattan Distance Neighbourhood",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/kth-manhattan-distance-neighbourhood?utm=codolio",
+    "order": 624,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-625",
+    "title": "Best Time to Buy and Sell Stock atmost B times",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/best-time-to-buy-and-sell-stock-atmost-b-times?utm=codolio",
+    "order": 625,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-626",
+    "title": "Best Time to Buy and Sell Stocks III",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.interviewbit.com/problems/best-time-to-buy-and-sell-stocks-iii?utm=codolio",
+    "order": 626,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-627",
+    "title": "Longest valid Parentheses",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/longest-valid-parentheses?utm=codolio",
+    "order": 627,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-628",
+    "title": "Rod Cutting",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/rod-cutting?utm=codolio",
+    "order": 628,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-629",
+    "title": "Max Rectangle in Binary Matrix",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/max-rectangle-in-binary-matrix?utm=codolio",
+    "order": 629,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-630",
+    "title": "Maximum Size Square Sub-matrix",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/maximum-size-square-sub-matrix?utm=codolio",
+    "order": 630,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-631",
+    "title": "Maximum Path in Triangle",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/maximum-path-in-triangle?utm=codolio",
+    "order": 631,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-632",
+    "title": "Min Sum Path in Matrix",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/min-sum-path-in-matrix?utm=codolio",
+    "order": 632,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-633",
+    "title": "Coin Sum Infinite",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/coin-sum-infinite?utm=codolio",
+    "order": 633,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-634",
+    "title": "Arrange II",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/arrange-ii?utm=codolio",
+    "order": 634,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "ca-635",
+    "title": "Interleaved Strings",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/interleaved-strings/1?utm=codolio",
+    "order": 635,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-636",
+    "title": "Consecutive 1's not allowed",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/consecutive-1s-not-allowed1912/1?utm=codolio",
+    "order": 636,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-637",
+    "title": "Unique BST's",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/unique-bsts-1587115621/1?utm=codolio",
+    "order": 637,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-638",
+    "title": "Minimum Coins of 1, 2, 5 and 10",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/-minimum-number-of-coins4426/1?utm=codolio",
+    "order": 638,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-639",
+    "title": "Max Profit from Two Machines",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-tip-calculator2631/1?utm=codolio",
+    "order": 639,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-640",
+    "title": "Snake and Ladder Problem",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/snake-and-ladder-problem4816/1?utm=codolio",
+    "order": 640,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-641",
+    "title": "Special Keyboard",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/special-keyboard3018/1?utm=codolio",
+    "order": 641,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-642",
+    "title": "Minimum Cost to Fill Given Weight",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-cost-to-fill-given-weight-in-a-bag1956/1?utm=codolio",
+    "order": 642,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-643",
+    "title": "Count ways to N'th Stair(Order does not matter)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-ways-to-nth-stairorder-does-not-matter5639/1?utm=codolio",
+    "order": 643,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-644",
+    "title": "Distinct occurrences",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/distinct-occurrences/1?utm=codolio",
+    "order": 644,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-645",
+    "title": "Count subsequences of type a^i, b^j, c^k",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-subsequences-of-type-ai-bj-ck4425/1?utm=codolio",
+    "order": 645,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-646",
+    "title": "Unique Paths in a Grid",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/special-matrix4201/1?utm=codolio",
+    "order": 646,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-647",
+    "title": "Number of ways",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-ways2552/1?utm=codolio",
+    "order": 647,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-648",
+    "title": "Paint N Houses",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/distinct-coloring--170645/1?utm=codolio",
+    "order": 648,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-649",
+    "title": "Shortest XY distance in Grid",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-xy-distance-in-grid--170647/1?utm=codolio",
+    "order": 649,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-650",
+    "title": "Water Overflow",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/champagne-overflow2636/1?utm=codolio",
+    "order": 650,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-651",
+    "title": "Count possible ways to construct buildings",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-possible-ways-to-construct-buildings5007/1?utm=codolio",
+    "order": 651,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-652",
+    "title": "Number of paths in a matrix with k coins",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/number-of-paths-in-a-matrix-with-k-coins2728/1?utm=codolio",
+    "order": 652,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-653",
+    "title": "Stock Buy and Sell – Max 2 Transactions Allowed",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/buy-and-sell-a-share-at-most-twice/1?utm=codolio",
+    "order": 653,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-654",
+    "title": "Min Steps to Destination in Infinite Line",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-number-of-steps-to-reach-a-given-number5234/1?utm=codolio",
+    "order": 654,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-655",
+    "title": "Optimal Strategy For A Game",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/player-with-max-score/1?utm=codolio",
+    "order": 655,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-656",
+    "title": "Cutting Binary String",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/cutting-binary-string1342/1?utm=codolio",
+    "order": 656,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-657",
+    "title": "Two water Jug problem",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/two-water-jug-problem3402/1?utm=codolio",
+    "order": 657,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-658",
+    "title": "Min Cut Square",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/min-cut-square3303/1?utm=codolio",
+    "order": 658,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-659",
+    "title": "Maximum sum of elements not part of LIS",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-sum-of-elements-not-part-of-lis/1?utm=codolio",
+    "order": 659,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-660",
+    "title": "Count of AP Subsequences",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/count-of-ap-subsequences0016/1?utm=codolio",
+    "order": 660,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-661",
+    "title": "Pascal's Triangle",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/pascals-triangle?utm=codolio",
+    "order": 661,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-662",
+    "title": "Pascal's Triangle II",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/pascals-triangle-ii?utm=codolio",
+    "order": 662,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-663",
+    "title": "Best Time to Buy and Sell Stock IV",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv?utm=codolio",
+    "order": 663,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-664",
+    "title": "House Robber",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/house-robber?utm=codolio",
+    "order": 664,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-665",
+    "title": "House Robber II",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/house-robber-ii?utm=codolio",
+    "order": 665,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-666",
+    "title": "Last Stone Weight II",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/last-stone-weight-ii?utm=codolio",
+    "order": 666,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-667",
+    "title": "Predict the Winner",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/predict-the-winner?utm=codolio",
+    "order": 667,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-668",
+    "title": "Palindromic Partitioning",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/palindromic-patitioning4845/1?utm=codolio",
+    "order": 668,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-669",
+    "title": "Partition Into 2 Subsets with Min Sum Diff",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-sum-partition3317/1?utm=codolio",
+    "order": 669,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-670",
+    "title": "Smallest Window with All",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1?utm=codolio",
+    "order": 670,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-671",
+    "title": "The Painter's Partition Problem-II",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/the-painters-partition-problem1535/1?utm=codolio",
+    "order": 671,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-672",
+    "title": "Word Wrap",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/word-wrap1646/1?utm=codolio",
+    "order": 672,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-673",
+    "title": "Partition into k Subsets with Equal Sum",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/partition-array-to-k-subsets/1?utm=codolio",
+    "order": 673,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-674",
+    "title": "Word Break - 2",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/word-break-part-23249/1?utm=codolio",
+    "order": 674,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-675",
+    "title": "Stock Buy and Sell – Max K Transactions Allowed",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-profit4657/1?utm=codolio",
+    "order": 675,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-676",
+    "title": "Max Skills",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-number-of-coins--170647/1?utm=codolio",
+    "order": 676,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-677",
+    "title": "Minimum Points To Reach Destination",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/minimum-points-to-reach-destination0540/1?utm=codolio",
+    "order": 677,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-678",
+    "title": "Word Search - Count Occurrences with 4 Directions",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/count-occurences-of-a-given-word-in-a-2-d-array/1?utm=codolio",
+    "order": 678,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-679",
+    "title": "All Longest Common Subsequences",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/print-all-lcs-sequences3413/1?utm=codolio",
+    "order": 679,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-680",
+    "title": "All Palindromic Partitions",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-all-possible-palindromic-partitions-of-a-string/1?utm=codolio",
+    "order": 680,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-681",
+    "title": "Make Strictly Increasing",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/convert-to-strictly-increasing-array3351/1?utm=codolio",
+    "order": 681,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-682",
+    "title": "Brackets in Matrix Chain Multiplication",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/brackets-in-matrix-chain-multiplication1024/1?utm=codolio",
+    "order": 682,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-683",
+    "title": "Longest Zig-Zag Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/longest-zig-zag-sub-sequence2656/1?utm=codolio",
+    "order": 683,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-684",
+    "title": "Longest Increasing Path in a Matrix",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/longest-increasing-path-in-a-matrix/1?utm=codolio",
+    "order": 684,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-685",
+    "title": "Burst Balloons",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/burst-balloons?utm=codolio",
+    "order": 685,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-686",
+    "title": "Russian Doll Envelopes",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/russian-doll-envelopes?utm=codolio",
+    "order": 686,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-687",
+    "title": "Number of Ways to Stay in the Same Place After Some Steps",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/number-of-ways-to-stay-in-the-same-place-after-some-steps?utm=codolio",
+    "order": 687,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-688",
+    "title": "Maximum Sum BST in Binary Tree",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/maximum-sum-bst-in-binary-tree?utm=codolio",
+    "order": 688,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-689",
+    "title": "XOR of a given range",
+    "topic": "Segment Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/xor-of-a-given-range/1?utm=codolio",
+    "order": 689,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-690",
+    "title": "Max Prefix Sum For Range",
+    "topic": "Segment Tree",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-prefix-sum-for-a-given-range0227/1?utm=codolio",
+    "order": 690,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-691",
+    "title": "Range Minimum Query",
+    "topic": "Segment Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/range-minimum-query/1?utm=codolio",
+    "order": 691,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-692",
+    "title": "Array Sum Excluding Subarrays",
+    "topic": "Segment Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/nitika-and-her-queries4804/1?utm=codolio",
+    "order": 692,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-693",
+    "title": "Smallest Subarray GCD",
+    "topic": "Segment Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/smallest-sub-array4107/1?utm=codolio",
+    "order": 693,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-694",
+    "title": "Array Queries with OR and XOR",
+    "topic": "Segment Tree",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/element-left-after-performing-alternate-or-xor-operation5106/1?utm=codolio",
+    "order": 694,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-695",
+    "title": "Array Partition",
+    "topic": "Segment Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/array-partition/1?utm=codolio",
+    "order": 695,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-696",
+    "title": "Queries forType of Subarray and Update",
+    "topic": "Segment Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/akku-and-arrays4452/1?utm=codolio",
+    "order": 696,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-697",
+    "title": "Greater on Left and Smaller on Right",
+    "topic": "Segment Tree",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/greater-or-less--170646/1?utm=codolio",
+    "order": 697,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-698",
+    "title": "Unique Rows in Boolean Matrix",
+    "topic": "Trie",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/unique-rows-in-boolean-matrix/1?utm=codolio",
+    "order": 698,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-699",
+    "title": "Implement Trie",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/trie-insert-and-search0651/1?utm=codolio",
+    "order": 699,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-700",
+    "title": "Word Boggle",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/word-boggle4143/1?utm=codolio",
+    "order": 700,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-701",
+    "title": "Word with maximum frequency",
+    "topic": "Trie",
+    "difficulty": "easy",
+    "url": "https://www.geeksforgeeks.org/problems/most-frequent-word-in-an-array-of-strings3528/1?utm=codolio",
+    "order": 701,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-702",
+    "title": "Maximum XOR Subarray",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/maximum-xor-subarray--141631/1?utm=codolio",
+    "order": 702,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-703",
+    "title": "PascalCase Pattern Matching",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/camelcase-pattern-matching2259/1?utm=codolio",
+    "order": 703,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-704",
+    "title": "Trie Delete",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/trie-delete/1?utm=codolio",
+    "order": 704,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-705",
+    "title": "Word Search II",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/word-boggle-ii--141631/1?utm=codolio",
+    "order": 705,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-706",
+    "title": "K Length Prefix Matches",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/prefix-match-with-other-strings/1?utm=codolio",
+    "order": 706,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-707",
+    "title": "Phone Directory",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/phone-directory4628/1?utm=codolio",
+    "order": 707,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-708",
+    "title": "Palindrome Pairs",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/palindrome-pairs/1?utm=codolio",
+    "order": 708,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-709",
+    "title": "Shortest Unique Prefix for Every Word",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/shortest-unique-prefix-for-every-word/1?utm=codolio",
+    "order": 709,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-710",
+    "title": "Word Break (Trie)",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://www.geeksforgeeks.org/problems/word-break-trie--141631/1?utm=codolio",
+    "order": 710,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-711",
+    "title": "Duplicate rows in a binary matrix",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://www.geeksforgeeks.org/problems/find-duplicate-rows-in-a-binary-matrix/1?utm=codolio",
+    "order": 711,
+    "tags": [
+      "gfg"
+    ]
+  },
+  {
+    "id": "ca-712",
+    "title": "Range Sum Query - Mutable",
+    "topic": "Advanced DS",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/range-sum-query-mutable?utm=codolio",
+    "order": 712,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-713",
+    "title": "Count Number of Teams",
+    "topic": "Advanced DS",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-number-of-teams?utm=codolio",
+    "order": 713,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-714",
+    "title": "Minimum Possible Integer After at Most K Adjacent Swaps On Digits",
+    "topic": "Advanced DS",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits?utm=codolio",
+    "order": 714,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "ca-715",
+    "title": "Count Increasing Quadruplets",
+    "topic": "Advanced DS",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/count-increasing-quadruplets?utm=codolio",
+    "order": 715,
+    "tags": [
+      "leetcode"
+    ]
+  }
+]

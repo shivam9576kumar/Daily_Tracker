@@ -6,7 +6,7 @@ import { NotFoundError, ValidationError } from '../../utils/error';
 
 export interface GeneratePlanInput {
   name?: string;
-  source: 'neetcode150';
+  source: 'neetcode150' | 'coderarmy';
   startDate: string;
   durationDays: number;
   pace: 'relaxed' | 'moderate' | 'intensive' | 'custom';
@@ -95,8 +95,9 @@ export const planGenerationService = {
       );
     }
 
+    const defaultTitle = input.source === 'coderarmy' ? 'Coder Army' : 'NeetCode 150';
     const planName =
-      input.name?.trim() || `NeetCode 150 - ${input.durationDays} Day Plan`;
+      input.name?.trim() || `${defaultTitle} - ${input.durationDays} Day Plan`;
     const startDate = new Date(`${preview.summary.startDate}T00:00:00.000Z`);
     const endDate = new Date(`${preview.summary.endDate}T23:59:59.999Z`);
 
