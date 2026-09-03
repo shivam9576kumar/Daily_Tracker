@@ -1,29 +1,33 @@
 import api from './api';
-import type { ApiResponse, ActivePlanResponse, PlanPreviewData, ParsedPlanSettings, GeneratePlanPayload } from '../types';
+import type { ApiResponse, ActivePlanResponse, ArchivedPlan } from '../types';
 
 export const planApi = {
   async getActive(): Promise<ActivePlanResponse> {
     const res = await api.get<ApiResponse<ActivePlanResponse>>('/plans/active');
     return res.data.data;
   },
-
-  async aiParse(prompt: string): Promise<ParsedPlanSettings> {
-    const res = await api.post<ApiResponse<ParsedPlanSettings>>('/plans/ai-parse', { prompt });
+  async getArchived(): Promise<ArchivedPlan[]> {
+    const res = await api.get<ApiResponse<ArchivedPlan[]>>('/plans/archived');
     return res.data.data;
   },
-
-  async preview(payload: GeneratePlanPayload): Promise<PlanPreviewData> {
-    const res = await api.post<ApiResponse<PlanPreviewData>>('/plans/preview', payload);
+  async restore(id: string) {
+    const res = await api.post<ApiResponse<any>>(`/plans/${id}/restore`);
     return res.data.data;
   },
-
-  async commit(payload: GeneratePlanPayload): Promise<{ plan: any; tasksCreated: number }> {
-    const res = await api.post<ApiResponse<{ plan: any; tasksCreated: number }>>('/plans/commit', payload);
+  async remove(id: string) {
+    const res = await api.delete<ApiResponse<any>>(`/plans/${id}`);
     return res.data.data;
   },
-
-  async archive(planId: string): Promise<{ message: string }> {
-    const res = await api.patch<ApiResponse<{ message: string }>>(`/plans/${planId}/archive`);
+  async aiParse(prompt: string) {
+    const res = await api.post('/plans/ai-parse', { prompt });
+    return res.data.data;
+  },
+  async preview(payload: any) {
+    const res = await api.post('/plans/preview', payload);
+    return res.data.data;
+  },
+  async commit(payload: any) {
+    const res = await api.post('/plans/commit', payload);
     return res.data.data;
   },
 };

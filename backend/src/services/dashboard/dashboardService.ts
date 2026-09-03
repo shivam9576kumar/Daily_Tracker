@@ -25,18 +25,23 @@ export const dashboardService = {
       prisma.task.count({
         where: { userId, taskType: 'new', status: 'completed' },
       }),
-      // Backlog: flagged as backlog, not expired, not completed
+      // Backlog: flagged as backlog, not expired, not completed (live plan or manual)
       prisma.task.count({
         where: {
           userId,
           isBacklog: true,
           isExpired: false,
           status: { not: 'completed' },
+          OR: [{ planId: null }, { plan: { status: 'active' } }],
         },
       }),
-      // Expired: flagged expired
+      // Expired: flagged expired (live plan or manual)
       prisma.task.count({
-        where: { userId, isExpired: true },
+        where: {
+          userId,
+          isExpired: true,
+          OR: [{ planId: null }, { plan: { status: 'active' } }],
+        },
       }),
       streakService.getStreaks(userId, tz),
       prisma.assignment.findMany({

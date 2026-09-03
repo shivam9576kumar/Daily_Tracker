@@ -1,20 +1,19 @@
 /**
  * Coins are earned for SOLVING, based on the problem's own difficulty.
- * The revision rating (easy/medium/hard) NEVER affects coins — it only shapes the revision schedule.
- * Completing a revision task earns a flat amount.
+ * The revision rating (easy/medium/hard) NEVER affects coins.
  */
 export const COIN_REWARDS = {
-  problem: { easy: 5, medium: 10, hard: 15 },
+  new: { easy: 5, medium: 10, hard: 15 },
   revision: 5,
 } as const;
 
-type DifficultyKey = keyof typeof COIN_REWARDS.problem;
+type Difficulty = keyof typeof COIN_REWARDS.new;
 
 export function calculateCoins(taskType: string, difficulty?: string | null): number {
   if (taskType === 'revision') return COIN_REWARDS.revision;
   if (taskType === 'new') {
-    const key = (difficulty || 'medium') as DifficultyKey;
-    return COIN_REWARDS.problem[key] ?? COIN_REWARDS.problem.medium;
+    const d = (difficulty ?? 'medium') as Difficulty;
+    return COIN_REWARDS.new[d] ?? COIN_REWARDS.new.medium;
   }
   return 0;
 }

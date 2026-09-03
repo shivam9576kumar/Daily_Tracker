@@ -195,17 +195,16 @@ export interface GeneratePlanPayload {
 
 export interface Plan {
   id: string;
-  userId?: string;
   name: string;
   source: string;
   startDate: string;
   endDate: string;
-  status: 'active' | 'completed' | 'archived';
-  weekdayCapacity: number;
-  weekendCapacity: number;
+  status: 'active' | 'archived' | 'completed';
   createdAt: string;
-  updatedAt?: string;
-  tasks?: Task[];
+}
+
+export interface ArchivedPlan extends Plan {
+  progress: { total: number; solved: number; revPending: number };
 }
 
 export interface ActivePlanResponse {

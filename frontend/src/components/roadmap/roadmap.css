@@ -260,3 +260,49 @@
   border: 1px dashed rgba(255, 255, 255, 0.12);
   border-radius: 16px;
 }
+
+.roadmap-actions { display:flex; gap:8px; align-items:center; }
+.btn-danger-outline {
+  background: transparent;
+  border: 1px solid rgba(239,68,68,.35);
+  color: #fca5a5;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-danger-outline:hover { background: rgba(239,68,68,.12); color: #fecaca; }
+
+.archived-section { margin-top: 32px; }
+.archived-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .8px;
+  text-transform: uppercase; color: #8b90a0; margin-bottom: 12px;
+}
+.archived-card {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding: 12px 16px; border-radius: 12px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 8px;
+}
+.archived-name { font-size: 14px; font-weight: 600; color: #e5e7eb; }
+.archived-meta { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+.archived-btns { display:flex; gap:6px; }
+
+/* Delete modal counts */
+.delete-counts {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 14px 0;
+  font-size: 13px;
+  color: #d1d5db;
+  line-height: 1.6;
+}
+.delete-counts strong { color: #f3f4f6; }
+.delete-keep { color: #86efac; }
+.delete-warn { color: #fca5a5; }
+

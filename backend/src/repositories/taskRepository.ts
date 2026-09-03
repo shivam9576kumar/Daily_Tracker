@@ -43,27 +43,36 @@ export const taskRepository = {
    *      "Completed Today" clear itself at midnight: the window simply moves.
    */
   async getTodaysTasks(userId: string) {
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
-    const end = new Date(start);
-    end.setHours(23, 59, 59, 999);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endOfToday = new Date(today);
+    endOfToday.setHours(23, 59, 59, 999);
 
     return prisma.task.findMany({
       where: {
         userId,
         isExpired: false,
-        OR: [
-          { scheduledDate: { gte: start, lte: end } },
-          { status: 'backlog', isBacklog: true },
-          { status: 'completed', completedAt: { gte: start, lte: end } },
+        AND: [
+          {
+            OR: [
+              // scheduled today
+              { scheduledDate: { gte: today, lte: endOfToday } },
+              // open backlog
+              { isBacklog: true, status: 'backlog' },
+              // completed today — bug fix from previous phase
+              { status: 'completed', completedAt: { gte: today, lte: endOfToday } },
+            ],
+          },
+          // ── LEAK FIX: ignore archived plans ──
+          {
+            OR: [
+              { planId: null },
+              { plan: { status: 'active' } },
+            ],
+          },
         ],
       },
-      orderBy: [
-        { status: 'asc' },        // backlog → completed → pending
-        { isBacklog: 'desc' },
-        { taskType: 'asc' },      // new before revision
-        { scheduledDate: 'asc' },
-      ],
+      orderBy: [{ status: 'asc' }, { isBacklog: 'desc' }, { taskType: 'asc' }, { scheduledDate: 'asc' }],
     });
   },
 
@@ -191,6 +200,7 @@ export const taskRepository = {
         scheduledDate: {
           lt: today,
         },
+        OR: [{ planId: null }, { plan: { status: 'active' } }],
       },
     });
   },
@@ -214,6 +224,7 @@ export const taskRepository = {
         backlogSince: {
           lte: cutoff,
         },
+        OR: [{ planId: null }, { plan: { status: 'active' } }],
       },
     });
   },

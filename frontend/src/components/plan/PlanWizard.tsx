@@ -205,14 +205,13 @@ export default function PlanWizard() {
               loading={committing}
               onClick={() => handleCommit(true)}
             >
-              Archive Old & Create New
+              Archive & Create New Plan
             </Button>
           </>
         }
       >
         <p style={{ color: '#d1d5db', fontSize: 14 }}>
-          You already have an active study plan. Creating this new plan will archive your current active plan.
-          (Your completed tasks and revision progress will be preserved).
+          Your current plan will be archived — progress kept, you can restore or delete it anytime from Roadmap.
         </p>
       </Modal>
     </div>

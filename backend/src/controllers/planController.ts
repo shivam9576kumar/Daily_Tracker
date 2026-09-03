@@ -50,6 +50,31 @@ export const planController = {
     } catch (err) { next(err); }
   },
 
+  async getArchived(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = getAuthUser(req);
+      sendSuccess(res, await planService.getArchivedPlans(user.id));
+    } catch (err) { next(err); }
+  },
+
+  async restore(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = getAuthUser(req);
+      const id = req.params.id as string;
+      const plan = await planService.restorePlan(user.id, id);
+      sendSuccess(res, plan);
+    } catch (err) { next(err); }
+  },
+
+  async remove(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = getAuthUser(req);
+      const id = req.params.id as string;
+      const result = await planService.deletePlan(user.id, id);
+      sendSuccess(res, { message: 'Plan deleted', ...result });
+    } catch (err) { next(err); }
+  },
+
   async archive(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);

@@ -1,6 +1,7 @@
 import prisma from '../../config/database';
 import { taskRepository } from '../../repositories/taskRepository';
 import { NotFoundError, ValidationError } from '../../utils/error';
+import { calculateCoins } from '../../config/rewards';
 
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
 const TASK_TYPES = ['new', 'assignment'];
@@ -142,28 +143,35 @@ export const taskService = {
     });
   },
 
+  /**
+   * Delete a task. If it (or, for a parent, any of its completed revisions) was solved,
+   * refund those coins so users.coins always equals "sum of what is currently solved".
+   */
   async deleteTask(taskId: string, userId: string) {
     const task = await this.getTaskById(taskId, userId);
 
-    /**
-     * If deleting a parent/new task, delete all child revision tasks first.
-     * This prevents orphan revision tasks.
-     */
-    if (task.taskType === 'new') {
-      await prisma.task.deleteMany({
-        where: {
-          parentTaskId: taskId,
-          taskType: 'revision',
-        },
-      });
+    await prisma.$transaction(async (tx) => {
+      let refund = task.status === 'completed' ? calculateCoins(task.taskType, task.difficulty) : 0;
 
-      await prisma.revision.deleteMany({
-        where: {
-          parentTaskId: taskId,
-        },
-      });
-    }
+      if (task.taskType === 'new') {
+        const doneRevs = await tx.task.count({
+          where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
+        });
+        refund += doneRevs * calculateCoins('revision', null);
+        await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
+        await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+      } else if (task.taskType === 'revision') {
+        await tx.revision.deleteMany({ where: { revisionTaskId: taskId } });
+      }
 
-    return taskRepository.deleteTask(taskId);
+      await tx.task.delete({ where: { id: taskId } });
+
+      if (refund > 0) {
+        const u = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+        await tx.user.update({ where: { id: userId }, data: { coins: Math.max(0, (u?.coins ?? 0) - refund) } });
+      }
+    });
+
+    return { ok: true };
   },
 };
