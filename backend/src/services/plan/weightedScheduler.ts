@@ -62,14 +62,30 @@ export function scheduleQuestions(params: {
   const focusSet = new Set(focusTopics.map((t) => t.toLowerCase().trim()));
   const avoidSet = new Set(avoidTopics.map((t) => t.toLowerCase().trim()));
 
-  // 1. Filter out avoid topics if requested, unless it leaves too few questions
-  let filtered = rawQuestions.filter((q) => !avoidSet.has(q.topic.toLowerCase().trim()));
-  if (avoidSet.size > 0 && filtered.length < rawQuestions.length) {
-    if (filtered.length < 5) {
-      warnings.push('Avoid topics was too restrictive; included some avoided topics to ensure a complete plan.');
+  let filtered = [...rawQuestions];
+
+  // 1a. If focus topics specified, keep ONLY those topics
+  if (focusSet.size > 0) {
+    filtered = filtered.filter((q) => focusSet.has(q.topic.toLowerCase().trim()));
+    if (filtered.length === 0) {
+      warnings.push('No questions matched your focus topics. Including all questions instead.');
       filtered = [...rawQuestions];
     } else {
-      warnings.push(`Excluded ${rawQuestions.length - filtered.length} questions matching avoid topics.`);
+      warnings.push(`Filtered to ${filtered.length} questions matching focus topics: ${focusTopics.join(', ')}.`);
+    }
+  }
+
+  // 1b. Filter out avoid topics if requested
+  if (avoidSet.size > 0) {
+    const before = filtered.length;
+    filtered = filtered.filter((q) => !avoidSet.has(q.topic.toLowerCase().trim()));
+    if (filtered.length < 5) {
+      warnings.push('Avoid topics was too restrictive; included some avoided topics to ensure a complete plan.');
+      filtered = focusSet.size > 0
+        ? rawQuestions.filter((q) => focusSet.has(q.topic.toLowerCase().trim()))
+        : [...rawQuestions];
+    } else if (filtered.length < before) {
+      warnings.push(`Excluded ${before - filtered.length} questions matching avoid topics.`);
     }
   }
 
