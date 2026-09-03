@@ -18,6 +18,13 @@ export const planController = {
 
   async preview(req: Request, res: Response, next: NextFunction) {
     try {
+      let userId: string | undefined;
+      try {
+        const user = getAuthUser(req);
+        userId = user?.id;
+      } catch {
+        // Optional auth
+      }
       const preview = await planGenerationService.previewPlan(req.body);
       sendSuccess(res, preview);
     } catch (err) {
@@ -35,19 +42,12 @@ export const planController = {
     }
   },
 
+  /** GET /api/plans/active → { plan, tasks, revisions, origin } (plan may be null) */
   async getActive(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const result = await planService.getActivePlan(user.id);
-
-      if (!result) {
-        return sendSuccess(res, { plan: null, tasks: [] });
-      }
-
-      sendSuccess(res, result);
-    } catch (err) {
-      next(err);
-    }
+      sendSuccess(res, await planService.getActivePlan(user.id));
+    } catch (err) { next(err); }
   },
 
   async archive(req: Request, res: Response, next: NextFunction) {

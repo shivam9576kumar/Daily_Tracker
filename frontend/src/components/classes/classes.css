@@ -1,0 +1,160 @@
+.cl-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+}
+.cl-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.cl-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.cl-sub {
+  font-size: 12px;
+  color: #9ca3af;
+}
+.cl-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cl-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+}
+.cl-row.done {
+  opacity: 0.55;
+}
+.cl-row.done .cl-subject {
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+}
+.cl-row.live {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.06);
+}
+.cl-row.hidden {
+  opacity: 0.45;
+}
+.cl-row.hidden .cl-subject {
+  text-decoration: line-through;
+}
+.cl-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cl-dot.done {
+  background: #22c55e;
+}
+.cl-dot.live {
+  background: #ef4444;
+  animation: cl-pulse 1.5s infinite;
+}
+.cl-dot.upcoming {
+  background: rgba(255, 255, 255, 0.28);
+}
+.cl-dot.hidden {
+  background: #6b7280;
+}
+@keyframes cl-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.cl-subject {
+  flex: 1;
+  font-weight: 600;
+  color: #e5e7eb;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cl-time {
+  color: #9ca3af;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.cl-loc {
+  color: #6b7280;
+  font-size: 11.5px;
+}
+.cl-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.cl-badge.live {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+}
+.cl-badge.cancelled {
+  background: rgba(255, 255, 255, 0.06);
+  color: #9ca3af;
+}
+.cl-mini {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-family: inherit;
+}
+.cl-mini:hover:not(:disabled) {
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.cl-mini:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.cl-link {
+  font-size: 11px;
+  color: #818cf8;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.cl-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+.cl-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  padding: 6px 0;
+}
+.cl-tomorrow {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  color: #8b90a0;
+}

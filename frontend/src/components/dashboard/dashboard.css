@@ -272,3 +272,26 @@
   text-transform: uppercase;
   color: #6b7280;
 }
+
+/* ─── Toggle model ─── */
+.task-row.is-completed { opacity: 1; }                                   /* pills must stay readable */
+.task-row.is-completed .task-title { text-decoration: line-through; color: #9ca3af; }
+.task-row.is-busy { opacity: .6; pointer-events: none; }
+
+.task-check {                                                            /* it is a <button> now */
+  background: transparent; padding: 0; font-family: inherit; line-height: 1; cursor: pointer;
+}
+.task-check:hover:not(:disabled) { border-color: rgba(255,255,255,.55); transform: scale(1.06); }
+.task-check.checked:hover:not(:disabled) { background: #16a34a; border-color: #16a34a; }
+.task-check:disabled { cursor: not-allowed; }
+
+.task-rate-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.task-rate-label { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #8b90a0; }
+.task-rate-hint { font-size: 11.5px; color: #6b7280; font-style: italic; }
+
+.hitlist-alldone {
+  padding: 18px 20px; border-radius: 12px; font-size: 14px; color: #d1d5db;
+  background: rgba(34,197,94,.06); border: 1px solid rgba(34,197,94,.22);
+}
+.section-note { font-weight: 500; letter-spacing: 0; text-transform: none; color: #6b7280; }
+

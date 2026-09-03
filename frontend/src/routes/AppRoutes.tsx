@@ -6,6 +6,7 @@ import AppLayout from '../components/layout/AppLayout';
 import Dashboard from '../pages/Dashboard';
 import RoadmapPage from '../pages/RoadmapPage';
 import ProgressPage from '../pages/ProgressPage';
+import StudySlotsPage from '../pages/StudySlotsPage';
 import GeneratePlanPage from '../pages/GeneratePlanPage';
 
 /**
@@ -31,10 +32,7 @@ export default function AppRoutes() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/progress" element={<ProgressPage />} />
-          <Route
-            path="/study-slots"
-            element={<PlaceholderPage title="Study Slots" />}
-          />
+          <Route path="/study-slots" element={<StudySlotsPage />} />
           <Route path="/generate-plan" element={<GeneratePlanPage />} />
           <Route
             path="/settings"

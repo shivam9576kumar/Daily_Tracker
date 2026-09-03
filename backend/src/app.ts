@@ -17,6 +17,7 @@ import notificationRoutes from './routes/notificationRoutes';
 import debugRoutes from './routes/debugRoutes';
 import planRoutes from './routes/planRoutes';
 import progressRoutes from './routes/progressRoutes';
+import classesRoutes from './routes/classesRoutes';
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/debug', debugRoutes);
 app.use('/api/plans', planRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/classes', classesRoutes);
 
 // ─── 404 Handler ───
 app.use((_req, res) => {

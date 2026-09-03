@@ -1,84 +1,31 @@
-/* ─── Rating buttons ─── */
-.rating-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
+/* ─── Rating pills (toggle) ─── */
+.rating-pills { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.rating-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: #9ca3af; font-family: inherit; font-weight: 700;
+  cursor: pointer; transition: all .15s ease;
 }
+.rating-pills-sm .rating-pill { padding: 3px 9px; font-size: 11px; }
+.rating-pills-md .rating-pill { padding: 8px 14px; font-size: 13px; }
+.rating-pill:disabled { opacity: .5; cursor: not-allowed; }
+.rating-pill:hover:not(:disabled) { color: #e5e7eb; border-color: rgba(255,255,255,0.25); }
+.rating-pill.easy.is-active   { background: rgba(34,197,94,.22);  border-color: #22c55e; color: #86efac; box-shadow: 0 0 0 3px rgba(34,197,94,.15); }
+.rating-pill.medium.is-active { background: rgba(251,191,36,.22); border-color: #fbbf24; color: #fde68a; box-shadow: 0 0 0 3px rgba(251,191,36,.15); }
+.rating-pill.hard.is-active   { background: rgba(239,68,68,.22);  border-color: #ef4444; color: #fca5a5; box-shadow: 0 0 0 3px rgba(239,68,68,.15); }
+.rating-pill-emoji { font-size: 1.05em; line-height: 1; }
 
-.rating-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 15px 18px;
-  border-radius: 12px;
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  transition: all 0.16s ease;
-  width: 100%;
+/* ─── Drawer: revise box ─── */
+.revise-box {
+  margin: 18px 0 6px; padding: 14px; border-radius: 12px;
+  background: rgba(168,85,247,.07); border: 1px solid rgba(168,85,247,.2);
 }
-
-.rating-btn:hover {
-  transform: translateY(-2px);
-}
-
-.rating-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.rating-btn.easy:hover {
-  border-color: #22c55e;
-  background: rgba(34, 197, 94, 0.1);
-}
-
-.rating-btn.medium:hover {
-  border-color: #fbbf24;
-  background: rgba(251, 191, 36, 0.1);
-}
-
-.rating-btn.hard:hover {
-  border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
-}
-
-.rating-btn.selected.easy {
-  border-color: #22c55e;
-  background: rgba(34, 197, 94, 0.14);
-}
-
-.rating-btn.selected.medium {
-  border-color: #fbbf24;
-  background: rgba(251, 191, 36, 0.14);
-}
-
-.rating-btn.selected.hard {
-  border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.14);
-}
-
-.rating-emoji {
-  font-size: 24px;
-}
-
-.rating-text {
-  flex: 1;
-}
-
-.rating-label {
-  font-size: 15px;
-  font-weight: 700;
-  color: #f3f4f6;
-  margin-bottom: 3px;
-}
-
-.rating-desc {
-  font-size: 12px;
-  color: #9ca3af;
-}
+.revise-box .drawer-section-title { margin: 0 0 10px; }
+.revise-help { margin: 10px 0 0; font-size: 12.5px; color: #9ca3af; line-height: 1.5; }
+.revise-help strong { color: #d8b4fe; text-transform: capitalize; }
+.solve-first-note { margin-top: 14px; font-size: 12.5px; color: #6b7280; font-style: italic; }
 
 /* ─── Task drawer ─── */
 .drawer-title {
@@ -132,7 +79,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 13px;
-  border-radius: 9px;
+  border-radius: 99px;
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.07);
   font-size: 13px;
@@ -253,5 +200,3 @@
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
-
-

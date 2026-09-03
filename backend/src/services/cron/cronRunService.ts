@@ -2,8 +2,11 @@ import { Prisma } from '@prisma/client';
 import prisma from '../../config/database';
 import logger from '../../utils/logger';
 
+import { env } from '../../config/env';
+import { dateKeyInTz } from '../../utils/dateKeys';
+
 function todayKey() {
-  return new Date().toISOString().split('T')[0];
+  return dateKeyInTz(new Date(), env.DEFAULT_TIMEZONE);
 }
 
 export const cronRunService = {

@@ -26,10 +26,32 @@
 
 .plan-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
   margin-bottom: 24px;
 }
+
+/* ─── Revisions on the roadmap ─── */
+.roadmap-task.is-revision {
+  border-left: 3px solid rgba(168, 85, 247, 0.55);
+}
+.roadmap-task.is-revision .rt-title { color: #e9d5ff; }
+
+.week-rev-hint {
+  margin-left: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #d8b4fe;
+  background: rgba(168, 85, 247, 0.14);
+  padding: 2px 7px;
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
+.plan-stat-sub { font-size: 11.5px; color: #8b90a0; margin-top: 4px; }
+
 
 .plan-stat {
   background: rgba(255, 255, 255, 0.035);

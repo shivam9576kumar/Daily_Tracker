@@ -3,7 +3,6 @@ import { loadQuestionBank } from './questionBankLoader';
 import { calculateDailyCapacities, BusyDayInput } from './capacityCalculator';
 import { scheduleQuestions, SchedulerResult } from './weightedScheduler';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import logger from '../../utils/logger';
 
 export interface GeneratePlanInput {
   name?: string;
@@ -24,7 +23,9 @@ export const planGenerationService = {
   /**
    * Preview a generated plan without writing to database.
    */
-  async previewPlan(input: GeneratePlanInput): Promise<SchedulerResult> {
+  async previewPlan(
+    input: GeneratePlanInput
+  ): Promise<SchedulerResult> {
     const {
       source = 'neetcode150',
       startDate = new Date().toISOString().split('T')[0],
@@ -76,7 +77,8 @@ export const planGenerationService = {
 
     if (!preview.valid) {
       throw new ValidationError(
-        preview.errors.join(' ') || 'Plan schedule is invalid. Please adjust duration or daily load.'
+        preview.errors.join(' ') ||
+          'Plan schedule is invalid. Please adjust duration or daily load.'
       );
     }
 
@@ -93,52 +95,49 @@ export const planGenerationService = {
       );
     }
 
-    const planName = input.name?.trim() || `NeetCode 150 - ${input.durationDays} Day Plan`;
+    const planName =
+      input.name?.trim() || `NeetCode 150 - ${input.durationDays} Day Plan`;
     const startDate = new Date(`${preview.summary.startDate}T00:00:00.000Z`);
     const endDate = new Date(`${preview.summary.endDate}T23:59:59.999Z`);
 
     const result = await prisma.$transaction(
       async (tx) => {
-        // Archive existing active plans if requested
+        // 1. Archive existing active plan if requested
         if (existingActive && input.archiveExisting) {
-          await tx.plan.updateMany({
-            where: {
-              userId,
-              status: 'active',
-            },
-            data: {
-              status: 'archived',
-            },
+          await tx.plan.update({
+            where: { id: existingActive.id },
+            data: { status: 'archived' },
           });
         }
 
-        // Create Plan
+        // 2. Create the new Plan
         const plan = await tx.plan.create({
           data: {
             userId,
             name: planName,
-            source: input.source,
+            source: input.source || 'neetcode150',
             startDate,
             endDate,
             status: 'active',
-            weekdayCapacity: Math.round(input.weekdayLoad),
-            weekendCapacity: Math.round(input.weekendLoad),
+            weekdayCapacity: Math.round(preview.summary.weekdayLoad),
+            weekendCapacity: Math.round(preview.summary.weekendLoad),
           },
         });
 
-        // Flatten all scheduled questions into Task rows for batch insertion
-        const tasksData = [];
+        // 3. Batch insert tasks
+        const tasksData: any[] = [];
         for (const day of preview.days) {
-          for (const sq of day.questions) {
-            const scheduledDate = new Date(`${sq.scheduledDate}T00:00:00.000Z`);
+          const scheduledDate = new Date(`${day.date}T00:00:00.000Z`);
+
+          for (const q of day.questions) {
             tasksData.push({
               userId,
               planId: plan.id,
-              title: sq.question.title,
-              topic: sq.question.topic,
-              difficulty: sq.question.difficulty,
+              title: q.question.title,
+              topic: q.question.topic,
+              difficulty: q.question.difficulty,
               platform: 'leetcode',
-              problemUrl: sq.question.url,
+              problemUrl: q.question.url || null,
               taskType: 'new',
               status: 'pending',
               scheduledDate,
@@ -151,10 +150,6 @@ export const planGenerationService = {
             data: tasksData,
           });
         }
-
-        logger.info(
-          `✅ Created Plan "${plan.name}" (ID: ${plan.id}) with ${tasksData.length} tasks for user ${userId}`
-        );
 
         return {
           plan,
@@ -207,11 +202,11 @@ export const planGenerationService = {
       throw new NotFoundError('Plan');
     }
 
-    await prisma.plan.update({
+    const updated = await prisma.plan.update({
       where: { id: planId },
       data: { status: 'archived' },
     });
 
-    return { message: 'Plan archived successfully' };
+    return updated;
   },
 };

@@ -27,6 +27,13 @@ export const env = {
 
   // Gemini AI
   GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
+  GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-flash-latest',
+  GEMINI_MODEL_FALLBACKS: (
+    process.env.GEMINI_MODEL_FALLBACKS || 'gemini-3.6-flash,gemini-2.5-flash'
+  )
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean),
 
   // CORS
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',

@@ -211,35 +211,11 @@ Return JSON in this shape:
 }`;
 
     try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: 'user',
-                parts: [
-                  { text: `${systemInstruction}\n\nStudent prompt: "${prompt}"` },
-                ],
-              },
-            ],
-            generationConfig: {
-              temperature: 0.1,
-              responseMimeType: 'application/json',
-            },
-          }),
-        }
+      const { geminiGenerate } = await import('../../utils/geminiClient');
+      const rawText = await geminiGenerate(
+        { contents: [{ role: 'user', parts: [{ text: `${systemInstruction}\n\nStudent prompt: "${prompt}"` }] }] },
+        { temperature: 0.1, responseMimeType: 'application/json' }
       );
-
-      if (!response.ok) {
-        logger.warn(`Gemini API returned status ${response.status}, falling back to heuristic parser`);
-        return heuristicParse(prompt);
-      }
-
-      const data: any = await response.json();
-      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
       if (!rawText) {
         return heuristicParse(prompt);

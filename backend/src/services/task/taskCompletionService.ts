@@ -7,16 +7,14 @@ import { calculateCoins } from '../../config/rewards';
 import logger from '../../utils/logger';
 
 type RatingKey = 'easy' | 'medium' | 'hard';
-
 const VALID_RATINGS: RatingKey[] = ['easy', 'medium', 'hard'];
 
-function validateRating(rating: string): RatingKey {
-  if (!VALID_RATINGS.includes(rating as RatingKey)) {
-    throw new ValidationError(
-      `Invalid rating. Must be one of: ${VALID_RATINGS.join(', ')}`
-    );
-  }
+/* ───────────────────────── helpers ───────────────────────── */
 
+function validateRating(rating: unknown): RatingKey {
+  if (!VALID_RATINGS.includes(rating as RatingKey)) {
+    throw new ValidationError(`Invalid rating. Must be one of: ${VALID_RATINGS.join(', ')}`);
+  }
   return rating as RatingKey;
 }
 
@@ -26,271 +24,153 @@ function startOfDay(d: Date): Date {
   return x;
 }
 
-function isFutureDate(scheduledDate: Date): boolean {
-  const today = startOfDay(new Date());
-  const scheduled = startOfDay(new Date(scheduledDate));
-  return scheduled.getTime() > today.getTime();
-}
-
-function dateKey(date: Date) {
-  return date.toISOString().split('T')[0];
-}
-
-function addDaysAtStartOfDay(base: Date, days: number) {
+function addDaysAtStartOfDay(base: Date, days: number): Date {
   const d = new Date(base);
   d.setDate(d.getDate() + days);
   d.setHours(0, 0, 0, 0);
   return d;
 }
 
-async function adjustCoinsTx(
-  tx: Prisma.TransactionClient,
-  userId: string,
-  amount: number
-) {
-  if (amount === 0) return;
+/** 'YYYY-MM-DD' from LOCAL parts — the same grouping the Roadmap uses. */
+function localDateKey(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
 
+function isFutureDay(scheduledDate: Date): boolean {
+  return startOfDay(new Date(scheduledDate)).getTime() > startOfDay(new Date()).getTime();
+}
+
+function fmtDay(d: Date): string {
+  return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+/**
+ * Where a task goes when it is un-solved.
+ * If its scheduled day already passed it goes straight to BACKLOG, so it is visible on
+ * today's hitlist immediately instead of disappearing until the midnight cron.
+ */
+function revertedStatusFields(scheduledDate: Date) {
+  const isPast = startOfDay(new Date(scheduledDate)).getTime() < startOfDay(new Date()).getTime();
+  return isPast
+    ? { status: 'backlog', isBacklog: true, backlogSince: new Date(), isExpired: false }
+    : { status: 'pending', isBacklog: false, backlogSince: null, isExpired: false };
+}
+
+/* ───────────────────── transactional helpers ───────────────────── */
+
+async function adjustCoinsTx(tx: Prisma.TransactionClient, userId: string, amount: number) {
+  if (amount === 0) return;
   if (amount > 0) {
-    await tx.user.update({
-      where: { id: userId },
-      data: {
-        coins: {
-          increment: amount,
-        },
-      },
-    });
+    await tx.user.update({ where: { id: userId }, data: { coins: { increment: amount } } });
     return;
   }
-
-  const user = await tx.user.findUnique({
-    where: { id: userId },
-    select: { coins: true },
-  });
-
-  const nextCoins = Math.max(0, (user?.coins || 0) + amount);
-
-  await tx.user.update({
-    where: { id: userId },
-    data: {
-      coins: nextCoins,
-    },
-  });
+  const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+  await tx.user.update({ where: { id: userId }, data: { coins: Math.max(0, (user?.coins ?? 0) + amount) } });
 }
 
 /**
- * Delete all unfinished revision tasks and revision records for a parent.
- *
- * Completed revisions are intentionally preserved.
+ * Delete every UNFINISHED revision (pending/backlog) of a parent — the revision tasks AND
+ * their revision records. Completed revisions are always preserved.
  */
-async function deleteUnfinishedRevisionsTx(
-  tx: Prisma.TransactionClient,
-  parentTaskId: string
-) {
-  const revisionTasks = await tx.task.findMany({
-    where: {
-      parentTaskId,
-      taskType: 'revision',
-      status: {
-        not: 'completed',
-      },
-    },
-    select: {
-      id: true,
-    },
+async function deleteUnfinishedRevisionsTx(tx: Prisma.TransactionClient, parentTaskId: string) {
+  const unfinished = await tx.task.findMany({
+    where: { parentTaskId, taskType: 'revision', status: { not: 'completed' } },
+    select: { id: true },
   });
-
-  const ids = revisionTasks.map((t) => t.id);
-
-  if (ids.length > 0) {
-    await tx.task.deleteMany({
-      where: {
-        id: {
-          in: ids,
-        },
-      },
-    });
-  }
-
-  const deletedRecords = await tx.revision.deleteMany({
-    where: {
-      parentTaskId,
-      status: {
-        not: 'completed',
-      },
-    },
-  });
-
-  return {
-    deletedRevisionTasks: ids.length,
-    deletedRevisionRecords: deletedRecords.count,
-  };
+  const ids = unfinished.map((t) => t.id);
+  if (ids.length) await tx.task.deleteMany({ where: { id: { in: ids } } });
+  const records = await tx.revision.deleteMany({ where: { parentTaskId, status: { not: 'completed' } } });
+  return { deletedRevisionTasks: ids.length, deletedRevisionRecords: records.count };
 }
 
 /**
- * Create revision tasks and revision records safely.
- *
- * It prevents duplicate unfinished revisions for the same scheduled date.
+ * Create revision tasks + records for a rating.
+ *  - offsets from REVISION_RULES[rating], counted from `anchorDate`
+ *  - never two unfinished revisions on the same calendar day
+ *  - numbering continues after any completed revisions that were kept
  */
 async function createRevisionGraphTx(
   tx: Prisma.TransactionClient,
-  params: {
-    parentTaskId: string;
-    userId: string;
-    rating: RatingKey;
-    completionDate: Date;
-  }
+  p: { parentTaskId: string; userId: string; rating: RatingKey; anchorDate: Date }
 ) {
-  const { parentTaskId, userId, rating, completionDate } = params;
+  const parent = await tx.task.findUnique({ where: { id: p.parentTaskId } });
+  if (!parent) throw new NotFoundError('Parent task');
+  if (parent.taskType !== 'new') throw new ValidationError('Only new problems can have revisions');
 
-  const parentTask = await tx.task.findUnique({
-    where: { id: parentTaskId },
+  const offsets = (REVISION_RULES[p.rating] ?? []) as readonly number[];
+  if (offsets.length === 0) return { created: 0 };
+
+  const existing = await tx.revision.findMany({
+    where: { parentTaskId: p.parentTaskId },
+    select: { scheduledDate: true, revisionNumber: true },
   });
-
-  if (!parentTask) {
-    throw new NotFoundError('Parent task');
-  }
-
-  if (parentTask.taskType !== 'new') {
-    throw new ValidationError('Only new tasks can generate revisions');
-  }
-
-  const dayOffsets = REVISION_RULES[rating];
-
-  if (!dayOffsets) {
-    return {
-      created: 0,
-    };
-  }
-
-  const existingRevisions = await tx.revision.findMany({
-    where: {
-      parentTaskId,
-    },
-    select: {
-      scheduledDate: true,
-      revisionNumber: true,
-    },
-  });
-
-  const existingDateKeys = new Set(
-    existingRevisions.map((r) => dateKey(r.scheduledDate))
-  );
-
-  let nextRevisionNumber =
-    existingRevisions.length === 0
-      ? 1
-      : Math.max(...existingRevisions.map((r) => r.revisionNumber)) + 1;
+  const takenDays = new Set(existing.map((r) => localDateKey(r.scheduledDate)));
+  let nextNumber = existing.length ? Math.max(...existing.map((r) => r.revisionNumber)) + 1 : 1;
 
   let created = 0;
+  for (const offset of offsets) {
+    const scheduledDate = addDaysAtStartOfDay(p.anchorDate, offset);
+    const key = localDateKey(scheduledDate);
+    if (takenDays.has(key)) continue;
 
-  for (const offset of dayOffsets) {
-    const scheduledDate = addDaysAtStartOfDay(completionDate, offset);
-    const key = dateKey(scheduledDate);
-
-    if (existingDateKeys.has(key)) {
-      logger.info(
-        `Skipping duplicate revision for ${parentTask.title} on ${key}`
-      );
-      continue;
-    }
-
-    const revisionNumber = nextRevisionNumber++;
-
-    const revisionTask = await tx.task.create({
+    const revisionNumber = nextNumber++;
+    const revTask = await tx.task.create({
       data: {
-        userId,
-        planId: parentTask.planId,
-        parentTaskId,
-        title: parentTask.title,
-        topic: parentTask.topic,
-        difficulty: parentTask.difficulty,
-        platform: parentTask.platform,
-        problemUrl: parentTask.problemUrl,
+        userId: p.userId,
+        planId: parent.planId,
+        parentTaskId: parent.id,
+        title: parent.title,
+        topic: parent.topic,
+        difficulty: parent.difficulty,
+        platform: parent.platform,
+        problemUrl: parent.problemUrl,
         taskType: 'revision',
         status: 'pending',
         scheduledDate,
-        originalSolveDate: completionDate,
+        originalSolveDate: parent.completedAt ?? p.anchorDate,
         revisionNumber,
-        notes: parentTask.notes,
+        notes: parent.notes,
       },
     });
-
     await tx.revision.create({
-      data: {
-        parentTaskId,
-        revisionTaskId: revisionTask.id,
-        revisionNumber,
-        scheduledDate,
-        status: 'pending',
-      },
+      data: { parentTaskId: parent.id, revisionTaskId: revTask.id, revisionNumber, scheduledDate, status: 'pending' },
     });
-
-    existingDateKeys.add(key);
+    takenDays.add(key);
     created++;
   }
-
-  return {
-    created,
-  };
+  return { created };
 }
+
+/* ───────────────────────── the service ───────────────────────── */
 
 export const taskCompletionService = {
   /**
-   * Complete a task.
-   *
-   * New task:
-   * - requires rating
-   * - generates revisions
-   * - awards coins based on rating
-   *
-   * Revision task:
-   * - must NOT receive rating
-   * - updates matching revision record
-   * - awards fixed revision coins
+   * SOLVE.
+   * Rating is OPTIONAL for new problems (rate later with rateTask) and FORBIDDEN for revisions.
+   * Coins are awarded by the task's own difficulty, never by rating.
    */
-  async completeTask(taskId: string, userId: string, rating?: string) {
+  async completeTask(taskId: string, userId: string, rating?: string | null) {
     const task = await taskRepository.getTaskById(taskId, userId);
     if (!task) throw new NotFoundError('Task');
+    if (task.status === 'completed') throw new ValidationError('Task is already marked as solved');
 
-    if (task.status === 'completed') {
-      throw new ValidationError('Task is already completed');
-    }
-
-    // ─── FUTURE LOCK RULE ───
-    const taskIsBacklog = task.isBacklog || task.status === 'backlog';
-    const taskIsExpired = task.isExpired || task.status === 'expired';
-
-    if (!taskIsBacklog && !taskIsExpired && isFutureDate(task.scheduledDate)) {
-      throw new ValidationError(
-        `Cannot complete this task yet. It is scheduled for ${new Date(
-          task.scheduledDate
-        ).toLocaleDateString('en-IN', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
-        })}. It will appear in your dashboard on that day.`
-      );
-    }
-
-    const isNewTask = task.taskType === 'new';
-    const isRevisionTask = task.taskType === 'revision';
+    const isNew = task.taskType === 'new';
+    const isRevision = task.taskType === 'revision';
 
     let validRating: RatingKey | undefined;
-
-    if (isNewTask) {
-      if (!rating) {
-        throw new ValidationError('Rating is required for new tasks');
-      }
-
+    if (rating !== undefined && rating !== null && rating !== '') {
+      if (!isNew) throw new ValidationError('Only new problems can be rated');
       validRating = validateRating(rating);
     }
 
-    if (isRevisionTask && rating) {
-      throw new ValidationError('Revision tasks cannot be rated');
+    // Future lock: a task can only be solved on/after its scheduled day (backlog is past by definition)
+    const isOpenBacklog = task.isBacklog || task.status === 'backlog';
+    if (!isOpenBacklog && isFutureDay(task.scheduledDate)) {
+      throw new ValidationError(`This task is scheduled for ${fmtDay(task.scheduledDate)}. It unlocks on that day.`);
     }
 
     const now = new Date();
-    const coins = calculateCoins(task.taskType, validRating ?? task.rating);
+    const coins = calculateCoins(task.taskType, task.difficulty);
 
     await prisma.$transaction(async (tx) => {
       await tx.task.update({
@@ -298,216 +178,116 @@ export const taskCompletionService = {
         data: {
           status: 'completed',
           completedAt: now,
-          rating: isNewTask ? validRating : task.rating,
           isBacklog: false,
           backlogSince: null,
           isExpired: false,
-          originalSolveDate: isNewTask ? now : task.originalSolveDate,
+          ...(isNew ? { originalSolveDate: now, rating: validRating ?? null } : {}),
         },
       });
 
-      if (isNewTask && validRating) {
-        const deleted = await deleteUnfinishedRevisionsTx(tx, task.id);
-
-        if (
-          deleted.deletedRevisionTasks > 0 ||
-          deleted.deletedRevisionRecords > 0
-        ) {
-          logger.info(
-            `Cleaned old unfinished revisions for "${task.title}": ${JSON.stringify(
-              deleted
-            )}`
-          );
-        }
-
-        const result = await createRevisionGraphTx(tx, {
-          parentTaskId: task.id,
-          userId,
-          rating: validRating,
-          completionDate: now,
-        });
-
-        logger.info(
-          `Generated ${result.created} revisions for "${task.title}" (${validRating})`
-        );
+      if (isNew && validRating) {
+        await deleteUnfinishedRevisionsTx(tx, taskId);
+        const r = await createRevisionGraphTx(tx, { parentTaskId: taskId, userId, rating: validRating, anchorDate: now });
+        logger.info(`🔁 ${r.created} revisions for "${task.title}" (${validRating})`);
       }
 
-      if (isRevisionTask) {
+      if (isRevision) {
         await tx.revision.updateMany({
-          where: {
-            revisionTaskId: taskId,
-            status: {
-              not: 'completed',
-            },
-          },
-          data: {
-            status: 'completed',
-            completedAt: now,
-          },
+          where: { revisionTaskId: taskId, status: { not: 'completed' } },
+          data: { status: 'completed', completedAt: now },
         });
       }
 
       await adjustCoinsTx(tx, userId, coins);
     });
 
-    logger.info(
-      `✅ Completed "${task.title}" (${task.taskType}, +${coins} coins)`
-    );
-
+    logger.info(`✅ Solved "${task.title}" (${task.taskType}/${task.difficulty ?? '-'}, +${coins} coins${validRating ? `, rated ${validRating}` : ''})`);
     return taskRepository.getTaskById(taskId, userId);
   },
 
   /**
-   * Public helper for manual regeneration if ever needed internally.
+   * RATE / RE-RATE a solved problem. Works for the first rating and for switching.
+   *  - unfinished revisions are replaced; completed ones are kept
+   *  - anchored on the LATER of solve time and now → no revision is ever created in the past
+   *  - coins are NOT touched
    */
-  async generateRevisions(
-    parentTaskId: string,
-    userId: string,
-    rating: RatingKey,
-    completionDate: Date
-  ) {
-    return prisma.$transaction(async (tx) => {
-      await deleteUnfinishedRevisionsTx(tx, parentTaskId);
-
-      return createRevisionGraphTx(tx, {
-        parentTaskId,
-        userId,
-        rating,
-        completionDate,
-      });
-    });
-  },
-
-  /**
-   * Re-rate a completed new task.
-   *
-   * Rules:
-   * - only new tasks can be re-rated
-   * - completed revisions are preserved
-   * - unfinished revisions are deleted and regenerated
-   * - coin difference is adjusted
-   */
-  async rerateTask(taskId: string, userId: string, newRating: string) {
+  async rateTask(taskId: string, userId: string, rating: string) {
     const task = await taskRepository.getTaskById(taskId, userId);
     if (!task) throw new NotFoundError('Task');
+    if (task.taskType !== 'new') throw new ValidationError('Only new problems can be rated');
+    if (task.status !== 'completed') throw new ValidationError('Mark the problem as solved before rating it');
 
-    if (task.status !== 'completed') {
-      throw new ValidationError('Can only re-rate completed tasks');
-    }
+    const validRating = validateRating(rating);
+    if (task.rating === validRating) return task; // idempotent
 
-    if (task.taskType !== 'new') {
-      throw new ValidationError('Revision tasks cannot be re-rated');
-    }
-
-    const validRating = validateRating(newRating);
-
-    const oldCoins = task.rating ? calculateCoins('new', task.rating) : 0;
-    const newCoins = calculateCoins('new', validRating);
-    const coinDelta = newCoins - oldCoins;
-
-    const completionDate = task.completedAt || new Date();
+    const solvedAt = task.completedAt ?? new Date();
+    const anchorDate = new Date(Math.max(solvedAt.getTime(), Date.now()));
 
     await prisma.$transaction(async (tx) => {
-      const deleted = await deleteUnfinishedRevisionsTx(tx, taskId);
-
-      logger.info(
-        `Re-rate cleanup for "${task.title}": ${JSON.stringify(deleted)}`
-      );
-
-      await tx.task.update({
-        where: { id: taskId },
-        data: {
-          rating: validRating,
-        },
-      });
-
-      const created = await createRevisionGraphTx(tx, {
-        parentTaskId: taskId,
-        userId,
-        rating: validRating,
-        completionDate,
-      });
-
-      await adjustCoinsTx(tx, userId, coinDelta);
-
-      logger.info(
-        `Re-rated "${task.title}" → ${validRating}, created ${created.created} revisions, coin delta ${coinDelta}`
-      );
+      const removed = await deleteUnfinishedRevisionsTx(tx, taskId);
+      await tx.task.update({ where: { id: taskId }, data: { rating: validRating } });
+      const created = await createRevisionGraphTx(tx, { parentTaskId: taskId, userId, rating: validRating, anchorDate });
+      logger.info(`⭐ "${task.title}" rated ${validRating} (was ${task.rating ?? 'unrated'}): -${removed.deletedRevisionTasks} +${created.created} revisions`);
     });
 
     return taskRepository.getTaskById(taskId, userId);
   },
 
   /**
-   * Undo completion.
-   *
-   * New parent task:
-   * - delete unfinished revisions
-   * - preserve completed revisions
-   * - refund coins
-   *
-   * Revision task:
-   * - reopen its revision record
-   * - refund revision coins
+   * UNRATE — remove the revision plan but KEEP the solve.
+   * rating → null, unfinished revisions deleted, completed revisions kept.
+   * Task stays completed: streak, heatmap, total and coins are unchanged.
+   */
+  async unrateTask(taskId: string, userId: string) {
+    const task = await taskRepository.getTaskById(taskId, userId);
+    if (!task) throw new NotFoundError('Task');
+    if (task.taskType !== 'new') throw new ValidationError('Only new problems have a rating');
+    if (task.status !== 'completed') throw new ValidationError('Task is not marked as solved');
+
+    await prisma.$transaction(async (tx) => {
+      const removed = await deleteUnfinishedRevisionsTx(tx, taskId);
+      await tx.task.update({ where: { id: taskId }, data: { rating: null } });
+      logger.info(`☆ "${task.title}" unrated (was ${task.rating ?? 'unrated'}): -${removed.deletedRevisionTasks} revisions`);
+    });
+
+    return taskRepository.getTaskById(taskId, userId);
+  },
+
+  /**
+   * UNSOLVE (undo) — one step from any state, rated or not.
+   *  new task:      unfinished revisions deleted (completed kept), rating/completedAt cleared, coins refunded
+   *  revision task: its revision record reopened, coins refunded
+   *  either:        → pending, or → backlog if its scheduled day already passed
    */
   async undoTask(taskId: string, userId: string) {
     const task = await taskRepository.getTaskById(taskId, userId);
     if (!task) throw new NotFoundError('Task');
+    if (task.status !== 'completed') throw new ValidationError('Task is not marked as solved');
 
-    if (task.status !== 'completed') {
-      throw new ValidationError('Can only undo completed tasks');
-    }
-
-    const coins = calculateCoins(task.taskType, task.rating);
+    const coins = calculateCoins(task.taskType, task.difficulty);
+    const revert = revertedStatusFields(task.scheduledDate);
+    let removed = { deletedRevisionTasks: 0, deletedRevisionRecords: 0 };
 
     await prisma.$transaction(async (tx) => {
       if (task.taskType === 'new') {
-        const deleted = await deleteUnfinishedRevisionsTx(tx, taskId);
-
-        logger.info(
-          `Undo cleanup for "${task.title}": ${JSON.stringify(deleted)}`
-        );
-
+        removed = await deleteUnfinishedRevisionsTx(tx, taskId);
         await tx.task.update({
           where: { id: taskId },
-          data: {
-            status: 'pending',
-            completedAt: null,
-            rating: null,
-            originalSolveDate: null,
-            isBacklog: false,
-            backlogSince: null,
-            isExpired: false,
-          },
+          data: { ...revert, completedAt: null, rating: null, originalSolveDate: null },
         });
       } else if (task.taskType === 'revision') {
         await tx.revision.updateMany({
-          where: {
-            revisionTaskId: taskId,
-          },
-          data: {
-            status: 'pending',
-            completedAt: null,
-          },
+          where: { revisionTaskId: taskId },
+          data: { status: 'pending', completedAt: null },
         });
-
-        await tx.task.update({
-          where: { id: taskId },
-          data: {
-            status: 'pending',
-            completedAt: null,
-            isBacklog: false,
-            backlogSince: null,
-            isExpired: false,
-          },
-        });
+        await tx.task.update({ where: { id: taskId }, data: { ...revert, completedAt: null } });
+      } else {
+        await tx.task.update({ where: { id: taskId }, data: { ...revert, completedAt: null } });
       }
-
       await adjustCoinsTx(tx, userId, -coins);
     });
 
-    logger.info(`↩️ Undid "${task.title}" (-${coins} coins)`);
-
+    logger.info(`↩️ Unsolved "${task.title}" → ${revert.status} (-${coins} coins, -${removed.deletedRevisionTasks} revisions)`);
     return taskRepository.getTaskById(taskId, userId);
   },
 };

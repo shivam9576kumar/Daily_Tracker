@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import type { Task } from '../../types';
 import RoadmapTaskRow from './RoadmapTaskRow';
+import { formatKey, todayKey } from '../../utils/dateKeys';
 import './roadmap.css';
 
-interface DayGroup {
-  dateStr: string; // YYYY-MM-DD
-  date: Date;
+export interface DayGroup {
+  dateKey: string;   // 'YYYY-MM-DD' local
   tasks: Task[];
 }
 
@@ -15,55 +15,56 @@ interface Props {
   defaultOpen?: boolean;
 }
 
-function isSameDay(a: Date, b: Date) {
-  return a.toISOString().split('T')[0] === b.toISOString().split('T')[0];
-}
+export default function WeekCard({ weekNumber, days, defaultOpen = false }: Props) {
+  const [open, setOpen] = useState(defaultOpen);
+  const today = todayKey();
 
-export default function WeekCard({ weekNumber, days, defaultOpen }: Props) {
-  const [open, setOpen] = useState(defaultOpen ?? weekNumber === 1);
-  const today = new Date();
+  const all = days.flatMap((d) => d.tasks);
+  const total = all.length;
+  const done = all.filter((t) => t.status === 'completed').length;
+  const revCount = all.filter((t) => t.taskType === 'revision').length;
+  const onlyRevisions = revCount > 0 && revCount === total;
 
-  const total = days.reduce((acc, d) => acc + d.tasks.length, 0);
-  const done = days.reduce((acc, d) => acc + d.tasks.filter(t => t.status === 'completed').length, 0);
+  const first = days[0]?.dateKey;
+  const last = days[days.length - 1]?.dateKey;
+  const short = { day: 'numeric', month: 'short' } as const;
 
   return (
     <div className="week-card">
-      <div className="week-header" onClick={() => setOpen(!open)}>
+      <div className="week-header" onClick={() => setOpen((o) => !o)}>
         <div>
-          <div className="week-title">Week {weekNumber}</div>
+          <div className="week-title">
+            Week {weekNumber}
+            {onlyRevisions && <span className="week-rev-hint">revisions only</span>}
+          </div>
           <div className="week-meta">
-            {days[0]?.date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} - {days[days.length-1]?.date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} • {done}/{total} done
+            {first && formatKey(first, short)} – {last && formatKey(last, short)} · {done}/{total} done
+            {revCount > 0 && ` · ${revCount} rev`}
           </div>
         </div>
         <span style={{ color: '#9ca3af' }}>{open ? '−' : '+'}</span>
       </div>
 
-      {open && (
-        <div>
-          {days.map((day) => {
-            const isToday = isSameDay(day.date, today);
-            const isFuture = day.date > today && !isToday;
-            const isPast = day.date < today && !isToday;
+      {open && days.map((day) => {
+        const isToday = day.dateKey === today;
+        const isFuture = day.dateKey > today;      // string compare is safe for YYYY-MM-DD
+        const isPast = day.dateKey < today;
+        const pendingPast = isPast && day.tasks.some((t) => t.status !== 'completed');
 
-            return (
-              <div key={day.dateStr} className={`day-group ${isToday ? 'is-today' : ''} ${isFuture ? 'is-future' : ''}`}>
-                <div className="day-header">
-                  <span className="day-date">
-                    {day.date.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' })}
-                  </span>
-                  {isToday && <span className="day-badge badge-today">Today</span>}
-                  {isFuture && <span className="day-badge badge-future">Locked</span>}
-                  {isPast && day.tasks.some(t => t.status !== 'completed') && <span className="day-badge badge-past">Pending</span>}
-                </div>
-
-                {day.tasks.map((task) => (
-                  <RoadmapTaskRow key={task.id} task={task} isToday={isToday} isFuture={isFuture} />
-                ))}
-              </div>
-            );
-          })}
-        </div>
-      )}
+        return (
+          <div key={day.dateKey} className={`day-group ${isToday ? 'is-today' : ''} ${isFuture ? 'is-future' : ''}`}>
+            <div className="day-header">
+              <span className="day-date">{formatKey(day.dateKey)}</span>
+              {isToday && <span className="day-badge badge-today">Today</span>}
+              {isFuture && <span className="day-badge badge-future">Locked</span>}
+              {pendingPast && <span className="day-badge badge-past">Pending</span>}
+            </div>
+            {day.tasks.map((t) => (
+              <RoadmapTaskRow key={t.id} task={t} isToday={isToday} isFuture={isFuture} />
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }

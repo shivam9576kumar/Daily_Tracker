@@ -10,13 +10,9 @@ export const taskController = {
     try {
       const user = getAuthUser(req);
       const { status, topic, taskType, planId } = req.query;
-      const tasks = await taskService.getAllTasks(user.id, {
-        status: status as string,
-        topic: topic as string,
-        taskType: taskType as string,
-        planId: planId as string,
-      });
-      sendSuccess(res, tasks);
+      sendSuccess(res, await taskService.getAllTasks(user.id, {
+        status: status as string, topic: topic as string, taskType: taskType as string, planId: planId as string,
+      }));
     } catch (err) { next(err); }
   },
 
@@ -24,9 +20,7 @@ export const taskController = {
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const id = req.params.id as string;
-      const task = await taskService.getTaskById(id, user.id);
-      sendSuccess(res, task);
+      sendSuccess(res, await taskService.getTaskById(req.params.id as string, user.id));
     } catch (err) { next(err); }
   },
 
@@ -34,8 +28,7 @@ export const taskController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const task = await taskService.createTask(user.id, req.body);
-      sendCreated(res, task);
+      sendCreated(res, await taskService.createTask(user.id, req.body));
     } catch (err) { next(err); }
   },
 
@@ -43,9 +36,7 @@ export const taskController = {
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const id = req.params.id as string;
-      const task = await taskService.updateTask(id, user.id, req.body);
-      sendSuccess(res, task);
+      sendSuccess(res, await taskService.updateTask(req.params.id as string, user.id, req.body));
     } catch (err) { next(err); }
   },
 
@@ -53,45 +44,41 @@ export const taskController = {
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const id = req.params.id as string;
-      await taskService.deleteTask(id, user.id);
+      await taskService.deleteTask(req.params.id as string, user.id);
       sendMessage(res, 'Task deleted');
     } catch (err) { next(err); }
   },
 
-  /** POST /api/tasks/:id/complete */
+  /** POST /api/tasks/:id/complete   body: { rating? }  — solve (rating optional, new problems only) */
   async complete(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const id = req.params.id as string;
-      const { rating } = req.body;
-      const task = await taskCompletionService.completeTask(
-        id, user.id, rating
-      );
-      sendSuccess(res, task);
+      const rating = req.body?.rating;
+      sendSuccess(res, await taskCompletionService.completeTask(req.params.id as string, user.id, rating));
     } catch (err) { next(err); }
   },
 
-  /** POST /api/tasks/:id/rate */
+  /** POST /api/tasks/:id/rate   body: { rating }  — rate or re-rate a solved problem */
   async rate(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const id = req.params.id as string;
-      const { rating } = req.body;
-      const task = await taskCompletionService.rerateTask(
-        id, user.id, rating
-      );
-      sendSuccess(res, task);
+      sendSuccess(res, await taskCompletionService.rateTask(req.params.id as string, user.id, req.body?.rating));
     } catch (err) { next(err); }
   },
 
-  /** POST /api/tasks/:id/undo */
+  /** POST /api/tasks/:id/unrate  — remove the revision plan, keep the solve */
+  async unrate(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = getAuthUser(req);
+      sendSuccess(res, await taskCompletionService.unrateTask(req.params.id as string, user.id));
+    } catch (err) { next(err); }
+  },
+
+  /** POST /api/tasks/:id/undo  — unsolve */
   async undo(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const id = req.params.id as string;
-      const task = await taskCompletionService.undoTask(id, user.id);
-      sendSuccess(res, task);
+      sendSuccess(res, await taskCompletionService.undoTask(req.params.id as string, user.id));
     } catch (err) { next(err); }
   },
 
@@ -99,8 +86,7 @@ export const taskController = {
   async getRevisions(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const id = req.params.id as string;
-      const task = await taskService.getTaskById(id, user.id);
+      const task = await taskService.getTaskById(req.params.id as string, user.id);
       sendSuccess(res, task.revisions || []);
     } catch (err) { next(err); }
   },

@@ -75,6 +75,18 @@ export interface CreateAssignmentPayload {
   deadline: string; // ISO or yyyy-mm-dd
 }
 
+export interface ClassRow {
+  id: string;
+  userId?: string;
+  dayOfWeek: number;
+  subject: string;
+  startTime: string; // "HH:MM"
+  endTime: string;
+  location: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface DashboardData {
   statusOverview: StatusOverview;
   vibe: Vibe;
@@ -83,6 +95,7 @@ export interface DashboardData {
     pending: Task[];
     completed: Task[];
   };
+  classes: ClassRow[];
 }
 
 export interface CreateTaskPayload {
@@ -110,30 +123,30 @@ export interface AppNotification {
   createdAt: string;
 }
 
-// ─── Plan Types ───
 export type PlanSource = 'neetcode150';
 export type PlanPace = 'relaxed' | 'moderate' | 'intensive' | 'custom';
 
 export interface BusyDayInput {
-  date: string; // YYYY-MM-DD
+  date: string;
   reason?: string;
   loadReduction: number;
 }
 
-export interface QuestionBankItem {
-  id: string;
+export interface ScheduledQuestion {
   title: string;
   topic: string;
   difficulty: Difficulty;
-  url: string;
-  order: number;
-  tags?: string[];
-}
-
-export interface ScheduledQuestion {
-  question: QuestionBankItem;
-  scheduledDate: string;
-  load: number;
+  platform?: string;
+  problemUrl?: string;
+  question?: {
+    id?: string;
+    title: string;
+    topic: string;
+    difficulty: Difficulty;
+    platform?: string;
+    problemUrl?: string;
+  };
+  load?: number;
 }
 
 export interface DaySchedule {
@@ -197,7 +210,9 @@ export interface Plan {
 
 export interface ActivePlanResponse {
   plan: Plan | null;
-  tasks: Task[];
+  tasks: Task[];       // the active plan's problems only (never revisions)
+  revisions: Task[];   // ALL revision tasks, any source, not expired, dated on/after origin
+  origin: string;      // ISO — Roadmap week 1 starts here (min of plan start, today)
 }
 
 export interface ParsedPlanSettings {
@@ -292,5 +307,3 @@ export interface ProgressOverview {
   activity: ActivityItem[];
   generatedAt: string;
 }
-
-

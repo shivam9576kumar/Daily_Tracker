@@ -18,12 +18,12 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
-  plans         Plan[]
-  tasks         Task[]
-  assignments   Assignment[]
-  notes         Note[]
-  timetables    Timetable[]
-  notifications Notification[]
+  plans          Plan[]
+  tasks          Task[]
+  assignments    Assignment[]
+  notes          Note[]
+  notifications  Notification[]
+  classSchedules ClassSchedule[]
 
   @@map("users")
 }
@@ -64,7 +64,7 @@ model Task {
   scheduledDate     DateTime  @default(now()) @map("scheduled_date")
   originalSolveDate DateTime? @map("original_solve_date")
   completedAt       DateTime? @map("completed_at")
-  rating            String?   // easy | medium | hard
+  rating            String? // easy | medium | hard
   revisionNumber    Int       @default(0) @map("revision_number")
   isBacklog         Boolean   @default(false) @map("is_backlog")
   backlogSince      DateTime? @map("backlog_since")
@@ -142,35 +142,21 @@ model Note {
   @@map("notes")
 }
 
-// ─── Timetables ───
-model Timetable {
-  id         String   @id @default(uuid())
-  userId     String   @map("user_id")
-  fileName   String   @map("file_name")
-  fileUrl    String   @map("file_url")
-  uploadedAt DateTime @default(now()) @map("uploaded_at")
-  status     String   @default("processing") // processing | parsed | error
-
-  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  classSchedules ClassSchedule[]
-
-  @@map("timetables")
-}
-
 // ─── Class Schedules ───
 model ClassSchedule {
-  id          String  @id @default(uuid())
-  timetableId String  @map("timetable_id")
-  userId      String  @map("user_id")
-  dayOfWeek   Int     @map("day_of_week") // 0=Sun, 1=Mon, ..., 6=Sat
-  subject     String
-  startTime   String  @map("start_time") // HH:MM
-  endTime     String  @map("end_time") // HH:MM
-  location    String?
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  dayOfWeek Int      @map("day_of_week") // 0=Sun .. 6=Sat
+  subject   String
+  startTime String   @map("start_time") // "HH:MM" 24h
+  endTime   String   @map("end_time") // "HH:MM" 24h
+  location  String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  timetable Timetable @relation(fields: [timetableId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId, dayOfWeek])
+  @@index([userId, dayOfWeek, startTime])
   @@map("class_schedules")
 }
 
@@ -178,7 +164,7 @@ model ClassSchedule {
 model Notification {
   id        String    @id @default(uuid())
   userId    String    @map("user_id")
-  type      String    // backlog | expired | revision | system
+  type      String // backlog | expired | revision | system
   title     String
   message   String
   metadata  Json?

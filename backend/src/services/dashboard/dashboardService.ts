@@ -1,6 +1,7 @@
 import { taskRepository } from '../../repositories/taskRepository';
 import prisma from '../../config/database';
 import { streakService } from '../progress/streakService';
+import { classesService } from '../classes/classesService';
 
 /**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
@@ -17,6 +18,7 @@ export const dashboardService = {
       streaks,
       pendingAssignments,
       user,
+      classesForWeek,
     ] = await Promise.all([
       taskRepository.getTodaysTasks(userId),
       // Total unique problems actually solved (new tasks only, not revisions)
@@ -45,14 +47,15 @@ export const dashboardService = {
         where: { id: userId },
         select: { coins: true },
       }),
+      classesService.list(userId).catch(() => []),
     ]);
 
-    // Separate pending and completed tasks
     const pendingTasks = todaysTasks.filter((t) => t.status !== 'completed');
-    const completedTasks = todaysTasks.filter((t) => t.status === 'completed');
+    const completedTasks = todaysTasks
+      .filter((t) => t.status === 'completed')
+      .sort((a, b) => (b.completedAt?.getTime() ?? 0) - (a.completedAt?.getTime() ?? 0)); // newest first
 
-    // Generate vibe
-    const vibe = getVibe(pendingTasks.length, todaysTasks);
+    const vibe = getVibe(pendingTasks.length, completedTasks.length, todaysTasks);
 
     // Color-code assignments by urgency
     const assignments = pendingAssignments.map((a) => ({
@@ -75,62 +78,38 @@ export const dashboardService = {
         pending: pendingTasks,
         completed: completedTasks,
       },
+      classes: classesForWeek,
     };
   },
 };
 
-/**
- * Generate a vibe message based on today's task load.
- */
 function getVibe(
   pendingCount: number,
-  tasks: { difficulty: string | null; taskType: string; status: string }[]
+  completedCount: number,
+  tasks: { difficulty: string | null; taskType: string; status: string; rating: string | null }[]
 ) {
   if (pendingCount === 0) {
-    const completedCount = tasks.filter(
-      (t) => t.status === 'completed'
-    ).length;
-
-    if (completedCount > 0) {
-      return {
-        emoji: '🎉',
-        message: 'All tasks completed for today. Great work!',
-        intensity: 'none' as const,
-      };
+    if (completedCount === 0) {
+      return { emoji: '🎉', message: 'All clear! No tasks today. Enjoy your day!', intensity: 'none' as const };
     }
-
+    const unrated = tasks.filter((t) => t.status === 'completed' && t.taskType === 'new' && !t.rating).length;
     return {
-      emoji: '🎉',
-      message: 'All clear! No tasks today. Enjoy your day!',
+      emoji: '🏁',
+      message: unrated > 0
+        ? `All done for today — ${completedCount} solved · ${unrated} still without a revision plan`
+        : `All done for today — ${completedCount} solved. Nice work!`,
       intensity: 'none' as const,
     };
   }
 
-  const hardCount = tasks.filter(
-    (t) => t.difficulty === 'hard' && t.status !== 'completed'
-  ).length;
-
+  const hardCount = tasks.filter((t) => t.difficulty === 'hard' && t.status !== 'completed').length;
   if (hardCount >= 3 || pendingCount >= 6) {
-    return {
-      emoji: '⚔️',
-      message: 'Grind Day! Heavy load ahead. Stay focused!',
-      intensity: 'high' as const,
-    };
+    return { emoji: '⚔️', message: 'Grind Day! Heavy load ahead. Stay focused!', intensity: 'high' as const };
   }
-
   if (pendingCount >= 3) {
-    return {
-      emoji: '💪',
-      message: 'Solid day! A good mix of challenges awaits.',
-      intensity: 'medium' as const,
-    };
+    return { emoji: '💪', message: 'Solid day! A good mix of challenges awaits.', intensity: 'medium' as const };
   }
-
-  return {
-    emoji: '🌤️',
-    message: 'Light day! Quick and easy. Keep the streak alive!',
-    intensity: 'low' as const,
-  };
+  return { emoji: '🌤️', message: 'Light day! Quick and easy. Keep the streak alive!', intensity: 'low' as const };
 }
 
 /**

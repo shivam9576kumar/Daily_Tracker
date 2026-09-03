@@ -34,38 +34,34 @@ export const taskRepository = {
   /**
    * Get today's tasks plus any backlog tasks.
    */
+  /**
+   * Today's hitlist = three things:
+   *   1. anything scheduled today (any status)
+   *   2. open backlog (overdue, not expired, not solved)
+   *   3. anything SOLVED TODAY — by completedAt — regardless of when it was scheduled.
+   *      Without (3) a backlog item vanishes the moment you solve it. (3) also makes
+   *      "Completed Today" clear itself at midnight: the window simply moves.
+   */
   async getTodaysTasks(userId: string) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const endOfToday = new Date(today);
-    endOfToday.setHours(23, 59, 59, 999);
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(start);
+    end.setHours(23, 59, 59, 999);
 
     return prisma.task.findMany({
       where: {
         userId,
+        isExpired: false,
         OR: [
-          {
-            scheduledDate: {
-              gte: today,
-              lte: endOfToday,
-            },
-            status: {
-              in: ['pending', 'completed', 'backlog'],
-            },
-            isExpired: false,
-          },
-          {
-            isBacklog: true,
-            isExpired: false,
-            status: 'backlog',
-          },
+          { scheduledDate: { gte: start, lte: end } },
+          { status: 'backlog', isBacklog: true },
+          { status: 'completed', completedAt: { gte: start, lte: end } },
         ],
       },
       orderBy: [
-        { status: 'asc' },
+        { status: 'asc' },        // backlog → completed → pending
         { isBacklog: 'desc' },
-        { taskType: 'asc' },
+        { taskType: 'asc' },      // new before revision
         { scheduledDate: 'asc' },
       ],
     });

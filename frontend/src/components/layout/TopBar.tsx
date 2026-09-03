@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', end: true },
   { to: '/roadmap', label: 'Roadmap', end: false },
   { to: '/progress', label: 'Progress', end: false },
-  { to: '/study-slots', label: 'Study Slots', end: false },
+  { to: '/study-slots', label: 'My Classes', end: false },
   { to: '/generate-plan', label: 'Generate Plan', end: false },
 ];
 

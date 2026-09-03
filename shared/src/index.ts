@@ -32,4 +32,4 @@ export type { Plan, CreatePlanInput, GeneratePlanInput, ParsedPlanInput, TopicAl
 export type { Revision } from './types/Revision';
 export type { Note, CreateNoteInput, UpdateNoteInput } from './types/Note';
 export type { HeatmapDay, TopicProgressItem, StreakInfo, ProgressSummary } from './types/Progress';
-export type { Timetable, ClassSchedule, FreeSlot } from './types/Timetable';
+export type { ClassSchedule } from './types/ClassSchedule';

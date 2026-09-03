@@ -100,17 +100,25 @@ export default function PlanPreview({ preview, onCommit, committing }: Props) {
 
             {day.questions.length > 0 ? (
               <div className="schedule-day-questions">
-                {day.questions.map((q) => (
-                  <div key={q.question.id} className="schedule-q-row">
-                    <span className="schedule-q-title">{q.question.title}</span>
-                    <div className="schedule-q-meta">
-                      <span className="tag tag-topic">{q.question.topic}</span>
-                      <span className={`tag tag-${q.question.difficulty}`}>
-                        {q.question.difficulty} ({q.load})
-                      </span>
+                {day.questions.map((q, idx) => {
+                  const title = q.question?.title ?? q.title;
+                  const topic = q.question?.topic ?? q.topic;
+                  const difficulty = q.question?.difficulty ?? q.difficulty;
+                  const load = q.load ?? (difficulty === 'easy' ? 0.5 : difficulty === 'hard' ? 1.5 : 1.0);
+                  const key = q.question?.id ?? `${title}-${idx}`;
+
+                  return (
+                    <div key={key} className="schedule-q-row">
+                      <span className="schedule-q-title">{title}</span>
+                      <div className="schedule-q-meta">
+                        <span className="tag tag-topic">{topic}</span>
+                        <span className={`tag tag-${difficulty}`}>
+                          {difficulty} ({load})
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div style={{ fontSize: 12.5, color: '#6b7280', fontStyle: 'italic' }}>

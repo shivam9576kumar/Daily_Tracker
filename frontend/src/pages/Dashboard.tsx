@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDashboardStore } from '../store/dashboardStore';
+import { useTaskActions } from '../hooks/useTaskActions';
 import StatusOverview from '../components/dashboard/StatusOverview';
 import VibeBanner from '../components/dashboard/VibeBanner';
-import PendingAssignments from '../components/assignments/PendingAssignments';
 import TodaysHitlist from '../components/dashboard/TodaysHitlist';
+import PendingAssignments from '../components/assignments/PendingAssignments';
+import TodayClassStrip from '../components/classes/TodayClassStrip';
 import TaskDrawer from '../components/task/TaskDrawer';
 import AddTaskModal from '../components/task/AddTaskModal';
 import Spinner from '../components/common/Spinner';
@@ -20,7 +22,9 @@ export default function Dashboard() {
     fetch();
   }, [fetch]);
 
-  const refresh = () => fetch(true);
+  // Silent refresh: no spinner, just new data
+  const refresh = useCallback(() => fetch(true), [fetch]);
+  const actions = useTaskActions(refresh);
 
   if (loading && !data) {
     return (
@@ -48,16 +52,24 @@ export default function Dashboard() {
     <div className="dashboard">
       <StatusOverview data={data.statusOverview} />
       <VibeBanner vibe={data.vibe} />
+      {data.classes && <TodayClassStrip classes={data.classes} />}
+
       <PendingAssignments
         pending={data.pendingAssignments || []}
         onChanged={refresh}
       />
+
       <TodaysHitlist
         pending={data.todaysHitlist.pending}
         completed={data.todaysHitlist.completed}
-        onTaskClick={(t: Task) => setSelectedTaskId(t.id)}
+        busyId={actions.busyId}
+        onOpen={(t: Task) => setSelectedTaskId(t.id)}
         onAddTask={() => setAddOpen(true)}
+        onToggleSolved={actions.toggleSolved}
+        onRate={actions.rate}
+        onUnrate={actions.unrate}
       />
+
       <TaskDrawer
         taskId={selectedTaskId}
         onClose={() => setSelectedTaskId(null)}
