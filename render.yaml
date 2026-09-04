@@ -3,7 +3,7 @@ services:
     name: dsa-tracker-app
     runtime: node
     plan: free
-    buildCommand: npm run render-build
+    buildCommand: npm install && npm run render-build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
