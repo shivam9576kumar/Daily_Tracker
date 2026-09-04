@@ -23,4 +23,3 @@ databases:
   - name: dsa-tracker-db
     plan: free
     databaseName: daily_tracker
-    user: postgres
