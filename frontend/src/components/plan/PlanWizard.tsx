@@ -24,6 +24,7 @@ import type {
   BusyDayInput,
   TopicQuota,
   AIDraft,
+  ScheduleMode,
 } from '../../types';
 import './plan.css';
 
@@ -45,6 +46,8 @@ export default function PlanWizard() {
   const [weekdayLoad, setWeekdayLoad] = useState(2.0);
   const [weekendLoad, setWeekendLoad] = useState(3.0);
   const [bufferDay, setBufferDay] = useState(0);
+  const [scheduleMode, setScheduleMode] = useState<ScheduleMode>('balanced');
+  const [orderedTopics, setOrderedTopics] = useState<string[]>([]);
   const [topicQuotas, setTopicQuotas] = useState<TopicQuota[]>([]);
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
   const [avoidTopics, setAvoidTopics] = useState<string[]>([]);
@@ -58,6 +61,21 @@ export default function PlanWizard() {
     setPreviewData(null);
     setPreviewPayload(null);
   };
+
+  function buildTopicPayload() {
+    if (scheduleMode === 'sequential' && orderedTopics.length > 0) {
+      return {
+        scheduleMode: 'sequential' as const,
+        topicQuotas: orderedTopics.map((t) => ({ topic: t, count: 9999, all: true })),
+        focusTopics: undefined,
+      };
+    }
+    return {
+      scheduleMode: 'balanced' as const,
+      topicQuotas: topicQuotas.length > 0 ? topicQuotas : undefined,
+      focusTopics: scheduleMode === 'balanced' ? focusTopics : undefined,
+    };
+  }
 
   const handleAiParse = async (prompt: string) => {
     setAiLoading(true);
@@ -85,6 +103,7 @@ export default function PlanWizard() {
   const handleGeneratePreview = async (overridePayload?: GeneratePlanPayload) => {
     setPreviewLoading(true);
     try {
+      const topicPayload = buildTopicPayload();
       const payload: GeneratePlanPayload = overridePayload || {
         source,
         startDate,
@@ -93,10 +112,9 @@ export default function PlanWizard() {
         weekdayLoad,
         weekendLoad,
         bufferDay,
-        topicQuotas: topicQuotas.length > 0 ? topicQuotas : undefined,
-        focusTopics: topicQuotas.length > 0 ? undefined : focusTopics,
         avoidTopics,
         busyDays,
+        ...topicPayload,
       };
 
       if (overridePayload) {
@@ -106,7 +124,13 @@ export default function PlanWizard() {
         if (overridePayload.pace) setPace(overridePayload.pace);
         setWeekdayLoad(overridePayload.weekdayLoad);
         setWeekendLoad(overridePayload.weekendLoad);
-        if (overridePayload.topicQuotas) setTopicQuotas(overridePayload.topicQuotas);
+        if (overridePayload.scheduleMode) setScheduleMode(overridePayload.scheduleMode);
+        if (overridePayload.topicQuotas) {
+          setTopicQuotas(overridePayload.topicQuotas);
+          if (overridePayload.scheduleMode === 'sequential' || overridePayload.topicQuotas.some((q) => q.all)) {
+            setOrderedTopics(overridePayload.topicQuotas.map((q) => q.topic));
+          }
+        }
         if (overridePayload.focusTopics) setFocusTopics(overridePayload.focusTopics);
         if (overridePayload.avoidTopics) setAvoidTopics(overridePayload.avoidTopics);
         if (overridePayload.busyDays) setBusyDays(overridePayload.busyDays);
@@ -147,6 +171,14 @@ export default function PlanWizard() {
     setFocusTopics(draft.focusTopics || []);
     setAvoidTopics(draft.avoidTopics || []);
     setTopicQuotas(draft.topicQuotas || []);
+    if (draft.scheduleMode) {
+      setScheduleMode(draft.scheduleMode);
+    } else if (draft.topicQuotas?.some((q) => q.all)) {
+      setScheduleMode('sequential');
+    }
+    if (draft.topicQuotas?.length && (draft.scheduleMode === 'sequential' || draft.topicQuotas.some((q) => q.all))) {
+      setOrderedTopics(draft.topicQuotas.map((q) => q.topic));
+    }
     setBusyDays(draft.busyDays || []);
     if (typeof draft.bufferDay === 'number') setBufferDay(draft.bufferDay);
     setMode('manual');
@@ -276,9 +308,19 @@ export default function PlanWizard() {
           />
 
           <StepTopicPreferences
+            scheduleMode={scheduleMode}
+            orderedTopics={orderedTopics}
             focusTopics={focusTopics}
             avoidTopics={avoidTopics}
-            onChange={(f, a) => {
+            onModeChange={(m) => {
+              setScheduleMode(m);
+              clearPreview();
+            }}
+            onOrderedTopicsChange={(topics) => {
+              setOrderedTopics(topics);
+              clearPreview();
+            }}
+            onFocusAvoidChange={(f, a) => {
               setFocusTopics(f);
               setAvoidTopics(a);
               clearPreview();

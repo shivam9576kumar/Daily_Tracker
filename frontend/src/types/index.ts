@@ -180,9 +180,12 @@ export interface PlanPreviewData {
   days: DaySchedule[];
 }
 
+export type ScheduleMode = 'balanced' | 'sequential';
+
 export interface TopicQuota {
   topic: string;
   count: number;
+  all?: boolean;
 }
 
 export interface AIDraft {
@@ -197,6 +200,7 @@ export interface AIDraft {
   avoidTopics: string[] | null;
   busyDays: BusyDayInput[] | null;
   bufferDay: number | null;
+  scheduleMode?: ScheduleMode | null;
 }
 
 export type AIIntent =
@@ -245,6 +249,7 @@ export interface GeneratePlanPayload {
   busyDays?: BusyDayInput[];
   bufferDay?: number;
   archiveExisting?: boolean;
+  scheduleMode?: ScheduleMode;
 }
 
 export interface Plan {

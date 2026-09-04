@@ -22,10 +22,13 @@ Preparing for technical interviews and mastering Data Structures & Algorithms re
 - **Supported Question Banks**:
   - 🚀 **NeetCode 150 Sample** (20 essential pattern problems).
   - ⚔️ **Coder Army Sheet** (715 comprehensive DSA problems across 17 modules).
+- **Dual Scheduling Modes**:
+  - 🔄 **Balanced Mode (Default)**: Rotates and interleaves topics across days for optimal revision spread.
+  - 🎯 **Sequential Mode (New)**: Schedules topics in a strict user-defined priority order (e.g., *Finish ALL Stack $\rightarrow$ then ALL Queue $\rightarrow$ then ALL Heap*) without topic rotation.
 - **Flexible Pacing**: Select **Relaxed** (1.5–2.5 load/day), **Moderate** (2.0–3.0 load/day), or **Intensive** (3.0–4.5 load/day).
-- **Strict Topic Filtering**: Focus on specific topics (e.g. *Stack, Queue, Heap*) to generate topic-focused sub-plans.
+- **Ordered Topic Priorities & Filtering**: Drag/reorder topic cards in Step 3 to set exact sequential priorities, or select focus/avoid topics.
 - **Exam & Busy Day Load Reduction**: Specify exam dates or heavy days to automatically scale down scheduled study load.
-- **AI Prompt Assist**: Type prompts like *"30 days plan from Coder Army Sheet focusing on Stack, Queue, and Heap"* and let Gemini AI configure the settings.
+- **AI Prompt Assist**: Type prompts like *"30 days plan from Coder Army Sheet finish all Stack then all Queue"* and let Gemini AI configure the settings.
 
 ### 🔄 2. Solve $\rightarrow$ Rate Toggle & 4-Stage Revisions
 - **Solve Checkbox**: Mark a problem as solved (`status: completed`). Earns +10 base coins and updates streak.

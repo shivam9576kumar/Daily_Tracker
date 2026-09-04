@@ -4,7 +4,7 @@ import logger from '../../utils/logger';
 import { loadQuestionBank, getAvailableTopics } from '../plan/questionBankLoader';
 import { todayKey } from '../../utils/dateKeys';
 
-export interface TopicQuota { topic: string; count: number; }
+export interface TopicQuota { topic: string; count: number; all?: boolean; }
 export interface BusyDayInput { date: string; reason?: string; loadReduction: number; }
 
 export interface AIDraft {
@@ -19,6 +19,7 @@ export interface AIDraft {
   avoidTopics?: string[] | null;
   busyDays?: BusyDayInput[] | null;
   bufferDay?: number | null;
+  scheduleMode?: 'balanced' | 'sequential' | null;
 }
 
 export type AIIntent =
@@ -353,11 +354,12 @@ function sanitizePatch(raw: any, todayKeyStr: string = ''): Partial<AIDraft> {
   if (typeof raw.weekendLoad === 'number' && raw.weekendLoad > 0) patch.weekendLoad = raw.weekendLoad;
   if (typeof raw.pace === 'string' && ['relaxed', 'moderate', 'intensive', 'custom'].includes(raw.pace)) patch.pace = raw.pace;
   if (typeof raw.bufferDay === 'number' && raw.bufferDay >= 0 && raw.bufferDay <= 6) patch.bufferDay = raw.bufferDay;
+  if (typeof raw.scheduleMode === 'string' && ['balanced', 'sequential'].includes(raw.scheduleMode)) patch.scheduleMode = raw.scheduleMode as 'balanced' | 'sequential';
 
   if (Array.isArray(raw.topicQuotas)) {
     const q = raw.topicQuotas
-      .filter((x: any) => x && typeof x.topic === 'string' && Number.isInteger(x.count) && x.count > 0)
-      .map((x: any) => ({ topic: x.topic, count: x.count }));
+      .filter((x: any) => x && typeof x.topic === 'string' && (x.all === true || (Number.isInteger(x.count) && x.count > 0)))
+      .map((x: any) => ({ topic: x.topic, count: x.all ? 9999 : x.count, ...(x.all ? { all: true } : {}) }));
     if (q.length) patch.topicQuotas = q;
   }
   if (Array.isArray(raw.focusTopics)) {
@@ -399,6 +401,7 @@ function mergeDraft(prev: AIDraft, patch: Partial<AIDraft>): AIDraft {
     avoidTopics: patch.avoidTopics ?? prev.avoidTopics ?? null,
     busyDays: patch.busyDays ?? prev.busyDays ?? null,
     bufferDay: patch.bufferDay ?? prev.bufferDay ?? null,
+    scheduleMode: patch.scheduleMode ?? prev.scheduleMode ?? null,
   };
 }
 
@@ -435,6 +438,7 @@ PLANNING RULES
 - Quietly build a plan draft from anything the user says about studying.
 - "10 Stack, 10 Heap, 10 Queue" -> topicQuotas [{topic, count}] (exact counts).
 - "focus on Stack, Heap" (no counts) -> focusTopics.
+- "finish all Stack then all Queue" -> set scheduleMode="sequential" and topicQuotas with [{topic: "Stack", count: 9999, all: true}, {topic: "Queue", count: 9999, all: true}] in that exact order.
 - "30 questions, mostly Heap" -> propose a split and ASK to confirm before setting it.
 - "15 days", "start today", "exam on 10 Sept" -> durationDays, startDate, busyDays.
 - Only put a field in draftPatch if the user actually mentioned it this turn. Do NOT repeat unchanged fields.

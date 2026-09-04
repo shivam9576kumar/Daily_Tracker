@@ -2,9 +2,12 @@ import { QuestionBankEntry } from './questionBankLoader';
 import { DailyCapacity } from './capacityCalculator';
 import { getDifficultyLoad } from './difficultyWeights';
 
+export type ScheduleMode = 'balanced' | 'sequential';
+
 export interface TopicQuota {
   topic: string;
   count: number;
+  all?: boolean;
 }
 
 export interface ScheduledQuestion {
@@ -52,6 +55,7 @@ export function scheduleQuestions(params: {
   avoidTopics?: string[];
   weekdayLoad: number;
   weekendLoad: number;
+  scheduleMode?: ScheduleMode;
 }): SchedulerResult {
   const {
     source,
@@ -62,6 +66,7 @@ export function scheduleQuestions(params: {
     avoidTopics = [],
     weekdayLoad,
     weekendLoad,
+    scheduleMode = 'balanced',
   } = params;
 
   const warnings: string[] = [];
@@ -70,76 +75,65 @@ export function scheduleQuestions(params: {
   const focusSet = new Set(focusTopics.map((t) => t.toLowerCase().trim()));
   const avoidSet = new Set(avoidTopics.map((t) => t.toLowerCase().trim()));
 
-  let filtered = [...rawQuestions];
+  let filtered: QuestionBankEntry[] = [];
 
   if (topicQuotas && topicQuotas.length > 0) {
-    // 1. Merge duplicate quota topics case-insensitively and ignore non-positive counts
-    const quotaMap = new Map<string, { topicName: string; count: number }>();
+    // 1. Merge duplicate topics case-insensitively, PRESERVE first-seen order
+    const orderedTopics: string[] = [];
+    const wanted = new Map<string, { topicName: string; count: number; all: boolean }>();
+
     for (const q of topicQuotas) {
       if (!q || !q.topic || typeof q.topic !== 'string') continue;
-      const count = Math.floor(Number(q.count));
-      if (!Number.isFinite(count) || count < 1) continue;
-
-      const normKey = q.topic.trim().toLowerCase();
-      const existing = quotaMap.get(normKey);
-      if (existing) {
-        existing.count += count;
-      } else {
-        // Resolve canonical topic name from rawQuestions if available
+      const key = q.topic.trim().toLowerCase();
+      if (!wanted.has(key)) {
+        orderedTopics.push(key);
         const matchingQ = rawQuestions.find(
-          (raw) => raw.topic.trim().toLowerCase() === normKey
+          (raw) => raw.topic.trim().toLowerCase() === key
         );
         const topicName = matchingQ ? matchingQ.topic : q.topic.trim();
-        quotaMap.set(normKey, { topicName, count });
+        wanted.set(key, { topicName, count: 0, all: false });
+      }
+      const entry = wanted.get(key)!;
+      if (q.all) entry.all = true;
+      const count = Math.floor(Number(q.count));
+      if (Number.isFinite(count) && count > 0) {
+        entry.count += count;
       }
     }
 
     const selected: QuestionBankEntry[] = [];
     const selectedIds = new Set<string>();
 
-    for (const { topicName, count: requestedCount } of quotaMap.values()) {
-      const topicQuestions = rawQuestions.filter(
-        (q) => q.topic.trim().toLowerCase() === topicName.toLowerCase()
+    for (const topicKey of orderedTopics) {
+      if (avoidSet.has(topicKey)) {
+        warnings.push(`"${topicKey}" is in both selected and avoided; skipped.`);
+        continue;
+      }
+      const want = wanted.get(topicKey)!;
+      const pool = rawQuestions.filter(
+        (x) => x.topic.trim().toLowerCase() === topicKey && !selectedIds.has(x.id)
       );
+      const take = want.all ? pool.length : Math.min(pool.length, want.count);
 
-      const unselectedForTopic = topicQuestions.filter(
-        (q) => !selectedIds.has(q.id)
-      );
-
-      const take = Math.min(unselectedForTopic.length, requestedCount);
-      const chosen = unselectedForTopic.slice(0, take);
-
+      if (take < (want.all ? pool.length : want.count)) {
+        warnings.push(
+          `Only ${take} questions available for ${want.topicName} (requested ${want.count}).`
+        );
+      }
+      const chosen = pool.slice(0, take);
       for (const q of chosen) {
         selectedIds.add(q.id);
         selected.push(q);
       }
-
-      if (take < requestedCount) {
-        warnings.push(
-          `Only ${take} questions available for ${topicName} (requested ${requestedCount}).`
-        );
-      }
     }
 
-    let finalSelected = selected;
-    // Remove avoided topics from the selected set
-    if (avoidSet.size > 0) {
-      const countBeforeAvoid = finalSelected.length;
-      finalSelected = finalSelected.filter(
-        (q) => !avoidSet.has(q.topic.toLowerCase().trim())
-      );
-      if (finalSelected.length < countBeforeAvoid) {
-        warnings.push(
-          `Avoid topics removed ${countBeforeAvoid - finalSelected.length} questions from requested topic quotas.`
-        );
-      }
-    }
-
-    filtered = finalSelected;
+    filtered = selected;
     if (filtered.length === 0) {
-      errors.push('No questions remain after applying topic quantities and avoid topics.');
+      errors.push('No questions remain after topic selection and avoid filtering.');
     }
   } else {
+    filtered = [...rawQuestions];
+
     // 1a. If focus topics specified, keep ONLY those topics
     if (focusSet.size > 0) {
       filtered = filtered.filter((q) => focusSet.has(q.topic.toLowerCase().trim()));
@@ -166,13 +160,16 @@ export function scheduleQuestions(params: {
     }
   }
 
-  // 2. Sort questions: Focus topics first, then preserve original topic/difficulty and order
-  const questionsToSchedule = [...filtered].sort((a, b) => {
-    const aFocus = focusSet.has(a.topic.toLowerCase().trim()) ? 1 : 0;
-    const bFocus = focusSet.has(b.topic.toLowerCase().trim()) ? 1 : 0;
-    if (aFocus !== bFocus) return bFocus - aFocus;
-    return (a.order || 0) - (b.order || 0);
-  });
+  // 2. Determine initial question sequence to schedule
+  const questionsToSchedule =
+    scheduleMode === 'sequential'
+      ? [...filtered]
+      : [...filtered].sort((a, b) => {
+          const aFocus = focusSet.has(a.topic.toLowerCase().trim()) ? 1 : 0;
+          const bFocus = focusSet.has(b.topic.toLowerCase().trim()) ? 1 : 0;
+          if (aFocus !== bFocus) return bFocus - aFocus;
+          return (a.order || 0) - (b.order || 0);
+        });
 
   const totalQuestions = questionsToSchedule.length;
   let totalLoad = 0;
@@ -192,93 +189,104 @@ export function scheduleQuestions(params: {
 
     // If capacity is 0 (e.g. heavy busy day / zero capacity day), schedule 0 tasks
     if (targetCapacity > 0 && remainingPool.length > 0) {
-      // Find the best combination of questions from remainingPool
-      // Max load allowed today = targetCapacity + 0.5
       const maxAllowedLoad = targetCapacity + 0.5;
-      let hardCountToday = 0;
 
-      // Greedy selection with heuristic scoring
-      let madeProgress = true;
-      while (madeProgress && remainingPool.length > 0) {
-        madeProgress = false;
-        let bestCandidateIdx = -1;
-        let bestScore = -Infinity;
-
-        for (let i = 0; i < remainingPool.length; i++) {
-          const cand = remainingPool[i];
+      if (scheduleMode === 'sequential') {
+        // Sequential mode: consume remainingPool from the front in strict order
+        while (remainingPool.length > 0) {
+          const cand = remainingPool[0];
           const candLoad = getDifficultyLoad(cand.difficulty);
 
-          // Check if adding exceeds maxAllowedLoad
-          if (currentDayLoad + candLoad > maxAllowedLoad) {
-            continue;
+          if (currentDayLoad > 0 && currentDayLoad + candLoad > maxAllowedLoad) {
+            break;
           }
 
-          // Check hard question limit (max 1 hard per day unless capacity >= 3.0)
-          if (cand.difficulty === 'hard') {
-            if (hardCountToday >= 1 && targetCapacity < 3.0) {
-              continue;
-            }
-            if (day.isBufferDay || (day.busyReason && targetCapacity < 1.5)) {
-              // Strongly avoid hard on buffer/busy days
-              continue;
-            }
-          }
-
-          // Heuristic score
-          let score = 100;
-
-          // 1. Distance to target capacity
-          const newLoad = currentDayLoad + candLoad;
-          const distToTarget = Math.abs(targetCapacity - newLoad);
-          score -= distToTarget * 30;
-
-          // 2. Topic rotation bonus (different from last task today and yesterday)
-          const candTopic = cand.topic.toLowerCase().trim();
-          if (candTopic === lastTopicUsed) {
-            score -= 25;
-          }
-          if (dayQuestions.some((dq) => dq.question.topic.toLowerCase().trim() === candTopic)) {
-            score -= 35;
-          }
-
-          // 3. Focus topic bonus
-          if (focusSet.has(candTopic)) {
-            score += 40;
-          }
-
-          // 4. Balanced mix bonus: if we already have an Easy, prefer Medium over another Easy
-          if (dayQuestions.length > 0 && dayQuestions.some((dq) => dq.question.difficulty === 'easy') && cand.difficulty === 'medium') {
-            score += 15;
-          }
-
-          // 5. Order bonus: preserve original source order
-          score -= (cand.order || 0) * 0.1;
-
-          if (score > bestScore) {
-            bestScore = score;
-            bestCandidateIdx = i;
-          }
-        }
-
-        if (bestCandidateIdx !== -1) {
-          const chosen = remainingPool.splice(bestCandidateIdx, 1)[0];
-          const chosenLoad = getDifficultyLoad(chosen.difficulty);
-          if (chosen.difficulty === 'hard') hardCountToday++;
-
-          currentDayLoad += chosenLoad;
-          lastTopicUsed = chosen.topic.toLowerCase().trim();
-
+          const chosen = remainingPool.shift()!;
+          currentDayLoad += candLoad;
           dayQuestions.push({
             question: chosen,
             scheduledDate: day.date,
-            load: chosenLoad,
+            load: candLoad,
           });
 
-          madeProgress = true;
-
-          // If we reached or slightly exceeded target capacity, we can stop for this day
           if (currentDayLoad >= targetCapacity) {
             break;
+          }
+        }
+      } else {
+        // Balanced mode: Greedy selection with heuristic scoring & topic rotation
+        let hardCountToday = 0;
+        let madeProgress = true;
+        while (madeProgress && remainingPool.length > 0) {
+          madeProgress = false;
+          let bestCandidateIdx = -1;
+          let bestScore = -Infinity;
+
+          for (let i = 0; i < remainingPool.length; i++) {
+            const cand = remainingPool[i];
+            const candLoad = getDifficultyLoad(cand.difficulty);
+
+            if (currentDayLoad + candLoad > maxAllowedLoad) {
+              continue;
+            }
+
+            if (cand.difficulty === 'hard') {
+              if (hardCountToday >= 1 && targetCapacity < 3.0) {
+                continue;
+              }
+              if (day.isBufferDay || (day.busyReason && targetCapacity < 1.5)) {
+                continue;
+              }
+            }
+
+            let score = 100;
+            const newLoad = currentDayLoad + candLoad;
+            const distToTarget = Math.abs(targetCapacity - newLoad);
+            score -= distToTarget * 30;
+
+            const candTopic = cand.topic.toLowerCase().trim();
+            if (candTopic === lastTopicUsed) {
+              score -= 25;
+            }
+            if (dayQuestions.some((dq) => dq.question.topic.toLowerCase().trim() === candTopic)) {
+              score -= 35;
+            }
+
+            if (focusSet.has(candTopic)) {
+              score += 40;
+            }
+
+            if (dayQuestions.length > 0 && dayQuestions.some((dq) => dq.question.difficulty === 'easy') && cand.difficulty === 'medium') {
+              score += 15;
+            }
+
+            score -= (cand.order || 0) * 0.1;
+
+            if (score > bestScore) {
+              bestScore = score;
+              bestCandidateIdx = i;
+            }
+          }
+
+          if (bestCandidateIdx !== -1) {
+            const chosen = remainingPool.splice(bestCandidateIdx, 1)[0];
+            const chosenLoad = getDifficultyLoad(chosen.difficulty);
+            if (chosen.difficulty === 'hard') hardCountToday++;
+
+            currentDayLoad += chosenLoad;
+            lastTopicUsed = chosen.topic.toLowerCase().trim();
+
+            dayQuestions.push({
+              question: chosen,
+              scheduledDate: day.date,
+              load: chosenLoad,
+            });
+
+            madeProgress = true;
+
+            if (currentDayLoad >= targetCapacity) {
+              break;
+            }
           }
         }
       }
@@ -296,8 +304,8 @@ export function scheduleQuestions(params: {
     });
   }
 
-  // 3. If remaining questions were not scheduled, try a second pass filling days up to capacityLoad + 0.5
-  if (remainingPool.length > 0) {
+  // 3. If remaining questions were not scheduled, try a second pass filling days up to capacityLoad + 0.5 (balanced mode only)
+  if (scheduleMode !== 'sequential' && remainingPool.length > 0) {
     for (const day of days) {
       if (remainingPool.length === 0) break;
       if (day.capacityLoad === 0) continue;

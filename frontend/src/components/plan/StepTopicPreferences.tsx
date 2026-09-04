@@ -1,9 +1,14 @@
+import type { ScheduleMode } from '../../types';
 import './plan.css';
 
 interface Props {
+  scheduleMode: ScheduleMode;
+  orderedTopics: string[];
   focusTopics: string[];
   avoidTopics: string[];
-  onChange: (focus: string[], avoid: string[]) => void;
+  onModeChange: (mode: ScheduleMode) => void;
+  onOrderedTopicsChange: (topics: string[]) => void;
+  onFocusAvoidChange: (focus: string[], avoid: string[]) => void;
 }
 
 const AVAILABLE_TOPICS = [
@@ -22,9 +27,13 @@ const AVAILABLE_TOPICS = [
 ];
 
 export default function StepTopicPreferences({
+  scheduleMode,
+  orderedTopics,
   focusTopics,
   avoidTopics,
-  onChange,
+  onModeChange,
+  onOrderedTopicsChange,
+  onFocusAvoidChange,
 }: Props) {
   const toggleFocus = (topic: string) => {
     let nextFocus = [...focusTopics];
@@ -35,7 +44,7 @@ export default function StepTopicPreferences({
     } else {
       nextFocus.push(topic);
     }
-    onChange(nextFocus, nextAvoid);
+    onFocusAvoidChange(nextFocus, nextAvoid);
   };
 
   const toggleAvoid = (topic: string) => {
@@ -47,68 +56,209 @@ export default function StepTopicPreferences({
     } else {
       nextAvoid.push(topic);
     }
-    onChange(nextFocus, nextAvoid);
+    onFocusAvoidChange(nextFocus, nextAvoid);
+  };
+
+  const addTopic = (t: string) => {
+    if (!orderedTopics.includes(t)) {
+      onOrderedTopicsChange([...orderedTopics, t]);
+    }
+  };
+
+  const removeTopic = (t: string) => {
+    onOrderedTopicsChange(orderedTopics.filter((x) => x !== t));
+  };
+
+  const moveUp = (i: number) => {
+    if (i <= 0) return;
+    const next = [...orderedTopics];
+    [next[i - 1], next[i]] = [next[i], next[i - 1]];
+    onOrderedTopicsChange(next);
+  };
+
+  const moveDown = (i: number) => {
+    if (i >= orderedTopics.length - 1) return;
+    const next = [...orderedTopics];
+    [next[i + 1], next[i]] = [next[i], next[i + 1]];
+    onOrderedTopicsChange(next);
   };
 
   return (
     <section className="card step-card">
       <div className="step-card__kicker">Step 3 of 5</div>
-      <h2 className="step-card__heading">Topic Priorities & Exclusions</h2>
-      <p className="step-card__hint">
-        Focus topics will be scheduled earlier; avoided topics will be deprioritized or excluded.
-      </p>
+      <h2 className="step-card__heading">Topic Priorities &amp; Exclusions</h2>
+      <p className="step-card__hint">Choose how topics are ordered across your plan.</p>
 
-      <div className="topic-group">
-        <div className="topic-group__head">
-          <span className="topic-group__label">Focus topics</span>
-          <span className="topic-group__hint">(Prioritized earlier in the schedule)</span>
-        </div>
-        <div className="chip-cloud">
-          {AVAILABLE_TOPICS.map((topic) => {
-            const isSelected = focusTopics.some(
-              (t) => t.toLowerCase() === topic.toLowerCase()
-            );
-            return (
-              <button
-                key={`focus-${topic}`}
-                type="button"
-                className={`chip${isSelected ? ' is-on' : ''}`}
-                aria-pressed={isSelected}
-                onClick={() => toggleFocus(topic)}
-              >
-                {isSelected ? '✓ ' : '+ '}
-                {topic}
-              </button>
-            );
-          })}
-        </div>
+      {/* Mode toggle */}
+      <div className="topic-mode" role="radiogroup" aria-label="Scheduling order">
+        <button
+          type="button"
+          className={`topic-mode__btn ${scheduleMode === 'balanced' ? 'is-active' : ''}`}
+          aria-pressed={scheduleMode === 'balanced'}
+          onClick={() => onModeChange('balanced')}
+        >
+          Balanced
+          <span className="topic-mode__desc">Mix topics across days (better revision spread)</span>
+        </button>
+        <button
+          type="button"
+          className={`topic-mode__btn ${scheduleMode === 'sequential' ? 'is-active' : ''}`}
+          aria-pressed={scheduleMode === 'sequential'}
+          onClick={() => onModeChange('sequential')}
+        >
+          Sequential
+          <span className="topic-mode__desc">Finish each topic fully before the next</span>
+        </button>
       </div>
 
-      <div className="topic-group">
-        <div className="topic-group__head">
-          <span className="topic-group__label">Avoid topics</span>
-          <span className="topic-group__hint">(Deprioritized or excluded)</span>
-        </div>
-        <div className="chip-cloud">
-          {AVAILABLE_TOPICS.map((topic) => {
-            const isSelected = avoidTopics.some(
-              (t) => t.toLowerCase() === topic.toLowerCase()
-            );
-            return (
-              <button
-                key={`avoid-${topic}`}
-                type="button"
-                className={`chip${isSelected ? ' is-avoid' : ''}`}
-                aria-pressed={isSelected}
-                onClick={() => toggleAvoid(topic)}
-              >
-                {isSelected ? '✕ ' : ''}
-                {topic}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      {scheduleMode === 'balanced' ? (
+        <>
+          <div className="topic-group">
+            <div className="topic-group__head">
+              <span className="topic-group__label">Focus topics</span>
+              <span className="topic-group__hint">(Prioritized earlier in the schedule)</span>
+            </div>
+            <div className="chip-cloud">
+              {AVAILABLE_TOPICS.map((topic) => {
+                const isSelected = focusTopics.some(
+                  (t) => t.toLowerCase() === topic.toLowerCase()
+                );
+                return (
+                  <button
+                    key={`focus-${topic}`}
+                    type="button"
+                    className={`chip${isSelected ? ' is-on' : ''}`}
+                    aria-pressed={isSelected}
+                    onClick={() => toggleFocus(topic)}
+                  >
+                    {isSelected ? '✓ ' : '+ '}
+                    {topic}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="topic-group">
+            <div className="topic-group__head">
+              <span className="topic-group__label">Avoid topics</span>
+              <span className="topic-group__hint">(Deprioritized or excluded)</span>
+            </div>
+            <div className="chip-cloud">
+              {AVAILABLE_TOPICS.map((topic) => {
+                const isSelected = avoidTopics.some(
+                  (t) => t.toLowerCase() === topic.toLowerCase()
+                );
+                return (
+                  <button
+                    key={`avoid-${topic}`}
+                    type="button"
+                    className={`chip${isSelected ? ' is-avoid' : ''}`}
+                    aria-pressed={isSelected}
+                    onClick={() => toggleAvoid(topic)}
+                  >
+                    {isSelected ? '✕ ' : ''}
+                    {topic}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="topic-order">
+            <div className="topic-order__label t-label">
+              Topic order (top = scheduled first)
+            </div>
+
+            {orderedTopics.length === 0 ? (
+              <div className="topic-order__empty t-body">
+                Add topics below. All questions of topic #1 come first, then #2, then #3.
+              </div>
+            ) : (
+              <ol className="topic-order__list">
+                {orderedTopics.map((t, i) => (
+                  <li key={t} className="topic-order__item">
+                    <span className="topic-order__num">{i + 1}</span>
+                    <span className="topic-order__name">{t}</span>
+                    <div className="topic-order__controls">
+                      <button
+                        type="button"
+                        className="icon-btn"
+                        aria-label={`Move ${t} up`}
+                        disabled={i === 0}
+                        onClick={() => moveUp(i)}
+                      >
+                        ▲
+                      </button>
+                      <button
+                        type="button"
+                        className="icon-btn"
+                        aria-label={`Move ${t} down`}
+                        disabled={i === orderedTopics.length - 1}
+                        onClick={() => moveDown(i)}
+                      >
+                        ▼
+                      </button>
+                      <button
+                        type="button"
+                        className="icon-btn is-danger"
+                        aria-label={`Remove ${t}`}
+                        onClick={() => removeTopic(t)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+
+          <div className="topic-pool">
+            <div className="topic-pool__label t-label">Add topic</div>
+            <div className="chip-cloud">
+              {AVAILABLE_TOPICS.filter((t) => !orderedTopics.includes(t)).map((t) => (
+                <button key={t} type="button" className="chip" onClick={() => addTopic(t)}>
+                  + {t}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="topic-group" style={{ marginTop: 20 }}>
+            <div className="topic-group__head">
+              <span className="topic-group__label">Avoid topics</span>
+              <span className="topic-group__hint">(Deprioritized or excluded)</span>
+            </div>
+            <div className="chip-cloud">
+              {AVAILABLE_TOPICS.map((topic) => {
+                const isSelected = avoidTopics.some(
+                  (t) => t.toLowerCase() === topic.toLowerCase()
+                );
+                return (
+                  <button
+                    key={`avoid-${topic}`}
+                    type="button"
+                    className={`chip${isSelected ? ' is-avoid' : ''}`}
+                    aria-pressed={isSelected}
+                    onClick={() => toggleAvoid(topic)}
+                  >
+                    {isSelected ? '✕ ' : ''}
+                    {topic}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <p className="topic-order__note t-meta">
+            Sequential groups a topic together. Revisions still spread out automatically
+            at +1/+3/+7/+14 days.
+          </p>
+        </>
+      )}
     </section>
   );
 }

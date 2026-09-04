@@ -42,18 +42,20 @@ export function draftToPlanPayload(
     avoidTopics: draft.avoidTopics ?? undefined,
     busyDays: draft.busyDays ?? [],
     bufferDay: draft.bufferDay ?? undefined,
+    scheduleMode: draft.scheduleMode ?? (draft.topicQuotas?.some((q) => q.all) ? 'sequential' : 'balanced'),
   };
 }
 
 function normalizeQuotas(
-  quotas?: TopicQuota[]
+  quotas?: TopicQuota[],
+  preserveOrder: boolean = false
 ): TopicQuota[] {
-  return [...(quotas ?? [])]
-    .map((quota) => ({
-      topic: quota.topic.trim().toLowerCase(),
-      count: quota.count,
-    }))
-    .sort((a, b) => a.topic.localeCompare(b.topic));
+  const mapped = [...(quotas ?? [])].map((quota) => ({
+    topic: quota.topic.trim().toLowerCase(),
+    count: quota.count,
+    all: quota.all,
+  }));
+  return preserveOrder ? mapped : mapped.sort((a, b) => a.topic.localeCompare(b.topic));
 }
 
 function normalizeStrings(values?: string[]): string[] {
@@ -77,6 +79,7 @@ function normalizeBusyDays(
 export function planPayloadFingerprint(
   payload: GeneratePlanPayload
 ): string {
+  const isSequential = payload.scheduleMode === 'sequential';
   return JSON.stringify({
     source: payload.source,
     startDate: payload.startDate,
@@ -84,7 +87,8 @@ export function planPayloadFingerprint(
     pace: payload.pace,
     weekdayLoad: payload.weekdayLoad,
     weekendLoad: payload.weekendLoad,
-    topicQuotas: normalizeQuotas(payload.topicQuotas),
+    scheduleMode: payload.scheduleMode ?? 'balanced',
+    topicQuotas: normalizeQuotas(payload.topicQuotas, isSequential),
     focusTopics: normalizeStrings(payload.focusTopics),
     avoidTopics: normalizeStrings(payload.avoidTopics),
     busyDays: normalizeBusyDays(payload.busyDays),
