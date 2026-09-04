@@ -209,7 +209,6 @@ export default function PlanWizard() {
             onGeneratePreview={(payload) => handleGeneratePreview(payload)}
             onCommit={() => handleCommit()}
             onTweakManually={handleTweakManually}
-            canCommit={previewLoaded}
             previewLoaded={previewLoaded}
           />
           {previewData && (

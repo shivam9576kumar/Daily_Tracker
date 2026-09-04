@@ -12,7 +12,6 @@ interface Props {
   onGeneratePreview: (payload: GeneratePlanPayload) => void;
   onCommit: () => void;
   onTweakManually: (draft: AIDraft) => void;
-  canCommit: boolean;        // true only after a preview is loaded
   previewLoaded: boolean;    // drives the "Create Plan" button
 }
 
@@ -28,7 +27,6 @@ export default function AIPlanChat({
   onGeneratePreview,
   onCommit,
   onTweakManually,
-  canCommit,
   previewLoaded,
 }: Props) {
   const [messages, setMessages] = useState<AIChatMessage[]>([]);
