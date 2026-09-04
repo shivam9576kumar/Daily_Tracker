@@ -1,4 +1,3 @@
-import React from 'react';
 import './circular-progress.css';
 
 interface Props {

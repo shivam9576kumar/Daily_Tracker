@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import Drawer from '../common/Drawer';
-import Button from '../common/Button';
 import Spinner from '../common/Spinner';
-import RevisionBadge from './RevisionBadge';
 import RatingPills from './RatingPills';
 import NotesEditor from './NotesEditor';
 import { taskApi } from '../../services/taskApi';

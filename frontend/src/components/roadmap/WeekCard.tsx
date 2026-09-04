@@ -73,7 +73,6 @@ export default function WeekCard({ weekNumber, days, defaultOpen = false }: Prop
           {days.map((day) => {
             const isToday = day.dateKey === today;
             const isFuture = day.dateKey > today;
-            const isPast = day.dateKey < today;
             const dayTotal = day.tasks.length;
             const dayDone = day.tasks.filter((t) => t.status === 'completed').length;
             const allDone = dayDone === dayTotal && dayTotal > 0;

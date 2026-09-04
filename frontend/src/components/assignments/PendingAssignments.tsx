@@ -3,7 +3,6 @@ import type { Assignment } from '../../types';
 import { assignmentApi } from '../../services/assignmentApi';
 import { getErrorMessage } from '../../services/api';
 import { useUIStore } from '../../store/uiStore';
-import Button from '../common/Button';
 import AssignmentItem from './AssignmentItem';
 import AssignmentForm from './AssignmentForm';
 import './assignments.css';

@@ -6,7 +6,6 @@ import StepSchedulePace from './StepSchedulePace';
 import StepTopicPreferences from './StepTopicPreferences';
 import StepBusyDays from './StepBusyDays';
 import PlanPreview from './PlanPreview';
-import Button from '../common/Button';
 import Modal from '../common/Modal';
 import { planApi } from '../../services/planApi';
 import { getErrorMessage } from '../../services/api';

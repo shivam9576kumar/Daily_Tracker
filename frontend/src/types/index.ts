@@ -202,6 +202,8 @@ export interface Plan {
   startDate: string;
   endDate: string;
   status: 'active' | 'archived' | 'completed';
+  weekdayCapacity?: number;
+  weekendCapacity?: number;
   createdAt: string;
 }
 

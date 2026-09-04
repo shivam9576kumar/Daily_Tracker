@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import path from 'path';
+import fs from 'fs';
 import { env } from './config/env';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import { timezoneMiddleware } from './middleware/timezoneMiddleware';
@@ -22,12 +24,16 @@ import classesRoutes from './routes/classesRoutes';
 const app = express();
 
 // ─── Security ───
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 // ─── CORS ───
 app.use(
   cors({
-    origin: env.FRONTEND_URL,
+    origin: env.FRONTEND_URL || true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Timezone'],
@@ -67,7 +73,21 @@ app.use('/api/plans', planRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/classes', classesRoutes);
 
-// ─── 404 Handler ───
+// ─── Production Static Hosting & SPA Fallback ───
+const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');
+
+if (fs.existsSync(frontendDistPath)) {
+  app.use(express.static(frontendDistPath));
+
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+}
+
+// ─── 404 Handler for API routes ───
 app.use((_req, res) => {
   res.status(404).json({
     success: false,
