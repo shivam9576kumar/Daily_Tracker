@@ -27,7 +27,7 @@ Preparing for technical interviews and mastering Data Structures & Algorithms re
   - 🎯 **Sequential Mode (New)**: Schedules topics in a strict user-defined priority order (e.g., *Finish ALL Stack $\rightarrow$ then ALL Queue $\rightarrow$ then ALL Heap*) without topic rotation.
 - **Flexible Pacing**: Select **Relaxed** (1.5–2.5 load/day), **Moderate** (2.0–3.0 load/day), or **Intensive** (3.0–4.5 load/day).
 - **Ordered Topic Priorities & Filtering**: Drag/reorder topic cards in Step 3 to set exact sequential priorities, or select focus/avoid topics.
-- **Exam & Busy Day Load Reduction**: Specify exam dates or heavy days to automatically scale down scheduled study load.
+- **Custom Start Date Selection**: Select any custom future start date using a native HTML5 calendar picker with validation against past dates.
 - **AI Prompt Assist**: Type prompts like *"30 days plan from Coder Army Sheet finish all Stack then all Queue"* and let Gemini AI configure the settings.
 
 ### 🔄 2. Solve $\rightarrow$ Rate Toggle & 4-Stage Revisions
