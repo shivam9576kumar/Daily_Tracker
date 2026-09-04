@@ -16,3 +16,5 @@ services:
         sync: false
       - key: DEFAULT_TIMEZONE
         value: Asia/Kolkata
+      - key: FRONTEND_URL
+        value: https://dsa-tracker-app.onrender.com

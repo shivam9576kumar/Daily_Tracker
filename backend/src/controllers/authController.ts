@@ -87,7 +87,12 @@ export async function googleCallback(
     logger.info(`User logged in: ${user.email}`);
 
     // Redirect to frontend with token
-    res.redirect(`${env.FRONTEND_URL}/auth/callback?token=${token}`);
+    const hostOrigin = `${req.protocol}://${req.get('host')}`;
+    const baseUrl = (env.FRONTEND_URL && !env.FRONTEND_URL.includes('localhost'))
+      ? env.FRONTEND_URL
+      : (env.isProd ? hostOrigin : env.FRONTEND_URL);
+
+    res.redirect(`${baseUrl}/auth/callback?token=${token}`);
   } catch (error) {
     next(error);
   }
