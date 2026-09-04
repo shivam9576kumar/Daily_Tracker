@@ -9,13 +9,60 @@ import { sendSuccess, sendError } from '../utils/response';
 import { env } from '../config/env';
 import logger from '../utils/logger';
 
+import { prisma } from '../config/database';
+
 /**
  * GET /api/auth/google
  * Redirects to Google's OAuth consent screen.
  */
 export function googleLogin(_req: Request, res: Response) {
+  if (!env.GOOGLE_CLIENT_ID) {
+    return res.status(400).send(`
+      <h2>Google OAuth Client ID not configured on server.</h2>
+      <p>Please return to the login page and use <strong>Continue as Guest / Demo</strong>, or configure <code>GOOGLE_CLIENT_ID</code> in Render environment variables.</p>
+    `);
+  }
   const url = getGoogleAuthUrl();
   res.redirect(url);
+}
+
+/**
+ * POST /api/auth/demo
+ * Creates or retrieves a demo student account and returns a JWT token.
+ */
+export async function demoLogin(_req: Request, res: Response, next: NextFunction) {
+  try {
+    let user = await prisma.user.findFirst({
+      where: { email: 'demo@dsatracker.com' },
+    });
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          googleId: 'demo-student-id',
+          email: 'demo@dsatracker.com',
+          name: 'Demo Student',
+          coins: 100,
+        },
+      });
+    }
+
+    const token = generateToken({ userId: user.id, email: user.email });
+    logger.info(`Demo user logged in: ${user.email}`);
+
+    sendSuccess(res, {
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatarUrl: user.avatarUrl,
+        coins: user.coins,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 /**

@@ -8,6 +8,12 @@ export const authApi = {
     return `${API_BASE}/auth/google`;
   },
 
+  /** 1-Click Demo / Guest login */
+  async demoLogin() {
+    const res = await api.post('/auth/demo');
+    return res.data.data;
+  },
+
   /** Get current user profile */
   async getMe() {
     const res = await api.get('/auth/me');
