@@ -1,6 +1,7 @@
 import { QuestionBankEntry } from './questionBankLoader';
 import { DailyCapacity } from './capacityCalculator';
 import { getDifficultyLoad } from './difficultyWeights';
+import { resolveTopic, topicKey } from '../../utils/topicNormalize';
 
 export type ScheduleMode = 'balanced' | 'sequential';
 
@@ -72,28 +73,39 @@ export function scheduleQuestions(params: {
   const warnings: string[] = [];
   const errors: string[] = [];
 
-  const focusSet = new Set(focusTopics.map((t) => t.toLowerCase().trim()));
-  const avoidSet = new Set(avoidTopics.map((t) => t.toLowerCase().trim()));
+  const bankTopics = [...new Set(rawQuestions.map((q) => q.topic))];
+
+  const resolvedAvoid = new Set(
+    avoidTopics
+      .map((a) => resolveTopic(a, bankTopics))
+      .filter(Boolean) as string[]
+  );
+
+  const resolvedFocus = new Set(
+    focusTopics
+      .map((f) => resolveTopic(f, bankTopics))
+      .filter(Boolean) as string[]
+  );
 
   let filtered: QuestionBankEntry[] = [];
 
   if (topicQuotas && topicQuotas.length > 0) {
-    // 1. Merge duplicate topics case-insensitively, PRESERVE first-seen order
+    // 1. Merge duplicate topics case-insensitively using resolveTopic, PRESERVE first-seen order
     const orderedTopics: string[] = [];
     const wanted = new Map<string, { topicName: string; count: number; all: boolean }>();
 
     for (const q of topicQuotas) {
       if (!q || !q.topic || typeof q.topic !== 'string') continue;
-      const key = q.topic.trim().toLowerCase();
-      if (!wanted.has(key)) {
-        orderedTopics.push(key);
-        const matchingQ = rawQuestions.find(
-          (raw) => raw.topic.trim().toLowerCase() === key
-        );
-        const topicName = matchingQ ? matchingQ.topic : q.topic.trim();
-        wanted.set(key, { topicName, count: 0, all: false });
+      const resolved = resolveTopic(q.topic, bankTopics);
+      if (!resolved) {
+        warnings.push(`Topic "${q.topic}" not found in this question bank — skipped.`);
+        continue;
       }
-      const entry = wanted.get(key)!;
+      if (!wanted.has(resolved)) {
+        orderedTopics.push(resolved);
+        wanted.set(resolved, { topicName: resolved, count: 0, all: false });
+      }
+      const entry = wanted.get(resolved)!;
       if (q.all) entry.all = true;
       const count = Math.floor(Number(q.count));
       if (Number.isFinite(count) && count > 0) {
@@ -104,26 +116,26 @@ export function scheduleQuestions(params: {
     const selected: QuestionBankEntry[] = [];
     const selectedIds = new Set<string>();
 
-    for (const topicKey of orderedTopics) {
-      if (avoidSet.has(topicKey)) {
-        warnings.push(`"${topicKey}" is in both selected and avoided; skipped.`);
+    for (const topicName of orderedTopics) {
+      if (resolvedAvoid.has(topicName)) {
+        warnings.push(`"${topicName}" is in both selected and avoided; skipped.`);
         continue;
       }
-      const want = wanted.get(topicKey)!;
+      const want = wanted.get(topicName)!;
       const pool = rawQuestions.filter(
-        (x) => x.topic.trim().toLowerCase() === topicKey && !selectedIds.has(x.id)
+        (x) => x.topic === topicName && !selectedIds.has(x.id)
       );
       const take = want.all ? pool.length : Math.min(pool.length, want.count);
 
       if (take < (want.all ? pool.length : want.count)) {
         warnings.push(
-          `Only ${take} questions available for ${want.topicName} (requested ${want.count}).`
+          `Only ${pool.length} "${topicName}" questions available (requested ${want.count}).`
         );
       }
       const chosen = pool.slice(0, take);
-      for (const q of chosen) {
-        selectedIds.add(q.id);
-        selected.push(q);
+      for (const item of chosen) {
+        selectedIds.add(item.id);
+        selected.push(item);
       }
     }
 
@@ -135,24 +147,31 @@ export function scheduleQuestions(params: {
     filtered = [...rawQuestions];
 
     // 1a. If focus topics specified, keep ONLY those topics
-    if (focusSet.size > 0) {
-      filtered = filtered.filter((q) => focusSet.has(q.topic.toLowerCase().trim()));
+    if (focusTopics.length > 0) {
+      if (resolvedFocus.size > 0) {
+        filtered = filtered.filter((q) => resolvedFocus.has(q.topic));
+      } else {
+        filtered = [];
+      }
+
       if (filtered.length === 0) {
-        warnings.push('No questions matched your focus topics. Including all questions instead.');
+        warnings.push('No questions matched focus topics. Using all questions.');
         filtered = [...rawQuestions];
       } else {
-        warnings.push(`Filtered to ${filtered.length} questions matching focus topics: ${focusTopics.join(', ')}.`);
+        warnings.push(
+          `Filtered to ${filtered.length} questions matching focus topics: ${[...resolvedFocus].join(', ')}.`
+        );
       }
     }
 
     // 1b. Filter out avoid topics if requested
-    if (avoidSet.size > 0) {
+    if (resolvedAvoid.size > 0) {
       const before = filtered.length;
-      filtered = filtered.filter((q) => !avoidSet.has(q.topic.toLowerCase().trim()));
+      filtered = filtered.filter((q) => !resolvedAvoid.has(q.topic));
       if (filtered.length < 5) {
         warnings.push('Avoid topics was too restrictive; included some avoided topics to ensure a complete plan.');
-        filtered = focusSet.size > 0
-          ? rawQuestions.filter((q) => focusSet.has(q.topic.toLowerCase().trim()))
+        filtered = resolvedFocus.size > 0
+          ? rawQuestions.filter((q) => resolvedFocus.has(q.topic))
           : [...rawQuestions];
       } else if (filtered.length < before) {
         warnings.push(`Excluded ${before - filtered.length} questions matching avoid topics.`);
@@ -165,8 +184,8 @@ export function scheduleQuestions(params: {
     scheduleMode === 'sequential'
       ? [...filtered]
       : [...filtered].sort((a, b) => {
-          const aFocus = focusSet.has(a.topic.toLowerCase().trim()) ? 1 : 0;
-          const bFocus = focusSet.has(b.topic.toLowerCase().trim()) ? 1 : 0;
+          const aFocus = resolvedFocus.has(a.topic) ? 1 : 0;
+          const bFocus = resolvedFocus.has(b.topic) ? 1 : 0;
           if (aFocus !== bFocus) return bFocus - aFocus;
           return (a.order || 0) - (b.order || 0);
         });
@@ -244,15 +263,15 @@ export function scheduleQuestions(params: {
             const distToTarget = Math.abs(targetCapacity - newLoad);
             score -= distToTarget * 30;
 
-            const candTopic = cand.topic.toLowerCase().trim();
+            const candTopic = cand.topic;
             if (candTopic === lastTopicUsed) {
               score -= 25;
             }
-            if (dayQuestions.some((dq) => dq.question.topic.toLowerCase().trim() === candTopic)) {
+            if (dayQuestions.some((dq) => dq.question.topic === candTopic)) {
               score -= 35;
             }
 
-            if (focusSet.has(candTopic)) {
+            if (resolvedFocus.has(candTopic)) {
               score += 40;
             }
 
@@ -274,7 +293,7 @@ export function scheduleQuestions(params: {
             if (chosen.difficulty === 'hard') hardCountToday++;
 
             currentDayLoad += chosenLoad;
-            lastTopicUsed = chosen.topic.toLowerCase().trim();
+            lastTopicUsed = chosen.topic;
 
             dayQuestions.push({
               question: chosen,

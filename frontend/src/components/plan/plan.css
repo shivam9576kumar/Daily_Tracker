@@ -400,6 +400,12 @@
   border-color: var(--danger);
 }
 
+.chip__count {
+  font: 500 11px/1 var(--font-sans);
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
 /* ─── Busy Days ─── */
 .busy-form {
   display: grid;

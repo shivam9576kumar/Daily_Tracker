@@ -169,4 +169,18 @@ export const planController = {
       next(err);
     }
   },
+
+  async topics(req: Request, res: Response, next: NextFunction) {
+    try {
+      const source = (req.query.source as string) || 'coderarmy';
+      const questions = loadQuestionBank(source);
+      const counts = new Map<string, number>();
+      for (const q of questions) counts.set(q.topic, (counts.get(q.topic) || 0) + 1);
+      const topics = [...counts.entries()]
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count);
+      sendSuccess(res, { source, topics });
+    } catch (err) { next(err); }
+  },
 };
+

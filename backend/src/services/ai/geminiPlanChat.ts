@@ -3,6 +3,7 @@ import { geminiGenerate } from '../../utils/geminiClient';
 import logger from '../../utils/logger';
 import { loadQuestionBank, getAvailableTopics } from '../plan/questionBankLoader';
 import { todayKey } from '../../utils/dateKeys';
+import { resolveTopic } from '../../utils/topicNormalize';
 
 export interface TopicQuota { topic: string; count: number; all?: boolean; }
 export interface BusyDayInput { date: string; reason?: string; loadReduction: number; }
@@ -104,37 +105,6 @@ interface BankMeta {
   sources: BankSourceMeta[];
 }
 
-const TOPIC_ALIASES: Record<string, string> = {
-  dp: 'Dynamic Programming',
-  dynamicprogramming: 'Dynamic Programming',
-  dynamic_programming: 'Dynamic Programming',
-  array: 'Arrays',
-  arrays: 'Arrays',
-  graph: 'Graphs',
-  graphs: 'Graphs',
-  tree: 'Trees',
-  trees: 'Trees',
-  stack: 'Stack',
-  stacks: 'Stack',
-  queue: 'Queue',
-  queues: 'Queue',
-  heap: 'Heap',
-  heaps: 'Heap',
-  hashmap: 'Hashing',
-  hashmaps: 'Hashing',
-  hashing: 'Hashing',
-  linkedlist: 'Linked List',
-  linkedlists: 'Linked List',
-  twopointers: 'Two Pointers',
-  slidingwindow: 'Sliding Window',
-  backtracking: 'Backtracking',
-  recursion: 'Recursion',
-  greedy: 'Greedy',
-  trie: 'Trie',
-  tries: 'Trie',
-  binarysearch: 'Binary Search',
-};
-
 const MONTH_NAMES: Record<string, number> = {
   jan: 1, january: 1,
   feb: 2, february: 2,
@@ -186,36 +156,17 @@ function parseBusyDateToken(token: string, todayKeyStr: string): string | null {
   return isValidDateKey(resultKey) ? resultKey : null;
 }
 
-function normalizedTopicKey(topic: string): string {
-  return topic
-    .trim()
-    .toLowerCase()
-    .replace(/[\s_-]+/g, '');
-}
-
 function resolveCanonicalTopic(
   input: string,
   source: 'neetcode150' | 'coderarmy' | null,
   context: AIPlannerContext
 ): string | null {
-  const key = normalizedTopicKey(input);
-  const alias = TOPIC_ALIASES[key] ?? input.trim();
-
   const allowedSources = source
     ? context.sources.filter((item) => item.id === source)
     : context.sources;
 
-  for (const bank of allowedSources) {
-    const found = bank.topics.find(
-      (topic) => normalizedTopicKey(topic.name) === normalizedTopicKey(alias)
-    );
-
-    if (found) {
-      return found.name;
-    }
-  }
-
-  return null;
+  const bankTopics = allowedSources.flatMap((s) => s.topics.map((t) => t.name));
+  return resolveTopic(input, bankTopics);
 }
 
 function normalizeDraftTopics(
@@ -293,7 +244,7 @@ function normalizeDraftTopics(
       continue;
     }
 
-    focusMap.set(normalizedTopicKey(canonical), canonical);
+    focusMap.set(canonical.toLowerCase(), canonical);
   }
 
   const avoidMap = new Map<string, string>();
@@ -307,8 +258,9 @@ function normalizeDraftTopics(
       continue;
     }
 
-    avoidMap.set(normalizedTopicKey(canonical), canonical);
+    avoidMap.set(canonical.toLowerCase(), canonical);
   }
+
 
   const normalizedDraft: AIDraft = {
     ...draft,

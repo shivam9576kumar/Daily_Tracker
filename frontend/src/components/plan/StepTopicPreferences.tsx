@@ -1,7 +1,10 @@
+import { useState, useEffect } from 'react';
 import type { ScheduleMode } from '../../types';
+import { planApi } from '../../services/planApi';
 import './plan.css';
 
 interface Props {
+  source: string;
   scheduleMode: ScheduleMode;
   orderedTopics: string[];
   focusTopics: string[];
@@ -11,22 +14,8 @@ interface Props {
   onFocusAvoidChange: (focus: string[], avoid: string[]) => void;
 }
 
-const AVAILABLE_TOPICS = [
-  'Arrays',
-  'Hashing',
-  'Two Pointers',
-  'Sliding Window',
-  'Binary Search',
-  'Linked List',
-  'Trees',
-  'Heap',
-  'Stack',
-  'Queue',
-  'Dynamic Programming',
-  'Graphs',
-];
-
 export default function StepTopicPreferences({
+  source,
   scheduleMode,
   orderedTopics,
   focusTopics,
@@ -35,26 +24,46 @@ export default function StepTopicPreferences({
   onOrderedTopicsChange,
   onFocusAvoidChange,
 }: Props) {
-  const toggleFocus = (topic: string) => {
-    let nextFocus = [...focusTopics];
-    let nextAvoid = avoidTopics.filter((t) => t.toLowerCase() !== topic.toLowerCase());
+  const [bankTopics, setBankTopics] = useState<{ name: string; count: number }[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<boolean>(false);
 
-    if (nextFocus.some((t) => t.toLowerCase() === topic.toLowerCase())) {
-      nextFocus = nextFocus.filter((t) => t.toLowerCase() !== topic.toLowerCase());
+  useEffect(() => {
+    setLoading(true);
+    setLoadError(false);
+    planApi
+      .getTopics(source)
+      .then((res) => {
+        setBankTopics(res.topics || []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setBankTopics([]);
+        setLoading(false);
+        setLoadError(true);
+      });
+  }, [source]);
+
+  const toggleFocus = (topicName: string) => {
+    let nextFocus = [...focusTopics];
+    let nextAvoid = avoidTopics.filter((t) => t.toLowerCase() !== topicName.toLowerCase());
+
+    if (nextFocus.some((t) => t.toLowerCase() === topicName.toLowerCase())) {
+      nextFocus = nextFocus.filter((t) => t.toLowerCase() !== topicName.toLowerCase());
     } else {
-      nextFocus.push(topic);
+      nextFocus.push(topicName);
     }
     onFocusAvoidChange(nextFocus, nextAvoid);
   };
 
-  const toggleAvoid = (topic: string) => {
+  const toggleAvoid = (topicName: string) => {
     let nextAvoid = [...avoidTopics];
-    let nextFocus = focusTopics.filter((t) => t.toLowerCase() !== topic.toLowerCase());
+    let nextFocus = focusTopics.filter((t) => t.toLowerCase() !== topicName.toLowerCase());
 
-    if (nextAvoid.some((t) => t.toLowerCase() === topic.toLowerCase())) {
-      nextAvoid = nextAvoid.filter((t) => t.toLowerCase() !== topic.toLowerCase());
+    if (nextAvoid.some((t) => t.toLowerCase() === topicName.toLowerCase())) {
+      nextAvoid = nextAvoid.filter((t) => t.toLowerCase() !== topicName.toLowerCase());
     } else {
-      nextAvoid.push(topic);
+      nextAvoid.push(topicName);
     }
     onFocusAvoidChange(nextFocus, nextAvoid);
   };
@@ -111,7 +120,15 @@ export default function StepTopicPreferences({
         </button>
       </div>
 
-      {scheduleMode === 'balanced' ? (
+      {loading ? (
+        <div style={{ padding: '16px 0', color: 'var(--text-muted)', fontSize: 14 }}>
+          Loading topics from question bank...
+        </div>
+      ) : loadError ? (
+        <div style={{ padding: '16px 0', color: '#ef4444', fontSize: 14 }}>
+          Could not load topics.
+        </div>
+      ) : scheduleMode === 'balanced' ? (
         <>
           <div className="topic-group">
             <div className="topic-group__head">
@@ -119,20 +136,20 @@ export default function StepTopicPreferences({
               <span className="topic-group__hint">(Prioritized earlier in the schedule)</span>
             </div>
             <div className="chip-cloud">
-              {AVAILABLE_TOPICS.map((topic) => {
+              {bankTopics.map((topic) => {
                 const isSelected = focusTopics.some(
-                  (t) => t.toLowerCase() === topic.toLowerCase()
+                  (t) => t.toLowerCase() === topic.name.toLowerCase()
                 );
                 return (
                   <button
-                    key={`focus-${topic}`}
+                    key={`focus-${topic.name}`}
                     type="button"
                     className={`chip${isSelected ? ' is-on' : ''}`}
                     aria-pressed={isSelected}
-                    onClick={() => toggleFocus(topic)}
+                    onClick={() => toggleFocus(topic.name)}
                   >
                     {isSelected ? '✓ ' : '+ '}
-                    {topic}
+                    {topic.name} <span className="chip__count">{topic.count}</span>
                   </button>
                 );
               })}
@@ -145,20 +162,20 @@ export default function StepTopicPreferences({
               <span className="topic-group__hint">(Deprioritized or excluded)</span>
             </div>
             <div className="chip-cloud">
-              {AVAILABLE_TOPICS.map((topic) => {
+              {bankTopics.map((topic) => {
                 const isSelected = avoidTopics.some(
-                  (t) => t.toLowerCase() === topic.toLowerCase()
+                  (t) => t.toLowerCase() === topic.name.toLowerCase()
                 );
                 return (
                   <button
-                    key={`avoid-${topic}`}
+                    key={`avoid-${topic.name}`}
                     type="button"
                     className={`chip${isSelected ? ' is-avoid' : ''}`}
                     aria-pressed={isSelected}
-                    onClick={() => toggleAvoid(topic)}
+                    onClick={() => toggleAvoid(topic.name)}
                   >
                     {isSelected ? '✕ ' : ''}
-                    {topic}
+                    {topic.name} <span className="chip__count">{topic.count}</span>
                   </button>
                 );
               })}
@@ -219,11 +236,18 @@ export default function StepTopicPreferences({
           <div className="topic-pool">
             <div className="topic-pool__label t-label">Add topic</div>
             <div className="chip-cloud">
-              {AVAILABLE_TOPICS.filter((t) => !orderedTopics.includes(t)).map((t) => (
-                <button key={t} type="button" className="chip" onClick={() => addTopic(t)}>
-                  + {t}
-                </button>
-              ))}
+              {bankTopics
+                .filter((t) => !orderedTopics.includes(t.name))
+                .map((topic) => (
+                  <button
+                    key={`pool-${topic.name}`}
+                    type="button"
+                    className="chip"
+                    onClick={() => addTopic(topic.name)}
+                  >
+                    + {topic.name} <span className="chip__count">{topic.count}</span>
+                  </button>
+                ))}
             </div>
           </div>
 
@@ -233,20 +257,20 @@ export default function StepTopicPreferences({
               <span className="topic-group__hint">(Deprioritized or excluded)</span>
             </div>
             <div className="chip-cloud">
-              {AVAILABLE_TOPICS.map((topic) => {
+              {bankTopics.map((topic) => {
                 const isSelected = avoidTopics.some(
-                  (t) => t.toLowerCase() === topic.toLowerCase()
+                  (t) => t.toLowerCase() === topic.name.toLowerCase()
                 );
                 return (
                   <button
-                    key={`avoid-${topic}`}
+                    key={`avoid-${topic.name}`}
                     type="button"
                     className={`chip${isSelected ? ' is-avoid' : ''}`}
                     aria-pressed={isSelected}
-                    onClick={() => toggleAvoid(topic)}
+                    onClick={() => toggleAvoid(topic.name)}
                   >
                     {isSelected ? '✕ ' : ''}
-                    {topic}
+                    {topic.name} <span className="chip__count">{topic.count}</span>
                   </button>
                 );
               })}

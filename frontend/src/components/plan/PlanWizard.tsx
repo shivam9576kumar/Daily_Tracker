@@ -313,6 +313,7 @@ export default function PlanWizard() {
           />
 
           <StepTopicPreferences
+            source={source}
             scheduleMode={scheduleMode}
             orderedTopics={orderedTopics}
             focusTopics={focusTopics}

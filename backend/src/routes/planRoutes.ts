@@ -12,6 +12,7 @@ router.post('/commit', planController.commit);
 
 router.get('/active', planController.getActive);
 router.get('/archived', planController.getArchived);
+router.get('/topics', planController.topics);
 
 router.post('/:id/restore', planController.restore);
 router.delete('/:id', planController.remove);

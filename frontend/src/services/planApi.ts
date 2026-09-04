@@ -34,4 +34,9 @@ export const planApi = {
     const res = await api.post('/plans/commit', payload);
     return res.data.data;
   },
+  async getTopics(source: string): Promise<{ source: string; topics: { name: string; count: number }[] }> {
+    const res = await api.get('/plans/topics', { params: { source } });
+    return res.data.data;
+  },
 };
+

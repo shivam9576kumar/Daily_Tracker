@@ -24,10 +24,11 @@ Preparing for technical interviews and mastering Data Structures & Algorithms re
   - ⚔️ **Coder Army Sheet** (715 comprehensive DSA problems across 17 modules).
 - **Dual Scheduling Modes**:
   - 🔄 **Balanced Mode (Default)**: Rotates and interleaves topics across days for optimal revision spread.
-  - 🎯 **Sequential Mode (New)**: Schedules topics in a strict user-defined priority order (e.g., *Finish ALL Stack $\rightarrow$ then ALL Queue $\rightarrow$ then ALL Heap*) without topic rotation.
-- **Flexible Pacing**: Select **Relaxed** (1.5–2.5 load/day), **Moderate** (2.0–3.0 load/day), or **Intensive** (3.0–4.5 load/day).
-- **Ordered Topic Priorities & Filtering**: Drag/reorder topic cards in Step 3 to set exact sequential priorities, or select focus/avoid topics.
-- **Custom Start Date Selection**: Select any custom future start date using a native HTML5 calendar picker with validation against past dates.
+  - 🎯 **Sequential Mode**: Schedules topics in a strict user-defined priority order (e.g., *Finish ALL Stack $\rightarrow$ then ALL Queue $\rightarrow$ then ALL Heap*) without topic rotation.
+- **Dynamic Question Bank Source of Truth (`/api/plans/topics`)**: Focus/Avoid chips and topic counts are fetched directly from the backend question bank endpoint, guaranteeing exact string matching with live problem counts (e.g., *Binary Tree 60, Heap 36, Linked List 59*).
+- **Topic Normalization & Alias Safety Net**: A canonical `topicKey()` normalizer maps free-text AI prompt inputs and legacy saved plans (*"trees", "heaps", "dp"*) to exact question bank canonical names (*"Binary Tree", "Heap", "Dynamic Programming"*).
+- **Flexible Pacing & Custom Duration**: Select preset pace or type any custom duration from 1 to 365 days.
+- **Custom Start Date Picker**: Native calendar picker with validation against past dates.
 - **AI Prompt Assist**: Type prompts like *"30 days plan from Coder Army Sheet finish all Stack then all Queue"* and let Gemini AI configure the settings.
 
 ### 🔄 2. Solve $\rightarrow$ Rate Toggle & 4-Stage Revisions
@@ -188,7 +189,8 @@ npm run dev
 | | `POST` | `/api/tasks/:id/complete` | Complete task (awards coins & streak) |
 | | `POST` | `/api/tasks/:id/unrate` | Un-rate task (refunds coins & deletes 4 pending revisions) |
 | | `DELETE` | `/api/tasks/:id` | Delete task |
-| **Plans** | `POST` | `/api/plans/preview` | Generate schedule preview without saving |
+| **Plans** | `GET` | `/api/plans/topics` | Fetch dynamic topic list & problem counts per source |
+| | `POST` | `/api/plans/preview` | Generate schedule preview without saving |
 | | `POST` | `/api/plans/commit` | Create new plan + batch tasks transaction |
 | | `GET` | `/api/plans/active` | Get current active plan & scheduled tasks |
 | | `POST` | `/api/plans/:id/archive` | Archive an active plan |
