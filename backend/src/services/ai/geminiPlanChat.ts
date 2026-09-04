@@ -446,9 +446,20 @@ PLANNING RULES
 - If the user clearly wants a preview ("generate it", "show me the schedule") set intent = "request_preview".
 - If the user clearly wants to finalize ("create the plan", "yes make it") set intent = "request_commit".
 
-OUTPUT: return JSON ONLY, no markdown, with this exact shape:
+FORMATTING FOR CODE/DSA ANSWERS:
+- When the user asks for code, explanation, approach, or DSA solution:
+  - reply MUST be GitHub Flavored Markdown.
+  - Structure: 1-line intro + blank line + fenced code block with language tag + blank line + Time/Space Complexity bullets.
+  - Always use a language tag: \`\`\`cpp, \`\`\`java, \`\`\`python — never bare \`\`\`.
+  - Keep real newlines inside the reply string as \n. Do NOT collapse code to one line.
+  - Do NOT escape or remove backticks inside reply.
+  - For code/explanation questions: intent = "general_chat", action = "none", missingFields = [], done = false.
+  - Example reply value:
+    "Here is the O(n) hash map approach:\n\n\`\`\`cpp\nvector<int> twoSum(vector<int>& nums, int target) {\n    unordered_map<int, int> m;\n    for (int i = 0; i < nums.size(); i++) {\n        if (m.count(target - nums[i])) return {m[target - nums[i]], i};\n        m[nums[i]] = i;\n    }\n    return {};\n}\n\`\`\`\n\n- **Time:** O(n)\n- **Space:** O(n)"
+
+OUTPUT: return JSON ONLY (the outer wrapper is JSON, but the reply field inside may contain markdown). Use this exact shape:
 {
-  "reply": "your natural 1-3 sentence chat message (this is what the user sees)",
+  "reply": "your natural chat message — may contain GitHub Flavored Markdown including fenced code blocks",
   "intent": "general_chat" | "plan_building" | "request_preview" | "request_commit" | "off_topic",
   "draftPatch": {
     "source": "neetcode150" | "coderarmy" | null,
@@ -467,6 +478,18 @@ OUTPUT: return JSON ONLY, no markdown, with this exact shape:
   "assumptions": ["string"]
 }
 `;
+}
+
+/**
+ * Extract JSON from Gemini response. Only strips the outermost ```json fence,
+ * preserving all code fences inside the reply field.
+ */
+function extractJson(raw: string): string {
+  const t = raw.trim();
+  // Match outermost ```json ... ``` wrapper only
+  const m = t.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  if (m) return m[1].trim();
+  return t;
 }
 
 export const geminiPlanChat = {
@@ -488,7 +511,7 @@ export const geminiPlanChat = {
         { contents: [{ role: 'user', parts: [{ text: prompt }] }] },
         { temperature: 0.2, responseMimeType: 'application/json' }
       );
-      const cleaned = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+      const cleaned = extractJson(raw);
       const parsed = JSON.parse(cleaned);
 
       const reply =

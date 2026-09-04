@@ -687,12 +687,79 @@
   align-self: flex-end;
   background: var(--brand);
   color: var(--text-on-brand);
+  white-space: pre-wrap;
 }
 
 .ai-chat__bubble--assistant {
   align-self: flex-start;
   background: var(--bg-subtle);
   color: var(--text-primary);
+  max-width: min(85%, 680px);
+}
+
+/* ─── ChatMarkdown — AI-style code rendering ─── */
+.chat-md { word-break: break-word; }
+.chat-md__p { margin: 0 0 8px; font: 400 14px/1.6 var(--font-sans); color: var(--text-primary); }
+.chat-md__p:last-child { margin-bottom: 0; }
+.chat-md__ul, .chat-md__ol { margin: 8px 0; padding-left: 20px; font: 400 14px/1.6 var(--font-sans); color: var(--text-primary); }
+.chat-md__li { margin: 2px 0; }
+.chat-md__strong { font-weight: 600; color: var(--text-primary); }
+.chat-md__heading { margin: 12px 0 6px; font: 600 15px/1.3 var(--font-sans); color: var(--text-primary); }
+
+.chat-md__inline {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font: 600 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--text-primary);
+}
+
+/* Code block wrapper (pre-wrap holds copy btn + pre) */
+.chat-md__pre-wrap {
+  position: relative;
+  margin: 10px 0;
+}
+
+.chat-md__pre {
+  margin: 0;
+  padding: 14px;
+  border-radius: 12px;
+  overflow-x: auto;
+  background: #0d1117;
+  border: 1px solid var(--border);
+}
+
+.chat-md__pre code,
+.chat-md__code {
+  background: transparent !important;
+  padding: 0 !important;
+  font: 400 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: #e6edf3;
+}
+
+.chat-md__copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font: 600 12px/1 var(--font-sans);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.chat-md__pre-wrap:hover .chat-md__copy {
+  opacity: 1;
+}
+
+.chat-md__copy:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .ai-chat__greeting {

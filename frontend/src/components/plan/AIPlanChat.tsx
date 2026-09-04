@@ -4,6 +4,7 @@ import {
   draftToPlanPayload,
   planPayloadFingerprint,
 } from '../../utils/planDraft';
+import ChatMarkdown from './ChatMarkdown';
 import type {
   AIChatMessage,
   AIDraft,
@@ -104,7 +105,9 @@ export default function AIPlanChat({
         )}
         {messages.map((m, i) => (
           <div key={i} className={`ai-chat__bubble ai-chat__bubble--${m.role}`}>
-            {m.content}
+            {m.role === 'assistant'
+              ? <ChatMarkdown text={m.content} />
+              : m.content}
           </div>
         ))}
         {loading && <div className="ai-chat__bubble ai-chat__bubble--assistant">Thinking…</div>}
