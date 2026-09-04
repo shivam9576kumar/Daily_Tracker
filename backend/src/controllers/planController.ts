@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getAuthUser } from '../middleware/authMiddleware';
+import { getTz } from '../middleware/timezoneMiddleware';
 import { planGenerationService } from '../services/plan/planGenerationService';
 import { planService } from '../services/plan/planService';
 import { geminiPlanParser } from '../services/ai/geminiPlanParser';
@@ -13,7 +14,7 @@ export const planController = {
       const { messages, draft } = req.body;
       if (!messages || !Array.isArray(messages)) throw new ValidationError('messages is required');
       if (!draft) throw new ValidationError('draft is required');
-      const result = await geminiPlanChat.process({ messages, draft });
+      const result = await geminiPlanChat.process({ messages, draft, timezone: getTz(req) });
       sendSuccess(res, result);
     } catch (err) {
       next(err);

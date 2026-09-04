@@ -199,6 +199,13 @@ export interface AIDraft {
   bufferDay: number | null;
 }
 
+export type AIIntent =
+  | 'general_chat'
+  | 'plan_building'
+  | 'request_preview'
+  | 'request_commit'
+  | 'off_topic';
+
 export interface AIChatMessage {
   role: 'user' | 'assistant';
   content: string;
@@ -207,12 +214,14 @@ export interface AIChatMessage {
 export interface AIConversationRequest {
   messages: AIChatMessage[];
   draft: AIDraft;
+  timezone?: string;
 }
 
 export interface AIConversationResponse {
+  reply: string;
+  intent: AIIntent;
   draft: AIDraft;
   missingFields: string[];
-  question: string;
   done: boolean;
   confidence: 'high' | 'low';
 }

@@ -1,3 +1,15 @@
+# Complete Code Changes & Exact Code Written
+
+This document contains the exact code written and added across all files in the project for the **Real Conversational AI Plan Generator + `topicQuotas` Fix**.
+
+---
+
+## 1. `backend/src/services/ai/geminiPlanChat.ts` (REWRITTEN)
+**Link**: [`geminiPlanChat.ts`](file:///c:/Users/shiva/Daily_Tracker/backend/src/services/ai/geminiPlanChat.ts)
+
+Full implementation of real AI conversation, trusted context injection, intent classification, draft patch sanitization, and offline mode fallback:
+
+```ts
 import { env } from '../../config/env';
 import { geminiGenerate } from '../../utils/geminiClient';
 import logger from '../../utils/logger';
@@ -239,7 +251,6 @@ export const geminiPlanChat = {
     }
   },
 
-  // Used when the model returned a draft but no usable reply text.
   composeFallbackReply(draft: AIDraft, missingFields: string[]): string {
     if (missingFields.length === 0) return 'Your plan is ready. Tap Generate Preview to see the schedule.';
     const first = missingFields[0];
@@ -252,7 +263,6 @@ export const geminiPlanChat = {
     return ask[first] ?? 'Tell me a bit more and I will set it up.';
   },
 
-  // Honest degraded mode: no key. Still extracts what it can, but says it is offline.
   offlineReply(messages: AIChatMessage[], draft: AIDraft, ctx: { today: string }): AIChatResponse {
     const lastUser = [...messages].reverse().find((m) => m.role === 'user');
     const text = lastUser?.content ?? '';
@@ -311,3 +321,282 @@ export const geminiPlanChat = {
     return patch;
   },
 };
+```
+
+---
+
+## 2. `backend/src/controllers/planController.ts`
+**Link**: [`planController.ts`](file:///c:/Users/shiva/Daily_Tracker/backend/src/controllers/planController.ts)
+
+Forwarded timezone header:
+
+```ts
+import { Request, Response, NextFunction } from 'express';
+import { getAuthUser } from '../middleware/authMiddleware';
+import { getTz } from '../middleware/timezoneMiddleware';
+import { planGenerationService } from '../services/plan/planGenerationService';
+import { planService } from '../services/plan/planService';
+import { geminiPlanParser } from '../services/ai/geminiPlanParser';
+import { geminiPlanChat } from '../services/ai/geminiPlanChat';
+import { sendSuccess } from '../utils/response';
+import { ValidationError } from '../utils/error';
+
+export const planController = {
+  async aiConversation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { messages, draft } = req.body;
+      if (!messages || !Array.isArray(messages)) throw new ValidationError('messages is required');
+      if (!draft) throw new ValidationError('draft is required');
+      const result = await geminiPlanChat.process({ messages, draft, timezone: getTz(req) });
+      sendSuccess(res, result);
+    } catch (err) {
+      next(err);
+    }
+  },
+  // ...
+};
+```
+
+---
+
+## 3. `frontend/src/types/index.ts`
+**Link**: [`index.ts`](file:///c:/Users/shiva/Daily_Tracker/frontend/src/types/index.ts)
+
+Added `AIIntent` type and updated `AIConversationResponse`:
+
+```ts
+export type AIIntent =
+  | 'general_chat'
+  | 'plan_building'
+  | 'request_preview'
+  | 'request_commit'
+  | 'off_topic';
+
+export interface AIChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface AIConversationRequest {
+  messages: AIChatMessage[];
+  draft: AIDraft;
+  timezone?: string;
+}
+
+export interface AIConversationResponse {
+  reply: string;
+  intent: AIIntent;
+  draft: AIDraft;
+  missingFields: string[];
+  done: boolean;
+  confidence: 'high' | 'low';
+}
+```
+
+---
+
+## 4. `frontend/src/components/plan/AIPlanChat.tsx`
+**Link**: [`AIPlanChat.tsx`](file:///c:/Users/shiva/Daily_Tracker/frontend/src/components/plan/AIPlanChat.tsx)
+
+Renders verbatim Gemini reply and executes intent actions:
+
+```tsx
+import { useState } from 'react';
+import { planApi } from '../../services/planApi';
+import type {
+  AIChatMessage,
+  AIDraft,
+  GeneratePlanPayload,
+  PlanSource,
+  AIIntent,
+} from '../../types';
+
+interface Props {
+  onGeneratePreview: (payload: GeneratePlanPayload) => void;
+  onCommit: () => void;
+  onTweakManually: (draft: AIDraft) => void;
+  canCommit: boolean;        // true only after a preview is loaded
+  previewLoaded: boolean;    // drives the "Create Plan" button
+}
+
+export default function AIPlanChat({
+  onGeneratePreview,
+  onCommit,
+  onTweakManually,
+  canCommit,
+  previewLoaded,
+}: Props) {
+  const [messages, setMessages] = useState<AIChatMessage[]>([]);
+  const [draft, setDraft] = useState<AIDraft | null>(null);
+  const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState('');
+
+  const buildPayload = (): GeneratePlanPayload => {
+    const today = new Date().toISOString().split('T')[0];
+    return {
+      source: (draft?.source as PlanSource) || 'neetcode150',
+      startDate: draft?.startDate || today,
+      durationDays: draft?.durationDays || 30,
+      pace: (draft?.pace as any) || 'moderate',
+      weekdayLoad: draft?.weekdayLoad ?? 2,
+      weekendLoad: draft?.weekendLoad ?? 3,
+      topicQuotas: draft?.topicQuotas ?? undefined,
+      focusTopics: draft?.focusTopics ?? undefined,
+      avoidTopics: draft?.avoidTopics ?? undefined,
+      busyDays: draft?.busyDays ?? [],
+    };
+  };
+
+  const actOnIntent = (intent: AIIntent) => {
+    if (intent === 'request_commit' && canCommit) {
+      onCommit();
+    } else if (intent === 'request_preview' || (intent === 'request_commit' && !canCommit)) {
+      onGeneratePreview(buildPayload());
+    }
+  };
+
+  const send = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg: AIChatMessage = { role: 'user', content: input.trim() };
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
+    setInput('');
+    setLoading(true);
+
+    try {
+      const res = await planApi.aiConversation({
+        messages: newMessages,
+        draft: draft ?? ({} as AIDraft),
+      });
+      setDraft(res.draft);
+      setDone(res.done);
+      // Show the REAL AI reply — never a hardcoded menu.
+      setMessages([...newMessages, { role: 'assistant', content: res.reply }]);
+      actOnIntent(res.intent);
+    } catch (err) {
+      setMessages([
+        ...newMessages,
+        { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="ai-chat card">
+      <div className="ai-chat__messages">
+        {messages.length === 0 && (
+          <div className="ai-chat__bubble ai-chat__bubble--assistant">
+            Hi! Tell me what you want to study. Example: “10 Stack, 10 Heap, 10 Queue from Coder Army in 15 days.”
+          </div>
+        )}
+        {messages.map((m, i) => (
+          <div key={i} className={`ai-chat__bubble ai-chat__bubble--${m.role}`}>
+            {m.content}
+          </div>
+        ))}
+        {loading && <div className="ai-chat__bubble ai-chat__bubble--assistant">Thinking…</div>}
+      </div>
+
+      <div className="ai-chat__input-row">
+        <input
+          className="field ai-chat__input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') send();
+          }}
+          placeholder="Type your message…"
+          disabled={loading}
+        />
+        <button className="btn-primary" onClick={send} disabled={loading}>
+          Send
+        </button>
+      </div>
+
+      {done && draft && (
+        <div className="ai-draft-summary card">
+          <h3>Plan draft</h3>
+          <p>
+            <strong>Source:</strong>{' '}
+            {draft.source === 'coderarmy'
+              ? 'Coder Army Sheet'
+              : draft.source === 'neetcode150'
+              ? 'NeetCode 150'
+              : '—'}
+          </p>
+          <p>
+            <strong>Start:</strong> {draft.startDate || '—'} · <strong>Duration:</strong>{' '}
+            {draft.durationDays ? `${draft.durationDays} days` : '—'}
+          </p>
+          {draft.topicQuotas?.length ? (
+            <p>
+              <strong>Topics:</strong>{' '}
+              {draft.topicQuotas.map((q) => `${q.topic} ${q.count}`).join(' · ')}
+            </p>
+          ) : draft.focusTopics?.length ? (
+            <p>
+              <strong>Focus:</strong> {draft.focusTopics.join(', ')}
+            </p>
+          ) : null}
+          {draft.busyDays?.length ? (
+            <p>
+              <strong>Busy days:</strong> {draft.busyDays.map((d) => d.date).join(', ')}
+            </p>
+          ) : null}
+
+          <div className="ai-draft-summary__actions">
+            <button className="btn-primary" onClick={() => onGeneratePreview(buildPayload())}>
+              🚀 Generate Preview
+            </button>
+            {previewLoaded && (
+              <button className="btn-primary" onClick={onCommit}>
+                ✅ Create Plan
+              </button>
+            )}
+            <button className="btn-secondary" onClick={() => onTweakManually(draft)}>
+              🔧 Edit Manually
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+---
+
+## 5. `frontend/src/components/plan/PlanWizard.tsx`
+**Link**: [`PlanWizard.tsx`](file:///c:/Users/shiva/Daily_Tracker/frontend/src/components/plan/PlanWizard.tsx)
+
+Updated props passed to `<AIPlanChat />`:
+
+```tsx
+const previewLoaded = Boolean(previewData);
+
+{mode === 'ai' ? (
+  <>
+    <AIPlanChat
+      onGeneratePreview={(payload) => handleGeneratePreview(payload)}
+      onCommit={() => handleCommit()}
+      onTweakManually={handleTweakManually}
+      canCommit={previewLoaded}
+      previewLoaded={previewLoaded}
+    />
+    {previewData && (
+      <div style={{ marginTop: 24 }}>
+        <PlanPreview
+          preview={previewData}
+          onCommit={handleCommit}
+          committing={committing}
+        />
+      </div>
+    )}
+  </>
+) : (
+  // 5-step manual wizard...
+)}
+```

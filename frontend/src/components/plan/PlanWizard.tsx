@@ -166,6 +166,7 @@ export default function PlanWizard() {
 
   const steps = ['Source', 'Schedule', 'Topics', 'Busy Days', 'Preview'];
   const current = previewData ? 4 : 0;
+  const previewLoaded = Boolean(previewData);
 
   return (
     <>
@@ -200,7 +201,10 @@ export default function PlanWizard() {
         <>
           <AIPlanChat
             onGeneratePreview={(payload) => handleGeneratePreview(payload)}
+            onCommit={() => handleCommit()}
             onTweakManually={handleTweakManually}
+            canCommit={previewLoaded}
+            previewLoaded={previewLoaded}
           />
           {previewData && (
             <div style={{ marginTop: 24 }}>
