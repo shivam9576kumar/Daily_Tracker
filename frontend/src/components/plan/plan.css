@@ -797,3 +797,29 @@
   gap: 8px;
   flex-wrap: wrap;
 }
+
+/* Mobile responsive rules for Plan Wizard & AI Chat */
+@media (max-width: 768px) {
+  .source-grid { grid-template-columns: 1fr; }
+  .pace-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .busy-form { grid-template-columns: 1fr; }
+  .preview-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .ai-chat { padding: 14px; }
+  .ai-chat__bubble, .ai-chat__bubble--assistant { max-width: 92%; }
+  .ai-chat__input-row { flex-direction: row; }
+  .ai-chat__input { min-height: 44px; }
+  .ai-draft-summary__list { grid-template-columns: 1fr; }
+  .ai-draft-summary__actions { flex-direction: column; }
+  .ai-draft-summary__actions .btn-primary,
+  .ai-draft-summary__actions .btn-secondary { width: 100%; }
+  .chat-md__pre { font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .preview-grid { grid-template-columns: 1fr; }
+  .plan-mode-toggle { width: 100%; }
+  .plan-mode-toggle__btn { flex: 1; }
+}
+

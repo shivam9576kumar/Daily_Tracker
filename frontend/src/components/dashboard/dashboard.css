@@ -91,3 +91,19 @@ input.task-row__check:focus-visible { outline: 0; box-shadow: var(--focus-ring);
 .task-rate-label { font-size: 11px; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--text-muted); }
 .task-rate-hint { font-size: 11.5px; color: var(--text-muted); font-style: italic; }
 
+@media (max-width: 400px) {
+  .stats-grid { grid-template-columns: 1fr; gap: 12px; }
+  .stat-card { padding: 16px 18px; }
+  .t-stat { font-size: 30px; }
+}
+
+@media (max-width: 768px) {
+  .dashboard, .dashboard-page { gap: 16px; }
+  .vibe-card { padding: 14px 16px; gap: 12px; }
+  .vibe-card__emoji { width: 36px; height: 36px; font-size: 18px; }
+  .vibe-card__msg { font-size: 15px; }
+  .section-head { flex-wrap: wrap; }
+  .section-head .btn-primary { min-height: 40px; }
+}
+
+

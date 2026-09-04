@@ -1,5 +1,33 @@
 *, *::before, *::after { box-sizing: border-box; }
 
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img, svg, video, canvas { max-width: 100%; height: auto; }
+
+/* long words / urls never blow width */
+.t-title, .task-panel__title, .cl-subject, .kv__v { overflow-wrap: anywhere; }
+
+/* respect iOS safe areas */
+.app-main {
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
+}
+@media (max-width: 768px) {
+  .app-main {
+    padding: 16px;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}
+@media (max-width: 400px) {
+  .app-main { padding: 12px; }
+}
+
+
 /* ================================================================
    THEME-AGNOSTIC TOKENS & TYPE SCALE
    ================================================================ */
@@ -236,14 +264,6 @@ a { color: var(--text-link); }
 button { font-family: inherit; }
 
 /* Navbar */
-.navbar {
-  height: 64px;
-  padding: 0 24px;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border);
-  box-sizing: border-box;
-}
-
 .navbar__brand {
   font: var(--fw-brand) var(--fs-brand)/1 var(--font-sans);
   letter-spacing: -0.02em;

@@ -383,3 +383,42 @@
     transform: translateX(0);
   }
 }
+
+/* ─── Mobile Responsive Drawer & Modal Tweaks ─── */
+@media (max-width: 768px) {
+  .task-panel, .drawer {
+    width: 100vw;
+    border-left: 0;
+  }
+  .task-panel__head, .drawer-header { padding: 16px 16px 12px; }
+  .task-panel__body, .drawer-body {
+    padding: 14px 16px 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .task-panel__foot, .drawer-footer {
+    padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+  }
+  .task-panel__title { font-size: 18px; }
+
+  .modal-overlay { padding: 12px; align-items: flex-end; }
+  .modal {
+    max-width: 100%;
+    max-height: 92vh;
+    padding: 20px 16px calc(20px + env(safe-area-inset-bottom));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    animation: sheetUp .24s cubic-bezier(0.16,1,0.3,1);
+  }
+  .form-row { grid-template-columns: 1fr; }
+  .modal-footer { position: sticky; bottom: 0; background: var(--bg-elevated); }
+  .modal-footer .btn { flex: 1; }
+
+  .field, .form-input, .form-select, .notes-textarea, .ai-chat__input, input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(30px); opacity: .6; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
