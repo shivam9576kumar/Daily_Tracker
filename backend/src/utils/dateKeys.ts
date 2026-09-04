@@ -36,8 +36,10 @@ export function dateKeyInTz(date: Date, tz: string): string {
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
-export function todayKey(tz: string): string {
-  return dateKeyInTz(new Date(), tz);
+import { env } from '../config/env';
+
+export function todayKey(tz?: string): string {
+  return dateKeyInTz(new Date(), tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
 }
 
 /** Add days to a key without any timezone/DST drift. */

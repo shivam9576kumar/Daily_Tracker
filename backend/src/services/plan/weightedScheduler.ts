@@ -73,24 +73,71 @@ export function scheduleQuestions(params: {
   let filtered = [...rawQuestions];
 
   if (topicQuotas && topicQuotas.length > 0) {
-    let selected: QuestionBankEntry[] = [];
-    for (const quota of topicQuotas) {
-      const topicQuestions = rawQuestions.filter(
-        (q) => q.topic.toLowerCase() === quota.topic.toLowerCase()
-      );
-      const take = Math.min(topicQuestions.length, quota.count);
-      selected.push(...topicQuestions.slice(0, take));
-      if (take < quota.count) {
-        warnings.push(`Only ${take} questions available for ${quota.topic} (requested ${quota.count}).`);
+    // 1. Merge duplicate quota topics case-insensitively and ignore non-positive counts
+    const quotaMap = new Map<string, { topicName: string; count: number }>();
+    for (const q of topicQuotas) {
+      if (!q || !q.topic || typeof q.topic !== 'string') continue;
+      const count = Math.floor(Number(q.count));
+      if (!Number.isFinite(count) || count < 1) continue;
+
+      const normKey = q.topic.trim().toLowerCase();
+      const existing = quotaMap.get(normKey);
+      if (existing) {
+        existing.count += count;
+      } else {
+        // Resolve canonical topic name from rawQuestions if available
+        const matchingQ = rawQuestions.find(
+          (raw) => raw.topic.trim().toLowerCase() === normKey
+        );
+        const topicName = matchingQ ? matchingQ.topic : q.topic.trim();
+        quotaMap.set(normKey, { topicName, count });
       }
     }
+
+    const selected: QuestionBankEntry[] = [];
+    const selectedIds = new Set<string>();
+
+    for (const { topicName, count: requestedCount } of quotaMap.values()) {
+      const topicQuestions = rawQuestions.filter(
+        (q) => q.topic.trim().toLowerCase() === topicName.toLowerCase()
+      );
+
+      const unselectedForTopic = topicQuestions.filter(
+        (q) => !selectedIds.has(q.id)
+      );
+
+      const take = Math.min(unselectedForTopic.length, requestedCount);
+      const chosen = unselectedForTopic.slice(0, take);
+
+      for (const q of chosen) {
+        selectedIds.add(q.id);
+        selected.push(q);
+      }
+
+      if (take < requestedCount) {
+        warnings.push(
+          `Only ${take} questions available for ${topicName} (requested ${requestedCount}).`
+        );
+      }
+    }
+
+    let finalSelected = selected;
     // Remove avoided topics from the selected set
     if (avoidSet.size > 0) {
-      selected = selected.filter((q) => !avoidSet.has(q.topic.toLowerCase().trim()));
+      const countBeforeAvoid = finalSelected.length;
+      finalSelected = finalSelected.filter(
+        (q) => !avoidSet.has(q.topic.toLowerCase().trim())
+      );
+      if (finalSelected.length < countBeforeAvoid) {
+        warnings.push(
+          `Avoid topics removed ${countBeforeAvoid - finalSelected.length} questions from requested topic quotas.`
+        );
+      }
     }
-    filtered = selected;
+
+    filtered = finalSelected;
     if (filtered.length === 0) {
-      errors.push('No questions remain after quota and avoid-topic filtering.');
+      errors.push('No questions remain after applying topic quantities and avoid topics.');
     }
   } else {
     // 1a. If focus topics specified, keep ONLY those topics

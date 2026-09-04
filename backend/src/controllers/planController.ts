@@ -1,20 +1,89 @@
 import { Request, Response, NextFunction } from 'express';
+import prisma from '../config/database';
 import { getAuthUser } from '../middleware/authMiddleware';
 import { getTz } from '../middleware/timezoneMiddleware';
+import { todayKey } from '../utils/dateKeys';
+import {
+  loadQuestionBank,
+  getAvailableTopics,
+  getTopicCount,
+} from '../services/plan/questionBankLoader';
+import { geminiPlanChat } from '../services/ai/geminiPlanChat';
 import { planGenerationService } from '../services/plan/planGenerationService';
 import { planService } from '../services/plan/planService';
 import { geminiPlanParser } from '../services/ai/geminiPlanParser';
-import { geminiPlanChat } from '../services/ai/geminiPlanChat';
 import { sendSuccess } from '../utils/response';
 import { ValidationError } from '../utils/error';
+
+function buildPlannerContext(
+  timezone: string,
+  hasActivePlan: boolean
+) {
+  const makeSource = (
+    id: 'neetcode150' | 'coderarmy',
+    name: string
+  ) => {
+    const questions = loadQuestionBank(id);
+
+    return {
+      id,
+      name,
+      total: questions.length,
+      topics: getAvailableTopics(questions).map((topic) => ({
+        name: topic,
+        available: getTopicCount(questions, topic),
+      })),
+    };
+  };
+
+  return {
+    today: todayKey(timezone),
+    timezone,
+    hasActivePlan,
+    sources: [
+      makeSource('neetcode150', 'NeetCode 150'),
+      makeSource('coderarmy', 'Coder Army Sheet'),
+    ],
+  };
+}
 
 export const planController = {
   async aiConversation(req: Request, res: Response, next: NextFunction) {
     try {
+      const user = getAuthUser(req);
       const { messages, draft } = req.body;
-      if (!messages || !Array.isArray(messages)) throw new ValidationError('messages is required');
-      if (!draft) throw new ValidationError('draft is required');
-      const result = await geminiPlanChat.process({ messages, draft, timezone: getTz(req) });
+
+      if (!Array.isArray(messages)) {
+        throw new ValidationError('messages must be an array');
+      }
+
+      if (!draft || typeof draft !== 'object') {
+        throw new ValidationError('draft is required');
+      }
+
+      const timezone = getTz(req);
+
+      const activePlan = await prisma.plan.findFirst({
+        where: {
+          userId: user.id,
+          status: 'active',
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      const context = buildPlannerContext(
+        timezone,
+        Boolean(activePlan)
+      );
+
+      const result = await geminiPlanChat.process({
+        messages,
+        draft,
+        context,
+      });
+
       sendSuccess(res, result);
     } catch (err) {
       next(err);

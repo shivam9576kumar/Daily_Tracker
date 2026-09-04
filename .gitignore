@@ -30,3 +30,6 @@ npm-debug.log*
 
 # Coverage
 coverage/
+
+# Scratch
+scratch/

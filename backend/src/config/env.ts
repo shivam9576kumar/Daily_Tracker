@@ -27,9 +27,9 @@ export const env = {
 
   // Gemini AI
   GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
-  GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-flash-latest',
+  GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-3.6-flash',
   GEMINI_MODEL_FALLBACKS: (
-    process.env.GEMINI_MODEL_FALLBACKS || 'gemini-3.6-flash,gemini-2.5-flash'
+    process.env.GEMINI_MODEL_FALLBACKS || 'gemini-1.5-flash-latest,gemini-2.0-flash-exp,gemini-1.5-pro-latest'
   )
     .split(',')
     .map((s) => s.trim())

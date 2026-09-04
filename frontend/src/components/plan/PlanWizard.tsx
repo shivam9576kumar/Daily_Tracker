@@ -11,6 +11,11 @@ import Modal from '../common/Modal';
 import { planApi } from '../../services/planApi';
 import { getErrorMessage } from '../../services/api';
 import { useUIStore } from '../../store/uiStore';
+import {
+  draftToPlanPayload,
+  planPayloadFingerprint,
+  getLocalDateKey,
+} from '../../utils/planDraft';
 import type {
   GeneratePlanPayload,
   PlanPace,
@@ -21,14 +26,6 @@ import type {
   AIDraft,
 } from '../../types';
 import './plan.css';
-
-function getLocalDateKey(): string {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
 
 export default function PlanWizard() {
   const navigate = useNavigate();
@@ -53,8 +50,14 @@ export default function PlanWizard() {
   const [avoidTopics, setAvoidTopics] = useState<string[]>([]);
   const [busyDays, setBusyDays] = useState<BusyDayInput[]>([]);
 
-  // Preview data
+  // Preview state & truth
   const [previewData, setPreviewData] = useState<PlanPreviewData | null>(null);
+  const [previewPayload, setPreviewPayload] = useState<GeneratePlanPayload | null>(null);
+
+  const clearPreview = () => {
+    setPreviewData(null);
+    setPreviewPayload(null);
+  };
 
   const handleAiParse = async (prompt: string) => {
     setAiLoading(true);
@@ -71,7 +74,7 @@ export default function PlanWizard() {
       if (typeof parsed.bufferDay === 'number') setBufferDay(parsed.bufferDay);
 
       toast('✨ AI populated your plan settings! Please review before generating.', 'success');
-      setPreviewData(null);
+      clearPreview();
     } catch (err) {
       toast(getErrorMessage(err) || 'AI could not understand. Please fill manually.', 'error');
     } finally {
@@ -91,7 +94,7 @@ export default function PlanWizard() {
         weekendLoad,
         bufferDay,
         topicQuotas: topicQuotas.length > 0 ? topicQuotas : undefined,
-        focusTopics,
+        focusTopics: topicQuotas.length > 0 ? undefined : focusTopics,
         avoidTopics,
         busyDays,
       };
@@ -111,6 +114,7 @@ export default function PlanWizard() {
 
       const preview = await planApi.preview(payload);
       setPreviewData(preview);
+      setPreviewPayload(payload);
       toast('Plan schedule preview generated!', 'info');
     } catch (err) {
       toast(getErrorMessage(err), 'error');
@@ -119,8 +123,22 @@ export default function PlanWizard() {
     }
   };
 
+  const handleAIPlanDraftChanged = (nextDraft: AIDraft) => {
+    if (!previewPayload) return;
+    const nextPayload = draftToPlanPayload(nextDraft);
+
+    if (
+      planPayloadFingerprint(previewPayload) !==
+      planPayloadFingerprint(nextPayload)
+    ) {
+      clearPreview();
+    }
+  };
+
   const handleTweakManually = (draft: AIDraft) => {
-    setSource(draft.source || 'neetcode150');
+    clearPreview();
+
+    setSource((draft.source as PlanSource) || 'neetcode150');
     setStartDate(draft.startDate || getLocalDateKey());
     setDurationDays(draft.durationDays || 30);
     if (draft.pace) setPace(draft.pace as PlanPace);
@@ -135,26 +153,18 @@ export default function PlanWizard() {
   };
 
   const handleCommit = async (archiveExisting = false) => {
+    if (!previewPayload || !previewData) {
+      return;
+    }
+
     setCommitting(true);
     try {
-      const sourceTitle = source === 'coderarmy' ? 'Coder Army' : 'NeetCode 150';
-      const payload: GeneratePlanPayload = {
-        name: `${sourceTitle} - ${durationDays} Day Plan`,
-        source,
-        startDate,
-        durationDays,
-        pace,
-        weekdayLoad,
-        weekendLoad,
-        bufferDay,
-        topicQuotas: topicQuotas.length > 0 ? topicQuotas : undefined,
-        focusTopics,
-        avoidTopics,
-        busyDays,
+      const payloadToCommit: GeneratePlanPayload = {
+        ...previewPayload,
         archiveExisting,
       };
 
-      const result = await planApi.commit(payload);
+      const result = await planApi.commit(payloadToCommit);
       toast(`🎉 Plan "${result.plan.name}" created with ${result.tasksCreated} tasks!`, 'success');
       setArchiveModalOpen(false);
       navigate('/roadmap');
@@ -172,7 +182,7 @@ export default function PlanWizard() {
 
   const steps = ['Source', 'Schedule', 'Topics', 'Busy Days', 'Preview'];
   const current = previewData ? 4 : 0;
-  const previewLoaded = Boolean(previewData);
+  const previewLoaded = Boolean(previewData && previewPayload);
 
   return (
     <>
@@ -209,13 +219,14 @@ export default function PlanWizard() {
             onGeneratePreview={(payload) => handleGeneratePreview(payload)}
             onCommit={() => handleCommit()}
             onTweakManually={handleTweakManually}
+            onPlanDraftChanged={handleAIPlanDraftChanged}
             previewLoaded={previewLoaded}
           />
           {previewData && (
             <div style={{ marginTop: 24 }}>
               <PlanPreview
                 preview={previewData}
-                onCommit={handleCommit}
+                onCommit={() => handleCommit()}
                 committing={committing}
               />
             </div>
@@ -238,7 +249,13 @@ export default function PlanWizard() {
 
           <PromptAssist onParse={handleAiParse} loading={aiLoading} />
 
-          <StepSourceSelect source={source} onChange={setSource} />
+          <StepSourceSelect
+            source={source}
+            onChange={(s) => {
+              setSource(s);
+              clearPreview();
+            }}
+          />
 
           <StepSchedulePace
             startDate={startDate}
@@ -254,7 +271,7 @@ export default function PlanWizard() {
               if (fields.weekdayLoad !== undefined) setWeekdayLoad(fields.weekdayLoad);
               if (fields.weekendLoad !== undefined) setWeekendLoad(fields.weekendLoad);
               if (fields.bufferDay !== undefined) setBufferDay(fields.bufferDay);
-              setPreviewData(null);
+              clearPreview();
             }}
           />
 
@@ -264,7 +281,7 @@ export default function PlanWizard() {
             onChange={(f, a) => {
               setFocusTopics(f);
               setAvoidTopics(a);
-              setPreviewData(null);
+              clearPreview();
             }}
           />
 
@@ -272,7 +289,7 @@ export default function PlanWizard() {
             busyDays={busyDays}
             onChange={(b) => {
               setBusyDays(b);
-              setPreviewData(null);
+              clearPreview();
             }}
           />
 
@@ -293,7 +310,7 @@ export default function PlanWizard() {
           {previewData && (
             <PlanPreview
               preview={previewData}
-              onCommit={handleCommit}
+              onCommit={() => handleCommit()}
               committing={committing}
             />
           )}
@@ -332,4 +349,5 @@ export default function PlanWizard() {
     </>
   );
 }
+
 

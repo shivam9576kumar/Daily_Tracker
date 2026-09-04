@@ -1,7 +1,8 @@
 import prisma from '../../config/database';
-import { loadQuestionBank } from './questionBankLoader';
+import { QuestionBankEntry, loadQuestionBank } from './questionBankLoader';
 import { calculateDailyCapacities, BusyDayInput } from './capacityCalculator';
 import { scheduleQuestions, SchedulerResult, TopicQuota } from './weightedScheduler';
+import { todayKey } from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
 
 export interface GeneratePlanInput {
@@ -29,7 +30,7 @@ export const planGenerationService = {
   ): Promise<SchedulerResult> {
     const {
       source = 'neetcode150',
-      startDate = new Date().toISOString().split('T')[0],
+      startDate = todayKey(),
       durationDays = 14,
       weekdayLoad = 2.0,
       weekendLoad = 3.0,

@@ -32,24 +32,41 @@ export async function geminiGenerate(
         },
       });
 
-      const result = await model.generateContent(request);
-      const text = result.response.text();
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const result = await model.generateContent(request);
+          const text = result.response.text();
 
-      if (modelName !== env.GEMINI_MODEL) {
-        logger.info(`Gemini fallback succeeded with model: ${modelName}`);
+          if (modelName !== env.GEMINI_MODEL) {
+            logger.info(`Gemini fallback succeeded with model: ${modelName}`);
+          }
+
+          return text;
+        } catch (err: any) {
+          const msg: string = err?.message ?? '';
+          const isBusy = msg.includes('503') || msg.includes('high demand') || msg.includes('overloaded');
+          if (isBusy && attempt < 2) {
+            logger.warn(`Gemini model ${modelName} 503 busy, retrying attempt ${attempt + 1}...`);
+            await new Promise((r) => setTimeout(r, 1000));
+            continue;
+          }
+          throw err;
+        }
       }
-
-      return text;
+      throw new Error(`Failed all attempts for ${modelName}`);
     } catch (err: any) {
       const msg: string = err?.message ?? '';
-      const isDeprecated =
+      const isDeprecatedOrBusy =
         msg.includes('404') ||
+        msg.includes('503') ||
         msg.includes('no longer available') ||
         msg.includes('deprecated') ||
-        msg.includes('not found');
+        msg.includes('not found') ||
+        msg.includes('high demand') ||
+        msg.includes('overloaded');
 
-      if (isDeprecated) {
-        logger.warn(`Gemini model deprecated: ${modelName}. Trying next.`);
+      if (isDeprecatedOrBusy) {
+        logger.warn(`Gemini model ${modelName} unavailable/busy: ${msg}. Trying next model.`);
         lastError = err;
         continue;
       }

@@ -1,32 +1,29 @@
 import { useState } from 'react';
 import { planApi } from '../../services/planApi';
+import {
+  draftToPlanPayload,
+  planPayloadFingerprint,
+} from '../../utils/planDraft';
 import type {
   AIChatMessage,
   AIDraft,
   GeneratePlanPayload,
-  PlanSource,
   AIAction,
 } from '../../types';
 
 interface Props {
-  onGeneratePreview: (payload: GeneratePlanPayload) => void;
-  onCommit: () => void;
+  onGeneratePreview: (payload: GeneratePlanPayload) => Promise<void> | void;
+  onCommit: () => Promise<void> | void;
   onTweakManually: (draft: AIDraft) => void;
-  previewLoaded: boolean;    // drives the "Create Plan" button
-}
-
-function getLocalDateKey(): string {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
+  onPlanDraftChanged: (draft: AIDraft) => void;
+  previewLoaded: boolean;
 }
 
 export default function AIPlanChat({
   onGeneratePreview,
   onCommit,
   onTweakManually,
+  onPlanDraftChanged,
   previewLoaded,
 }: Props) {
   const [messages, setMessages] = useState<AIChatMessage[]>([]);
@@ -37,23 +34,6 @@ export default function AIPlanChat({
   const [action, setAction] = useState<AIAction>('none');
   const [warnings, setWarnings] = useState<string[]>([]);
   const [assumptions, setAssumptions] = useState<string[]>([]);
-
-  const buildPayload = (): GeneratePlanPayload => {
-    const today = getLocalDateKey();
-    const hasQuotas = Boolean(draft?.topicQuotas?.length);
-    return {
-      source: (draft?.source as PlanSource) || 'neetcode150',
-      startDate: draft?.startDate || today,
-      durationDays: draft?.durationDays || 30,
-      pace: (draft?.pace as any) || 'moderate',
-      weekdayLoad: draft?.weekdayLoad ?? 2,
-      weekendLoad: draft?.weekendLoad ?? 3,
-      topicQuotas: hasQuotas ? draft!.topicQuotas! : undefined,
-      focusTopics: hasQuotas ? undefined : draft?.focusTopics ?? undefined,
-      avoidTopics: draft?.avoidTopics ?? undefined,
-      busyDays: draft?.busyDays ?? [],
-    };
-  };
 
   const send = async () => {
     if (!input.trim() || loading) return;
@@ -68,13 +48,42 @@ export default function AIPlanChat({
         messages: newMessages,
         draft: draft ?? ({} as AIDraft),
       });
+
+      const previousPayload = draft
+        ? draftToPlanPayload(draft)
+        : null;
+
+      const nextPayload = draftToPlanPayload(res.draft);
+
+      const planChanged =
+        !previousPayload ||
+        planPayloadFingerprint(previousPayload) !==
+          planPayloadFingerprint(nextPayload);
+
+      if (
+        planChanged &&
+        (
+          res.intent === 'plan_building' ||
+          res.intent === 'request_preview' ||
+          res.intent === 'request_commit'
+        )
+      ) {
+        onPlanDraftChanged(res.draft);
+      }
+
       setDraft(res.draft);
       setDone(res.done);
       setAction(res.action);
       setWarnings(res.warnings ?? []);
       setAssumptions(res.assumptions ?? []);
-      // Show the REAL AI reply — never auto-trigger preview or commit!
-      setMessages([...newMessages, { role: 'assistant', content: res.reply }]);
+
+      setMessages([
+        ...newMessages,
+        {
+          role: 'assistant',
+          content: res.reply,
+        },
+      ]);
     } catch (err) {
       setMessages([
         ...newMessages,
@@ -166,16 +175,24 @@ export default function AIPlanChat({
 
           <div className="ai-draft-summary__actions">
             {(action === 'show_draft' || action === 'offer_preview') && (
-              <button className="btn-primary" onClick={() => onGeneratePreview(buildPayload())}>
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={() => onGeneratePreview(draftToPlanPayload(draft))}
+              >
                 🚀 Generate Preview
               </button>
             )}
-            {previewLoaded && (
-              <button className="btn-primary" onClick={onCommit}>
+            {previewLoaded && done && (
+              <button type="button" className="btn-primary" onClick={onCommit}>
                 ✅ Create Plan
               </button>
             )}
-            <button className="btn-secondary" onClick={() => onTweakManually(draft)}>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => onTweakManually(draft)}
+            >
               🔧 Edit Manually
             </button>
           </div>
@@ -184,3 +201,4 @@ export default function AIPlanChat({
     </div>
   );
 }
+
