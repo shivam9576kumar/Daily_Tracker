@@ -6,6 +6,7 @@ const router = Router();
 router.use(authMiddleware);
 
 router.post('/ai-parse', planController.aiParse);
+router.post('/ai-conversation', planController.aiConversation);
 router.post('/preview', planController.preview);
 router.post('/commit', planController.commit);
 

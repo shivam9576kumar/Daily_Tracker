@@ -1,7 +1,7 @@
 import prisma from '../../config/database';
 import { loadQuestionBank } from './questionBankLoader';
 import { calculateDailyCapacities, BusyDayInput } from './capacityCalculator';
-import { scheduleQuestions, SchedulerResult } from './weightedScheduler';
+import { scheduleQuestions, SchedulerResult, TopicQuota } from './weightedScheduler';
 import { NotFoundError, ValidationError } from '../../utils/error';
 
 export interface GeneratePlanInput {
@@ -12,6 +12,7 @@ export interface GeneratePlanInput {
   pace: 'relaxed' | 'moderate' | 'intensive' | 'custom';
   weekdayLoad: number;
   weekendLoad: number;
+  topicQuotas?: TopicQuota[];
   focusTopics?: string[];
   avoidTopics?: string[];
   busyDays?: BusyDayInput[];
@@ -32,6 +33,7 @@ export const planGenerationService = {
       durationDays = 14,
       weekdayLoad = 2.0,
       weekendLoad = 3.0,
+      topicQuotas,
       focusTopics = [],
       avoidTopics = [],
       busyDays = [],
@@ -60,6 +62,7 @@ export const planGenerationService = {
       source,
       questions,
       capacities,
+      topicQuotas,
       focusTopics,
       avoidTopics,
       weekdayLoad,

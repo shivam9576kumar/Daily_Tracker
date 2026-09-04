@@ -30,3 +30,11 @@ export function loadQuestionBank(source: string = 'neetcode150'): QuestionBankEn
     .sort((a, b) => (a.order || 0) - (b.order || 0));
 }
 
+export function getTopicCount(questions: QuestionBankEntry[], topic: string): number {
+  return questions.filter((q) => q.topic.toLowerCase() === topic.toLowerCase()).length;
+}
+
+export function getAvailableTopics(questions: QuestionBankEntry[]): string[] {
+  return [...new Set(questions.map((q) => q.topic))];
+}
+

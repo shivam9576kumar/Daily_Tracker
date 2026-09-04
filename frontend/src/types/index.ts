@@ -180,6 +180,43 @@ export interface PlanPreviewData {
   days: DaySchedule[];
 }
 
+export interface TopicQuota {
+  topic: string;
+  count: number;
+}
+
+export interface AIDraft {
+  source: PlanSource | null;
+  startDate: string | null;
+  durationDays: number | null;
+  pace: PlanPace | null;
+  weekdayLoad: number | null;
+  weekendLoad: number | null;
+  topicQuotas: TopicQuota[] | null;
+  focusTopics: string[] | null;
+  avoidTopics: string[] | null;
+  busyDays: BusyDayInput[] | null;
+  bufferDay: number | null;
+}
+
+export interface AIChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface AIConversationRequest {
+  messages: AIChatMessage[];
+  draft: AIDraft;
+}
+
+export interface AIConversationResponse {
+  draft: AIDraft;
+  missingFields: string[];
+  question: string;
+  done: boolean;
+  confidence: 'high' | 'low';
+}
+
 export interface GeneratePlanPayload {
   name?: string;
   source: PlanSource;
@@ -188,6 +225,7 @@ export interface GeneratePlanPayload {
   pace: PlanPace;
   weekdayLoad: number;
   weekendLoad: number;
+  topicQuotas?: TopicQuota[];
   focusTopics?: string[];
   avoidTopics?: string[];
   busyDays?: BusyDayInput[];

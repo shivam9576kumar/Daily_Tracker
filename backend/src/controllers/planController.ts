@@ -3,9 +3,23 @@ import { getAuthUser } from '../middleware/authMiddleware';
 import { planGenerationService } from '../services/plan/planGenerationService';
 import { planService } from '../services/plan/planService';
 import { geminiPlanParser } from '../services/ai/geminiPlanParser';
+import { geminiPlanChat } from '../services/ai/geminiPlanChat';
 import { sendSuccess } from '../utils/response';
+import { ValidationError } from '../utils/error';
 
 export const planController = {
+  async aiConversation(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { messages, draft } = req.body;
+      if (!messages || !Array.isArray(messages)) throw new ValidationError('messages is required');
+      if (!draft) throw new ValidationError('draft is required');
+      const result = await geminiPlanChat.process({ messages, draft });
+      sendSuccess(res, result);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   async aiParse(req: Request, res: Response, next: NextFunction) {
     try {
       const { prompt } = req.body;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AIPlanChat from './AIPlanChat';
 import PromptAssist from './PromptAssist';
 import StepSourceSelect from './StepSourceSelect';
 import StepSchedulePace from './StepSchedulePace';
@@ -16,6 +17,8 @@ import type {
   PlanSource,
   PlanPreviewData,
   BusyDayInput,
+  TopicQuota,
+  AIDraft,
 } from '../../types';
 import './plan.css';
 
@@ -23,6 +26,7 @@ export default function PlanWizard() {
   const navigate = useNavigate();
   const toast = useUIStore((s) => s.toast);
 
+  const [mode, setMode] = useState<'ai' | 'manual'>('ai');
   const [aiLoading, setAiLoading] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [committing, setCommitting] = useState(false);
@@ -38,6 +42,7 @@ export default function PlanWizard() {
   const [weekdayLoad, setWeekdayLoad] = useState(2.0);
   const [weekendLoad, setWeekendLoad] = useState(3.0);
   const [bufferDay, setBufferDay] = useState(0);
+  const [topicQuotas, setTopicQuotas] = useState<TopicQuota[]>([]);
   const [focusTopics, setFocusTopics] = useState<string[]>([]);
   const [avoidTopics, setAvoidTopics] = useState<string[]>([]);
   const [busyDays, setBusyDays] = useState<BusyDayInput[]>([]);
@@ -68,10 +73,10 @@ export default function PlanWizard() {
     }
   };
 
-  const handleGeneratePreview = async () => {
+  const handleGeneratePreview = async (overridePayload?: GeneratePlanPayload) => {
     setPreviewLoading(true);
     try {
-      const payload: GeneratePlanPayload = {
+      const payload: GeneratePlanPayload = overridePayload || {
         source,
         startDate,
         durationDays,
@@ -79,10 +84,24 @@ export default function PlanWizard() {
         weekdayLoad,
         weekendLoad,
         bufferDay,
+        topicQuotas: topicQuotas.length > 0 ? topicQuotas : undefined,
         focusTopics,
         avoidTopics,
         busyDays,
       };
+
+      if (overridePayload) {
+        setSource(overridePayload.source);
+        setStartDate(overridePayload.startDate);
+        setDurationDays(overridePayload.durationDays);
+        if (overridePayload.pace) setPace(overridePayload.pace);
+        setWeekdayLoad(overridePayload.weekdayLoad);
+        setWeekendLoad(overridePayload.weekendLoad);
+        if (overridePayload.topicQuotas) setTopicQuotas(overridePayload.topicQuotas);
+        if (overridePayload.focusTopics) setFocusTopics(overridePayload.focusTopics);
+        if (overridePayload.avoidTopics) setAvoidTopics(overridePayload.avoidTopics);
+        if (overridePayload.busyDays) setBusyDays(overridePayload.busyDays);
+      }
 
       const preview = await planApi.preview(payload);
       setPreviewData(preview);
@@ -92,6 +111,21 @@ export default function PlanWizard() {
     } finally {
       setPreviewLoading(false);
     }
+  };
+
+  const handleTweakManually = (draft: AIDraft) => {
+    setSource(draft.source || 'neetcode150');
+    setStartDate(draft.startDate || new Date().toISOString().split('T')[0]);
+    setDurationDays(draft.durationDays || 30);
+    if (draft.pace) setPace(draft.pace as PlanPace);
+    setWeekdayLoad(draft.weekdayLoad ?? 2);
+    setWeekendLoad(draft.weekendLoad ?? 3);
+    setFocusTopics(draft.focusTopics || []);
+    setAvoidTopics(draft.avoidTopics || []);
+    setTopicQuotas(draft.topicQuotas || []);
+    setBusyDays(draft.busyDays || []);
+    if (typeof draft.bufferDay === 'number') setBufferDay(draft.bufferDay);
+    setMode('manual');
   };
 
   const handleCommit = async (archiveExisting = false) => {
@@ -107,6 +141,7 @@ export default function PlanWizard() {
         weekdayLoad,
         weekendLoad,
         bufferDay,
+        topicQuotas: topicQuotas.length > 0 ? topicQuotas : undefined,
         focusTopics,
         avoidTopics,
         busyDays,
@@ -144,79 +179,116 @@ export default function PlanWizard() {
         </p>
       </header>
 
-      <ol className="wizard-steps" aria-label="Plan wizard progress">
-        {steps.map((s, i) => (
-          <li
-            key={s}
-            className={`wizard-step${i === current ? ' is-active' : ''}${i < current ? ' is-done' : ''}`}
-          >
-            <span className="wizard-step__dot">{i < current ? '✓' : i + 1}</span>
-            <span className="wizard-step__label">{s}</span>
-            {i < steps.length - 1 && <span className="wizard-step__line" aria-hidden="true" />}
-          </li>
-        ))}
-      </ol>
+      <div className="plan-mode-toggle" style={{ marginBottom: 20 }}>
+        <button
+          type="button"
+          className={`plan-mode-toggle__btn ${mode === 'ai' ? 'is-active' : ''}`}
+          onClick={() => setMode('ai')}
+        >
+          ✨ AI Chat
+        </button>
+        <button
+          type="button"
+          className={`plan-mode-toggle__btn ${mode === 'manual' ? 'is-active' : ''}`}
+          onClick={() => setMode('manual')}
+        >
+          🔧 Manual Setup
+        </button>
+      </div>
 
-      <PromptAssist onParse={handleAiParse} loading={aiLoading} />
+      {mode === 'ai' ? (
+        <>
+          <AIPlanChat
+            onGeneratePreview={(payload) => handleGeneratePreview(payload)}
+            onTweakManually={handleTweakManually}
+          />
+          {previewData && (
+            <div style={{ marginTop: 24 }}>
+              <PlanPreview
+                preview={previewData}
+                onCommit={handleCommit}
+                committing={committing}
+              />
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <ol className="wizard-steps" aria-label="Plan wizard progress">
+            {steps.map((s, i) => (
+              <li
+                key={s}
+                className={`wizard-step${i === current ? ' is-active' : ''}${i < current ? ' is-done' : ''}`}
+              >
+                <span className="wizard-step__dot">{i < current ? '✓' : i + 1}</span>
+                <span className="wizard-step__label">{s}</span>
+                {i < steps.length - 1 && <span className="wizard-step__line" aria-hidden="true" />}
+              </li>
+            ))}
+          </ol>
 
-      <StepSourceSelect source={source} onChange={setSource} />
+          <PromptAssist onParse={handleAiParse} loading={aiLoading} />
 
-      <StepSchedulePace
-        startDate={startDate}
-        durationDays={durationDays}
-        pace={pace}
-        weekdayLoad={weekdayLoad}
-        weekendLoad={weekendLoad}
-        bufferDay={bufferDay}
-        onChange={(fields) => {
-          if (fields.startDate !== undefined) setStartDate(fields.startDate);
-          if (fields.durationDays !== undefined) setDurationDays(fields.durationDays);
-          if (fields.pace !== undefined) setPace(fields.pace);
-          if (fields.weekdayLoad !== undefined) setWeekdayLoad(fields.weekdayLoad);
-          if (fields.weekendLoad !== undefined) setWeekendLoad(fields.weekendLoad);
-          if (fields.bufferDay !== undefined) setBufferDay(fields.bufferDay);
-          setPreviewData(null);
-        }}
-      />
+          <StepSourceSelect source={source} onChange={setSource} />
 
-      <StepTopicPreferences
-        focusTopics={focusTopics}
-        avoidTopics={avoidTopics}
-        onChange={(f, a) => {
-          setFocusTopics(f);
-          setAvoidTopics(a);
-          setPreviewData(null);
-        }}
-      />
+          <StepSchedulePace
+            startDate={startDate}
+            durationDays={durationDays}
+            pace={pace}
+            weekdayLoad={weekdayLoad}
+            weekendLoad={weekendLoad}
+            bufferDay={bufferDay}
+            onChange={(fields) => {
+              if (fields.startDate !== undefined) setStartDate(fields.startDate);
+              if (fields.durationDays !== undefined) setDurationDays(fields.durationDays);
+              if (fields.pace !== undefined) setPace(fields.pace);
+              if (fields.weekdayLoad !== undefined) setWeekdayLoad(fields.weekdayLoad);
+              if (fields.weekendLoad !== undefined) setWeekendLoad(fields.weekendLoad);
+              if (fields.bufferDay !== undefined) setBufferDay(fields.bufferDay);
+              setPreviewData(null);
+            }}
+          />
 
-      <StepBusyDays
-        busyDays={busyDays}
-        onChange={(b) => {
-          setBusyDays(b);
-          setPreviewData(null);
-        }}
-      />
+          <StepTopicPreferences
+            focusTopics={focusTopics}
+            avoidTopics={avoidTopics}
+            onChange={(f, a) => {
+              setFocusTopics(f);
+              setAvoidTopics(a);
+              setPreviewData(null);
+            }}
+          />
 
-      {!previewData && (
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0 32px' }}>
-          <button
-            type="button"
-            className="btn-primary"
-            style={{ padding: '12px 28px', fontSize: 16 }}
-            disabled={previewLoading}
-            onClick={handleGeneratePreview}
-          >
-            {previewLoading ? 'Generating...' : '⚡ Generate Schedule Preview'}
-          </button>
-        </div>
-      )}
+          <StepBusyDays
+            busyDays={busyDays}
+            onChange={(b) => {
+              setBusyDays(b);
+              setPreviewData(null);
+            }}
+          />
 
-      {previewData && (
-        <PlanPreview
-          preview={previewData}
-          onCommit={handleCommit}
-          committing={committing}
-        />
+          {!previewData && (
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0 32px' }}>
+              <button
+                type="button"
+                className="btn-primary"
+                style={{ padding: '12px 28px', fontSize: 16 }}
+                disabled={previewLoading}
+                onClick={() => handleGeneratePreview()}
+              >
+                {previewLoading ? 'Generating...' : '⚡ Generate Schedule Preview'}
+              </button>
+            </div>
+          )}
+
+          {previewData && (
+            <PlanPreview
+              preview={previewData}
+              onCommit={handleCommit}
+              committing={committing}
+            />
+          )}
+        </>
       )}
 
       <Modal
@@ -251,3 +323,4 @@ export default function PlanWizard() {
     </>
   );
 }
+

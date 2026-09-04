@@ -1,7 +1,11 @@
 import api from './api';
-import type { ApiResponse, ActivePlanResponse, ArchivedPlan } from '../types';
+import type { ApiResponse, ActivePlanResponse, ArchivedPlan, AIConversationRequest, AIConversationResponse } from '../types';
 
 export const planApi = {
+  async aiConversation(payload: AIConversationRequest): Promise<AIConversationResponse> {
+    const res = await api.post('/plans/ai-conversation', payload);
+    return res.data.data;
+  },
   async getActive(): Promise<ActivePlanResponse> {
     const res = await api.get<ApiResponse<ActivePlanResponse>>('/plans/active');
     return res.data.data;

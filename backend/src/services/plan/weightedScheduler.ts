@@ -2,6 +2,11 @@ import { QuestionBankEntry } from './questionBankLoader';
 import { DailyCapacity } from './capacityCalculator';
 import { getDifficultyLoad } from './difficultyWeights';
 
+export interface TopicQuota {
+  topic: string;
+  count: number;
+}
+
 export interface ScheduledQuestion {
   question: QuestionBankEntry;
   scheduledDate: string;
@@ -27,6 +32,7 @@ export interface SchedulerResult {
     source: string;
     totalQuestions: number;
     totalLoad: number;
+    totalSelected: number;
     durationDays: number;
     startDate: string;
     endDate: string;
@@ -41,6 +47,7 @@ export function scheduleQuestions(params: {
   source: string;
   questions: QuestionBankEntry[];
   capacities: DailyCapacity[];
+  topicQuotas?: TopicQuota[];
   focusTopics?: string[];
   avoidTopics?: string[];
   weekdayLoad: number;
@@ -50,6 +57,7 @@ export function scheduleQuestions(params: {
     source,
     questions: rawQuestions,
     capacities,
+    topicQuotas,
     focusTopics = [],
     avoidTopics = [],
     weekdayLoad,
@@ -64,28 +72,50 @@ export function scheduleQuestions(params: {
 
   let filtered = [...rawQuestions];
 
-  // 1a. If focus topics specified, keep ONLY those topics
-  if (focusSet.size > 0) {
-    filtered = filtered.filter((q) => focusSet.has(q.topic.toLowerCase().trim()));
-    if (filtered.length === 0) {
-      warnings.push('No questions matched your focus topics. Including all questions instead.');
-      filtered = [...rawQuestions];
-    } else {
-      warnings.push(`Filtered to ${filtered.length} questions matching focus topics: ${focusTopics.join(', ')}.`);
+  if (topicQuotas && topicQuotas.length > 0) {
+    let selected: QuestionBankEntry[] = [];
+    for (const quota of topicQuotas) {
+      const topicQuestions = rawQuestions.filter(
+        (q) => q.topic.toLowerCase() === quota.topic.toLowerCase()
+      );
+      const take = Math.min(topicQuestions.length, quota.count);
+      selected.push(...topicQuestions.slice(0, take));
+      if (take < quota.count) {
+        warnings.push(`Only ${take} questions available for ${quota.topic} (requested ${quota.count}).`);
+      }
     }
-  }
+    // Remove avoided topics from the selected set
+    if (avoidSet.size > 0) {
+      selected = selected.filter((q) => !avoidSet.has(q.topic.toLowerCase().trim()));
+    }
+    filtered = selected;
+    if (filtered.length === 0) {
+      errors.push('No questions remain after quota and avoid-topic filtering.');
+    }
+  } else {
+    // 1a. If focus topics specified, keep ONLY those topics
+    if (focusSet.size > 0) {
+      filtered = filtered.filter((q) => focusSet.has(q.topic.toLowerCase().trim()));
+      if (filtered.length === 0) {
+        warnings.push('No questions matched your focus topics. Including all questions instead.');
+        filtered = [...rawQuestions];
+      } else {
+        warnings.push(`Filtered to ${filtered.length} questions matching focus topics: ${focusTopics.join(', ')}.`);
+      }
+    }
 
-  // 1b. Filter out avoid topics if requested
-  if (avoidSet.size > 0) {
-    const before = filtered.length;
-    filtered = filtered.filter((q) => !avoidSet.has(q.topic.toLowerCase().trim()));
-    if (filtered.length < 5) {
-      warnings.push('Avoid topics was too restrictive; included some avoided topics to ensure a complete plan.');
-      filtered = focusSet.size > 0
-        ? rawQuestions.filter((q) => focusSet.has(q.topic.toLowerCase().trim()))
-        : [...rawQuestions];
-    } else if (filtered.length < before) {
-      warnings.push(`Excluded ${before - filtered.length} questions matching avoid topics.`);
+    // 1b. Filter out avoid topics if requested
+    if (avoidSet.size > 0) {
+      const before = filtered.length;
+      filtered = filtered.filter((q) => !avoidSet.has(q.topic.toLowerCase().trim()));
+      if (filtered.length < 5) {
+        warnings.push('Avoid topics was too restrictive; included some avoided topics to ensure a complete plan.');
+        filtered = focusSet.size > 0
+          ? rawQuestions.filter((q) => focusSet.has(q.topic.toLowerCase().trim()))
+          : [...rawQuestions];
+      } else if (filtered.length < before) {
+        warnings.push(`Excluded ${before - filtered.length} questions matching avoid topics.`);
+      }
     }
   }
 
@@ -266,6 +296,7 @@ export function scheduleQuestions(params: {
       source,
       totalQuestions,
       totalLoad,
+      totalSelected: totalQuestions,
       durationDays,
       startDate,
       endDate,
