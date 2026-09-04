@@ -864,3 +864,47 @@
   .topic-mode__btn { min-width: 100%; }
 }
 
+/* Duration Control & Presets */
+.duration-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.duration-control__input {
+  padding-right: 52px;
+  max-width: 100%;
+}
+.duration-control__unit {
+  position: absolute;
+  right: 14px;
+  font: 500 13px/1 var(--font-sans);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.duration-presets {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.duration-presets__badge {
+  display: none;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-soft);
+  color: var(--brand-soft-text);
+  font: 600 12px/1 var(--font-sans);
+}
+.duration-presets__badge.is-visible { display: inline-flex; }
+
+@media (max-width: 640px) {
+  .duration-control__input { max-width: 100%; }
+}
+
+/* iOS: prevent zoom on focus */
+@media (max-width: 768px) {
+  .duration-control__input { font-size: 16px; }
+}
+

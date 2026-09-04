@@ -101,6 +101,11 @@ export default function PlanWizard() {
   };
 
   const handleGeneratePreview = async (overridePayload?: GeneratePlanPayload) => {
+    if (!overridePayload && (!durationDays || durationDays < 1 || durationDays > 365)) {
+      toast('Duration must be between 1 and 365 days.', 'error');
+      return;
+    }
+
     setPreviewLoading(true);
     try {
       const topicPayload = buildTopicPayload();

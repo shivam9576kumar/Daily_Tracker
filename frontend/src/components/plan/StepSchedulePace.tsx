@@ -19,6 +19,8 @@ interface Props {
   }) => void;
 }
 
+const DURATION_PRESETS = [7, 14, 21, 30, 45, 60];
+
 const PACES: Array<{
   id: PlanPace;
   name: string;
@@ -66,6 +68,16 @@ export default function StepSchedulePace({
   onChange,
 }: Props) {
   const today = getLocalDateKey();
+  const isPreset = DURATION_PRESETS.includes(durationDays);
+
+  const applyDuration = (raw: string | number) => {
+    const n = typeof raw === 'number' ? raw : parseInt(raw, 10);
+    if (Number.isNaN(n)) {
+      onChange({ durationDays: 0 });
+      return;
+    }
+    onChange({ durationDays: Math.min(365, Math.max(1, n)) });
+  };
 
   const handlePaceClick = (selectedPace: PlanPace) => {
     if (selectedPace === 'relaxed') {
@@ -129,22 +141,47 @@ export default function StepSchedulePace({
         </div>
 
         <div className="form-field">
-          <label htmlFor="plan-duration">Duration (Days)</label>
-          <div className="select-wrap">
-            <select
-              id="plan-duration"
-              className="field"
-              value={durationDays}
-              onChange={(e) => onChange({ durationDays: parseInt(e.target.value, 10) })}
-            >
-              <option value={7}>7 Days (Fast Sprint)</option>
-              <option value={14}>14 Days (Balanced)</option>
-              <option value={21}>21 Days</option>
-              <option value={30}>30 Days (Standard Month)</option>
-              <option value={45}>45 Days</option>
-              <option value={60}>60 Days</option>
-            </select>
+          <label htmlFor="duration-input">Duration (Days)</label>
+
+          <div className="duration-control">
+            <input
+              id="duration-input"
+              type="number"
+              inputMode="numeric"
+              className="field duration-control__input"
+              min={1}
+              max={365}
+              value={durationDays || ''}
+              placeholder="e.g. 25"
+              onChange={(e) => applyDuration(e.target.value)}
+              onBlur={(e) => {
+                const n = parseInt(e.target.value, 10);
+                if (Number.isNaN(n) || n < 1) onChange({ durationDays: 1 });
+              }}
+              aria-describedby="duration-hint"
+            />
+            <span className="duration-control__unit">days</span>
           </div>
+
+          <div className="duration-presets" role="group" aria-label="Duration quick picks">
+            {DURATION_PRESETS.map((d) => (
+              <button
+                key={d}
+                type="button"
+                className={`chip ${durationDays === d ? 'is-on' : ''}`}
+                onClick={() => applyDuration(d)}
+              >
+                {d}
+              </button>
+            ))}
+            <span className={`duration-presets__badge ${!isPreset && durationDays ? 'is-visible' : ''}`}>
+              Custom
+            </span>
+          </div>
+
+          <span id="duration-hint" className="form-field__hint">
+            Type any number of days (1–365), or tap a quick pick.
+          </span>
         </div>
 
         <div className="form-field">
