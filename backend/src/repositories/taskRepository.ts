@@ -1,5 +1,6 @@
 import prisma from '../config/database';
 import { Prisma } from '@prisma/client';
+import { todayKey } from '../utils/dateKeys';
 
 /**
  * Task Repository — data access layer for the tasks table.
@@ -32,7 +33,7 @@ export const taskRepository = {
   },
 
   /**
-   * Get today's tasks plus any backlog tasks.
+   * Get today's tasks plus any backlog tasks in the user's timezone.
    */
   /**
    * Today's hitlist = three things:
@@ -42,11 +43,10 @@ export const taskRepository = {
    *      Without (3) a backlog item vanishes the moment you solve it. (3) also makes
    *      "Completed Today" clear itself at midnight: the window simply moves.
    */
-  async getTodaysTasks(userId: string) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const endOfToday = new Date(today);
-    endOfToday.setHours(23, 59, 59, 999);
+  async getTodaysTasks(userId: string, tz?: string) {
+    const currentKey = todayKey(tz);
+    const today = new Date(`${currentKey}T00:00:00.000Z`);
+    const endOfToday = new Date(`${currentKey}T23:59:59.999Z`);
 
     return prisma.task.findMany({
       where: {

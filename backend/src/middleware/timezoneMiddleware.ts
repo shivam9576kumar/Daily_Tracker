@@ -9,10 +9,12 @@ import { isValidTimeZone } from '../utils/dateKeys';
 export function timezoneMiddleware(req: Request, _res: Response, next: NextFunction) {
   const raw = req.headers['x-timezone'];
   const tz = typeof raw === 'string' ? raw.trim() : '';
-  (req as any).tz = isValidTimeZone(tz) ? tz : env.DEFAULT_TIMEZONE;
+  const resolved = isValidTimeZone(tz) ? tz : (env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
+  (req as any).tz = resolved;
+  (req as any).timezone = resolved;
   next();
 }
 
 export function getTz(req: Request): string {
-  return (req as any).tz || env.DEFAULT_TIMEZONE;
+  return (req as any).tz || (req as any).timezone || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
 }

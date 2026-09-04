@@ -21,8 +21,8 @@ export interface CreateTaskInput {
  * Core task service — CRUD operations and validation.
  */
 export const taskService = {
-  async getTodaysTasks(userId: string) {
-    return taskRepository.getTodaysTasks(userId);
+  async getTodaysTasks(userId: string, tz?: string) {
+    return taskRepository.getTodaysTasks(userId, tz);
   },
 
   async getTaskById(taskId: string, userId: string) {

@@ -11,7 +11,7 @@ export const dashboardService = {
   async getDashboardData(userId: string, tz: string) {
     // Run queries in small batches to stay well under the pool size limit (15)
     const [todaysTasks, totalQuestions, user, activePlan] = await Promise.all([
-      taskRepository.getTodaysTasks(userId),
+      taskRepository.getTodaysTasks(userId, tz),
       // Total unique problems actually solved (new tasks only, not revisions)
       prisma.task.count({
         where: { userId, taskType: 'new', status: 'completed' },
