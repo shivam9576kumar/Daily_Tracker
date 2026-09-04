@@ -1,83 +1,317 @@
-/* ─── Auth Page Styles ─── */
+/* ─── Login Page — Codolio-Style Redesign ─── */
 
+/* ── Full-page container ── */
 .login-page {
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg-page);
+}
+
+/* ── Left panel — branding ── */
+.login-hero {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  background: var(--color-bg-primary);
+  padding: 64px 56px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
   position: relative;
   overflow: hidden;
 }
 
-.login-page::before {
+.login-hero::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: var(--gradient-glow);
-  animation: pulse-glow 6s ease-in-out infinite;
+  top: -120px;
+  right: -120px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
+  opacity: 0.7;
   pointer-events: none;
 }
 
-.login-card {
+.login-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.login-hero__brand {
+  font: var(--fw-brand) var(--fs-brand) / 1 var(--font-sans);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
   position: relative;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-12) var(--space-10);
-  text-align: center;
-  max-width: 420px;
-  width: 90%;
-  animation: slideUp 0.6s ease both;
+  z-index: 1;
 }
 
-.login-card h1 {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-extrabold);
-  margin-bottom: var(--space-2);
+.login-hero__brand-a { color: var(--text-primary); }
+.login-hero__brand-b { color: var(--brand); }
+
+.login-hero__tagline {
+  font: var(--fw-h1) var(--fs-h1) / var(--lh-h1) var(--font-sans);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  max-width: 380px;
+  position: relative;
+  z-index: 1;
 }
 
-.login-card p {
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-8);
-  font-size: var(--font-size-base);
-  line-height: 1.6;
+.login-hero__subtitle {
+  font: var(--fw-body) var(--fs-body) / var(--lh-body) var(--font-sans);
+  color: var(--text-secondary);
+  max-width: 380px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
 }
 
-.login-divider {
-  width: 60px;
-  height: 4px;
-  border-radius: var(--radius-full);
-  background: var(--gradient-accent);
-  margin: 0 auto var(--space-8);
+/* Feature list on left panel */
+.login-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
 }
 
-.google-login-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-6);
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
+.login-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font: var(--fw-body) var(--fs-body) / var(--lh-body) var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.login-features__icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
   border-radius: var(--radius-md);
-  color: var(--color-text-primary);
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
+  color: var(--brand-text);
+  font-size: 18px;
+}
+
+.login-features__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.login-features__title {
+  font: var(--fw-title) var(--fs-title) / var(--lh-title) var(--font-sans);
+  color: var(--text-primary);
+}
+
+.login-features__desc {
+  font: var(--fw-body) 13px / var(--lh-body) var(--font-sans);
+  color: var(--text-muted);
+}
+
+/* ── Right panel — auth form ── */
+.login-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  position: relative;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow);
+  padding: 40px 36px;
+  animation: loginSlideUp 0.5s ease both;
+}
+
+@keyframes loginSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-card__heading {
+  font: var(--fw-h1) var(--fs-h1) / var(--lh-h1) var(--font-sans);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.login-card__subtext {
+  font: var(--fw-body) var(--fs-body) / var(--lh-body) var(--font-sans);
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+/* Divider line */
+.login-divider {
+  width: 48px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+  margin-bottom: 28px;
+}
+
+/* Auth buttons group */
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* Google button — override to be full-width + match card style */
+.login-actions .google-login-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 13px 20px;
+  font-size: var(--fs-btn);
+  font-weight: var(--fw-btn);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
   cursor: pointer;
   transition: all var(--transition-base);
 }
 
-.google-login-btn:hover {
-  background: var(--color-bg-card-hover);
-  border-color: var(--color-border-active);
-  box-shadow: var(--shadow-glow);
+.login-actions .google-login-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--brand);
+  box-shadow: var(--focus-ring);
   transform: translateY(-1px);
 }
 
+/* Guest button — orange primary */
+.login-guest-btn {
+  width: 100%;
+  padding: 13px 20px;
+  background: var(--brand);
+  color: var(--text-on-brand);
+  border: 0;
+  border-radius: var(--radius-md);
+  font: var(--fw-btn) var(--fs-btn) / 1 var(--font-sans);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.login-guest-btn:hover {
+  background: var(--brand-hover);
+  box-shadow: var(--shadow-brand);
+  transform: translateY(-1px);
+}
+
+.login-guest-btn:active {
+  background: var(--brand-active);
+  transform: translateY(0);
+}
+
+.login-guest-btn:disabled {
+  background: var(--bg-subtle);
+  color: var(--text-disabled);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Or separator */
+.login-or {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 2px 0;
+}
+
+.login-or::before,
+.login-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.login-or span {
+  font: var(--fw-meta) var(--fs-meta) / 1 var(--font-sans);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Footer disclaimer text */
+.login-card__footer {
+  margin-top: 24px;
+  font: 400 12px / 1.5 var(--font-sans);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ── Mobile (single-column) ── */
+@media (max-width: 840px) {
+  .login-page {
+    grid-template-columns: 1fr;
+  }
+
+  .login-hero {
+    display: none;
+  }
+
+  .login-form-panel {
+    min-height: 100vh;
+    padding: 32px 20px;
+  }
+
+  .login-card {
+    max-width: 420px;
+    padding: 36px 28px;
+  }
+}
+
+/* Tablet tweaks */
+@media (min-width: 841px) and (max-width: 1100px) {
+  .login-hero {
+    padding: 48px 36px;
+  }
+
+  .login-hero__tagline {
+    font-size: 22px;
+  }
+}
+
+/* ── Google icon (shared) ── */
 .google-icon {
   flex-shrink: 0;
 }

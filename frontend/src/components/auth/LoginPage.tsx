@@ -30,32 +30,92 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      <div className="login-card">
-        <h1 className="gradient-text">DSA Study Planner</h1>
-        <div className="login-divider" />
-        <p>
-          AI-powered study planning with spaced repetition,
-          progress tracking, and smart scheduling.
+      {/* ── Left Panel — Branding + Features ── */}
+      <div className="login-hero">
+        <div className="login-hero__brand">
+          <span className="login-hero__brand-a">DSA</span>
+          <span className="login-hero__brand-b">Planner</span>
+        </div>
+
+        <h1 className="login-hero__tagline">
+          Master DSA with AI-Powered Study Plans
+        </h1>
+        <p className="login-hero__subtitle">
+          Intelligent scheduling, spaced repetition, and real-time progress
+          tracking — all in one place.
         </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
-          <GoogleLoginButton />
-          <button
-            className="btn btn--secondary"
-            onClick={handleDemoLogin}
-            disabled={loading}
-            style={{
-              width: '100%',
-              padding: '12px',
-              fontWeight: 600,
-              borderRadius: 'var(--radius-md)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-            }}
-          >
-            {loading ? 'Logging in...' : '⚡ Continue as Guest Student'}
-          </button>
+
+        <ul className="login-features">
+          <li>
+            <div className="login-features__icon">🤖</div>
+            <div className="login-features__text">
+              <span className="login-features__title">AI-Powered Planning</span>
+              <span className="login-features__desc">
+                Chat with AI to build a personalized study plan in seconds
+              </span>
+            </div>
+          </li>
+          <li>
+            <div className="login-features__icon">📅</div>
+            <div className="login-features__text">
+              <span className="login-features__title">Smart Scheduling</span>
+              <span className="login-features__desc">
+                Weighted topic distribution with spaced repetition built in
+              </span>
+            </div>
+          </li>
+          <li>
+            <div className="login-features__icon">📊</div>
+            <div className="login-features__text">
+              <span className="login-features__title">Progress Tracking</span>
+              <span className="login-features__desc">
+                Heatmaps, streaks, and detailed analytics to keep you motivated
+              </span>
+            </div>
+          </li>
+          <li>
+            <div className="login-features__icon">🎯</div>
+            <div className="login-features__text">
+              <span className="login-features__title">Revision Engine</span>
+              <span className="login-features__desc">
+                Automatic revision scheduling based on your difficulty ratings
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      {/* ── Right Panel — Auth Card ── */}
+      <div className="login-form-panel">
+        <div className="login-card">
+          <h2 className="login-card__heading">Get Started</h2>
+          <p className="login-card__subtext">
+            Sign in to start your study plan
+          </p>
+          <div className="login-divider" />
+
+          <div className="login-actions">
+            <GoogleLoginButton />
+
+            <div className="login-or">
+              <span>or</span>
+            </div>
+
+            <button
+              className="login-guest-btn"
+              onClick={handleDemoLogin}
+              disabled={loading}
+              id="guest-login-btn"
+            >
+              {loading ? 'Logging in…' : '⚡ Continue as Guest Student'}
+            </button>
+          </div>
+
+          <p className="login-card__footer">
+            Guest accounts are temporary demo sessions.
+            <br />
+            Sign in with Google to save your progress.
+          </p>
         </div>
       </div>
     </div>
