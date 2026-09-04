@@ -285,8 +285,8 @@
 
 /* ─── Capacity Banner & Summary ─── */
 .capacity-card {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.12));
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 24px;
@@ -314,8 +314,8 @@
 
 .cap-label {
   font-size: 11px;
-  color: #9ca3af;
-  text-transform: uppercase;
+  color: var(--text-muted);
+  text-transform: none;
 }
 
 .cap-value {

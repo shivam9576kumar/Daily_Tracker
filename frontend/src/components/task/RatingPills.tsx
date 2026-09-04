@@ -28,7 +28,7 @@ export default function RatingPills({ value, size = 'md', disabled, onRate, onUn
             role="radio"
             aria-checked={active}
             disabled={disabled}
-            className={`rating-pill ${o.key}${active ? ' is-active' : ''}`}
+            className={`rating-pill ${o.key}${active ? ' selected is-active' : ''}`}
             title={active ? `Rated ${o.label} — tap again to remove the revision plan` : o.title}
             onClick={() => (active ? onUnrate() : onRate(o.key))}
           >

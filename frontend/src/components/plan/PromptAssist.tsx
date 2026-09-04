@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Button from '../common/Button';
 import './plan.css';
 
 interface Props {
@@ -10,30 +9,36 @@ interface Props {
 export default function PromptAssist({ onParse, loading }: Props) {
   const [prompt, setPrompt] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!prompt.trim() || loading) return;
     await onParse(prompt.trim());
   };
 
   return (
-    <div className="ai-assist-box">
-      <div className="ai-assist-title">
-        <span>✨ Describe your goal with AI Assist</span>
+    <section className="card ai-assist">
+      <div className="ai-assist__head">
+        <span aria-hidden="true">✨</span>
+        <h2 className="ai-assist__title">Describe your goal with AI Assist</h2>
       </div>
-      <form className="ai-assist-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="ai-assist-input"
-          placeholder="e.g. I want to finish NeetCode in 14 days, moderate pace, weak in Binary Search, exam on 10 Sept..."
+      <div className="ai-assist__body">
+        <textarea
+          className="field ai-assist__input"
+          rows={3}
+          placeholder="e.g. I want to finish NeetCode in 14 days, moderate pace, weak in Binary Search, exam on 10 Sept…"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           disabled={loading}
         />
-        <Button type="submit" loading={loading} disabled={!prompt.trim() || loading}>
-          ✨ Use AI Assist
-        </Button>
-      </form>
-    </div>
+        <button
+          type="button"
+          className="btn-brand-outline ai-assist__btn"
+          disabled={!prompt.trim() || loading}
+          onClick={() => handleSubmit()}
+        >
+          {loading ? 'Analyzing...' : '✨ Use AI Assist'}
+        </button>
+      </div>
+    </section>
   );
 }

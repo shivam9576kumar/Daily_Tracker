@@ -44,15 +44,15 @@ export const planService = {
       orderBy: { createdAt: 'desc' },
     });
 
-    // Attach progress per plan
-    const withProgress = await Promise.all(plans.map(async (p) => {
+    return Promise.all(plans.map(async (p) => {
       const total = await prisma.task.count({ where: { userId, planId: p.id, taskType: { not: 'revision' } } });
       const solved = await prisma.task.count({ where: { userId, planId: p.id, taskType: { not: 'revision' }, status: 'completed' } });
       const revPending = await prisma.task.count({ where: { userId, planId: p.id, taskType: 'revision', status: { not: 'completed' } } });
-      return { ...p, progress: { total, solved, revPending } };
+      return {
+        ...p,
+        progress: { total, solved, revPending },
+      };
     }));
-
-    return withProgress;
   },
 
   async restorePlan(userId: string, planId: string) {
@@ -61,82 +61,62 @@ export const planService = {
     if (target.status === 'active') throw new ValidationError('Plan is already active');
 
     return prisma.$transaction(async (tx) => {
-      // Archive current active
+      // Archive current active plan if any
       await tx.plan.updateMany({
         where: { userId, status: 'active' },
         data: { status: 'archived' },
       });
-      // Activate target
+
+      // Activate target plan
       await tx.plan.update({
         where: { id: planId },
         data: { status: 'active' },
       });
+
       return tx.plan.findUnique({ where: { id: planId } });
     });
   },
 
   /**
-   * Delete plan X:
-   * - keep completed tasks as history (planId=null, rating=null)
-   * - delete all pending tasks + pending revision records
-   * - coins are KEPT (no refund)
+   * Delete a plan.
+   * Locked product rule: remove the plan and unfinished NEW plan work.
+   * Keep everything the student already earned or already scheduled as a revision.
+   *  - completed parents stay (planId = null)
+   *  - all revision tasks stay (planId = null)
+   *  - only unfinished new plan work is deleted
+   *  - plan row deleted
    */
   async deletePlan(userId: string, planId: string) {
     const plan = await prisma.plan.findFirst({ where: { id: planId, userId } });
     if (!plan) throw new NotFoundError('Plan');
 
     return prisma.$transaction(async (tx) => {
-      // All task ids belonging to this plan
-      const allPlanTasks = await tx.task.findMany({
-        where: { userId, planId },
-        select: { id: true, status: true, taskType: true },
+      // 1. Detach completed parents (history)
+      await tx.task.updateMany({
+        where: { planId, userId, status: 'completed' },
+        data: { planId: null },
       });
 
-      const completedIds = allPlanTasks.filter(t => t.status === 'completed').map(t => t.id);
-      const pendingIds   = allPlanTasks.filter(t => t.status !== 'completed').map(t => t.id);
+      // 2. Detach ALL revision tasks that belong to this plan (keep rows)
+      await tx.task.updateMany({
+        where: { planId, userId, taskType: 'revision' },
+        data: { planId: null },
+      });
 
-      // 1. For completed parents, delete their PENDING revisions (both tasks and records)
-      if (completedIds.length) {
-        // Pending revision TASKS whose parent is a completed plan task
-        const pendingRevTasks = await tx.task.findMany({
-          where: { userId, parentTaskId: { in: completedIds }, status: { not: 'completed' } },
-          select: { id: true },
-        });
-        const pendingRevTaskIds = pendingRevTasks.map(t => t.id);
+      // 3. Delete only unfinished NEW plan work (not revisions, not completed)
+      await tx.task.deleteMany({
+        where: {
+          planId,
+          userId,
+          taskType: { not: 'revision' },
+          status: { in: ['pending', 'backlog', 'expired'] },
+        },
+      });
 
-        if (pendingRevTaskIds.length) {
-          await tx.revision.deleteMany({ where: { revisionTaskId: { in: pendingRevTaskIds } } });
-          await tx.task.deleteMany({ where: { id: { in: pendingRevTaskIds } } });
-        }
-
-        await tx.revision.deleteMany({
-          where: { parentTaskId: { in: completedIds }, status: { not: 'completed' } },
-        });
-
-        // Detach completed plan tasks as history
-        await tx.task.updateMany({
-          where: { id: { in: completedIds } },
-          data: { planId: null, rating: null },
-        });
-      }
-
-      // 2. Delete all pending plan tasks + their revision records
-      if (pendingIds.length) {
-        await tx.revision.deleteMany({
-          where: {
-            OR: [
-              { parentTaskId: { in: pendingIds } },
-              { revisionTaskId: { in: pendingIds } },
-            ],
-          },
-        });
-        await tx.task.deleteMany({ where: { id: { in: pendingIds } } });
-      }
-
-      // 3. Delete the plan row
+      // 4. Delete the plan row
       await tx.plan.delete({ where: { id: planId } });
 
-      return { deletedPending: pendingIds.length, keptCompleted: completedIds.length };
+      return { ok: true };
     });
   },
 };

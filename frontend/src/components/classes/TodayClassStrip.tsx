@@ -98,9 +98,9 @@ export default function TodayClassStrip({ classes }: Props) {
                   {to12h(c.startTime)}–{to12h(c.endTime)}
                 </span>
                 {c.location && <span className="cl-loc">{c.location}</span>}
-                {st === 'live' && <span className="cl-badge live">LIVE</span>}
+                {st === 'live' && <span className="cl-badge live">Live</span>}
                 {st === 'hidden' && (
-                  <span className="cl-badge cancelled">CANCELLED</span>
+                  <span className="cl-badge cancelled">Cancelled</span>
                 )}
                 {st === 'upcoming' || st === 'live' ? (
                   <button className="cl-mini" onClick={() => hide(c.id)}>

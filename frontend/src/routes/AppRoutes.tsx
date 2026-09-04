@@ -34,6 +34,7 @@ export default function AppRoutes() {
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/study-slots" element={<StudySlotsPage />} />
           <Route path="/generate-plan" element={<GeneratePlanPage />} />
+          <Route path="/plan/wizard" element={<GeneratePlanPage />} />
           <Route
             path="/settings"
             element={<PlaceholderPage title="Settings" />}

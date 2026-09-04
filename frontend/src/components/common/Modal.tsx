@@ -33,8 +33,8 @@ export default function Modal({
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>{title}</h3>
-          <button className="modal-close" onClick={onClose} aria-label="Close">
+          <h3 className="t-h2">{title}</h3>
+          <button className="modal-close btn-ghost" onClick={onClose} aria-label="Close">
             ×
           </button>
         </div>

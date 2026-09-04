@@ -2,13 +2,13 @@ import './progress.css';
 
 export default function ProgressLegend() {
   return (
-    <div className="hm-legend">
+    <div className="heatmap-legend">
       <span>Less</span>
-      <div className="hm-cell" />
-      <div className="hm-cell hm-l1" />
-      <div className="hm-cell hm-l2" />
-      <div className="hm-cell hm-l3" />
-      <div className="hm-cell hm-l4" />
+      <div className="heatmap-legend__cell hm-0" />
+      <div className="heatmap-legend__cell hm-1" />
+      <div className="heatmap-legend__cell hm-2" />
+      <div className="heatmap-legend__cell hm-3" />
+      <div className="heatmap-legend__cell hm-4" />
       <span>More</span>
     </div>
   );

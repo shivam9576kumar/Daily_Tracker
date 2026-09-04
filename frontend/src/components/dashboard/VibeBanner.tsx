@@ -3,9 +3,11 @@ import './dashboard.css';
 
 export default function VibeBanner({ vibe }: { vibe: Vibe }) {
   return (
-    <div className={`vibe-banner vibe-${vibe.intensity}`}>
-      <span className="vibe-emoji">{vibe.emoji}</span>
-      <span>{vibe.message}</span>
-    </div>
+    <section className="vibe-card" role="status" aria-live="polite">
+      <span className="vibe-card__emoji" aria-hidden="true">{vibe.emoji}</span>
+      <div>
+        <p className="vibe-card__msg">{vibe.message}</p>
+      </div>
+    </section>
   );
 }

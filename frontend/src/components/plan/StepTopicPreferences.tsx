@@ -51,56 +51,64 @@ export default function StepTopicPreferences({
   };
 
   return (
-    <div className="wizard-card">
-      <div className="wizard-section-title">
-        <span>🎯 Step 3: Topic Priorities & Exclusions</span>
-      </div>
+    <section className="card step-card">
+      <div className="step-card__kicker">Step 3 of 5</div>
+      <h2 className="step-card__heading">Topic Priorities & Exclusions</h2>
+      <p className="step-card__hint">
+        Focus topics will be scheduled earlier; avoided topics will be deprioritized or excluded.
+      </p>
 
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: '#d8b4fe', marginBottom: 8 }}>
-          ⭐ Focus Topics (Prioritized earlier in the schedule)
+      <div className="topic-group">
+        <div className="topic-group__head">
+          <span className="topic-group__label">Focus topics</span>
+          <span className="topic-group__hint">(Prioritized earlier in the schedule)</span>
         </div>
-        <div className="topic-chips">
+        <div className="chip-cloud">
           {AVAILABLE_TOPICS.map((topic) => {
             const isSelected = focusTopics.some(
               (t) => t.toLowerCase() === topic.toLowerCase()
             );
             return (
-              <div
+              <button
                 key={`focus-${topic}`}
-                className={`topic-chip ${isSelected ? 'selected-focus' : ''}`}
+                type="button"
+                className={`chip${isSelected ? ' is-on' : ''}`}
+                aria-pressed={isSelected}
                 onClick={() => toggleFocus(topic)}
               >
                 {isSelected ? '✓ ' : '+ '}
                 {topic}
-              </div>
+              </button>
             );
           })}
         </div>
       </div>
 
-      <div>
-        <div style={{ fontSize: 13, fontWeight: 700, color: '#fca5a5', marginBottom: 8 }}>
-          🚫 Avoid / Deprioritize Topics
+      <div className="topic-group">
+        <div className="topic-group__head">
+          <span className="topic-group__label">Avoid topics</span>
+          <span className="topic-group__hint">(Deprioritized or excluded)</span>
         </div>
-        <div className="topic-chips">
+        <div className="chip-cloud">
           {AVAILABLE_TOPICS.map((topic) => {
             const isSelected = avoidTopics.some(
               (t) => t.toLowerCase() === topic.toLowerCase()
             );
             return (
-              <div
+              <button
                 key={`avoid-${topic}`}
-                className={`topic-chip ${isSelected ? 'selected-avoid' : ''}`}
+                type="button"
+                className={`chip${isSelected ? ' is-avoid' : ''}`}
+                aria-pressed={isSelected}
                 onClick={() => toggleAvoid(topic)}
               >
                 {isSelected ? '✕ ' : ''}
                 {topic}
-              </div>
+              </button>
             );
           })}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

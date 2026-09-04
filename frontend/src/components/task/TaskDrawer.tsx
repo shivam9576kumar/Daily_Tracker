@@ -10,12 +10,18 @@ import { getErrorMessage } from '../../services/api';
 import { useUIStore } from '../../store/uiStore';
 import { useTaskActions } from '../../hooks/useTaskActions';
 import type { Task } from '../../types';
+import { platformLabel } from '../../utils/labels';
 import '../dashboard/dashboard.css';
 import './task.css';
 
 function fmt(d: string | null | undefined) {
   if (!d) return '—';
   return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function titleCase(s?: string | null) {
+  if (!s) return '';
+  return s.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 interface Props {
@@ -81,35 +87,94 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
     }
   };
 
+  const statusChip = (() => {
+    if (!task) return null;
+    if (completed) return <span className="pill pill-success">Completed</span>;
+    if (task.isBacklog) return <span className="pill pill-warning">Backlog</span>;
+    if (task.status === 'expired') return <span className="pill pill-danger">Expired</span>;
+    return null;
+  })();
+
+  const statusPill = (() => {
+    if (!task) return null;
+    if (completed) return <span className="pill pill-success">Completed</span>;
+    if (task.isBacklog) return <span className="pill pill-warning">Backlog</span>;
+    if (task.status === 'expired') return <span className="pill pill-danger">Expired</span>;
+    return <span className="pill pill-count">Pending</span>;
+  })();
+
   const header = (
-    <div style={{ flex: 1, minWidth: 0 }}>
-      <h3 className="drawer-title">{task?.title || 'Loading…'}</h3>
-      {task && (
-        <div className="drawer-tags">
-          <span className="tag tag-topic">{task.topic}</span>
-          {task.difficulty && <span className={`tag tag-${task.difficulty}`}>{task.difficulty}</span>}
-          {isRevision && <RevisionBadge revisionNumber={task.revisionNumber} />}
-          {task.isBacklog && !completed && <span className="tag tag-backlog">Backlog</span>}
-        </div>
-      )}
-    </div>
+    <header className="task-panel__head">
+      <div className="task-panel__head-text">
+        <h2 className="task-panel__title">{task?.title || 'Loading…'}</h2>
+        {task && (
+          <div className="task-panel__pills">
+            {task.taskType === 'revision' && (
+              <span className="pill pill-revision">Rev #{task.revisionNumber}</span>
+            )}
+            <span className="pill pill-topic">{titleCase(task.topic)}</span>
+            {task.difficulty && (
+              <span className={`pill pill-${task.difficulty}`}>
+                {titleCase(task.difficulty)}
+              </span>
+            )}
+            {statusChip}
+          </div>
+        )}
+      </div>
+      <button
+        type="button"
+        className="icon-btn"
+        aria-label="Close"
+        onClick={onClose}
+      >
+        ×
+      </button>
+    </header>
   );
 
   const footer = task && (
     <>
       {task.problemUrl && (
-        <Button variant="secondary" block onClick={() => window.open(task.problemUrl!, '_blank', 'noopener,noreferrer')}>
-          🔗 Solve on {task.platform}
-        </Button>
+        <a
+          href={task.problemUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-secondary"
+          style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          Solve on {platformLabel(task.platform) || 'Platform'} ↗
+        </a>
       )}
 
       {!completed ? (
-        <Button block loading={busy} onClick={() => actions.solve(task)}>✓ Mark as Solved</Button>
+        <button
+          type="button"
+          className="btn-primary"
+          disabled={busy}
+          onClick={() => actions.solve(task)}
+        >
+          {busy ? 'Saving...' : '✓ Mark as Solved'}
+        </button>
       ) : (
-        <Button variant="secondary" block loading={busy} onClick={() => actions.unsolve(task)}>↩ Mark as Unsolved</Button>
+        <button
+          type="button"
+          className="btn-ghost"
+          disabled={busy}
+          onClick={() => actions.unsolve(task)}
+        >
+          {busy ? 'Updating...' : 'Undo solve'}
+        </button>
       )}
 
-      <Button variant="danger" block disabled={busy} onClick={handleDelete}>🗑 Delete Task</Button>
+      <button
+        type="button"
+        className="btn-danger-outline"
+        disabled={busy}
+        onClick={handleDelete}
+      >
+        {deleting ? 'Deleting...' : 'Delete Task'}
+      </button>
     </>
   );
 
@@ -119,21 +184,54 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
         <Spinner large />
       ) : (
         <>
-          <div className="meta-list">
-            <div className="meta-row">
-              <span className="meta-key">Status</span>
-              <span className="meta-val">{completed ? '✅ Solved' : task.isBacklog ? '⚠️ Backlog' : '⏳ Pending'}</span>
+          {completed && (
+            <div className="banner banner--success" style={{ margin: '0 0 16px' }}>
+              {task.rating
+                ? `Solved · ${titleCase(task.rating)} · ${revPending + revDone} revisions scheduled`
+                : 'Solved — rate it to schedule revisions.'}
             </div>
-            <div className="meta-row"><span className="meta-key">Type</span><span className="meta-val">{task.taskType}</span></div>
-            <div className="meta-row"><span className="meta-key">Platform</span><span className="meta-val">{task.platform || '—'}</span></div>
-            <div className="meta-row"><span className="meta-key">Scheduled</span><span className="meta-val">{fmt(task.scheduledDate)}</span></div>
+          )}
+
+          <dl className="kv">
+            <div className="kv__row">
+              <dt className="kv__k">Status</dt>
+              <dd className="kv__v">{statusPill}</dd>
+            </div>
+            <div className="kv__row">
+              <dt className="kv__k">Type</dt>
+              <dd className="kv__v">{titleCase(task.taskType)}</dd>
+            </div>
+            <div className="kv__row">
+              <dt className="kv__k">Platform</dt>
+              <dd className="kv__v">{platformLabel(task.platform) || '—'}</dd>
+            </div>
+            <div className="kv__row">
+              <dt className="kv__k">Scheduled</dt>
+              <dd className="kv__v">{fmt(task.scheduledDate)}</dd>
+            </div>
             {task.completedAt && (
-              <div className="meta-row"><span className="meta-key">Solved On</span><span className="meta-val">{fmt(task.completedAt)}</span></div>
+              <div className="kv__row">
+                <dt className="kv__k">Solved on</dt>
+                <dd className="kv__v">{fmt(task.completedAt)}</dd>
+              </div>
             )}
             {isRevision && task.originalSolveDate && (
-              <div className="meta-row"><span className="meta-key">First Solved</span><span className="meta-val">{fmt(task.originalSolveDate)}</span></div>
+              <div className="kv__row">
+                <dt className="kv__k">Original solve</dt>
+                <dd className="kv__v">{fmt(task.originalSolveDate)}</dd>
+              </div>
             )}
-          </div>
+            {task.rating && (
+              <div className="kv__row">
+                <dt className="kv__k">Rating</dt>
+                <dd className="kv__v">
+                  <span className={`pill pill-${task.rating}`}>
+                    {titleCase(task.rating)}
+                  </span>
+                </dd>
+              </div>
+            )}
+          </dl>
 
           {isRevision && task.parentTask && (
             <div className="revision-summary">
@@ -144,14 +242,14 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
           )}
 
           {isNew && !completed && (
-            <div className="solve-first-note">
+            <div className="task-panel__hint">
               Mark as solved first — then pick Easy / Medium / Hard here to schedule spaced revisions.
             </div>
           )}
 
-          {isNew && completed && (
+          {task.status === 'completed' && task.taskType !== 'revision' && (
             <div className="revise-box">
-              <div className="drawer-section-title">🔁 Revise this problem?</div>
+              <div className="revise-box__title">How hard was it?</div>
               <RatingPills
                 value={task.rating}
                 size="md"
@@ -161,10 +259,11 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
               />
               <p className="revise-help">
                 {task.rating ? (
-                  <>Rated <strong>{task.rating}</strong> · {revPending} upcoming, {revDone} done. Tap the bright pill again to remove
-                  the plan — the solve still counts. Upcoming revisions also appear on your Roadmap.</>
+                  <>
+                    Rated <strong>{titleCase(task.rating)}</strong> · {revPending} upcoming{revDone > 0 ? `, ${revDone} done` : ''}. Tap the pill again to remove the plan — the solve still counts.
+                  </>
                 ) : (
-                  <>No revision plan yet. Pick how hard it felt to schedule spaced revisions — coins and streak are already counted.</>
+                  <>Easy: +14 and +28 days. Medium: +1, +3, +7, +14. Hard: +1, +3, +7, +14, +28.</>
                 )}
               </p>
             </div>

@@ -10,7 +10,7 @@ export default function AppLayout({ children }: Props) {
   return (
     <div className="app-layout">
       <TopBar />
-      <main className="app-content">
+      <main className="app-main">
         {children || <Outlet />}
       </main>
     </div>

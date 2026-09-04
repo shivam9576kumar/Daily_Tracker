@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { tokenStorage } from '../../services/tokenStorage';
+import ThemeToggle from '../common/ThemeToggle';
 import './topbar.css';
 
 /**
@@ -27,40 +28,43 @@ export default function TopBar() {
   const initial = (user?.name?.trim()?.[0] || user?.email?.[0] || '?').toUpperCase();
 
   return (
-    <header className="topbar">
-      <NavLink to="/" end className="topbar-logo">
-        DSA Planner
+    <header className="navbar topbar">
+      <NavLink to="/" end className="navbar__brand" aria-label="DSA Planner — home">
+        <span className="navbar__brand-a">DSA</span>{' '}
+        <span className="navbar__brand-b">Planner</span>
       </NavLink>
 
-      <nav className="topbar-nav" aria-label="Main navigation">
+      <nav className="navbar__links topbar-nav" aria-label="Main navigation">
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.end}
-            className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+            className={({ isActive }) => `navbar__link nav-link${isActive ? ' active' : ''}`}
           >
             {item.label}
           </NavLink>
         ))}
       </nav>
 
-      <div className="topbar-user">
+      <div className="navbar__right">
+        <ThemeToggle />
         {user?.avatarUrl ? (
           <img
-            className="topbar-avatar"
+            className="navbar__avatar"
             src={user.avatarUrl}
             alt=""
             referrerPolicy="no-referrer"
           />
         ) : (
-          <div className="topbar-avatar topbar-avatar-fallback">{initial}</div>
+          <div className="navbar__avatar">{initial}</div>
         )}
-        <span className="topbar-name">{user?.name || user?.email || ''}</span>
-        <button className="topbar-logout" onClick={handleLogout}>
+        <span className="navbar__user">{user?.name || user?.email || ''}</span>
+        <button className="navbar__logout" onClick={handleLogout}>
           Logout
         </button>
       </div>
     </header>
   );
 }
+

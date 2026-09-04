@@ -11,10 +11,10 @@ interface Props {
 }
 
 function colorFor(p: number) {
-  if (p >= 100) return '#22c55e';
-  if (p >= 50) return '#8b5cf6';
-  if (p > 0) return '#6366f1';
-  return 'rgba(255,255,255,0.15)';
+  if (p >= 100) return 'var(--success)';
+  if (p >= 50) return 'var(--brand)';
+  if (p > 0) return 'var(--brand-hover)';
+  return 'var(--border)';
 }
 
 export default function TopicProgressCircle({ topic, solved, total, percent }: Props) {
@@ -22,7 +22,7 @@ export default function TopicProgressCircle({ topic, solved, total, percent }: P
     <div className="topic-ring" title={`${topic}: ${solved} of ${total}`}>
       <div className="topic-ring-wrap">
         <svg width="64" height="64" viewBox="0 0 64 64" style={{ transform: 'rotate(-90deg)' }}>
-          <circle cx="32" cy="32" r={R} stroke="rgba(255,255,255,0.08)" strokeWidth="6" fill="none" />
+          <circle cx="32" cy="32" r={R} stroke="var(--border)" strokeWidth="6" fill="none" />
           <circle
             cx="32"
             cy="32"

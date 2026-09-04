@@ -1,3 +1,4 @@
+.navbar,
 .topbar {
   position: sticky;
   top: 0;
@@ -7,109 +8,154 @@
   justify-content: space-between;
   gap: 20px;
   height: 64px;
+  width: 100%;
   padding: 0 24px;
-  background: rgba(10, 10, 16, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  box-sizing: border-box;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
 }
 
+.navbar__brand,
 .topbar-logo {
-  font-size: 18px;
-  font-weight: 800;
+  font: var(--fw-brand) var(--fs-brand)/1 var(--font-sans);
+  letter-spacing: -0.02em;
   text-decoration: none;
   white-space: nowrap;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  flex-shrink: 0;
 }
 
+.navbar__brand-a {
+  color: var(--text-primary);
+}
+
+.navbar__brand-b {
+  color: var(--brand); /* allowed exception: wordmark */
+}
+
+.navbar__links,
 .topbar-nav {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
+.navbar__link,
 .nav-link {
-  padding: 8px 14px;
-  border-radius: 10px;
-  color: #9ca3af;
-  font-size: 14px;
-  font-weight: 500;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 0;
+  background: none;
+  font: var(--fw-nav) var(--fs-nav)/1 var(--font-sans);
+  color: var(--text-secondary);
   text-decoration: none;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: color var(--transition-fast);
 }
 
+.navbar__link:hover,
 .nav-link:hover {
-  color: #e5e7eb;
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  background: none;
 }
 
-/* Exactly ONE link gets this class at any time — driven by the URL */
+.navbar__link.active,
 .nav-link.active {
-  color: #a5b4fc;
-  background: rgba(99, 102, 241, 0.15);
+  color: var(--text-primary);
   font-weight: 600;
+  background: none;
 }
 
+.navbar__link.active::after,
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--brand);
+}
+
+.navbar__link:focus-visible,
+.nav-link:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+.navbar__right,
 .topbar-user {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+  margin-left: auto;
+  min-width: 0;
+  background: none;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 
+.navbar__avatar,
 .topbar-avatar {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
+  background: var(--avatar-bg);
+  color: var(--avatar-text);
+  font: 700 14px/34px var(--font-sans);
+  text-align: center;
+  flex: 0 0 auto;
   object-fit: cover;
-}
-
-.topbar-avatar-fallback {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  color: #e5e7eb;
-  font-weight: 700;
-  font-size: 13px;
 }
 
+.navbar__user,
 .topbar-name {
-  color: #e5e7eb;
-  font-size: 14px;
-  font-weight: 500;
+  font: 600 14px/1 var(--font-sans);
+  color: var(--text-primary);
+  white-space: nowrap;
 }
 
+.navbar__logout,
 .topbar-logout {
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-family: inherit;
+  font: 600 13px/1 var(--font-sans);
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #9ca3af;
   cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
 }
 
+.navbar__logout:hover,
 .topbar-logout:hover {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--danger);
+  border-color: var(--danger);
+  background: var(--danger-bg);
 }
 
 @media (max-width: 760px) {
+  .navbar,
   .topbar {
     height: auto;
     flex-wrap: wrap;
-    padding: 10px 14px;
+    padding: 10px 24px;
     row-gap: 8px;
   }
+  .navbar__links,
   .topbar-nav {
     order: 3;
     width: 100%;
     overflow-x: auto;
   }
+  .navbar__user,
   .topbar-name {
     display: none;
   }

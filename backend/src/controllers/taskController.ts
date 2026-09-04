@@ -2,7 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import { taskService } from '../services/task/taskService';
 import { taskCompletionService } from '../services/task/taskCompletionService';
 import { getAuthUser } from '../middleware/authMiddleware';
+import { getTz } from '../middleware/timezoneMiddleware';
 import { sendSuccess, sendCreated, sendMessage } from '../utils/response';
+import { ValidationError } from '../utils/error';
 
 export const taskController = {
   /** GET /api/tasks */
@@ -54,7 +56,8 @@ export const taskController = {
     try {
       const user = getAuthUser(req);
       const rating = req.body?.rating;
-      sendSuccess(res, await taskCompletionService.completeTask(req.params.id as string, user.id, rating));
+      const tz = getTz(req);
+      sendSuccess(res, await taskCompletionService.completeTask(user.id, req.params.id as string, rating, tz));
     } catch (err) { next(err); }
   },
 
@@ -62,7 +65,10 @@ export const taskController = {
   async rate(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await taskCompletionService.rateTask(req.params.id as string, user.id, req.body?.rating));
+      const rating = req.body?.rating;
+      if (!rating) throw new ValidationError('rating is required');
+      const tz = getTz(req);
+      sendSuccess(res, await taskCompletionService.completeTask(user.id, req.params.id as string, rating, tz));
     } catch (err) { next(err); }
   },
 
@@ -70,7 +76,7 @@ export const taskController = {
   async unrate(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await taskCompletionService.unrateTask(req.params.id as string, user.id));
+      sendSuccess(res, await taskCompletionService.unrateTask(user.id, req.params.id as string));
     } catch (err) { next(err); }
   },
 
@@ -78,7 +84,7 @@ export const taskController = {
   async undo(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await taskCompletionService.undoTask(req.params.id as string, user.id));
+      sendSuccess(res, await taskCompletionService.undoTask(user.id, req.params.id as string));
     } catch (err) { next(err); }
   },
 

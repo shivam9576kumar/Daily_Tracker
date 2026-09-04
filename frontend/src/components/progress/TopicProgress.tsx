@@ -1,5 +1,5 @@
 import type { TopicProgressData } from '../../types';
-import TopicProgressCircle from './TopicProgressCircle';
+import CircularProgress from '../common/CircularProgress';
 import './progress.css';
 
 interface Props {
@@ -8,25 +8,33 @@ interface Props {
 }
 
 export default function TopicProgress({ data, onScopeChange }: Props) {
-  const title =
+  const subtitle =
     data.scope === 'plan' && data.planName
-      ? `Topic mastery · ${data.planName}`
-      : 'Topic mastery · all problems';
+      ? data.planName
+      : 'All problems';
 
   return (
-    <section className="pcard">
-      <div className="pcard-head">
-        <h3 className="pcard-title">{title}</h3>
+    <section className="progress-card topic-card">
+      <div className="progress-card__header" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+        <h2 className="progress-card__heading">Topic Mastery</h2>
+        <div className="topic-card__subtitle">{subtitle}</div>
+
         {data.hasActivePlan && (
-          <div className="scope-toggle">
+          <div className="progress-tabs" role="tablist">
             <button
-              className={`scope-btn ${data.scope === 'plan' ? 'active' : ''}`}
+              type="button"
+              role="tab"
+              aria-selected={data.scope === 'plan'}
+              className={`progress-tab ${data.scope === 'plan' ? 'is-active' : ''}`}
               onClick={() => onScopeChange('plan')}
             >
-              This plan
+              This Plan
             </button>
             <button
-              className={`scope-btn ${data.scope === 'all' ? 'active' : ''}`}
+              type="button"
+              role="tab"
+              aria-selected={data.scope === 'all'}
+              className={`progress-tab ${data.scope === 'all' ? 'is-active' : ''}`}
               onClick={() => onScopeChange('all')}
             >
               All
@@ -42,7 +50,19 @@ export default function TopicProgress({ data, onScopeChange }: Props) {
       ) : (
         <div className="topic-grid">
           {data.topics.map((t) => (
-            <TopicProgressCircle key={t.topic} {...t} />
+            <div className="topic-item topic-item--circular" key={t.topic}>
+              <CircularProgress
+                percentage={t.percent}
+                size={68}
+                strokeWidth={6}
+                color={t.percent >= 100 ? 'var(--success)' : 'var(--brand)'}
+                trackColor="var(--border)"
+              />
+              <div className="topic-item__info">
+                <span className="topic-item__name">{t.topic}</span>
+                <span className="topic-item__count">{t.solved} / {t.total}</span>
+              </div>
+            </div>
           ))}
         </div>
       )}

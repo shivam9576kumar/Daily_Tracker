@@ -1,0 +1,32 @@
+.circular-progress {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.circular-progress__svg {
+  transform: rotate(-90deg);
+  display: block;
+}
+
+.circular-progress__track {
+  fill: none;
+}
+
+.circular-progress__fill {
+  fill: none;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.circular-progress__value {
+  position: absolute;
+  font: 700 14px/1 var(--font-sans);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.circular-progress__value.is-zero {
+  color: var(--text-disabled);
+}

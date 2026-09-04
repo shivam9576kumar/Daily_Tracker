@@ -130,8 +130,34 @@ export default function PlanWizard() {
     }
   };
 
+  const steps = ['Source', 'Schedule', 'Topics', 'Busy Days', 'Preview'];
+  const current = previewData ? 4 : 0;
+
   return (
-    <div>
+    <>
+      <header className="wizard-head">
+        <div className="wizard-head__title-row">
+          <span className="wizard-head__icon" aria-hidden="true">🎯</span>
+          <h1 className="wizard-head__title">Generate Plan</h1>
+        </div>
+        <p className="wizard-head__subtitle">
+          Generate a fair, balanced, and weighted study schedule customized to your pace and goals.
+        </p>
+      </header>
+
+      <ol className="wizard-steps" aria-label="Plan wizard progress">
+        {steps.map((s, i) => (
+          <li
+            key={s}
+            className={`wizard-step${i === current ? ' is-active' : ''}${i < current ? ' is-done' : ''}`}
+          >
+            <span className="wizard-step__dot">{i < current ? '✓' : i + 1}</span>
+            <span className="wizard-step__label">{s}</span>
+            {i < steps.length - 1 && <span className="wizard-step__line" aria-hidden="true" />}
+          </li>
+        ))}
+      </ol>
+
       <PromptAssist onParse={handleAiParse} loading={aiLoading} />
 
       <StepSourceSelect source={source} onChange={setSource} />
@@ -172,15 +198,19 @@ export default function PlanWizard() {
         }}
       />
 
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0 32px' }}>
-        <Button
-          size="lg"
-          loading={previewLoading}
-          onClick={handleGeneratePreview}
-        >
-          ⚡ Generate Schedule Preview
-        </Button>
-      </div>
+      {!previewData && (
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0 32px' }}>
+          <button
+            type="button"
+            className="btn-primary"
+            style={{ padding: '12px 28px', fontSize: 16 }}
+            disabled={previewLoading}
+            onClick={handleGeneratePreview}
+          >
+            {previewLoading ? 'Generating...' : '⚡ Generate Schedule Preview'}
+          </button>
+        </div>
+      )}
 
       {previewData && (
         <PlanPreview
@@ -196,27 +226,29 @@ export default function PlanWizard() {
         title="Active Plan Exists"
         footer={
           <>
-            <Button
-              variant="secondary"
+            <button
+              type="button"
+              className="btn-secondary"
               onClick={() => setArchiveModalOpen(false)}
               disabled={committing}
             >
               Cancel
-            </Button>
-            <Button
-              variant="danger"
-              loading={committing}
+            </button>
+            <button
+              type="button"
+              className="btn-danger"
+              disabled={committing}
               onClick={() => handleCommit(true)}
             >
-              Archive & Create New Plan
-            </Button>
+              {committing ? 'Archiving...' : 'Archive & Create New Plan'}
+            </button>
           </>
         }
       >
-        <p style={{ color: '#d1d5db', fontSize: 14 }}>
+        <div className="banner banner--warning" style={{ margin: 0 }}>
           Your current plan will be archived — progress kept, you can restore or delete it anytime from Roadmap.
-        </p>
+        </div>
       </Modal>
-    </div>
+    </>
   );
 }

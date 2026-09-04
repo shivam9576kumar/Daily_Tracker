@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import Button from '../components/common/Button';
 import Spinner from '../components/common/Spinner';
 import { classesApi, type ClassInput } from '../services/classesApi';
 import { getErrorMessage } from '../services/api';
@@ -11,8 +10,6 @@ import {
   addMinutesToHHMM,
   to12h,
 } from '../utils/timeFormat';
-import '../components/progress/progress.css';
-import '../components/common/common.css';
 import '../components/classes/classes.css';
 
 const HOURS: string[] = (() => {
@@ -124,16 +121,6 @@ export default function StudySlotsPage() {
     ]);
   };
 
-  const duplicateRow = (i: number) => {
-    const src = rows[i];
-    const copy: Row = {
-      ...src,
-      key: `new-${Math.random().toString(36).slice(2, 10)}`,
-      id: undefined,
-    };
-    setRows([...rows.slice(0, i + 1), copy, ...rows.slice(i + 1)]);
-  };
-
   const removeRow = (i: number) => {
     const next = rows.filter((_, j) => j !== i);
     setRows(next.length ? next : [blankRow()]);
@@ -190,18 +177,20 @@ export default function StudySlotsPage() {
 
   if (loading)
     return (
-      <div className="progress-page">
+      <div className="classes-page">
         <Spinner large />
       </div>
     );
 
   return (
-    <div className="progress-page">
-      <header className="progress-header">
-        <h1 className="progress-title">📚 My Classes</h1>
-        <p className="progress-subtitle">
-          Enter your semester timetable once. It appears live on your dashboard each
-          day.
+    <div className="classes-page">
+      <header className="classes-page__header">
+        <div className="classes-page__title-row">
+          <span className="classes-page__icon" aria-hidden="true">📚</span>
+          <h1 className="classes-page__title">My Classes</h1>
+        </div>
+        <p className="classes-page__subtitle">
+          Enter your semester timetable once. It appears live on your dashboard each day.
         </p>
       </header>
 
@@ -211,148 +200,178 @@ export default function StudySlotsPage() {
         ))}
       </datalist>
 
-      <section className="pcard">
-        {rows.map((r, i) => (
-          <div
-            key={r.key}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '130px 1fr 110px 110px 130px 72px',
-              gap: 8,
-              marginBottom: 8,
-              alignItems: 'center',
-            }}
-          >
-            <select
-              className="form-select"
-              value={r.dayOfWeek}
-              onChange={(e) => setRow(i, { dayOfWeek: Number(e.target.value) })}
-            >
-              {DAY_NAMES.map((d, di) => (
-                <option key={di} value={di}>
-                  {d}
-                </option>
-              ))}
-            </select>
+      <section className="card class-editor">
+        <div className="class-editor__head">
+          <div className="class-editor__head-left">
+            <h2 className="class-editor__heading">Weekly Timetable</h2>
+            <span className="pill pill-count">
+              {rows.length} {rows.length === 1 ? 'class' : 'classes'}
+            </span>
+          </div>
+          {dirty && <span className="pill pill-warning">Unsaved changes</span>}
+        </div>
 
-            <input
-              className="form-input"
-              list="subject-list"
-              placeholder="Subject code (e.g. CH3101)"
-              value={r.subject}
-              onChange={(e) => setRow(i, { subject: e.target.value })}
-            />
-
-            <select
-              className="form-select"
-              value={r.startTime}
-              onChange={(e) => onStartChange(i, e.target.value)}
-            >
-              {[...new Set([...HOURS, r.startTime])].sort().map((t) => (
-                <option key={t} value={t}>
-                  {to12h(t)}
-                </option>
-              ))}
-            </select>
-
-            <select
-              className="form-select"
-              value={r.endTime}
-              onChange={(e) => setRow(i, { endTime: e.target.value })}
-            >
-              {[...new Set([...HOURS, ...HOURS.map((t) => addMinutesToHHMM(t, 55)), r.endTime])]
-                .sort()
-                .map((t) => (
-                  <option key={t} value={t}>
-                    {to12h(t)}
-                  </option>
-                ))}
-            </select>
-
-            <input
-              className="form-input"
-              placeholder="Room (optional)"
-              value={r.location ?? ''}
-              onChange={(e) => setRow(i, { location: e.target.value })}
-            />
-
-            <div style={{ display: 'flex', gap: 4 }}>
-              <button
-                className="cl-mini"
-                type="button"
-                title="Duplicate row"
-                onClick={() => duplicateRow(i)}
-              >
-                ⧉
-              </button>
-              <button
-                className="cl-mini"
-                type="button"
-                title="Delete row"
-                onClick={() => removeRow(i)}
-              >
-                ✕
+        <div className="class-editor__body">
+          {rows.length === 0 ? (
+            <div className="class-editor__empty">
+              <span className="class-editor__empty-icon" aria-hidden="true">📚</span>
+              <h3 className="class-editor__empty-title">No classes yet</h3>
+              <p className="class-editor__empty-hint">
+                Add your first class to see it on the Dashboard each day.
+              </p>
+              <button type="button" className="btn-brand-outline" onClick={addRow}>
+                + Add Class
               </button>
             </div>
-          </div>
-        ))}
+          ) : (
+            <>
+              <div className="class-editor__labels" aria-hidden="true">
+                <span>Day</span>
+                <span>Subject</span>
+                <span>Start</span>
+                <span>End</span>
+                <span>Room</span>
+                <span />
+              </div>
 
-        <div
-          style={{
-            display: 'flex',
-            gap: 10,
-            marginTop: 14,
-            flexWrap: 'wrap',
-            alignItems: 'center',
-          }}
-        >
-          <Button size="sm" variant="secondary" onClick={addRow}>
-            + Add Class
-          </Button>
+              {rows.map((row, i) => (
+                <div key={row.key} className="class-editor__row">
+                  <div className="cell">
+                    <label className="cell__label">Day</label>
+                    <div className="select-wrap">
+                      <select
+                        className="field"
+                        value={row.dayOfWeek}
+                        onChange={(e) => setRow(i, { dayOfWeek: Number(e.target.value) })}
+                      >
+                        {DAY_NAMES.map((d, di) => (
+                          <option key={di} value={di}>
+                            {d}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
 
-          <span style={{ fontSize: 12, color: '#6b7280', marginLeft: 6 }}>
-            Copy day:
-          </span>
-          <select
-            className="form-select"
-            style={{ width: 110, padding: '5px 8px', fontSize: 12 }}
-            defaultValue=""
-            onChange={(e) => {
-              const [f, t] = e.target.value.split('-').map(Number);
-              if (!Number.isNaN(f) && !Number.isNaN(t)) copyDay(f, t);
-              e.currentTarget.value = '';
-            }}
-          >
-            <option value="" disabled>
-              Choose…
-            </option>
-            {DAY_SHORT.flatMap((from, fi) =>
-              DAY_SHORT.map((to, ti) =>
-                fi !== ti ? (
-                  <option key={`${fi}-${ti}`} value={`${fi}-${ti}`}>
-                    {from} → {to}
+                  <div className="cell cell--subject">
+                    <label className="cell__label">Subject</label>
+                    <input
+                      className="field"
+                      list="subject-list"
+                      placeholder="e.g. CS201 Data Structures"
+                      value={row.subject}
+                      onChange={(e) => setRow(i, { subject: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="cell">
+                    <label className="cell__label">Start</label>
+                    <div className="select-wrap">
+                      <select
+                        className="field"
+                        value={row.startTime}
+                        onChange={(e) => onStartChange(i, e.target.value)}
+                      >
+                        {[...new Set([...HOURS, row.startTime])].sort().map((t) => (
+                          <option key={t} value={t}>
+                            {to12h(t)}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="cell">
+                    <label className="cell__label">End</label>
+                    <div className="select-wrap">
+                      <select
+                        className="field"
+                        value={row.endTime}
+                        onChange={(e) => setRow(i, { endTime: e.target.value })}
+                      >
+                        {[...new Set([...HOURS, ...HOURS.map((t) => addMinutesToHHMM(t, 55)), row.endTime])]
+                          .sort()
+                          .map((t) => (
+                            <option key={t} value={t}>
+                              {to12h(t)}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="cell">
+                    <label className="cell__label">Room</label>
+                    <input
+                      className="field"
+                      placeholder="Room"
+                      value={row.location ?? ''}
+                      onChange={(e) => setRow(i, { location: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="cell cell--remove">
+                    <button
+                      type="button"
+                      className="icon-btn is-danger"
+                      aria-label="Remove class"
+                      onClick={() => removeRow(i)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+
+        <div className="class-editor__foot">
+          <div className="class-editor__foot-left">
+            <button type="button" className="btn-brand-outline" onClick={addRow}>
+              + Add Class
+            </button>
+            <div className="copy-day">
+              <span className="copy-day__label">Copy day:</span>
+              <div className="select-wrap select-wrap--sm">
+                <select
+                  className="field field--sm"
+                  defaultValue=""
+                  onChange={(e) => {
+                    const [f, t] = e.target.value.split('-').map(Number);
+                    if (!Number.isNaN(f) && !Number.isNaN(t)) copyDay(f, t);
+                    e.currentTarget.value = '';
+                  }}
+                >
+                  <option value="" disabled>
+                    Choose…
                   </option>
-                ) : null
-              )
-            ).filter(Boolean)}
-          </select>
+                  {DAY_SHORT.flatMap((from, fi) =>
+                    DAY_SHORT.map((to, ti) =>
+                      fi !== ti ? (
+                        <option key={`${fi}-${ti}`} value={`${fi}-${ti}`}>
+                          {from} → {to}
+                        </option>
+                      ) : null
+                    )
+                  ).filter(Boolean)}
+                </select>
+              </div>
+            </div>
+          </div>
 
-          <div style={{ flex: 1 }} />
-
-          <Button onClick={save} loading={saving} disabled={!dirty && !saving}>
-            Save Timetable
-          </Button>
+          <button
+            type="button"
+            className="btn-primary"
+            disabled={!dirty || saving}
+            onClick={save}
+          >
+            {saving ? 'Saving...' : 'Save Timetable'}
+          </button>
         </div>
       </section>
 
-      <p
-        style={{
-          fontSize: 12,
-          color: '#6b7280',
-          textAlign: 'center',
-          marginTop: 12,
-        }}
-      >
+      <p className="classes-footnote">
         Saved once per semester. Cancel-for-today lives on the dashboard.
       </p>
     </div>

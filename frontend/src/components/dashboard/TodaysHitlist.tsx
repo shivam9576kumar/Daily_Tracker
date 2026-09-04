@@ -1,9 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import type { Rating, Task } from '../../types';
-import Button from '../common/Button';
 import TaskRow from './TaskRow';
 import './dashboard.css';
 
 interface Props {
+  hasActivePlan?: boolean;
   pending: Task[];
   completed: Task[];
   busyId: string | null;
@@ -15,8 +16,18 @@ interface Props {
 }
 
 export default function TodaysHitlist({
-  pending, completed, busyId, onOpen, onAddTask, onToggleSolved, onRate, onUnrate,
+  hasActivePlan = true,
+  pending,
+  completed,
+  busyId,
+  onOpen,
+  onAddTask,
+  onToggleSolved,
+  onRate,
+  onUnrate,
 }: Props) {
+  const navigate = useNavigate();
+
   const row = (t: Task) => (
     <TaskRow
       key={t.id}
@@ -29,41 +40,47 @@ export default function TodaysHitlist({
     />
   );
 
-  const unrated = completed.filter((t) => t.taskType === 'new' && !t.rating).length;
-
   return (
     <section>
-      <div className="hitlist-header">
-        <h2>⚡ Today's Hitlist</h2>
-        <span className="hitlist-count">{pending.length} pending</span>
-        <div className="hitlist-spacer" />
-        <Button size="sm" onClick={onAddTask}>+ Add Task</Button>
+      <div className="section-head">
+        <div className="section-head__left">
+          <span className="section-head__icon" aria-hidden="true">⚡</span>
+          <h2 className="t-h2">Today's Hitlist</h2>
+          <span className="pill pill-count is-brand">{pending.length} pending</span>
+        </div>
+        <button type="button" className="btn-primary" onClick={onAddTask}>+ Add Task</button>
       </div>
 
       {pending.length === 0 ? (
-        completed.length === 0 ? (
-          <div className="empty-state">
+        !hasActivePlan ? (
+          <div className="empty-state card" style={{ textAlign: 'center', padding: '32px 20px' }}>
+            <div className="empty-emoji">🌱</div>
+            <h3 className="t-h2" style={{ margin: '0 0 6px' }}>No active plan</h3>
+            <p className="t-body" style={{ margin: '0 0 16px', color: 'var(--text-secondary)' }}>
+              Generate a plan to get a daily hitlist — your solved history and revision dates stay.
+            </p>
+            <button type="button" className="btn-primary" onClick={() => navigate('/generate-plan')}>
+              Generate Plan
+            </button>
+          </div>
+        ) : completed.length === 0 ? (
+          <div className="empty-state card">
             <div className="empty-emoji">🎯</div>
-            <div className="empty-text">No pending tasks for today. Add one to get started!</div>
-            <Button onClick={onAddTask}>+ Add Your First Task</Button>
+            <div className="empty-text t-body">No pending tasks for today. Add one to get started!</div>
+            <button type="button" className="btn-primary" style={{ marginTop: 12 }} onClick={onAddTask}>
+              + Add Your First Task
+            </button>
           </div>
-        ) : (
-          <div className="hitlist-alldone">
-            🏁 All done for today.{' '}
-            {unrated > 0
-              ? `${unrated} solved problem${unrated === 1 ? '' : 's'} still without a revision plan — pick a rating below.`
-              : 'Every solve has a revision plan. Nice.'}
-          </div>
-        )
+        ) : null
       ) : (
         <div className="task-list">{pending.map(row)}</div>
       )}
 
       {completed.length > 0 && (
         <>
-          <div className="section-divider">
+          <div className="section-divider t-label">
             ✓ Completed Today ({completed.length}){' '}
-            <span className="section-note">· tap the checkbox to unsolve · clears at midnight</span>
+            <span className="section-note t-meta">· tap the checkbox to unsolve · clears at midnight</span>
           </div>
           <div className="task-list">{completed.map(row)}</div>
         </>

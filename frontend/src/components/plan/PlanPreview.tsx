@@ -1,4 +1,3 @@
-import Button from '../common/Button';
 import type { PlanPreviewData } from '../../types';
 import './plan.css';
 
@@ -10,25 +9,27 @@ interface Props {
 
 function formatDateHeader(dateStr: string) {
   const d = new Date(dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00.000Z`);
-  return d.toLocaleDateString('en-IN', {
+  return d.toLocaleDateString('en-US', {
     weekday: 'short',
     day: 'numeric',
-    month: 'short',
   });
 }
 
 export default function PlanPreview({ preview, onCommit, committing }: Props) {
   const { summary, days, warnings, errors, valid } = preview;
+  const todayStr = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="wizard-card">
-      <div className="wizard-section-title">
-        <span>📊 Step 5: Schedule Preview & Confirmation</span>
-      </div>
+    <section className="card step-card">
+      <div className="step-card__kicker">Step 5 of 5</div>
+      <h2 className="step-card__heading">Schedule Preview & Confirmation</h2>
+      <p className="step-card__hint">
+        Review your generated plan schedule below before creating your study plan.
+      </p>
 
       {errors.length > 0 && (
-        <div className="plan-alert error">
-          <strong>⚠️ Errors:</strong>
+        <div className="banner banner--danger">
+          <strong>Errors:</strong>
           <ul style={{ margin: '4px 0 0 18px' }}>
             {errors.map((e, idx) => (
               <li key={idx}>{e}</li>
@@ -38,8 +39,8 @@ export default function PlanPreview({ preview, onCommit, committing }: Props) {
       )}
 
       {warnings.length > 0 && (
-        <div className="plan-alert warning">
-          <strong>💡 Notes & Warnings:</strong>
+        <div className="banner banner--warning">
+          <strong>Notes & Warnings:</strong>
           <ul style={{ margin: '4px 0 0 18px' }}>
             {warnings.map((w, idx) => (
               <li key={idx}>{w}</li>
@@ -48,97 +49,87 @@ export default function PlanPreview({ preview, onCommit, committing }: Props) {
         </div>
       )}
 
-      <div className="preview-summary-grid">
-        <div className="preview-stat-card">
-          <div className="preview-stat-val">{summary.totalQuestions}</div>
-          <div className="preview-stat-lbl">Questions</div>
-        </div>
-
-        <div className="preview-stat-card">
-          <div className="preview-stat-val">{summary.totalLoad}</div>
-          <div className="preview-stat-lbl">Total Load</div>
-        </div>
-
-        <div className="preview-stat-card">
-          <div className="preview-stat-val">{summary.durationDays}d</div>
-          <div className="preview-stat-lbl">Duration</div>
-        </div>
-
-        <div className="preview-stat-card">
-          <div className="preview-stat-val">{summary.estimatedQuestionsPerDay}</div>
-          <div className="preview-stat-lbl">Avg / Day</div>
-        </div>
-
-        <div className="preview-stat-card">
-          <div className="preview-stat-val">{summary.weekdayLoad}</div>
-          <div className="preview-stat-lbl">Weekday Load</div>
-        </div>
-
-        <div className="preview-stat-card">
-          <div className="preview-stat-val">{summary.weekendLoad}</div>
-          <div className="preview-stat-lbl">Weekend Load</div>
+      <div className="preview-summary-strip">
+        <span className="step-card__hint" style={{ margin: 0 }}>
+          {summary.durationDays} days · {summary.totalQuestions} questions · starts {days[0]?.date}
+        </span>
+        <div className="preview-chips">
+          <span className="pill pill-count">{summary.durationDays} days</span>
+          <span className="pill pill-count">{summary.totalQuestions} questions</span>
+          <span className="pill pill-count">{summary.totalLoad} load</span>
+          <span className="pill pill-count is-brand">~{summary.estimatedQuestionsPerDay} / day</span>
         </div>
       </div>
 
-      <div className="schedule-days-list">
-        {days.map((day) => (
-          <div key={day.date} className="schedule-day-card">
-            <div className="schedule-day-header">
-              <div className="schedule-day-date">
-                <span>{formatDateHeader(day.date)}</span>
-                {day.isBufferDay && (
-                  <span className="tag tag-platform">Buffer Day</span>
-                )}
-                {day.busyReason && (
-                  <span className="tag tag-backlog">{day.busyReason}</span>
-                )}
-              </div>
-              <div className="schedule-day-load">
-                Load: {day.usedLoad} / {day.capacityLoad}
-              </div>
-            </div>
+      <div className="preview-grid">
+        {days.map((day) => {
+          const isToday = day.date === todayStr;
+          const isRest = day.isBufferDay && day.questions.length === 0;
+          const isBusy = Boolean(day.busyReason);
 
-            {day.questions.length > 0 ? (
-              <div className="schedule-day-questions">
-                {day.questions.map((q, idx) => {
-                  const title = q.question?.title ?? q.title;
-                  const topic = q.question?.topic ?? q.topic;
-                  const difficulty = q.question?.difficulty ?? q.difficulty;
-                  const load = q.load ?? (difficulty === 'easy' ? 0.5 : difficulty === 'hard' ? 1.5 : 1.0);
-                  const key = q.question?.id ?? `${title}-${idx}`;
+          let dayClasses = 'pday';
+          if (isToday) dayClasses += ' is-today';
+          if (isBusy) dayClasses += ' is-busy';
+          if (isRest) dayClasses += ' is-rest';
 
-                  return (
-                    <div key={key} className="schedule-q-row">
-                      <span className="schedule-q-title">{title}</span>
-                      <div className="schedule-q-meta">
-                        <span className="tag tag-topic">{topic}</span>
-                        <span className={`tag tag-${difficulty}`}>
-                          {difficulty} ({load})
-                        </span>
+          return (
+            <div key={day.date} className={dayClasses}>
+              <div className="pday__head">
+                <span className="pday__date">{formatDateHeader(day.date)}</span>
+                <span className="pday__load">
+                  {day.questions.length > 0 ? `${day.questions.length}q` : isRest ? 'Rest' : '0q'}
+                </span>
+              </div>
+
+              {day.busyReason && (
+                <span className="pill pill-warning" style={{ fontSize: 11, alignSelf: 'flex-start' }}>
+                  {day.busyReason}
+                </span>
+              )}
+
+              {day.questions.length > 0 ? (
+                <div className="pday__questions">
+                  {day.questions.slice(0, 2).map((q, idx) => {
+                    const title = q.question?.title ?? q.title;
+                    const difficulty = (q.question?.difficulty ?? q.difficulty ?? 'medium').toLowerCase();
+                    const key = q.question?.id ?? `${title}-${idx}`;
+
+                    return (
+                      <div key={key} className="pday__q" title={title}>
+                        <span className={`pday__q-dot is-${difficulty}`} aria-hidden="true" />
+                        <span>{title}</span>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div style={{ fontSize: 12.5, color: '#6b7280', fontStyle: 'italic' }}>
-                No questions scheduled (catch-up / buffer day)
-              </div>
-            )}
-          </div>
-        ))}
+                    );
+                  })}
+                  {day.questions.length > 2 && (
+                    <span className="pday__more">+{day.questions.length - 2} more</span>
+                  )}
+                </div>
+              ) : isRest ? (
+                <span className="pday__rest-text">Catch-up Day</span>
+              ) : null}
+            </div>
+          );
+        })}
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
-        <Button
-          size="lg"
-          loading={committing}
+      <div className="step-foot">
+        <button
+          type="button"
+          className="btn-ghost"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          ← Edit Settings
+        </button>
+        <button
+          type="button"
+          className="btn-primary"
           disabled={!valid || committing}
           onClick={() => onCommit(false)}
         >
-          🚀 Create This Plan
-        </Button>
+          {committing ? 'Generating...' : 'Generate Plan'}
+        </button>
       </div>
-    </div>
+    </section>
   );
 }

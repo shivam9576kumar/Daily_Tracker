@@ -14,7 +14,7 @@ const BROWSER_TZ = (() => {
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-  timeout: 20000,
+  timeout: 60_000, // was 20s; rate can legitimately take several seconds on cold DB
 });
 
 // Attach JWT and X-Timezone to every request
@@ -27,7 +27,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Auto-logout on 401
+// Auto-logout on 401 & surface server error messages
 api.interceptors.response.use(
   (res) => res,
   (err) => {
@@ -37,6 +37,12 @@ api.interceptors.response.use(
         window.location.href = '/login';
       }
     }
+    const message =
+      err?.response?.data?.error ||
+      err?.response?.data?.message ||
+      (err.code === 'ECONNABORTED' ? 'Server is taking too long — please try again' : err.message) ||
+      'Something went wrong';
+    err.friendlyMessage = message;
     return Promise.reject(err);
   }
 );
@@ -44,8 +50,9 @@ api.interceptors.response.use(
 /** Extract a human-readable message from an Axios error. */
 export function getErrorMessage(err: unknown): string {
   if (axios.isAxiosError(err)) {
-    return err.response?.data?.error || err.message || 'Something went wrong';
+    return (err as any).friendlyMessage || err.response?.data?.error || err.response?.data?.message || err.message || 'Something went wrong';
   }
+  if (err instanceof Error) return err.message;
   return 'Something went wrong';
 }
 

@@ -60,6 +60,7 @@ export default function Dashboard() {
       />
 
       <TodaysHitlist
+        hasActivePlan={data.hasActivePlan}
         pending={data.todaysHitlist.pending}
         completed={data.todaysHitlist.completed}
         busyId={actions.busyId}

@@ -71,10 +71,12 @@ export default function RoadmapPage() {
   if (error && !data) {
     return (
       <div className="roadmap-page">
-        <div className="empty-roadmap">
-          <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>⚠️ {error}</div>
+        <section className="card roadmap-empty">
+          <span className="roadmap-empty__icon" aria-hidden="true">⚠️</span>
+          <h2 className="t-h2">Unable to load roadmap</h2>
+          <p className="t-body roadmap-empty__hint">{error}</p>
           <Button onClick={() => fetchActive()}>Retry</Button>
-        </div>
+        </section>
       </div>
     );
   }
@@ -88,19 +90,16 @@ export default function RoadmapPage() {
   if (!plan && revisions.length === 0 && archived.length === 0) {
     return (
       <div className="roadmap-page">
-        <div className="roadmap-header">
-          <div>
-            <h1 className="roadmap-title">📖 Study Roadmap</h1>
-            <p className="roadmap-subtitle">Your weekly journey towards DSA mastery.</p>
-          </div>
-        </div>
-        <div className="empty-roadmap">
-          <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>🚀 No Active Study Plan</div>
-          <div style={{ color: '#9ca3af', fontSize: 14, marginBottom: 20 }}>
-            Create one with AI to get a customized, balanced schedule.
-          </div>
-          <Button onClick={() => navigate('/generate-plan')}>✨ Generate Study Plan</Button>
-        </div>
+        <section className="card roadmap-empty">
+          <span className="roadmap-empty__icon" aria-hidden="true">🗺️</span>
+          <h2 className="t-h2">No active plan</h2>
+          <p className="t-body roadmap-empty__hint">
+            Your schedule is cleared. Solved problems and already-scheduled revisions are kept.
+          </p>
+          <button type="button" className="btn-primary" onClick={() => navigate('/generate-plan')}>
+            Generate Plan
+          </button>
+        </section>
       </div>
     );
   }
@@ -108,13 +107,23 @@ export default function RoadmapPage() {
   if (!plan) {
     return (
       <div className="roadmap-page">
-        <div className="roadmap-header">
+        <header className="roadmap-head">
           <div>
-            <h1 className="roadmap-title">🔁 Upcoming Revisions</h1>
-            <p className="roadmap-subtitle">No active plan. These are revisions from problems you've rated.</p>
+            <div className="roadmap-head__title">
+              <span className="roadmap-head__icon" aria-hidden="true">🔁</span>
+              <h1 className="t-h1">Upcoming Revisions</h1>
+            </div>
+            <p className="t-body roadmap-head__sub">
+              No active plan. Your schedule is cleared. Solved problems and already-scheduled revisions are kept.
+            </p>
           </div>
-          <Button onClick={() => navigate('/generate-plan')}>✨ Generate Study Plan</Button>
-        </div>
+          <div className="roadmap-head__actions">
+            <button type="button" className="btn-primary" onClick={() => navigate('/generate-plan')}>
+              Generate Plan
+            </button>
+          </div>
+        </header>
+
         {revisions.length > 0 && <Roadmap tasks={[]} revisions={revisions} originKey={originKey} />}
         <ArchivedPlansList plans={archived} busyId={busyId} onRestore={handleRestore} onDelete={handleDeleteArchived} />
         <DeletePlanModal
@@ -130,18 +139,29 @@ export default function RoadmapPage() {
     );
   }
 
+  const pendingRevs = revisions.filter(r => r.status !== 'completed' && (r.planId === plan.id || r.planId === null)).length;
+
   return (
     <div className="roadmap-page">
-      <div className="roadmap-header">
+      <header className="roadmap-head">
         <div>
-          <h1 className="roadmap-title">📖 Study Roadmap</h1>
-          <p className="roadmap-subtitle">{plan.name} · {tasks.length} problems · {revisions.filter(r => r.status !== 'completed' && r.planId === plan.id).length} revisions pending</p>
+          <div className="roadmap-head__title">
+            <span className="roadmap-head__icon" aria-hidden="true">📖</span>
+            <h1 className="t-h1">Study Roadmap</h1>
+          </div>
+          <p className="t-body roadmap-head__sub">
+            {plan.name} · {tasks.length} problems · {pendingRevs} revisions pending
+          </p>
         </div>
-        <div className="roadmap-actions">
-          <Button variant="secondary" onClick={() => navigate('/generate-plan')}>+ New Plan</Button>
-          <button className="btn-danger-outline" onClick={handleDeleteActive}>Delete Plan</button>
+        <div className="roadmap-head__actions">
+          <button type="button" className="btn-secondary" onClick={() => navigate('/generate-plan')}>
+            + New Plan
+          </button>
+          <button type="button" className="btn-danger-outline" onClick={handleDeleteActive}>
+            Delete Plan
+          </button>
         </div>
-      </div>
+      </header>
 
       <PlanStats plan={plan} tasks={tasks} revisions={revisions} />
       <Roadmap tasks={tasks} revisions={revisions.filter(r => r.planId === plan.id || r.planId === null)} originKey={originKey} />

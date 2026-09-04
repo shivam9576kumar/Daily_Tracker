@@ -77,18 +77,18 @@ export default function PendingAssignments({ pending, onChanged }: Props) {
   };
 
   return (
-    <section className="assignments-card">
+    <section className="card assignments-card">
       <div className="assignments-header">
-        <h2>📌 Pending Assignments</h2>
-        <span className="assignments-count">{pending.length}</span>
+        <h2 className="t-h2">📌 Pending Assignments</h2>
+        <span className="pill pill-count">{pending.length}</span>
         <div className="assignments-spacer" />
-        <Button size="sm" variant="secondary" onClick={openCreate}>
+        <button type="button" className="t-link" onClick={openCreate}>
           + Add
-        </Button>
+        </button>
       </div>
 
       {pending.length === 0 ? (
-        <div className="assignments-empty">No pending college assignments. Nice.</div>
+        <div className="assignments-empty t-body">No pending college assignments. Nice.</div>
       ) : (
         pending.map((a) => (
           <AssignmentItem
@@ -102,7 +102,7 @@ export default function PendingAssignments({ pending, onChanged }: Props) {
         ))
       )}
 
-      <button className="assignments-toggle" onClick={toggleCompleted}>
+      <button type="button" className="t-link assignments-toggle" onClick={toggleCompleted}>
         {showCompleted ? 'Hide completed' : 'Show completed'}
       </button>
 

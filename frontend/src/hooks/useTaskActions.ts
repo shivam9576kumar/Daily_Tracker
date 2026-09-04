@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { taskApi } from '../services/taskApi';
 import { getErrorMessage } from '../services/api';
 import { useUIStore } from '../store/uiStore';
+import { usePlanStore } from '../store/planStore';
 import { coinsFor } from '../utils/coins';
 import type { Rating, Task } from '../types';
 
@@ -18,11 +19,14 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
 
   const run = useCallback(
     async (id: string, call: () => Promise<Task>, message: (updated: Task) => string, kind: Kind): Promise<Task | null> => {
+      if (busyId) return null;
       setBusyId(id);
       try {
         const updated = await call();
         toast(message(updated), kind);
         await onChanged();
+        // Keep active plan & roadmap revisions synchronized
+        usePlanStore.getState().fetchActive().catch(() => {});
         return updated;
       } catch (err) {
         toast(getErrorMessage(err), 'error');

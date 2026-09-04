@@ -88,6 +88,8 @@ export interface ClassRow {
 }
 
 export interface DashboardData {
+  hasActivePlan?: boolean;
+  activePlan?: { id: string; name: string } | null;
   statusOverview: StatusOverview;
   vibe: Vibe;
   pendingAssignments: Assignment[];

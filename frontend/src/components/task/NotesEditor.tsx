@@ -67,15 +67,23 @@ export default function NotesEditor({ taskId, initialContent }: Props) {
       : 'Autosaves as you type';
 
   return (
-    <div className="notes-editor">
-      <div className="notes-editor-header">
-        <div className="drawer-section-title" style={{ margin: 0 }}>
-          📝 Notes
-        </div>
-        <span className={`notes-save-state is-${saveState}`}>{label}</span>
+    <section className="notes">
+      <div className="notes__head">
+        <span className="notes__title">📝 Notes</span>
+        <span
+          className={`notes__hint${
+            saveState === 'saved'
+              ? ' is-saved'
+              : saveState === 'error'
+              ? ' is-error'
+              : ''
+          }`}
+        >
+          {label}
+        </span>
       </div>
       <textarea
-        className="notes-textarea"
+        className="field notes__input"
         value={content}
         placeholder="Approach, pitfalls, complexity, what to revise…"
         onChange={(e) => {
@@ -83,8 +91,8 @@ export default function NotesEditor({ taskId, initialContent }: Props) {
           if (saveState === 'saved') setSaveState('idle');
         }}
         maxLength={20000}
-        rows={8}
+        rows={4}
       />
-    </div>
+    </section>
   );
 }

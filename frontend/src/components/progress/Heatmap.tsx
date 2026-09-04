@@ -44,58 +44,93 @@ export default function Heatmap({ data, bestStreak }: Props) {
 
   const rangeLabel = data.months.length === 12 ? 'the past year' : `the past ${data.months.length} months`;
 
+  // Compute padded flat days array and column index for each month
+  const padCount = data.months[0]?.firstWeekday ?? 0;
+  let runningDays = padCount;
+  const monthLabels: Array<{ label: string; weekIndex: number }> = [];
+
+  for (const m of data.months) {
+    const weekIndex = Math.floor(runningDays / 7);
+    monthLabels.push({ label: m.label, weekIndex });
+    runningDays += m.days.length;
+  }
+
+  const days: Array<HeatmapDay & { level: number; isPad?: boolean }> = [];
+  for (let i = 0; i < padCount; i++) {
+    days.push({
+      date: `pad-${i}`,
+      count: 0,
+      level: 0,
+      isPad: true,
+    });
+  }
+
+  for (const m of data.months) {
+    for (const d of m.days) {
+      days.push({
+        ...d,
+        level: levelFor(d.count),
+      });
+    }
+  }
+
+  const totalWeeks = Math.max(53, Math.ceil(days.length / 7));
+
   return (
-    <section className="pcard">
-      <div className="hm-header">
-        <div className="hm-headline">
+    <section className="progress-card heatmap-card">
+      <div className="progress-card__header">
+        <h2 className="progress-card__heading">
           <strong>{data.summary.totalCount}</strong> solved in {rangeLabel}
-        </div>
-        <div className="hm-meta">
+        </h2>
+        <div className="progress-card__meta">
           <span>
             Active days: <strong>{data.summary.activeDays}</strong>
           </span>
+          {' · '}
           <span>
             Max streak: <strong>{bestStreak}</strong>
           </span>
         </div>
       </div>
 
-      <div className="hm-scroll" ref={scrollRef} onScroll={() => setTip(null)}>
-        <div className="hm-months">
-          {data.months.map((m) => (
-            <div key={m.key} className="hm-month">
-              <div className="hm-grid" style={{ gridTemplateColumns: `repeat(${m.weeks}, 11px)` }}>
-                {m.days.map((day, i) => {
-                  const idx = m.firstWeekday + i; // i === dayOfMonth - 1
-                  const col = Math.floor(idx / 7) + 1;
-                  const row = (idx % 7) + 1; // row 1 = Sunday
-                  const lvl = levelFor(day.count);
-                  return (
-                    <div
-                      key={day.date}
-                      className={`hm-cell${lvl ? ` hm-l${lvl}` : ''}`}
-                      style={{ gridColumn: col, gridRow: row }}
-                      onMouseEnter={(e) => showTip(e, day)}
-                      onMouseLeave={() => setTip(null)}
-                      aria-label={`${day.count} solved on ${day.date}`}
-                    />
-                  );
-                })}
-              </div>
+      <div className="heatmap-card__grid-wrap" ref={scrollRef} onScroll={() => setTip(null)}>
+        <div className="heatmap-scroll">
+          <div
+            className="heatmap-months"
+            aria-hidden="true"
+            style={{ gridTemplateColumns: `repeat(${totalWeeks}, 1fr)` }}
+          >
+            {monthLabels.map((m) => (
+              <span
+                key={`${m.label}-${m.weekIndex}`}
+                className="heatmap-months__label"
+                style={{ gridColumnStart: m.weekIndex + 1 }}
+              >
+                {m.label}
+              </span>
+            ))}
+          </div>
 
-              {m.badge === 'full-month' ? (
-                <div className="hm-badge" title={`${m.label} ${m.year}: active every single day`}>
-                  {m.month}
-                </div>
-              ) : (
-                <div className="hm-month-label">{m.label}</div>
-              )}
-            </div>
-          ))}
+          <div
+            className="heatmap-grid"
+            style={{ gridTemplateColumns: `repeat(${totalWeeks}, 1fr)` }}
+          >
+            {days.map((day) => (
+              <div
+                key={day.date}
+                className={`heatmap-cell hm-${day.level}`}
+                style={day.isPad ? { visibility: 'hidden', pointerEvents: 'none' } : undefined}
+                onMouseEnter={day.isPad ? undefined : (e) => showTip(e, day)}
+                onMouseLeave={day.isPad ? undefined : () => setTip(null)}
+                aria-label={day.isPad ? undefined : `${day.count} solved on ${day.date}`}
+                title={day.isPad ? undefined : `${day.count} on ${day.date}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="hm-footer">
+      <div className="heatmap-footer">
         <span>New problems and revisions both count · {data.tz}</span>
         <ProgressLegend />
       </div>

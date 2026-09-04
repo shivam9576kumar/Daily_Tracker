@@ -4,7 +4,7 @@ import StatsCards from '../components/progress/StatsCards';
 import Heatmap from '../components/progress/Heatmap';
 import TopicProgress from '../components/progress/TopicProgress';
 import DifficultyBreakdown from '../components/progress/DifficultyBreakdown';
-import RecentActivity from '../components/progress/RecentActivity';
+import ActivityLog from '../components/progress/ActivityLog';
 import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
 import '../components/progress/progress.css';
@@ -39,9 +39,12 @@ export default function ProgressPage() {
 
   return (
     <div className="progress-page">
-      <header className="progress-header">
-        <h1 className="progress-title">📈 Progress</h1>
-        <p className="progress-subtitle">
+      <header className="progress-page__header">
+        <div className="progress-page__title-row">
+          <span className="progress-page__icon" aria-hidden="true">📈</span>
+          <h1 className="progress-page__title">Progress</h1>
+        </div>
+        <p className="progress-page__subtitle">
           Every green square is a day you showed up. Revisions count too.
         </p>
       </header>
@@ -49,19 +52,26 @@ export default function ProgressPage() {
       <StatsCards stats={data.stats} />
       <Heatmap data={data.heatmap} bestStreak={data.stats.bestStreak} />
 
-      <div className="progress-columns">
+      <div className="progress-analytics-grid">
         <TopicProgress
           data={data.topics}
           onScopeChange={(scope) => fetch({ scope, silent: true })}
         />
-        <div>
-          <DifficultyBreakdown
-            difficulty={data.topics.difficulty}
-            totals={data.topics.totals}
-          />
-          <RecentActivity items={data.activity} />
-        </div>
+        <DifficultyBreakdown
+          difficulty={data.topics.difficulty}
+          totals={data.topics.totals}
+        />
       </div>
+
+      <section className="progress-card activity-card">
+        <div className="progress-card__header">
+          <h2 className="progress-card__heading">Recent Activity</h2>
+        </div>
+
+        <div className="activity-card__body">
+          <ActivityLog activities={data.activity} />
+        </div>
+      </section>
     </div>
   );
 }

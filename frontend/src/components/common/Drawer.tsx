@@ -31,16 +31,11 @@ export default function Drawer({
 
   return (
     <>
-      <div className="drawer-overlay" onClick={onClose} />
-      <aside className="drawer">
-        <div className="drawer-header">
-          {header}
-          <button className="modal-close" onClick={onClose} aria-label="Close">
-            ×
-          </button>
-        </div>
-        <div className="drawer-body">{children}</div>
-        {footer && <div className="drawer-footer">{footer}</div>}
+      <div className="task-panel-overlay drawer-overlay" onClick={onClose} />
+      <aside className="task-panel drawer" aria-modal="true" role="dialog">
+        {header}
+        <div className="task-panel__body drawer-body">{children}</div>
+        {footer && <div className="task-panel__foot drawer-footer">{footer}</div>}
       </aside>
     </>
   );

@@ -9,22 +9,24 @@ import { classesService } from '../classes/classesService';
  */
 export const dashboardService = {
   async getDashboardData(userId: string, tz: string) {
-    // Run all queries in parallel
-    const [
-      todaysTasks,
-      totalQuestions,
-      backlogCount,
-      expiredCount,
-      streaks,
-      pendingAssignments,
-      user,
-      classesForWeek,
-    ] = await Promise.all([
+    // Run queries in small batches to stay well under the pool size limit (15)
+    const [todaysTasks, totalQuestions, user, activePlan] = await Promise.all([
       taskRepository.getTodaysTasks(userId),
       // Total unique problems actually solved (new tasks only, not revisions)
       prisma.task.count({
         where: { userId, taskType: 'new', status: 'completed' },
       }),
+      prisma.user.findUnique({
+        where: { id: userId },
+        select: { coins: true },
+      }),
+      prisma.plan.findFirst({
+        where: { userId, status: 'active' },
+        select: { id: true, name: true },
+      }),
+    ]);
+
+    const [backlogCount, expiredCount, streaks, pendingAssignments, classesForWeek] = await Promise.all([
       // Backlog: flagged as backlog, not expired, not completed (live plan or manual)
       prisma.task.count({
         where: {
@@ -48,10 +50,6 @@ export const dashboardService = {
         where: { userId, status: 'pending' },
         orderBy: { deadline: 'asc' },
       }),
-      prisma.user.findUnique({
-        where: { id: userId },
-        select: { coins: true },
-      }),
       classesService.list(userId).catch(() => []),
     ]);
 
@@ -60,7 +58,7 @@ export const dashboardService = {
       .filter((t) => t.status === 'completed')
       .sort((a, b) => (b.completedAt?.getTime() ?? 0) - (a.completedAt?.getTime() ?? 0)); // newest first
 
-    const vibe = getVibe(pendingTasks.length, completedTasks.length, todaysTasks);
+    const vibe = getVibe(pendingTasks.length, completedTasks.length, !!activePlan);
 
     // Color-code assignments by urgency
     const assignments = pendingAssignments.map((a) => ({
@@ -69,6 +67,8 @@ export const dashboardService = {
     }));
 
     return {
+      hasActivePlan: !!activePlan,
+      activePlan: activePlan ?? null,
       statusOverview: {
         totalQuestions,
         streak: streaks.current,
@@ -91,24 +91,23 @@ export const dashboardService = {
 function getVibe(
   pendingCount: number,
   completedCount: number,
-  tasks: { difficulty: string | null; taskType: string; status: string; rating: string | null }[]
+  hasActivePlan: boolean = true,
 ) {
   if (pendingCount === 0) {
     if (completedCount === 0) {
+      if (!hasActivePlan) {
+        return { emoji: '🌱', message: 'No active plan. Generate a plan to get a daily hitlist.', intensity: 'none' as const };
+      }
       return { emoji: '🎉', message: 'All clear! No tasks today. Enjoy your day!', intensity: 'none' as const };
     }
-    const unrated = tasks.filter((t) => t.status === 'completed' && t.taskType === 'new' && !t.rating).length;
     return {
       emoji: '🏁',
-      message: unrated > 0
-        ? `All done for today — ${completedCount} solved · ${unrated} still without a revision plan`
-        : `All done for today — ${completedCount} solved. Nice work!`,
+      message: `All done for today — ${completedCount} solved. Nice work!`,
       intensity: 'none' as const,
     };
   }
 
-  const hardCount = tasks.filter((t) => t.difficulty === 'hard' && t.status !== 'completed').length;
-  if (hardCount >= 3 || pendingCount >= 6) {
+  if (pendingCount >= 6) {
     return { emoji: '⚔️', message: 'Grind Day! Heavy load ahead. Stay focused!', intensity: 'high' as const };
   }
   if (pendingCount >= 3) {

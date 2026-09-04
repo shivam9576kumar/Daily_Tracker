@@ -1,6 +1,7 @@
 import type { Task } from '../../types';
 import RevisionBadge from '../task/RevisionBadge';
-import '../dashboard/dashboard.css';
+import { IconLock } from '../common/icons';
+import { platformLabel } from '../../utils/labels';
 import './roadmap.css';
 
 interface Props {
@@ -9,46 +10,44 @@ interface Props {
   isFuture: boolean;
 }
 
-function statusIcon(task: Task, isFuture: boolean) {
-  if (task.status === 'completed') return { icon: '✓', cls: 'done' };
-  if (isFuture) return { icon: '🔒', cls: 'locked' };
-  return { icon: '○', cls: 'pending' };
-}
-
 export default function RoadmapTaskRow({ task, isToday, isFuture }: Props) {
-  const isRevision = task.taskType === 'revision';
-  const completed = task.status === 'completed';
-  const s = statusIcon(task, isFuture);
+  const rowState =
+    task.status === 'completed' ? 'completed' :
+    task.status === 'expired'   ? 'expired'   :
+    task.isBacklog              ? 'backlog'   :
+    isFuture                    ? 'locked'    : 'pending';
 
-  // Roadmap is read-only: clicking only opens the problem. Completion happens on the Dashboard.
   const open = () => {
     if (task.problemUrl) window.open(task.problemUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const cls = [
-    'roadmap-task',
-    completed ? 'is-completed' : '',
-    isFuture ? 'is-future' : '',
-    isRevision ? 'is-revision' : '',
-  ].filter(Boolean).join(' ');
-
-  const tooltip = isRevision
+  const tooltip = task.taskType === 'revision'
     ? `Revision #${task.revisionNumber} — click to open the problem`
     : isFuture
     ? 'Locked — unlocks on its scheduled day'
     : 'Click to open on LeetCode';
 
   return (
-    <div className={cls} onClick={open} title={tooltip} style={{ cursor: task.problemUrl ? 'pointer' : 'default' }}>
-      <div className={`rt-status ${s.cls}`}>{s.icon}</div>
-      <div className="rt-main">
-        <div className="rt-title">{task.title}</div>
-        <div className="rt-tags">
-          {isRevision && <RevisionBadge revisionNumber={task.revisionNumber} />}
-          <span className="tag tag-topic">{task.topic}</span>
-          {task.difficulty && <span className={`tag tag-${task.difficulty}`}>{task.difficulty}</span>}
-          {isToday && <span className="tag tag-platform">Today</span>}
-          {task.isBacklog && !completed && <span className="tag tag-backlog">Backlog</span>}
+    <div
+      className={`rtask is-${rowState}${isToday ? ' in-today' : ''}`}
+      onClick={open}
+      title={tooltip}
+      style={{ cursor: task.problemUrl ? 'pointer' : 'default' }}
+    >
+      <span className="rtask__status" aria-hidden="true">
+        {rowState === 'locked' && <IconLock />}
+      </span>
+      <div className="rtask__body">
+        <span className="t-title rtask__title">{task.title}</span>
+        <div className="rtask__meta">
+          {task.taskType === 'revision' && <RevisionBadge revisionNumber={task.revisionNumber} />}
+          <span className="pill pill-topic">{task.topic}</span>
+          {task.difficulty && <span className={`pill pill-${task.difficulty}`}>{task.difficulty}</span>}
+          {task.platform && task.platform !== 'custom' && (
+            <span className="rtask__platform">{platformLabel(task.platform)}</span>
+          )}
+          {rowState === 'backlog' && <span className="pill pill-outline-warning">Backlog</span>}
+          {rowState === 'expired' && <span className="pill pill-outline-danger">Expired</span>}
         </div>
       </div>
     </div>

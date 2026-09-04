@@ -48,7 +48,7 @@ export default function Roadmap({ tasks, revisions, originKey }: Props) {
   const current = weeks.find((w) => w.days.some((d) => d.dateKey >= today)) ?? weeks[weeks.length - 1];
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {weeks.map((w) => (
         <WeekCard
           key={w.weekNumber}

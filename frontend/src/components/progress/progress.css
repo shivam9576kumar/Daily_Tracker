@@ -1,425 +1,601 @@
+/* ================================================================
+   PROGRESS PAGE: HEADER + STATS + HEATMAP + TOPICS + DIFFICULTY + ACTIVITY
+   ================================================================ */
+
 .progress-page {
-  width: 100%;
-  max-width: 1060px;
+  width: min(100% - 48px, 1360px);
   margin: 0 auto;
-  padding: 28px 20px 80px;
+  padding: 34px 0 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
-.progress-header {
-  margin-bottom: 22px;
+.progress-card,
+.heatmap-card,
+.topic-card,
+.difficulty-card,
+.activity-card {
+  width: 100%;
 }
 
-.progress-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: #f3f4f6;
-  margin: 0 0 6px;
+.progress-page__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.progress-subtitle {
-  color: #9ca3af;
-  font-size: 14px;
-  margin: 0;
-}
-
-.pcard {
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 18px 20px;
-}
-
-.pcard + .pcard {
-  margin-top: 18px;
-}
-
-.pcard-title {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.9px;
-  text-transform: uppercase;
-  color: #8b90a0;
-  margin: 0 0 14px;
-}
-
-.pcard-head {
+.progress-page__title-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
-  margin-bottom: 14px;
 }
 
-.pcard-head .pcard-title {
-  margin: 0;
-}
-
-/* ─── Stats ─── */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-.stat-card {
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 16px 18px;
-}
-
-.stat-label {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #8b90a0;
-  margin-bottom: 8px;
-}
-
-.stat-value {
-  font-size: 28px;
-  font-weight: 800;
-  color: #f3f4f6;
+.progress-page__icon {
+  font-size: 26px;
   line-height: 1;
 }
 
-.stat-hint {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 8px;
+.progress-page__title {
+  margin: 0;
+  font: 700 30px/1.2 var(--font-sans);
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
 }
 
-.stat-hint.warn {
-  color: #fcd34d;
+.progress-page__subtitle {
+  margin: 0;
+  font: 400 15px/1.6 var(--font-sans);
+  color: var(--text-secondary);
 }
 
-.stat-hint.ok {
-  color: #86efac;
-}
-
-/* ─── Heatmap (LeetCode style) ─── */
-.hm-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-
-.hm-headline {
-  font-size: 14px;
-  color: #d1d5db;
-}
-
-.hm-headline strong {
-  color: #f3f4f6;
-  font-size: 18px;
-}
-
-.hm-meta {
-  display: flex;
+/* ─── Top achievement statistics ─── */
+.progress-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
-  font-size: 12.5px;
-  color: #9ca3af;
 }
 
-.hm-meta strong {
-  color: #e5e7eb;
-}
-
-.hm-scroll {
-  overflow-x: auto;
-  padding: 6px 2px 10px;
-  scrollbar-width: thin;
-}
-
-.hm-months {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  width: max-content;
-}
-
-.hm-month {
+.progress-stat {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 8px;
+  min-height: 164px;
+  padding: 22px 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
 }
 
-.hm-grid {
+.progress-stat__label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 15px/1.35 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.progress-stat__value {
+  font: 800 42px/1.05 var(--font-sans);
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-stat__value.is-zero {
+  color: var(--text-disabled);
+}
+
+.progress-stat__detail {
+  margin-top: auto;
+  font: 500 13px/1.45 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.progress-stat__detail.warn {
+  color: var(--warning-text);
+}
+
+.progress-stat__detail.ok {
+  color: var(--success-text);
+}
+
+/* ─── Shared analysis card ─── */
+.progress-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+}
+
+.progress-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 22px 24px 0;
+}
+
+.progress-card__heading {
+  margin: 0;
+  font: 600 22px/1.3 var(--font-sans);
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+
+.progress-card__heading strong {
+  color: var(--text-primary);
+}
+
+.progress-card__meta {
+  font: 500 13px/1.45 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.progress-card__meta strong {
+  color: var(--text-primary);
+}
+
+/* ─── Heatmap ─── */
+.heatmap-card {
+  overflow: hidden;
+}
+
+.heatmap-card__grid-wrap {
+  overflow-x: auto;
+  padding: 18px 24px 8px;
+}
+
+.heatmap-scroll {
+  display: inline-block;
+  min-width: 100%;
+}
+
+/* Month labels sit on the SAME 53-column track as the grid */
+.heatmap-months {
   display: grid;
-  grid-template-rows: repeat(7, 11px);
+  grid-template-columns: repeat(53, 1fr);
   gap: 3px;
+  margin-bottom: 6px;
 }
 
-.hm-cell {
+.heatmap-months__label {
+  grid-row: 1;
+  font: 500 12px/1.2 var(--font-sans);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* One continuous grid — uniform 3px gap everywhere */
+.heatmap-grid {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  grid-template-columns: repeat(53, 1fr);
+  grid-auto-flow: column;
+  gap: 3px;
+  width: 100%;
+  min-width: 740px;
+}
+
+.heatmap-cell {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.25);
+}
+
+.heatmap-cell.hm-0 { background: var(--heatmap-0); }
+.heatmap-cell.hm-1 { background: var(--heatmap-1); }
+.heatmap-cell.hm-2 { background: var(--heatmap-2); }
+.heatmap-cell.hm-3 { background: var(--heatmap-3); }
+.heatmap-cell.hm-4 { background: var(--heatmap-4); }
+
+.heatmap-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 24px 20px;
+  font: 400 13px/1.5 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 12px/1 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.heatmap-legend__cell {
   width: 11px;
   height: 11px;
   border-radius: 2px;
-  background: #2a2b31;
 }
 
-.hm-cell:hover {
-  outline: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.hm-l1 {
-  background: #0e4429;
-}
-
-.hm-l2 {
-  background: #006d32;
-}
-
-.hm-l3 {
-  background: #26a641;
-}
-
-.hm-l4 {
-  background: #39d353;
-}
-
-.hm-month-label {
-  font-size: 12px;
-  color: #9ca3af;
-  height: 22px;
-  display: flex;
-  align-items: center;
-}
-
-.hm-badge {
-  width: 22px;
-  height: 22px;
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  background: linear-gradient(135deg, #f87171, #b91c1c);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hm-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  font-size: 12px;
-  color: #6b7280;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.hm-legend {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #9ca3af;
-}
-
-.hm-legend .hm-cell {
-  cursor: default;
-}
+.heatmap-legend__cell.hm-0 { background: var(--heatmap-0); }
+.heatmap-legend__cell.hm-1 { background: var(--heatmap-1); }
+.heatmap-legend__cell.hm-2 { background: var(--heatmap-2); }
+.heatmap-legend__cell.hm-3 { background: var(--heatmap-3); }
+.heatmap-legend__cell.hm-4 { background: var(--heatmap-4); }
 
 .hm-tooltip {
   position: fixed;
   z-index: 3000;
   transform: translate(-50%, calc(-100% - 8px));
-  background: #1b1b26;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e5e7eb;
-  font-size: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  font: 500 12px/1.4 var(--font-sans);
   padding: 6px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   pointer-events: none;
   white-space: nowrap;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-md);
 }
 
-/* ─── Topics ─── */
-.topic-grid {
+/* ─── Analytics 2-Column Grid ─── */
+.progress-analytics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
-  gap: 14px;
-}
-
-.topic-ring {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  text-align: center;
-}
-
-.topic-ring-wrap {
-  position: relative;
-  width: 64px;
-  height: 64px;
-}
-
-.topic-ring-pct {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 800;
-  color: #e5e7eb;
-}
-
-.topic-name {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: #d1d5db;
-}
-
-.topic-count {
-  font-size: 11.5px;
-  color: #8b90a0;
-}
-
-.scope-toggle {
-  display: flex;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 3px;
-}
-
-.scope-btn {
-  border: none;
-  background: transparent;
-  color: #9ca3af;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.scope-btn.active {
-  background: rgba(99, 102, 241, 0.25);
-  color: #c7d2fe;
-}
-
-/* ─── Difficulty ─── */
-.diff-row {
-  display: grid;
-  grid-template-columns: 70px 1fr 64px;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  font-size: 13px;
-}
-
-.diff-name {
-  font-weight: 700;
-  text-transform: capitalize;
-}
-
-.diff-name.easy {
-  color: #86efac;
-}
-
-.diff-name.medium {
-  color: #fcd34d;
-}
-
-.diff-name.hard {
-  color: #fca5a5;
-}
-
-.diff-bar {
-  height: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.diff-fill {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 0.4s ease;
-}
-
-.diff-fill.easy {
-  background: #22c55e;
-}
-
-.diff-fill.medium {
-  background: #fbbf24;
-}
-
-.diff-fill.hard {
-  background: #ef4444;
-}
-
-.diff-count {
-  text-align: right;
-  color: #9ca3af;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ─── Layout + activity ─── */
-.progress-columns {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 18px;
-  margin-top: 18px;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.85fr);
+  gap: 22px;
   align-items: start;
 }
 
-@media (max-width: 820px) {
-  .progress-columns {
-    grid-template-columns: 1fr;
-  }
+.topic-card,
+.difficulty-card,
+.activity-card {
+  overflow: hidden;
 }
 
-.activity-item {
+/* ─── Topic Mastery (Circular) ─── */
+.topic-card__subtitle {
+  margin-top: 5px;
+  font: 400 14px/1.5 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.progress-tabs {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
-  font-size: 13px;
+  gap: 24px;
+  margin-top: 20px;
+  border-bottom: 1px solid var(--border);
 }
 
-.activity-item:last-child {
-  border-bottom: none;
+.progress-tab {
+  position: relative;
+  padding: 0 0 11px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: 600 14px/1 var(--font-sans);
+  cursor: pointer;
+  transition: color var(--transition-fast);
 }
 
-.activity-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.progress-tab:hover {
+  color: var(--text-primary);
 }
 
-.activity-title {
-  flex: 1;
+.progress-tab.is-active {
+  color: var(--text-primary);
+}
+
+.progress-tab.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brand);
+}
+
+.progress-tab:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px 24px 24px;
+}
+
+.topic-item--circular {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.topic-item--circular:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.topic-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   min-width: 0;
+}
+
+.topic-item__name {
+  font: 600 15px/1.3 var(--font-sans);
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #e5e7eb;
 }
 
-.activity-time {
-  color: #8b90a0;
-  font-size: 12px;
-  white-space: nowrap;
+.topic-item__count {
+  font: 500 13px/1.4 var(--font-sans);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .progress-empty {
   text-align: center;
-  color: #8b90a0;
-  font-size: 13px;
+  color: var(--text-muted);
+  font: 400 13px/1.5 var(--font-sans);
+  padding: 32px 20px;
+}
+
+/* ─── Difficulty (Circular) ─── */
+.difficulty-card {
+  overflow: hidden;
+}
+
+.difficulty-card .progress-card__header {
+  padding-bottom: 8px;
+}
+
+.difficulty-circular__total {
+  font: 500 13px/1.4 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.difficulty-circular-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 22px 24px 24px;
+}
+
+.difficulty-circular-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  text-align: center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.difficulty-circular-item:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.difficulty-circular__name {
+  font: 600 14px/1.2 var(--font-sans);
+}
+
+.difficulty-circular__name.easy {
+  color: var(--easy-text);
+}
+.difficulty-circular__name.medium {
+  color: var(--medium-text);
+}
+.difficulty-circular__name.hard {
+  color: var(--hard-text);
+}
+
+.difficulty-circular__count {
+  font: 500 13px/1 var(--font-sans);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Recent Activity ─── */
+.activity-card__body {
+  padding: 8px 24px 24px;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
   padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.activity-row:last-child {
+  border-bottom: 0;
+}
+
+.activity-row__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.activity-row__icon.is-solved {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.activity-row__icon.is-revision {
+  background: var(--revision-bg);
+  color: var(--revision-text);
+}
+
+.activity-row__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-row__title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 15px/1.45 var(--font-sans);
+  color: var(--text-primary);
+}
+
+.activity-row__meta {
+  display: block;
+  margin-top: 3px;
+  font: 500 13px/1.45 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.activity-row__time {
+  flex: 0 0 auto;
+  font: 500 13px/1.4 var(--font-sans);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.activity-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 38px 20px 28px;
+  text-align: center;
+}
+
+.activity-empty__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--brand-tint);
+  color: var(--brand);
+  font-size: 20px;
+}
+
+.activity-empty__title {
+  font: 500 15px/1.45 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.activity-empty__hint {
+  max-width: 360px;
+  font: 400 13px/1.5 var(--font-sans);
+  color: var(--text-muted);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1000px) {
+  .topic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .progress-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .progress-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .progress-page {
+    width: min(100% - 28px, 1360px);
+    padding-top: 24px;
+  }
+
+  .progress-page__title {
+    font-size: 27px;
+  }
+
+  .progress-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .progress-stat {
+    min-height: 138px;
+    padding: 20px;
+  }
+
+  .progress-card__header {
+    padding: 20px 20px 0;
+  }
+
+  .heatmap-card__grid-wrap {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .heatmap-footer {
+    padding: 14px 20px 20px;
+  }
+
+  .topic-grid {
+    grid-template-columns: 1fr;
+    padding: 18px 20px 20px;
+  }
+
+  .difficulty-circular-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 18px 16px 20px;
+  }
+
+  .difficulty-circular-item {
+    padding: 14px 8px;
+  }
+
+  .activity-card__body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .activity-row {
+    gap: 10px;
+  }
+
+  .activity-row__time {
+    display: none;
+  }
 }

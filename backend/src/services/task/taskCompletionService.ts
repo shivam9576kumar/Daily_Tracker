@@ -1,293 +1,255 @@
-import { Prisma } from '@prisma/client';
+import { randomUUID } from 'node:crypto';
+import { Prisma, type Task } from '@prisma/client';
 import prisma from '../../config/database';
-import { taskRepository } from '../../repositories/taskRepository';
+import { env } from '../../config/env';
+import { dateKeyInTz } from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import { REVISION_RULES } from '@dsa-planner/shared';
-import { calculateCoins } from '../../config/rewards';
-import logger from '../../utils/logger';
+import { invalidateUserCache } from '../../middleware/authMiddleware';
 
-type RatingKey = 'easy' | 'medium' | 'hard';
-const VALID_RATINGS: RatingKey[] = ['easy', 'medium', 'hard'];
+export type Rating = 'easy' | 'medium' | 'hard';
 
-/* ───────────────────────── helpers ───────────────────────── */
+const RATINGS = ['easy', 'medium', 'hard'] as const;
+const RATING_BONUS: Record<Rating, number> = { easy: 0, medium: 5, hard: 10 };
+const BASE_SOLVE_COINS = 10;
 
-function validateRating(rating: unknown): RatingKey {
-  if (!VALID_RATINGS.includes(rating as RatingKey)) {
-    throw new ValidationError(`Invalid rating. Must be one of: ${VALID_RATINGS.join(', ')}`);
-  }
-  return rating as RatingKey;
+const REVISION_INTERVALS: Record<Rating, readonly number[]> = {
+  easy:   [14, 28],
+  medium: [1, 3, 7, 14],
+  hard:   [1, 3, 7, 14, 28],
+};
+
+/** Tokyo RTTs are huge; default Prisma tx timeout (5s) is far too low. */
+const TX_OPTIONS = { maxWait: 15_000, timeout: 60_000 } as const;
+
+function parseRating(value: unknown): Rating {
+  if (typeof value === 'string' && (RATINGS as readonly string[]).includes(value as Rating)) return value as Rating;
+  throw new ValidationError(`rating must be one of: ${RATINGS.join(', ')}`);
 }
 
-function startOfDay(d: Date): Date {
+function bonusFor(rating: string | null | undefined): number {
+  return rating && rating in RATING_BONUS ? RATING_BONUS[rating as Rating] : 0;
+}
+
+/**
+ * Given a timestamp instant `anchor` and user timezone `tz`,
+ * resolve the calendar date key 'YYYY-MM-DD' on the user's wall clock,
+ * and return UTC midnight of that calendar day.
+ */
+function solvedDateMidnightUtc(anchor: Date, tz: string = env.DEFAULT_TIMEZONE): Date {
+  const dateKey = dateKeyInTz(anchor, tz);
+  return new Date(`${dateKey}T00:00:00.000Z`);
+}
+
+function addUtcDays(d: Date, days: number): Date {
   const x = new Date(d);
-  x.setHours(0, 0, 0, 0);
+  x.setUTCDate(x.getUTCDate() + days);
   return x;
 }
 
-function addDaysAtStartOfDay(base: Date, days: number): Date {
-  const d = new Date(base);
-  d.setDate(d.getDate() + days);
-  d.setHours(0, 0, 0, 0);
-  return d;
-}
-
-/** 'YYYY-MM-DD' from LOCAL parts — the same grouping the Roadmap uses. */
-function localDateKey(d: Date): string {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
-
-function isFutureDay(scheduledDate: Date): boolean {
-  return startOfDay(new Date(scheduledDate)).getTime() > startOfDay(new Date()).getTime();
-}
-
-function fmtDay(d: Date): string {
-  return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-}
+type ParentTask = Pick<Task, 'id' | 'planId' | 'title' | 'topic' | 'difficulty' | 'platform' | 'problemUrl'>;
 
 /**
- * Where a task goes when it is un-solved.
- * If its scheduled day already passed it goes straight to BACKLOG, so it is visible on
- * today's hitlist immediately instead of disappearing until the midnight cron.
+ * Replace this task's pending/backlog revisions with a fresh rating-based set.
+ * Idempotent: re-rating never duplicates.
+ * Anchor is strictly the calendar date x of the solved-on day in the user's timezone.
  */
-function revertedStatusFields(scheduledDate: Date) {
-  const isPast = startOfDay(new Date(scheduledDate)).getTime() < startOfDay(new Date()).getTime();
-  return isPast
-    ? { status: 'backlog', isBacklog: true, backlogSince: new Date(), isExpired: false }
-    : { status: 'pending', isBacklog: false, backlogSince: null, isExpired: false };
-}
-
-/* ───────────────────── transactional helpers ───────────────────── */
-
-async function adjustCoinsTx(tx: Prisma.TransactionClient, userId: string, amount: number) {
-  if (amount === 0) return;
-  if (amount > 0) {
-    await tx.user.update({ where: { id: userId }, data: { coins: { increment: amount } } });
-    return;
-  }
-  const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
-  await tx.user.update({ where: { id: userId }, data: { coins: Math.max(0, (user?.coins ?? 0) + amount) } });
-}
-
-/**
- * Delete every UNFINISHED revision (pending/backlog) of a parent — the revision tasks AND
- * their revision records. Completed revisions are always preserved.
- */
-async function deleteUnfinishedRevisionsTx(tx: Prisma.TransactionClient, parentTaskId: string) {
-  const unfinished = await tx.task.findMany({
-    where: { parentTaskId, taskType: 'revision', status: { not: 'completed' } },
-    select: { id: true },
-  });
-  const ids = unfinished.map((t) => t.id);
-  if (ids.length) await tx.task.deleteMany({ where: { id: { in: ids } } });
-  const records = await tx.revision.deleteMany({ where: { parentTaskId, status: { not: 'completed' } } });
-  return { deletedRevisionTasks: ids.length, deletedRevisionRecords: records.count };
-}
-
-/**
- * Create revision tasks + records for a rating.
- *  - offsets from REVISION_RULES[rating], counted from `anchorDate`
- *  - never two unfinished revisions on the same calendar day
- *  - numbering continues after any completed revisions that were kept
- */
-async function createRevisionGraphTx(
+async function regenerateRevisions(
   tx: Prisma.TransactionClient,
-  p: { parentTaskId: string; userId: string; rating: RatingKey; anchorDate: Date }
-) {
-  const parent = await tx.task.findUnique({ where: { id: p.parentTaskId } });
-  if (!parent) throw new NotFoundError('Parent task');
-  if (parent.taskType !== 'new') throw new ValidationError('Only new problems can have revisions');
+  userId: string,
+  parent: ParentTask,
+  anchor: Date,
+  rating: Rating,
+  tz: string = env.DEFAULT_TIMEZONE,
+): Promise<void> {
+  await tx.revision.deleteMany({ where: { parentTaskId: parent.id, status: { in: ['pending', 'backlog'] } } });
+  await tx.task.deleteMany({ where: { parentTaskId: parent.id, status: { in: ['pending', 'backlog'] } } });
 
-  const offsets = (REVISION_RULES[p.rating] ?? []) as readonly number[];
-  if (offsets.length === 0) return { created: 0 };
+  const intervals = REVISION_INTERVALS[rating];
+  const base = solvedDateMidnightUtc(anchor, tz);
+  const ids = intervals.map(() => randomUUID());
 
-  const existing = await tx.revision.findMany({
-    where: { parentTaskId: p.parentTaskId },
-    select: { scheduledDate: true, revisionNumber: true },
+  await tx.task.createMany({
+    data: intervals.map((days, i) => ({
+      id: ids[i],
+      userId,
+      planId: parent.planId,
+      parentTaskId: parent.id,
+      title: parent.title,
+      topic: parent.topic,
+      difficulty: parent.difficulty,
+      platform: parent.platform,
+      problemUrl: parent.problemUrl,
+      taskType: 'revision',
+      status: 'pending',
+      scheduledDate: addUtcDays(base, days),
+      revisionNumber: i + 1,
+    })),
   });
-  const takenDays = new Set(existing.map((r) => localDateKey(r.scheduledDate)));
-  let nextNumber = existing.length ? Math.max(...existing.map((r) => r.revisionNumber)) + 1 : 1;
 
-  let created = 0;
-  for (const offset of offsets) {
-    const scheduledDate = addDaysAtStartOfDay(p.anchorDate, offset);
-    const key = localDateKey(scheduledDate);
-    if (takenDays.has(key)) continue;
-
-    const revisionNumber = nextNumber++;
-    const revTask = await tx.task.create({
-      data: {
-        userId: p.userId,
-        planId: parent.planId,
-        parentTaskId: parent.id,
-        title: parent.title,
-        topic: parent.topic,
-        difficulty: parent.difficulty,
-        platform: parent.platform,
-        problemUrl: parent.problemUrl,
-        taskType: 'revision',
-        status: 'pending',
-        scheduledDate,
-        originalSolveDate: parent.completedAt ?? p.anchorDate,
-        revisionNumber,
-        notes: parent.notes,
-      },
-    });
-    await tx.revision.create({
-      data: { parentTaskId: parent.id, revisionTaskId: revTask.id, revisionNumber, scheduledDate, status: 'pending' },
-    });
-    takenDays.add(key);
-    created++;
-  }
-  return { created };
+  await tx.revision.createMany({
+    data: intervals.map((days, i) => ({
+      parentTaskId: parent.id,
+      revisionTaskId: ids[i],
+      revisionNumber: i + 1,
+      scheduledDate: addUtcDays(base, days),
+      status: 'pending',
+    })),
+  });
 }
-
-/* ───────────────────────── the service ───────────────────────── */
 
 export const taskCompletionService = {
   /**
-   * SOLVE.
-   * Rating is OPTIONAL for new problems (rate later with rateTask) and FORBIDDEN for revisions.
-   * Coins are awarded by the task's own difficulty, never by rating.
+   * Solve (and optionally rate) a task. Serves POST /complete (rating optional) and POST /rate (rating required).
+   *  - first solve  → +10 coins
+   *  - rating given → bonus delta (new − previous), revisions regenerated (never duplicated)
+   *  - anchor is the solved-on calendar day x in the user's timezone.
    */
-  async completeTask(taskId: string, userId: string, rating?: string | null) {
-    const task = await taskRepository.getTaskById(taskId, userId);
+  async completeTask(userId: string, taskId: string, ratingInput?: unknown, tz: string = env.DEFAULT_TIMEZONE) {
+    const rating = ratingInput === undefined || ratingInput === null || ratingInput === '' ? undefined : parseRating(ratingInput);
+
+    const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
     if (!task) throw new NotFoundError('Task');
-    if (task.status === 'completed') throw new ValidationError('Task is already marked as solved');
-
-    const isNew = task.taskType === 'new';
-    const isRevision = task.taskType === 'revision';
-
-    let validRating: RatingKey | undefined;
-    if (rating !== undefined && rating !== null && rating !== '') {
-      if (!isNew) throw new ValidationError('Only new problems can be rated');
-      validRating = validateRating(rating);
-    }
-
-    // Future lock: a task can only be solved on/after its scheduled day (backlog is past by definition)
-    const isOpenBacklog = task.isBacklog || task.status === 'backlog';
-    if (!isOpenBacklog && isFutureDay(task.scheduledDate)) {
-      throw new ValidationError(`This task is scheduled for ${fmtDay(task.scheduledDate)}. It unlocks on that day.`);
-    }
+    // DECISION: revision tasks are marked done, never rated (rating one would spawn revisions of revisions).
+    if (rating && task.taskType === 'revision') throw new ValidationError('Revision tasks are marked done, not rated');
 
     const now = new Date();
-    const coins = calculateCoins(task.taskType, task.difficulty);
+    const isFirstSolve = task.status !== 'completed';
+    const nextRating: Rating | null = rating ?? (task.rating as Rating | null) ?? null;
+    const coinDelta = (isFirstSolve ? BASE_SOLVE_COINS : 0) + (rating ? bonusFor(rating) - bonusFor(task.rating) : 0);
 
-    await prisma.$transaction(async (tx) => {
-      await tx.task.update({
+    const result = await prisma.$transaction(async (tx) => {
+      const updated = await tx.task.update({
         where: { id: taskId },
         data: {
           status: 'completed',
-          completedAt: now,
+          rating: nextRating,
+          completedAt: isFirstSolve ? now : (task.completedAt ?? now),   // re-rating must not move "completed today"
+          originalSolveDate: task.originalSolveDate ?? now,
           isBacklog: false,
           backlogSince: null,
           isExpired: false,
-          ...(isNew ? { originalSolveDate: now, rating: validRating ?? null } : {}),
         },
       });
 
-      if (isNew && validRating) {
-        await deleteUnfinishedRevisionsTx(tx, taskId);
-        const r = await createRevisionGraphTx(tx, { parentTaskId: taskId, userId, rating: validRating, anchorDate: now });
-        logger.info(`🔁 ${r.created} revisions for "${task.title}" (${validRating})`);
-      }
-
-      if (isRevision) {
+      if (task.taskType === 'revision') {
         await tx.revision.updateMany({
           where: { revisionTaskId: taskId, status: { not: 'completed' } },
           data: { status: 'completed', completedAt: now },
         });
       }
 
-      await adjustCoinsTx(tx, userId, coins);
-    });
+      if (isFirstSolve || coinDelta !== 0) {
+        if (coinDelta > 0) {
+          await tx.user.update({
+            where: { id: userId },
+            data: { coins: { increment: coinDelta } },
+          });
+        } else if (coinDelta < 0) {
+          const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+          await tx.user.update({
+            where: { id: userId },
+            data: { coins: Math.max(0, (user?.coins ?? 0) + coinDelta) },
+          });
+        }
+      }
 
-    logger.info(`✅ Solved "${task.title}" (${task.taskType}/${task.difficulty ?? '-'}, +${coins} coins${validRating ? `, rated ${validRating}` : ''})`);
-    return taskRepository.getTaskById(taskId, userId);
+      if (rating) {
+        // DECISION: anchor revisions on the SOLVE date, not the plan's scheduledDate, so a backlog task
+        // solved late never gets revisions in the past.
+        const solvedOn = updated.originalSolveDate ?? updated.completedAt ?? now;
+        await regenerateRevisions(tx, userId, updated, solvedOn, rating, tz);
+      }
+
+      return updated;
+    }, TX_OPTIONS);
+    invalidateUserCache(userId);
+    return result;
   },
 
   /**
-   * RATE / RE-RATE a solved problem. Works for the first rating and for switching.
-   *  - unfinished revisions are replaced; completed ones are kept
-   *  - anchored on the LATER of solve time and now → no revision is ever created in the past
-   *  - coins are NOT touched
+   * Un-rate: remove the revision plan, KEEP the solve.
+   *  - rating cleared (null)
+   *  - pending/backlog child revisions deleted
+   *  - status stays 'completed', completedAt unchanged
+   *  - bonus coins refunded (base solve coins kept)
    */
-  async rateTask(taskId: string, userId: string, rating: string) {
-    const task = await taskRepository.getTaskById(taskId, userId);
+  async unrateTask(userId: string, taskId: string) {
+    const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
     if (!task) throw new NotFoundError('Task');
-    if (task.taskType !== 'new') throw new ValidationError('Only new problems can be rated');
-    if (task.status !== 'completed') throw new ValidationError('Mark the problem as solved before rating it');
 
-    const validRating = validateRating(rating);
-    if (task.rating === validRating) return task; // idempotent
+    const bonusRefund = bonusFor(task.rating);
 
-    const solvedAt = task.completedAt ?? new Date();
-    const anchorDate = new Date(Math.max(solvedAt.getTime(), Date.now()));
+    const result = await prisma.$transaction(async (tx) => {
+      await tx.revision.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
+      await tx.task.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
 
-    await prisma.$transaction(async (tx) => {
-      const removed = await deleteUnfinishedRevisionsTx(tx, taskId);
-      await tx.task.update({ where: { id: taskId }, data: { rating: validRating } });
-      const created = await createRevisionGraphTx(tx, { parentTaskId: taskId, userId, rating: validRating, anchorDate });
-      logger.info(`⭐ "${task.title}" rated ${validRating} (was ${task.rating ?? 'unrated'}): -${removed.deletedRevisionTasks} +${created.created} revisions`);
-    });
+      const updated = await tx.task.update({
+        where: { id: taskId },
+        data: { rating: null },
+      });
 
-    return taskRepository.getTaskById(taskId, userId);
+      if (bonusRefund > 0) {
+        const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+        if (user) {
+          await tx.user.update({
+            where: { id: userId },
+            data: { coins: Math.max(0, user.coins - bonusRefund) },
+          });
+        }
+      }
+      return updated;
+    }, TX_OPTIONS);
+    invalidateUserCache(userId);
+    return result;
   },
 
   /**
-   * UNRATE — remove the revision plan but KEEP the solve.
-   * rating → null, unfinished revisions deleted, completed revisions kept.
-   * Task stays completed: streak, heatmap, total and coins are unchanged.
+   * Undo solve: full revert to pending.
+   *  - status reverted to 'pending'
+   *  - rating and completedAt cleared
+   *  - pending/backlog child revisions deleted
+   *  - base + bonus coins refunded
    */
-  async unrateTask(taskId: string, userId: string) {
-    const task = await taskRepository.getTaskById(taskId, userId);
+  async undoTask(userId: string, taskId: string) {
+    const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
     if (!task) throw new NotFoundError('Task');
-    if (task.taskType !== 'new') throw new ValidationError('Only new problems have a rating');
-    if (task.status !== 'completed') throw new ValidationError('Task is not marked as solved');
 
-    await prisma.$transaction(async (tx) => {
-      const removed = await deleteUnfinishedRevisionsTx(tx, taskId);
-      await tx.task.update({ where: { id: taskId }, data: { rating: null } });
-      logger.info(`☆ "${task.title}" unrated (was ${task.rating ?? 'unrated'}): -${removed.deletedRevisionTasks} revisions`);
-    });
+    const wasCompleted = task.status === 'completed';
+    const refund = wasCompleted ? BASE_SOLVE_COINS + bonusFor(task.rating) : 0;
 
-    return taskRepository.getTaskById(taskId, userId);
-  },
+    const result = await prisma.$transaction(async (tx) => {
+      await tx.revision.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
+      await tx.task.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
 
-  /**
-   * UNSOLVE (undo) — one step from any state, rated or not.
-   *  new task:      unfinished revisions deleted (completed kept), rating/completedAt cleared, coins refunded
-   *  revision task: its revision record reopened, coins refunded
-   *  either:        → pending, or → backlog if its scheduled day already passed
-   */
-  async undoTask(taskId: string, userId: string) {
-    const task = await taskRepository.getTaskById(taskId, userId);
-    if (!task) throw new NotFoundError('Task');
-    if (task.status !== 'completed') throw new ValidationError('Task is not marked as solved');
-
-    const coins = calculateCoins(task.taskType, task.difficulty);
-    const revert = revertedStatusFields(task.scheduledDate);
-    let removed = { deletedRevisionTasks: 0, deletedRevisionRecords: 0 };
-
-    await prisma.$transaction(async (tx) => {
-      if (task.taskType === 'new') {
-        removed = await deleteUnfinishedRevisionsTx(tx, taskId);
-        await tx.task.update({
-          where: { id: taskId },
-          data: { ...revert, completedAt: null, rating: null, originalSolveDate: null },
-        });
-      } else if (task.taskType === 'revision') {
+      if (task.taskType === 'revision') {
         await tx.revision.updateMany({
           where: { revisionTaskId: taskId },
           data: { status: 'pending', completedAt: null },
         });
-        await tx.task.update({ where: { id: taskId }, data: { ...revert, completedAt: null } });
-      } else {
-        await tx.task.update({ where: { id: taskId }, data: { ...revert, completedAt: null } });
       }
-      await adjustCoinsTx(tx, userId, -coins);
-    });
 
-    logger.info(`↩️ Unsolved "${task.title}" → ${revert.status} (-${coins} coins, -${removed.deletedRevisionTasks} revisions)`);
-    return taskRepository.getTaskById(taskId, userId);
+      const updated = await tx.task.update({
+        where: { id: taskId },
+        data: { status: 'pending', rating: null, completedAt: null, isBacklog: false },
+      });
+
+      if (wasCompleted && refund > 0) {
+        const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+        if (user) {
+          await tx.user.update({
+            where: { id: userId },
+            data: { coins: Math.max(0, user.coins - refund) },
+          });
+        }
+      }
+      return updated;
+    }, TX_OPTIONS);
+    invalidateUserCache(userId);
+    return result;
+  },
+
+  /** Backward-compatible helper aliases */
+  async rateTask(taskId: string, userId: string, rating: string, tz: string = env.DEFAULT_TIMEZONE) {
+    return this.completeTask(userId, taskId, rating, tz);
   },
 };
