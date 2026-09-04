@@ -335,6 +335,8 @@ export default function PlanWizard() {
 
           <StepBusyDays
             busyDays={busyDays}
+            weekdayLoad={weekdayLoad}
+            weekendLoad={weekendLoad}
             onChange={(b) => {
               setBusyDays(b);
               clearPreview();
