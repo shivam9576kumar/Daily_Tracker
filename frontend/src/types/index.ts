@@ -206,6 +206,8 @@ export type AIIntent =
   | 'request_commit'
   | 'off_topic';
 
+export type AIAction = 'none' | 'show_draft' | 'offer_preview';
+
 export interface AIChatMessage {
   role: 'user' | 'assistant';
   content: string;
@@ -220,10 +222,13 @@ export interface AIConversationRequest {
 export interface AIConversationResponse {
   reply: string;
   intent: AIIntent;
+  action: AIAction;
   draft: AIDraft;
   missingFields: string[];
   done: boolean;
   confidence: 'high' | 'low';
+  warnings: string[];
+  assumptions: string[];
 }
 
 export interface GeneratePlanPayload {

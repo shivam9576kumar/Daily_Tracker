@@ -5,7 +5,7 @@ import type {
   AIDraft,
   GeneratePlanPayload,
   PlanSource,
-  AIIntent,
+  AIAction,
 } from '../../types';
 
 interface Props {
@@ -14,6 +14,14 @@ interface Props {
   onTweakManually: (draft: AIDraft) => void;
   canCommit: boolean;        // true only after a preview is loaded
   previewLoaded: boolean;    // drives the "Create Plan" button
+}
+
+function getLocalDateKey(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 export default function AIPlanChat({
@@ -28,9 +36,13 @@ export default function AIPlanChat({
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState('');
+  const [action, setAction] = useState<AIAction>('none');
+  const [warnings, setWarnings] = useState<string[]>([]);
+  const [assumptions, setAssumptions] = useState<string[]>([]);
 
   const buildPayload = (): GeneratePlanPayload => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDateKey();
+    const hasQuotas = Boolean(draft?.topicQuotas?.length);
     return {
       source: (draft?.source as PlanSource) || 'neetcode150',
       startDate: draft?.startDate || today,
@@ -38,19 +50,11 @@ export default function AIPlanChat({
       pace: (draft?.pace as any) || 'moderate',
       weekdayLoad: draft?.weekdayLoad ?? 2,
       weekendLoad: draft?.weekendLoad ?? 3,
-      topicQuotas: draft?.topicQuotas ?? undefined,
-      focusTopics: draft?.focusTopics ?? undefined,
+      topicQuotas: hasQuotas ? draft!.topicQuotas! : undefined,
+      focusTopics: hasQuotas ? undefined : draft?.focusTopics ?? undefined,
       avoidTopics: draft?.avoidTopics ?? undefined,
       busyDays: draft?.busyDays ?? [],
     };
-  };
-
-  const actOnIntent = (intent: AIIntent) => {
-    if (intent === 'request_commit' && canCommit) {
-      onCommit();
-    } else if (intent === 'request_preview' || (intent === 'request_commit' && !canCommit)) {
-      onGeneratePreview(buildPayload());
-    }
   };
 
   const send = async () => {
@@ -68,9 +72,11 @@ export default function AIPlanChat({
       });
       setDraft(res.draft);
       setDone(res.done);
-      // Show the REAL AI reply — never a hardcoded menu.
+      setAction(res.action);
+      setWarnings(res.warnings ?? []);
+      setAssumptions(res.assumptions ?? []);
+      // Show the REAL AI reply — never auto-trigger preview or commit!
       setMessages([...newMessages, { role: 'assistant', content: res.reply }]);
-      actOnIntent(res.intent);
     } catch (err) {
       setMessages([
         ...newMessages,
@@ -144,10 +150,28 @@ export default function AIPlanChat({
             </p>
           ) : null}
 
+          {warnings.length > 0 && (
+            <div className="banner banner--warning" style={{ marginTop: 8 }}>
+              {warnings.map((w, i) => (
+                <p key={i} style={{ margin: '2px 0' }}>{w}</p>
+              ))}
+            </div>
+          )}
+
+          {assumptions.length > 0 && (
+            <div className="banner banner--warning" style={{ marginTop: 8 }}>
+              {assumptions.map((a, i) => (
+                <p key={i} style={{ margin: '2px 0' }}>{a}</p>
+              ))}
+            </div>
+          )}
+
           <div className="ai-draft-summary__actions">
-            <button className="btn-primary" onClick={() => onGeneratePreview(buildPayload())}>
-              🚀 Generate Preview
-            </button>
+            {(action === 'show_draft' || action === 'offer_preview') && (
+              <button className="btn-primary" onClick={() => onGeneratePreview(buildPayload())}>
+                🚀 Generate Preview
+              </button>
+            )}
             {previewLoaded && (
               <button className="btn-primary" onClick={onCommit}>
                 ✅ Create Plan

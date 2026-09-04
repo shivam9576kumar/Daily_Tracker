@@ -28,6 +28,8 @@ export type AIIntent =
   | 'request_commit'
   | 'off_topic';
 
+export type AIAction = 'none' | 'show_draft' | 'offer_preview';
+
 export interface AIChatMessage { role: 'user' | 'assistant'; content: string; }
 
 export interface AIConversationRequest {
@@ -39,10 +41,13 @@ export interface AIConversationRequest {
 export interface AIChatResponse {
   reply: string;            // ALWAYS the text shown in the chat bubble
   intent: AIIntent;
+  action: AIAction;
   draft: AIDraft;
   missingFields: string[];  // computed by the app, not the model
   done: boolean;            // computed by the app
   confidence: 'high' | 'low';
+  warnings: string[];
+  assumptions: string[];
 }
 
 const VALID_SOURCES = ['neetcode150', 'coderarmy'];
@@ -74,6 +79,13 @@ function getBankMeta(): BankMeta {
 
 function normalizeIntent(v: unknown): AIIntent {
   return typeof v === 'string' && (VALID_INTENTS as string[]).includes(v) ? (v as AIIntent) : 'plan_building';
+}
+
+function computeAction(intent: AIIntent, done: boolean): AIAction {
+  if (!done) return 'none';
+  if (intent === 'request_preview') return 'offer_preview';
+  if (intent === 'request_commit') return 'offer_preview'; // never commit from AI
+  return 'show_draft';
 }
 
 function sanitizePatch(raw: any): Partial<AIDraft> {
@@ -185,7 +197,9 @@ OUTPUT: return JSON ONLY, no markdown, with this exact shape:
     "avoidTopics": string[] | null,
     "busyDays": [{ "date": "YYYY-MM-DD", "reason": string, "loadReduction": number }] | null,
     "bufferDay": number | null
-  }
+  },
+  "warnings": ["string"],
+  "assumptions": ["string"]
 }
 `;
 }
@@ -223,15 +237,21 @@ export const geminiPlanChat = {
       const reply = typeof parsed.reply === 'string' && parsed.reply.trim() ? parsed.reply.trim() : '';
       const intent = normalizeIntent(parsed.intent);
       const patch = sanitizePatch(parsed.draftPatch || parsed.draft || {});
+      const warnings = Array.isArray(parsed.warnings) ? parsed.warnings.filter((x: any) => typeof x === 'string') : [];
+      const assumptions = Array.isArray(parsed.assumptions) ? parsed.assumptions.filter((x: any) => typeof x === 'string') : [];
       const merged = mergeDraft(draft, patch);
       const { missingFields, done } = computeMissing(merged);
+
       return {
         reply: reply || this.composeFallbackReply(merged, missingFields),
         intent,
+        action: computeAction(intent, done),
         draft: merged,
         missingFields,
         done,
         confidence: 'high',
+        warnings,
+        assumptions,
       };
     } catch (err) {
       logger.error('geminiPlanChat: Gemini call failed, using offline fallback', err);
@@ -239,7 +259,6 @@ export const geminiPlanChat = {
     }
   },
 
-  // Used when the model returned a draft but no usable reply text.
   composeFallbackReply(draft: AIDraft, missingFields: string[]): string {
     if (missingFields.length === 0) return 'Your plan is ready. Tap Generate Preview to see the schedule.';
     const first = missingFields[0];
@@ -252,12 +271,11 @@ export const geminiPlanChat = {
     return ask[first] ?? 'Tell me a bit more and I will set it up.';
   },
 
-  // Honest degraded mode: no key. Still extracts what it can, but says it is offline.
   offlineReply(messages: AIChatMessage[], draft: AIDraft, ctx: { today: string }): AIChatResponse {
     const lastUser = [...messages].reverse().find((m) => m.role === 'user');
     const text = lastUser?.content ?? '';
 
-    const patch = this.extractPatch(text);
+    const patch = this.extractPatch(text, ctx.today);
     const merged = mergeDraft(draft, patch);
     const { missingFields, done } = computeMissing(merged);
 
@@ -280,10 +298,20 @@ export const geminiPlanChat = {
       intent = 'plan_building';
     }
 
-    return { reply, intent, draft: merged, missingFields, done, confidence: 'low' };
+    return {
+      reply,
+      intent,
+      action: done ? 'show_draft' : 'none',
+      draft: merged,
+      missingFields,
+      done,
+      confidence: 'low',
+      warnings: [],
+      assumptions: [],
+    };
   },
 
-  extractPatch(text: string): Partial<AIDraft> {
+  extractPatch(text: string, today: string): Partial<AIDraft> {
     const patch: Partial<AIDraft> = {};
     const quotaPattern = /(\d+)\s+(Stack|Heap|Queue|Arrays|Binary Search|Linked List|Trees|Graphs|Dynamic Programming|Backtracking|Hashing|Two Pointers|Sliding Window|Recursion|Greedy|Trie)/gi;
     const matches = [...text.matchAll(quotaPattern)];
@@ -296,7 +324,7 @@ export const geminiPlanChat = {
     if (dur) patch.durationDays = parseInt(dur[1], 10);
 
     if (/start\s+(today|now)/i.test(text) || /\btoday\b/i.test(text)) {
-      patch.startDate = new Date().toISOString().split('T')[0];
+      patch.startDate = today;
     } else {
       const d = text.match(/(\d{4}-\d{2}-\d{2})/);
       if (d) patch.startDate = d[1];

@@ -22,6 +22,14 @@ import type {
 } from '../../types';
 import './plan.css';
 
+function getLocalDateKey(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
 export default function PlanWizard() {
   const navigate = useNavigate();
   const toast = useUIStore((s) => s.toast);
@@ -34,9 +42,7 @@ export default function PlanWizard() {
 
   // Form state
   const [source, setSource] = useState<PlanSource>('neetcode150');
-  const [startDate, setStartDate] = useState(
-    new Date().toISOString().split('T')[0]
-  );
+  const [startDate, setStartDate] = useState(getLocalDateKey());
   const [durationDays, setDurationDays] = useState(14);
   const [pace, setPace] = useState<PlanPace>('moderate');
   const [weekdayLoad, setWeekdayLoad] = useState(2.0);
@@ -115,7 +121,7 @@ export default function PlanWizard() {
 
   const handleTweakManually = (draft: AIDraft) => {
     setSource(draft.source || 'neetcode150');
-    setStartDate(draft.startDate || new Date().toISOString().split('T')[0]);
+    setStartDate(draft.startDate || getLocalDateKey());
     setDurationDays(draft.durationDays || 30);
     if (draft.pace) setPace(draft.pace as PlanPace);
     setWeekdayLoad(draft.weekdayLoad ?? 2);
