@@ -1,4 +1,5 @@
 import type { PlanPace } from '../../types';
+import { getLocalDateKey } from '../../utils/planDraft';
 import './plan.css';
 
 interface Props {
@@ -64,6 +65,8 @@ export default function StepSchedulePace({
   bufferDay,
   onChange,
 }: Props) {
+  const today = getLocalDateKey();
+
   const handlePaceClick = (selectedPace: PlanPace) => {
     if (selectedPace === 'relaxed') {
       onChange({ pace: 'relaxed', weekdayLoad: 1.5, weekendLoad: 2.5 });
@@ -113,8 +116,16 @@ export default function StepSchedulePace({
             type="date"
             className="field"
             value={startDate}
-            onChange={(e) => onChange({ startDate: e.target.value })}
+            min={today}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val) onChange({ startDate: val });
+            }}
+            aria-label="Select start date"
           />
+          <p className="form-hint" style={{ margin: '4px 0 0', fontSize: 12, color: 'var(--text-muted)' }}>
+            Plan starts on this day.
+          </p>
         </div>
 
         <div className="form-field">

@@ -387,6 +387,9 @@ input, select, textarea { font-family: inherit; color: var(--text-primary); back
 .field.is-invalid { border-color: var(--danger); }
 .field.is-invalid:focus { box-shadow: 0 0 0 3px var(--danger-bg); }
 .field--sm { height: 36px; padding: 0 10px; font-size: 13px; }
+input[type="date"].field { cursor: pointer; color-scheme: light dark; }
+input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.85; }
+input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
 
 /* selects: hide native arrow, draw a gray chevron with borders (no raw colors, no SVG) */
 select.field { appearance: none; -webkit-appearance: none; padding-right: 34px; cursor: pointer; }
