@@ -28,8 +28,18 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
     busy ? 'is-busy' : '',
   ].filter(Boolean).join(' ');
 
+  const handleRowClick = () => {
+    if (!busy) {
+      onOpen(task);
+    }
+  };
+
+  const handleLeetCodeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className={cls} onClick={() => onOpen(task)}>
+    <div className={cls} onClick={handleRowClick} style={{ cursor: 'pointer' }}>
       <input
         type="checkbox"
         className="task-row__check"
@@ -47,7 +57,7 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
             target="_blank"
             rel="noopener noreferrer"
             className="t-title task-row__title task-row__title--link"
-            onClick={(e) => e.stopPropagation()}   // don't open the drawer when opening LeetCode
+            onClick={handleLeetCodeClick}
             title="Open today's LeetCode problem"
           >
             {task.title} ↗

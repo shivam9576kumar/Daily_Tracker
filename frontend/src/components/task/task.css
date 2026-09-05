@@ -474,8 +474,20 @@ input.task-row__check:focus-visible { outline: 0; box-shadow: var(--focus-ring);
 .task-row.is-potd { border-left: 3px solid var(--brand-soft-border); }
 .task-row.is-potd:hover { border-left-color: var(--brand); }
 
-.task-row__title--link { text-decoration: none; color: var(--text-primary); }
-.task-row__title--link:hover { color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
+.task-row__title--link {
+  display: inline-block;
+  max-width: 100%;
+  color: var(--brand-text);
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.task-row__title--link:hover {
+  color: var(--brand-hover, var(--brand-text));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 .hitlist-potd-note { margin: 6px 0 10px; }
 
