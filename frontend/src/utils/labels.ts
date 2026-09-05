@@ -6,6 +6,8 @@ const PLATFORM: Record<string, string> = {
   codeforces: 'Codeforces',
   codechef: 'CodeChef',
   hackerrank: 'HackerRank',
+  atcoder: 'AtCoder',
+  spoj: 'SPOJ',
   custom: 'Custom',
 };
 

@@ -142,7 +142,9 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
           className="btn-secondary"
           style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          Solve on {platformLabel(task.platform) || 'Platform'} ↗
+          {task.platform && task.platform !== 'custom'
+            ? `Solve on ${platformLabel(task.platform)} ↗`
+            : 'Open problem ↗'}
         </a>
       )}
 
