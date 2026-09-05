@@ -1,7 +1,10 @@
 import { taskRepository } from '../../repositories/taskRepository';
 import prisma from '../../config/database';
+import logger from '../../utils/logger';
 import { streakService } from '../progress/streakService';
 import { classesService } from '../classes/classesService';
+import { ensurePotdTaskForUser } from '../potd/potdService';
+import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakService';
 
 /**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
@@ -9,12 +12,31 @@ import { classesService } from '../classes/classesService';
  */
 export const dashboardService = {
   async getDashboardData(userId: string, tz: string) {
+    let potdMeta: { dateKey: string; stale: boolean } | null = null;
+    try {
+      const { potd, stale } = await ensurePotdTaskForUser(userId, tz);
+      if (potd) potdMeta = { dateKey: potd.dateKey, stale };
+    } catch (err) {
+      logger.warn('dashboardService: POTD ensure failed, continuing without it', {
+        message: (err as Error)?.message,
+      });
+    }
+
+    let potdStreak: PotdStreakResult | null = null;
+    try {
+      potdStreak = await computePotdStreak(userId, tz);
+    } catch (err) {
+      logger.warn('dashboardService: POTD streak computation failed', {
+        message: (err as Error)?.message,
+      });
+    }
+
     // Run queries in small batches to stay well under the pool size limit (15)
     const [todaysTasks, totalQuestions, user, activePlan] = await Promise.all([
       taskRepository.getTodaysTasks(userId, tz),
-      // Total unique problems actually solved (new tasks only, not revisions)
+      // Total unique problems actually solved (new tasks + potd, not revisions)
       prisma.task.count({
-        where: { userId, taskType: 'new', status: 'completed' },
+        where: { userId, taskType: { in: ['new', 'potd'] }, status: 'completed' },
       }),
       prisma.user.findUnique({
         where: { id: userId },
@@ -84,6 +106,8 @@ export const dashboardService = {
         completed: completedTasks,
       },
       classes: classesForWeek,
+      potd: potdMeta,
+      potdStreak,
     };
   },
 };

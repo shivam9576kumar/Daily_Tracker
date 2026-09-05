@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useProgressStore } from '../store/progressStore';
+import { potdApi } from '../services/potdApi';
+import type { PotdStreak } from '../types';
 import StatsCards from '../components/progress/StatsCards';
 import Heatmap from '../components/progress/Heatmap';
 import TopicProgress from '../components/progress/TopicProgress';
@@ -11,9 +13,11 @@ import '../components/progress/progress.css';
 
 export default function ProgressPage() {
   const { data, loading, error, fetch } = useProgressStore();
+  const [potdStreak, setPotdStreak] = useState<PotdStreak | null>(null);
 
   useEffect(() => {
     fetch();
+    potdApi.streak().then(setPotdStreak).catch(() => {});
   }, [fetch]);
 
   if (loading && !data) {
@@ -49,7 +53,7 @@ export default function ProgressPage() {
         </p>
       </header>
 
-      <StatsCards stats={data.stats} />
+      <StatsCards stats={data.stats} potdStreak={potdStreak} />
       <Heatmap data={data.heatmap} bestStreak={data.stats.bestStreak} />
 
       <div className="progress-analytics-grid">

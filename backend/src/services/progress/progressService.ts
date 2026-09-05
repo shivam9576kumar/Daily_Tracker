@@ -8,7 +8,7 @@ import type { ProgressScope } from './progressTypes';
 export const progressService = {
   async getStats(userId: string, tz: string) {
     const [totalSolved, revisionsDone, pendingRevisions, user, streaks] = await Promise.all([
-      prisma.task.count({ where: { userId, taskType: 'new', status: 'completed' } }),
+      prisma.task.count({ where: { userId, taskType: { in: ['new', 'potd'] }, status: 'completed' } }),
       prisma.task.count({ where: { userId, taskType: 'revision', status: 'completed' } }),
       prisma.task.count({
         where: { userId, taskType: 'revision', status: { in: ['pending', 'backlog'] } },

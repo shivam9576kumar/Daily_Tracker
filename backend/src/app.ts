@@ -20,6 +20,7 @@ import debugRoutes from './routes/debugRoutes';
 import planRoutes from './routes/planRoutes';
 import progressRoutes from './routes/progressRoutes';
 import classesRoutes from './routes/classesRoutes';
+import potdRoutes from './routes/potdRoutes';
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.use('/api/debug', debugRoutes);
 app.use('/api/plans', planRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/classes', classesRoutes);
+app.use('/api/potd', potdRoutes);
 
 // ─── Production Static Hosting & SPA Fallback ───
 const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');

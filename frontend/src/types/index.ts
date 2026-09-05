@@ -1,6 +1,6 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Rating = 'easy' | 'medium' | 'hard';
-export type TaskType = 'new' | 'revision' | 'assignment';
+export type TaskType = 'new' | 'revision' | 'assignment' | 'potd';
 export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired';
 
 export interface Task {
@@ -24,6 +24,7 @@ export interface Task {
   backlogSince: string | null;
   isExpired: boolean;
   notes: string | null;
+  potdDateKey?: string | null;
   createdAt: string;
   updatedAt: string;
   revisions?: Task[];
@@ -87,6 +88,14 @@ export interface ClassRow {
   updatedAt?: string;
 }
 
+export interface PotdStreak {
+  currentStreak: number;
+  longestStreak: number;
+  totalSolved: number;
+  lastSolvedDateKey: string | null;
+  solvedToday: boolean;
+}
+
 export interface DashboardData {
   hasActivePlan?: boolean;
   activePlan?: { id: string; name: string } | null;
@@ -98,6 +107,8 @@ export interface DashboardData {
     completed: Task[];
   };
   classes: ClassRow[];
+  potd?: { dateKey: string; stale: boolean } | null;
+  potdStreak?: PotdStreak | null;
 }
 
 export interface CreateTaskPayload {
@@ -353,7 +364,7 @@ export interface ActivityItem {
   title: string;
   topic: string;
   difficulty: string | null;
-  taskType: 'new' | 'revision';
+  taskType: 'new' | 'revision' | 'potd';
   rating: string | null;
   revisionNumber: number;
   completedAt: string;

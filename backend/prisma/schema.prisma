@@ -24,6 +24,7 @@ model User {
   notes          Note[]
   notifications  Notification[]
   classSchedules ClassSchedule[]
+  potdDismissals PotdDismissal[]
 
   @@map("users")
 }
@@ -70,6 +71,8 @@ model Task {
   backlogSince      DateTime? @map("backlog_since")
   isExpired         Boolean   @default(false) @map("is_expired")
   notes             String?
+  /// 'YYYY-MM-DD' of the LeetCode POTD this task represents. Null for every non-POTD task.
+  potdDateKey       String?   @map("potd_date_key")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at")
 
@@ -81,6 +84,8 @@ model Task {
   revisionRecords Revision[] @relation("RevisionParent")
   revisionTasks   Revision[] @relation("RevisionTask")
 
+  /// Guarantees exactly one POTD task per user per POTD date (no dupes on refresh/retry).
+  @@unique([userId, potdDateKey], name: "user_potd_unique")
   @@index([userId, scheduledDate])
   @@index([userId, status])
   @@index([parentTaskId])
@@ -191,4 +196,33 @@ model CronRun {
   @@unique([jobName, runDate])
   @@index([jobName, runDate])
   @@map("cron_runs")
+}
+
+// ─── POTD Cache ───
+model PotdCache {
+  /// 'YYYY-MM-DD' as returned by LeetCode (UTC-based). Primary key.
+  dateKey     String   @id @map("date_key")
+  title       String
+  titleSlug   String   @map("title_slug")
+  difficulty  String   // 'easy' | 'medium' | 'hard' (normalized lowercase)
+  url         String
+  topicTags   String[] @map("topic_tags")
+  questionId  String?  @map("question_id")
+  fetchedAt   DateTime @default(now()) @map("fetched_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("potd_cache")
+}
+
+// ─── POTD Dismissals ───
+model PotdDismissal {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  dateKey   String   @map("date_key") // 'YYYY-MM-DD'
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dateKey])
+  @@map("potd_dismissals")
 }

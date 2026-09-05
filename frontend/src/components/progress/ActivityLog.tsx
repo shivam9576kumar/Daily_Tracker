@@ -26,8 +26,12 @@ export default function ActivityLog({ activities, items }: Props) {
     <div className="activity-list">
       {list.map((item) => {
         const isRev = item.taskType === 'revision';
+        const isPotd = item.taskType === 'potd';
         const diff = item.difficulty ? item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1) : '';
-        const metaParts = [item.topic, diff].filter(Boolean);
+        const metaParts: string[] = [];
+        if (isPotd) metaParts.push('POTD');
+        if (item.topic) metaParts.push(item.topic);
+        if (diff) metaParts.push(diff);
         if (isRev) metaParts.push(`Rev #${item.revisionNumber}`);
 
         return (

@@ -1,5 +1,6 @@
 import { runBacklogCron } from './backlogCron';
 import { runExpiryCron } from './expiryCron';
+import { runPotdWarmupCron, runPotdPruneCron } from './potdCron';
 import { cronRunService } from '../services/cron/cronRunService';
 import logger from '../utils/logger';
 
@@ -16,6 +17,8 @@ export function initCronJobs() {
     await cronRunService.runOncePerDay('daily-maintenance', async () => {
       await runBacklogCron();
       await runExpiryCron();
+      await runPotdWarmupCron();
+      await runPotdPruneCron();
     });
   };
 

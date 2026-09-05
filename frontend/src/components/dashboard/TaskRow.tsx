@@ -2,6 +2,7 @@ import type { Rating, Task } from '../../types';
 import RevisionBadge from '../task/RevisionBadge';
 import RatingPills from '../task/RatingPills';
 import { platformLabel } from '../../utils/labels';
+import { formatShortDate } from '../../utils/dateKeys';
 import '../task/task.css';
 import './dashboard.css';
 
@@ -16,12 +17,14 @@ interface Props {
 
 export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, onUnrate }: Props) {
   const completed = task.status === 'completed';
-  const isNew = task.taskType === 'new';
+  const isPotd = task.taskType === 'potd';
+  const canRate = task.taskType !== 'revision';
 
   const cls = [
     'task-row',
     completed ? 'is-done' : '',
     task.isBacklog && !completed ? 'is-backlog' : '',
+    isPotd ? 'is-potd' : '',
     busy ? 'is-busy' : '',
   ].filter(Boolean).join(' ');
 
@@ -38,9 +41,27 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
       />
 
       <div className="task-row__body">
-        <span className="t-title task-row__title">{task.title}</span>
+        {isPotd && task.problemUrl ? (
+          <a
+            href={task.problemUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="t-title task-row__title task-row__title--link"
+            onClick={(e) => e.stopPropagation()}   // don't open the drawer when opening LeetCode
+            title="Open today's LeetCode problem"
+          >
+            {task.title} ↗
+          </a>
+        ) : (
+          <span className="t-title task-row__title">{task.title}</span>
+        )}
 
         <div className="task-row__meta">
+          {isPotd && (
+            <span className="pill pill-potd" title="LeetCode Problem of the Day">
+              POTD · {formatShortDate(task.potdDateKey ?? task.scheduledDate)}
+            </span>
+          )}
           {task.taskType === 'revision' && <RevisionBadge revisionNumber={task.revisionNumber} />}
           <span className="pill pill-topic">{task.topic}</span>
           {task.difficulty && <span className={`pill pill-${task.difficulty}`}>{task.difficulty}</span>}
@@ -49,7 +70,7 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
           )}
         </div>
 
-        {completed && isNew && (
+        {completed && canRate && (
           <div className="task-rate-row" onClick={(e) => e.stopPropagation()}>
             <span className="task-rate-label t-label">Revise?</span>
             <RatingPills

@@ -4,6 +4,7 @@ import Spinner from '../common/Spinner';
 import RatingPills from './RatingPills';
 import NotesEditor from './NotesEditor';
 import { taskApi } from '../../services/taskApi';
+import { potdApi } from '../../services/potdApi';
 import { getErrorMessage } from '../../services/api';
 import { useUIStore } from '../../store/uiStore';
 import { useTaskActions } from '../../hooks/useTaskActions';
@@ -162,6 +163,22 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
           onClick={() => actions.unsolve(task)}
         >
           {busy ? 'Updating...' : 'Undo solve'}
+        </button>
+      )}
+
+      {task.taskType === 'potd' && (
+        <button
+          type="button"
+          className="btn-ghost"
+          disabled={busy}
+          onClick={async () => {
+            if (!window.confirm("Hide today's POTD? It won't come back today.")) return;
+            await potdApi.dismiss(task.potdDateKey!);
+            await onChanged();
+            onClose();
+          }}
+        >
+          Hide today's POTD
         </button>
       )}
 

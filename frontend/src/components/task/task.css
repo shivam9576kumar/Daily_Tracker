@@ -452,3 +452,33 @@ input.task-row__check:focus-visible { outline: 0; box-shadow: var(--focus-ring);
   border-color: var(--brand);
   box-shadow: var(--focus-ring);
 }
+
+/* ─── POTD treatment ─── */
+/* POTD badge — teal is taken by revisions, so use the neutral+brand-tint treatment */
+.pill-potd {
+  background: var(--brand-tint);
+  color: var(--brand-soft-text);
+  border: 1px solid var(--brand-tint-border);
+  text-transform: none;
+}
+
+.pill-potd-streak {
+  background: var(--streak-bg);
+  color: var(--streak-text);
+  border: 1px solid var(--brand-tint-border);
+  font: 600 12px/1.4 var(--font-sans);
+  text-transform: none;
+}
+
+/* Subtle left accent so POTD reads as "bonus", not "plan work" */
+.task-row.is-potd { border-left: 3px solid var(--brand-soft-border); }
+.task-row.is-potd:hover { border-left-color: var(--brand); }
+
+.task-row__title--link { text-decoration: none; color: var(--text-primary); }
+.task-row__title--link:hover { color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
+
+.hitlist-potd-note { margin: 6px 0 10px; }
+
+@media (max-width: 640px) {
+  .task-row.is-potd { border-left-width: 3px; }
+}

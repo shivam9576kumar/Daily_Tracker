@@ -63,10 +63,9 @@ export const taskService = {
       );
     }
 
-    if (data.taskType === 'revision') {
-      throw new ValidationError(
-        'Revision tasks cannot be created manually. Complete a new task to generate revisions.'
-      );
+    const RESERVED_TASK_TYPES = ['potd', 'revision'];
+    if (data.taskType && RESERVED_TASK_TYPES.includes(data.taskType)) {
+      throw new ValidationError('This task type is created automatically and cannot be added manually.');
     }
 
     if (data.taskType && !TASK_TYPES.includes(data.taskType)) {
@@ -162,6 +161,12 @@ export const taskService = {
         await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
       } else if (task.taskType === 'revision') {
         await tx.revision.deleteMany({ where: { revisionTaskId: taskId } });
+      } else if (task.taskType === 'potd' && task.potdDateKey) {
+        await tx.potdDismissal.upsert({
+          where: { userId_dateKey: { userId, dateKey: task.potdDateKey } },
+          create: { userId, dateKey: task.potdDateKey },
+          update: {},
+        });
       }
 
       await tx.task.delete({ where: { id: taskId } });

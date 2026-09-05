@@ -31,3 +31,14 @@ export function formatKey(
 ): string {
   return keyToDate(key).toLocaleDateString('en-IN', opts);
 }
+
+export function formatShortDate(dateOrKey: string | Date): string {
+  if (typeof dateOrKey === 'string') {
+    const key = dateOrKey.slice(0, 10);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(key)) {
+      return keyToDate(key).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    }
+  }
+  const date = typeof dateOrKey === 'string' ? new Date(dateOrKey) : dateOrKey;
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}

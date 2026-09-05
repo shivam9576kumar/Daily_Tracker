@@ -63,6 +63,8 @@ export default function Dashboard() {
         hasActivePlan={data.hasActivePlan}
         pending={data.todaysHitlist.pending}
         completed={data.todaysHitlist.completed}
+        potdMeta={data.potd}
+        potdStreak={data.potdStreak}
         busyId={actions.busyId}
         onOpen={(t: Task) => setSelectedTaskId(t.id)}
         onAddTask={() => setAddOpen(true)}

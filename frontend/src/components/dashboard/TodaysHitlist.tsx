@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import type { Rating, Task } from '../../types';
+import type { PotdStreak, Rating, Task } from '../../types';
 import TaskRow from './TaskRow';
 import './dashboard.css';
 
@@ -7,6 +7,8 @@ interface Props {
   hasActivePlan?: boolean;
   pending: Task[];
   completed: Task[];
+  potdMeta?: { dateKey: string; stale: boolean } | null;
+  potdStreak?: PotdStreak | null;
   busyId: string | null;
   onOpen: (task: Task) => void;
   onAddTask: () => void;
@@ -19,6 +21,8 @@ export default function TodaysHitlist({
   hasActivePlan = true,
   pending,
   completed,
+  potdMeta,
+  potdStreak,
   busyId,
   onOpen,
   onAddTask,
@@ -27,6 +31,8 @@ export default function TodaysHitlist({
   onUnrate,
 }: Props) {
   const navigate = useNavigate();
+
+  const hasPotd = pending.some((t) => t.taskType === 'potd') || completed.some((t) => t.taskType === 'potd');
 
   const row = (t: Task) => (
     <TaskRow
@@ -47,9 +53,26 @@ export default function TodaysHitlist({
           <span className="section-head__icon" aria-hidden="true">⚡</span>
           <h2 className="t-h2">Today's Hitlist</h2>
           <span className="pill pill-count is-brand">{pending.length} pending</span>
+          {potdStreak && potdStreak.currentStreak > 0 && (
+            <span
+              className="pill pill-potd-streak"
+              title="Consecutive days you solved the LeetCode Problem of the Day"
+            >
+              ⚡ {potdStreak.currentStreak}-day POTD streak
+            </span>
+          )}
         </div>
         <button type="button" className="btn-primary" onClick={onAddTask}>+ Add Task</button>
       </div>
+
+      {hasPotd && (
+        <p className="hitlist-potd-note t-meta">
+          ⚡ Today's LeetCode POTD is included — it doesn't count toward your plan load.{potdMeta?.stale ? ' (showing the latest available challenge)' : ''}
+          {potdStreak && potdStreak.currentStreak === 0 && potdStreak.totalSolved > 0 && (
+            <span> · Solve today's POTD to start a new streak.</span>
+          )}
+        </p>
+      )}
 
       {pending.length === 0 ? (
         !hasActivePlan ? (

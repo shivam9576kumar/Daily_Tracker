@@ -1,7 +1,13 @@
-import type { ProgressStats } from '../../types';
+import type { PotdStreak, ProgressStats } from '../../types';
 import './progress.css';
 
-export default function StatsCards({ stats }: { stats: ProgressStats }) {
+export default function StatsCards({
+  stats,
+  potdStreak,
+}: {
+  stats: ProgressStats;
+  potdStreak?: PotdStreak | null;
+}) {
   const atRisk = stats.currentStreak > 0 && !stats.activeToday;
 
   return (
@@ -23,6 +29,19 @@ export default function StatsCards({ stats }: { stats: ProgressStats }) {
         </div>
         <div className={`progress-stat__detail ${atRisk ? 'warn' : stats.activeToday ? 'ok' : ''}`}>
           {atRisk ? 'Solve one today to keep it' : stats.activeToday ? 'Active today' : 'Solve one to start'}
+        </div>
+      </div>
+
+      <div className="progress-stat card">
+        <div className="progress-stat__label t-label">
+          <span aria-hidden="true">⚡</span>
+          <span>POTD Streak</span>
+        </div>
+        <div className={`progress-stat__value t-stat${!potdStreak?.currentStreak ? ' is-zero' : ''}`}>
+          {potdStreak?.currentStreak ?? 0}
+        </div>
+        <div className="progress-stat__detail t-meta">
+          Best: {potdStreak?.longestStreak ?? 0} · Total: {potdStreak?.totalSolved ?? 0}
         </div>
       </div>
 
