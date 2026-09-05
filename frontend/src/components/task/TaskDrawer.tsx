@@ -9,7 +9,7 @@ import { getErrorMessage } from '../../services/api';
 import { useUIStore } from '../../store/uiStore';
 import { useTaskActions } from '../../hooks/useTaskActions';
 import type { Task } from '../../types';
-import { platformLabel } from '../../utils/labels';
+import { resolvePlatform } from '../../utils/platform';
 import '../dashboard/dashboard.css';
 import './task.css';
 
@@ -132,6 +132,8 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
     </header>
   );
 
+  const plat = resolvePlatform(task?.problemUrl, task?.platform);
+
   const footer = task && (
     <>
       {task.problemUrl && (
@@ -142,9 +144,7 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
           className="btn-secondary"
           style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          {task.platform && task.platform !== 'custom'
-            ? `Solve on ${platformLabel(task.platform)} ↗`
-            : 'Open problem ↗'}
+          Solve on {plat?.label ?? 'Problem'} ↗
         </a>
       )}
 
@@ -220,7 +220,7 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
             </div>
             <div className="kv__row">
               <dt className="kv__k">Platform</dt>
-              <dd className="kv__v">{platformLabel(task.platform) || '—'}</dd>
+              <dd className="kv__v">{plat?.label || '—'}</dd>
             </div>
             <div className="kv__row">
               <dt className="kv__k">Scheduled</dt>

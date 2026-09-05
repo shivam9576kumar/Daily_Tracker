@@ -5,6 +5,7 @@ import { env } from '../../config/env';
 import { dateKeyInTz } from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
+import { resolvePlatformValue } from '../../utils/platform';
 
 export type Rating = 'easy' | 'medium' | 'hard';
 
@@ -77,7 +78,7 @@ async function regenerateRevisions(
       title: parent.title,
       topic: parent.topic,
       difficulty: parent.difficulty,
-      platform: parent.platform,
+      platform: resolvePlatformValue(parent.problemUrl, parent.platform),
       problemUrl: parent.problemUrl,
       taskType: 'revision',
       status: 'pending',

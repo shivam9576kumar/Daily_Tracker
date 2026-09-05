@@ -1,46 +1,33 @@
 import prisma from '../config/database';
 import { platformFromUrl } from '../utils/platform';
 
-/**
- * Idempotent backfill: sets task.platform to match the host of task.problemUrl.
- * Skips POTD tasks (always genuinely LeetCode) and tasks without a URL.
- */
 async function main() {
   const tasks = await prisma.task.findMany({
-    where: {
-      problemUrl: { not: null },
-      taskType: { not: 'potd' },
-    },
-    select: { id: true, problemUrl: true, platform: true, title: true },
+    where: { problemUrl: { not: null } },
+    select: { id: true, platform: true, problemUrl: true },
   });
 
-  console.log(`Scanning ${tasks.length} tasks…`);
-
-  let fixed = 0;
-  const changes: Record<string, number> = {};
+  let updated = 0;
+  const byPlatform: Record<string, number> = {};
 
   for (const t of tasks) {
-    const correct = platformFromUrl(t.problemUrl);
-    if (correct === 'custom') continue;          // don't downgrade unknown URLs
-    if (t.platform === correct) continue;        // already right
-
-    await prisma.task.update({
-      where: { id: t.id },
-      data: { platform: correct },
-    });
-
-    const key = `${t.platform} -> ${correct}`;
-    changes[key] = (changes[key] ?? 0) + 1;
-    fixed++;
+    const derived = platformFromUrl(t.problemUrl);
+    if (derived && derived !== t.platform) {
+      await prisma.task.update({
+        where: { id: t.id },
+        data: { platform: derived },
+      });
+      updated++;
+      byPlatform[derived] = (byPlatform[derived] ?? 0) + 1;
+    }
   }
 
-  console.log(`Fixed ${fixed} tasks.`);
-  console.table(changes);
-  await prisma.$disconnect();
+  console.log(`✅ Platform cleanup complete. Updated ${updated} task(s).`, byPlatform);
 }
 
-main().catch(async (e) => {
-  console.error(e);
-  await prisma.$disconnect();
-  process.exit(1);
-});
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(() => prisma.$disconnect());

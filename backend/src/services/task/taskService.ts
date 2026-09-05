@@ -2,6 +2,7 @@ import prisma from '../../config/database';
 import { taskRepository } from '../../repositories/taskRepository';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { calculateCoins } from '../../config/rewards';
+import { resolvePlatformValue } from '../../utils/platform';
 
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
 const TASK_TYPES = ['new', 'assignment'];
@@ -92,7 +93,7 @@ export const taskService = {
       title: data.title.trim(),
       topic: data.topic.trim(),
       difficulty: data.difficulty || 'medium',
-      platform: data.platform || 'custom',
+      platform: resolvePlatformValue(data.problemUrl, data.platform || 'custom'),
       problemUrl: data.problemUrl?.trim() || null,
       taskType: data.taskType || 'new',
       scheduledDate: scheduled,

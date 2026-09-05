@@ -1,7 +1,7 @@
 import type { Rating, Task } from '../../types';
 import RevisionBadge from '../task/RevisionBadge';
 import RatingPills from '../task/RatingPills';
-import { platformLabel } from '../../utils/labels';
+import { resolvePlatform } from '../../utils/platform';
 import { formatShortDate } from '../../utils/dateKeys';
 import '../task/task.css';
 import './dashboard.css';
@@ -19,6 +19,7 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
   const completed = task.status === 'completed';
   const isPotd = task.taskType === 'potd';
   const canRate = task.taskType !== 'revision';
+  const plat = resolvePlatform(task.problemUrl, task.platform);
 
   const cls = [
     'task-row',
@@ -75,8 +76,8 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
           {task.taskType === 'revision' && <RevisionBadge revisionNumber={task.revisionNumber} />}
           <span className="pill pill-topic">{task.topic}</span>
           {task.difficulty && <span className={`pill pill-${task.difficulty}`}>{task.difficulty}</span>}
-          {task.platform && task.platform !== 'custom' && (
-            <span className="task-row__platform">{platformLabel(task.platform)}</span>
+          {plat && plat.value !== 'custom' && (
+            <span className="task-row__platform">{plat.label}</span>
           )}
         </div>
 

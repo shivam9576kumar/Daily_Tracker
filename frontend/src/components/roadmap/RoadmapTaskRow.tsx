@@ -1,7 +1,7 @@
 import type { Task } from '../../types';
 import RevisionBadge from '../task/RevisionBadge';
 import { IconLock } from '../common/icons';
-import { platformLabel } from '../../utils/labels';
+import { resolvePlatform } from '../../utils/platform';
 import './roadmap.css';
 
 interface Props {
@@ -11,6 +11,8 @@ interface Props {
 }
 
 export default function RoadmapTaskRow({ task, isToday, isFuture }: Props) {
+  const plat = resolvePlatform(task.problemUrl, task.platform);
+
   const rowState =
     task.status === 'completed' ? 'completed' :
     task.status === 'expired'   ? 'expired'   :
@@ -25,7 +27,9 @@ export default function RoadmapTaskRow({ task, isToday, isFuture }: Props) {
     ? `Revision #${task.revisionNumber} — click to open the problem`
     : isFuture
     ? 'Locked — unlocks on its scheduled day'
-    : 'Click to open on LeetCode';
+    : plat
+    ? `Click to open on ${plat.label}`
+    : 'Click to open problem';
 
   return (
     <div
@@ -43,8 +47,8 @@ export default function RoadmapTaskRow({ task, isToday, isFuture }: Props) {
           {task.taskType === 'revision' && <RevisionBadge revisionNumber={task.revisionNumber} />}
           <span className="pill pill-topic">{task.topic}</span>
           {task.difficulty && <span className={`pill pill-${task.difficulty}`}>{task.difficulty}</span>}
-          {task.platform && task.platform !== 'custom' && (
-            <span className="rtask__platform">{platformLabel(task.platform)}</span>
+          {plat && plat.value !== 'custom' && (
+            <span className="rtask__platform">{plat.label}</span>
           )}
           {rowState === 'backlog' && <span className="pill pill-outline-warning">Backlog</span>}
           {rowState === 'expired' && <span className="pill pill-outline-danger">Expired</span>}

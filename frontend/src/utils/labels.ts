@@ -3,6 +3,7 @@ const PLATFORM: Record<string, string> = {
   gfg: 'GFG',
   geeksforgeeks: 'GFG',
   interviewbit: 'InterviewBit',
+  codingninjas: 'Coding Ninjas',
   codeforces: 'Codeforces',
   codechef: 'CodeChef',
   hackerrank: 'HackerRank',

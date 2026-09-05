@@ -1,6 +1,7 @@
 import prisma from '../../config/database';
 import logger from '../../utils/logger';
 import { dateKeyInTz } from '../../utils/dateKeys';
+import { resolvePlatformValue } from '../../utils/platform';
 
 const LEETCODE_GRAPHQL = 'https://leetcode.com/graphql';
 const FETCH_TIMEOUT_MS = 8000;
@@ -186,7 +187,7 @@ export async function ensurePotdTaskForUser(
         title: potd.title,
         topic,
         difficulty: potd.difficulty,
-        platform: 'leetcode',
+        platform: resolvePlatformValue(potd.url, 'leetcode'),
         problemUrl: potd.url,
         scheduledDate,
         potdDateKey: potd.dateKey,

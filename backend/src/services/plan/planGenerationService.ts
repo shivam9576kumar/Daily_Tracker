@@ -4,7 +4,7 @@ import { calculateDailyCapacities, BusyDayInput } from './capacityCalculator';
 import { scheduleQuestions, SchedulerResult, TopicQuota, ScheduleMode } from './weightedScheduler';
 import { todayKey } from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import { resolvePlatform } from '../../utils/platform';
+import { resolvePlatformValue } from '../../utils/platform';
 
 export interface GeneratePlanInput {
   name?: string;
@@ -145,8 +145,8 @@ export const planGenerationService = {
               title: q.question.title,
               topic: q.question.topic,
               difficulty: q.question.difficulty,
-              platform: resolvePlatform(q.question.url, q.question.tags),
               problemUrl: q.question.url || null,
+              platform: resolvePlatformValue(q.question.url, (q.question as any).platform ?? 'leetcode'),
               taskType: 'new',
               status: 'pending',
               scheduledDate,
