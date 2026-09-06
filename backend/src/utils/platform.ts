@@ -7,7 +7,8 @@ const PLATFORM_HOST_MAP: [string, string][] = [
   ['codeforces.com', 'codeforces'],
   ['hackerrank.com', 'hackerrank'],
   ['codechef.com', 'codechef'],
-  ['takeuforward.org', 'takeuforward'],
+  ['takeuforward.org', 'striver'],
+  ['striver', 'striver'],
 ];
 
 export function platformFromUrl(url?: string | null): string | null {

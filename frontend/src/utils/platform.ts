@@ -8,7 +8,8 @@ const PLATFORM_HOST_MAP: [string, string, string][] = [
   ['codeforces.com', 'codeforces', 'Codeforces'],
   ['hackerrank.com', 'hackerrank', 'HackerRank'],
   ['codechef.com', 'codechef', 'CodeChef'],
-  ['takeuforward.org', 'takeuforward', 'takeUforward'],
+  ['takeuforward.org', 'striver', 'Striver (takeuforward)'],
+  ['striver', 'striver', 'Striver (takeuforward)'],
 ];
 
 function titleCase(s: string): string {

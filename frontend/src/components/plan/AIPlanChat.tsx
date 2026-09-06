@@ -136,6 +136,8 @@ export default function AIPlanChat({
             <strong>Source:</strong>{' '}
             {draft.source === 'coderarmy'
               ? 'Coder Army Sheet'
+              : draft.source === 'striver'
+              ? "Striver's A2Z Sheet"
               : draft.source === 'neetcode150'
               ? 'NeetCode 150'
               : '—'}

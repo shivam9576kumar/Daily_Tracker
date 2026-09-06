@@ -45,8 +45,15 @@ export const taskRepository = {
    */
   async getTodaysTasks(userId: string, tz?: string) {
     const currentKey = todayKey(tz);
-    const today = new Date(`${currentKey}T00:00:00.000Z`);
-    const endOfToday = new Date(`${currentKey}T23:59:59.999Z`);
+    const [yStr, mStr, dStr] = currentKey.split('-');
+    const year = parseInt(yStr, 10);
+    const month = parseInt(mStr, 10);
+    const day = parseInt(dStr, 10);
+
+    // Center the window on local noon UTC, then expand 18h in each direction to cover all timezone offsets
+    const noonUTC = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+    const startWindow = new Date(noonUTC.getTime() - 18 * 60 * 60 * 1000);
+    const endWindow = new Date(noonUTC.getTime() + 18 * 60 * 60 * 1000);
 
     return prisma.task.findMany({
       where: {
@@ -55,12 +62,12 @@ export const taskRepository = {
         AND: [
           {
             OR: [
-              // scheduled today
-              { scheduledDate: { gte: today, lte: endOfToday } },
+              // scheduled today (in local timezone window)
+              { scheduledDate: { gte: startWindow, lte: endWindow } },
               // open backlog
               { isBacklog: true, status: 'backlog' },
-              // completed today — bug fix from previous phase
-              { status: 'completed', completedAt: { gte: today, lte: endOfToday } },
+              // completed today (in local timezone window)
+              { status: 'completed', completedAt: { gte: startWindow, lte: endWindow } },
             ],
           },
           // ── LEAK FIX: ignore archived plans ──

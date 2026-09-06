@@ -184,20 +184,26 @@ export const taskCompletionService = {
     const bonusRefund = bonusFor(task.rating);
 
     const result = await prisma.$transaction(async (tx) => {
-      await tx.revision.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
-      await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision', status: { in: ['pending', 'backlog'] } } });
+      const doneRevs = await tx.task.count({
+        where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
+      });
+      const revRefund = doneRevs * COIN_REWARDS.revision;
+
+      await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+      await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
 
       const updated = await tx.task.update({
         where: { id: taskId },
         data: { rating: null },
       });
 
-      if (bonusRefund > 0) {
+      const totalRefund = bonusRefund + revRefund;
+      if (totalRefund > 0) {
         const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
         if (user) {
           await tx.user.update({
             where: { id: userId },
-            data: { coins: Math.max(0, user.coins - bonusRefund) },
+            data: { coins: Math.max(0, user.coins - totalRefund) },
           });
         }
       }
@@ -211,19 +217,24 @@ export const taskCompletionService = {
    * Undo solve: full revert to pending.
    *  - status reverted to 'pending'
    *  - rating and completedAt cleared
-   *  - pending/backlog child revisions deleted
-   *  - base + bonus coins refunded
+   *  - all child revisions deleted
+   *  - base + bonus + completed revision coins refunded
    */
   async undoTask(userId: string, taskId: string) {
     const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
     if (!task) throw new NotFoundError('Task');
 
     const wasCompleted = task.status === 'completed';
-    const refund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
+    const baseRefund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
 
     const result = await prisma.$transaction(async (tx) => {
-      await tx.revision.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
-      await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision', status: { in: ['pending', 'backlog'] } } });
+      const doneRevs = await tx.task.count({
+        where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
+      });
+      const revRefund = doneRevs * COIN_REWARDS.revision;
+
+      await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+      await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
 
       if (task.taskType === 'revision') {
         await tx.revision.updateMany({
@@ -237,12 +248,13 @@ export const taskCompletionService = {
         data: { status: 'pending', rating: null, completedAt: null, isBacklog: false },
       });
 
-      if (wasCompleted && refund > 0) {
+      const totalRefund = baseRefund + revRefund;
+      if (wasCompleted && totalRefund > 0) {
         const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
         if (user) {
           await tx.user.update({
             where: { id: userId },
-            data: { coins: Math.max(0, user.coins - refund) },
+            data: { coins: Math.max(0, user.coins - totalRefund) },
           });
         }
       }
