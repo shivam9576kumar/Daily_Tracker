@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { BusyDayInput } from '../../types';
+import { getLocalDateKey, getOffsetDateKey } from '../../utils/planDraft';
 import './plan.css';
 
 interface Props {
@@ -10,11 +11,11 @@ interface Props {
 }
 
 const PRESETS = [
-  { label: 'Light',    pct: 30 },
-  { label: 'Half',     pct: 50 },
-  { label: 'Exam Day', pct: 60 },
-  { label: 'Heavy',    pct: 80 },
-  { label: 'No Study', pct: 100 },
+  { label: 'Light',    pct: 30,  defaultReason: 'Light Day' },
+  { label: 'Half',     pct: 50,  defaultReason: 'Half Day' },
+  { label: 'Exam Day', pct: 60,  defaultReason: 'Exam Day' },
+  { label: 'Heavy',    pct: 80,  defaultReason: 'Heavy Day' },
+  { label: 'No Study', pct: 100, defaultReason: 'No Study / Off' },
 ];
 
 export default function StepBusyDays({
@@ -23,9 +24,11 @@ export default function StepBusyDays({
   weekendLoad = 3.0,
   onChange,
 }: Props) {
-  const [busyDate, setBusyDate] = useState('');
-  const [busyReason, setBusyReason] = useState('');
+  // Default date to Today so the user can immediately click + Add Busy Day
+  const [busyDate, setBusyDate] = useState<string>(() => getLocalDateKey());
+  const [busyReason, setBusyReason] = useState('Exam Day');
   const [reductionPct, setReductionPct] = useState<number>(60);
+  const [addedNotice, setAddedNotice] = useState<string | null>(null);
 
   const clampPct = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
 
@@ -38,13 +41,13 @@ export default function StepBusyDays({
 
   const { wd, we } = remainingLoadPreview(reductionPct, weekdayLoad, weekendLoad);
 
-  const addBusyDay = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleAddBusyDay = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!busyDate) return;
 
     const entry: BusyDayInput = {
       date: busyDate,
-      reason: busyReason.trim() || undefined,
+      reason: busyReason.trim() || 'Exam / Busy Day',
       loadReduction: reductionPct / 100, // 0..1 contract for backend
     };
 
@@ -54,8 +57,18 @@ export default function StepBusyDays({
     ].sort((a, b) => a.date.localeCompare(b.date));
 
     onChange(next);
-    setBusyDate('');
-    setBusyReason('');
+    setAddedNotice(`Added busy day for ${formatDate(busyDate)}!`);
+    setTimeout(() => setAddedNotice(null), 3000);
+  };
+
+  const handlePresetSelect = (preset: typeof PRESETS[number]) => {
+    setReductionPct(preset.pct);
+    if (!busyReason.trim() || PRESETS.some((p) => p.defaultReason === busyReason)) {
+      setBusyReason(preset.defaultReason);
+    }
+    if (!busyDate) {
+      setBusyDate(getLocalDateKey());
+    }
   };
 
   function formatDate(dateStr: string): string {
@@ -71,25 +84,49 @@ export default function StepBusyDays({
     });
   }
 
+  const quickDates = [
+    { label: 'Today', date: getOffsetDateKey(0) },
+    { label: 'Tomorrow', date: getOffsetDateKey(1) },
+    { label: '+3 Days', date: getOffsetDateKey(3) },
+    { label: '+7 Days', date: getOffsetDateKey(7) },
+  ];
+
   return (
     <section className="card step-card">
       <div className="step-card__kicker">Step 4 of 5</div>
       <h2 className="step-card__heading">Exams &amp; Busy Days</h2>
       <p className="step-card__hint">
-        Add exams or busy days — load is reduced automatically.
+        Add exams or busy days — load is reduced automatically for those days.
       </p>
 
-      <form onSubmit={addBusyDay} className="busy-add-form">
+      <form onSubmit={handleAddBusyDay} className="busy-add-form">
         <div className="form-grid" style={{ marginTop: 14 }}>
           <div className="form-field">
-            <label htmlFor="busy-date">Date</label>
+            <label htmlFor="busy-date">
+              Exam / Busy Date <span style={{ color: 'var(--brand)', fontWeight: 600 }}>*</span>
+            </label>
             <input
               id="busy-date"
               type="date"
               className="field"
               value={busyDate}
               onChange={(e) => setBusyDate(e.target.value)}
+              required
             />
+            {/* Quick date shortcuts */}
+            <div style={{ display: 'flex', gap: 6, marginTop: 6, flexWrap: 'wrap' }}>
+              {quickDates.map((qd) => (
+                <button
+                  key={qd.label}
+                  type="button"
+                  className={`chip ${busyDate === qd.date ? 'is-on' : ''}`}
+                  style={{ padding: '3px 9px', fontSize: 11 }}
+                  onClick={() => setBusyDate(qd.date)}
+                >
+                  {qd.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="form-field">
@@ -98,7 +135,7 @@ export default function StepBusyDays({
               id="busy-reason"
               type="text"
               className="field"
-              placeholder="e.g. Midterm exam, travel, quiz..."
+              placeholder="e.g. Midterm Exam, End Sem, Travel..."
               value={busyReason}
               onChange={(e) => setBusyReason(e.target.value)}
             />
@@ -142,7 +179,7 @@ export default function StepBusyDays({
                 key={p.pct}
                 type="button"
                 className={`chip ${reductionPct === p.pct ? 'is-on' : ''}`}
-                onClick={() => setReductionPct(p.pct)}
+                onClick={() => handlePresetSelect(p)}
               >
                 {p.label} · {p.pct}%
               </button>
@@ -169,66 +206,83 @@ export default function StepBusyDays({
           </p>
         </div>
 
-        <div style={{ marginTop: 16, display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            {addedNotice ? (
+              <span style={{ color: 'var(--success-text)', fontSize: 13, fontWeight: 600 }}>
+                ✓ {addedNotice}
+              </span>
+            ) : !busyDate ? (
+              <span style={{ color: 'var(--warning-text)', fontSize: 12 }}>
+                ⚠️ Select a date to add your busy day
+              </span>
+            ) : null}
+          </div>
           <button
             type="submit"
-            className="btn-brand-outline"
+            className="btn-primary"
             disabled={!busyDate}
+            style={{ padding: '8px 20px' }}
           >
-            + Add Busy Day
+            + Add Exam / Busy Day
           </button>
         </div>
       </form>
 
       {busyDays.length === 0 ? (
-        <p className="busy-empty t-meta" style={{ marginTop: 16 }}>
-          No busy days added yet. Tasks will follow standard daily targets.
-        </p>
+        <div className="busy-empty t-meta" style={{ marginTop: 16, padding: '12px 14px', background: 'var(--bg-subtle)', borderRadius: 8 }}>
+          ℹ️ No busy days added yet. Tasks will follow standard daily targets. Select a date above and click <strong>+ Add Exam / Busy Day</strong> to add one.
+        </div>
       ) : (
-        <ul className="busy-list">
-          {busyDays.map((d) => {
-            const pct = Math.round(d.loadReduction * 100);
-            return (
-              <li key={d.date} className="busy-row">
-                <span className="busy-row__date">{formatDate(d.date)}</span>
-                <span className="busy-row__reason">{d.reason || '—'}</span>
-                <span
-                  className={`pill ${
-                    pct === 100 ? 'pill-outline-danger' : 'pill-outline-warning'
-                  }`}
-                >
-                  {pct === 100 ? 'No study' : `${pct}% less`}
-                </span>
-                <input
-                  type="range"
-                  className="busy-row__range"
-                  min={0}
-                  max={100}
-                  step={5}
-                  value={pct}
-                  onChange={(e) =>
-                    onChange(
-                      busyDays.map((x) =>
-                        x.date === d.date
-                          ? { ...x, loadReduction: clampPct(+e.target.value) / 100 }
-                          : x
+        <div style={{ marginTop: 20 }}>
+          <h4 style={{ margin: '0 0 8px', fontSize: 14, color: 'var(--text-secondary)' }}>
+            Scheduled Exams &amp; Busy Days ({busyDays.length})
+          </h4>
+          <ul className="busy-list">
+            {busyDays.map((d) => {
+              const pct = Math.round(d.loadReduction * 100);
+              return (
+                <li key={d.date} className="busy-row">
+                  <span className="busy-row__date">{formatDate(d.date)}</span>
+                  <span className="busy-row__reason">{d.reason || '—'}</span>
+                  <span
+                    className={`pill ${
+                      pct === 100 ? 'pill-outline-danger' : 'pill-outline-warning'
+                    }`}
+                  >
+                    {pct === 100 ? 'No study' : `${pct}% less`}
+                  </span>
+                  <input
+                    type="range"
+                    className="busy-row__range"
+                    min={0}
+                    max={100}
+                    step={5}
+                    value={pct}
+                    onChange={(e) =>
+                      onChange(
+                        busyDays.map((x) =>
+                          x.date === d.date
+                            ? { ...x, loadReduction: clampPct(+e.target.value) / 100 }
+                            : x
+                        )
                       )
-                    )
-                  }
-                  aria-label={`Adjust load reduction for ${d.date}`}
-                />
-                <button
-                  type="button"
-                  className="icon-btn is-danger"
-                  aria-label={`Remove busy day ${d.date}`}
-                  onClick={() => onChange(busyDays.filter((x) => x.date !== d.date))}
-                >
-                  ×
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+                    }
+                    aria-label={`Adjust load reduction for ${d.date}`}
+                  />
+                  <button
+                    type="button"
+                    className="icon-btn is-danger"
+                    aria-label={`Remove busy day ${d.date}`}
+                    onClick={() => onChange(busyDays.filter((x) => x.date !== d.date))}
+                  >
+                    ×
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       )}
     </section>
   );
