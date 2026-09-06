@@ -7,11 +7,14 @@ import { NotFoundError, ValidationError } from '../../utils/error';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolvePlatformValue } from '../../utils/platform';
 
+import {
+  COIN_REWARDS,
+  calculateRatingBonus,
+} from '../../config/rewards';
+
 export type Rating = 'easy' | 'medium' | 'hard';
 
 const RATINGS = ['easy', 'medium', 'hard'] as const;
-const RATING_BONUS: Record<Rating, number> = { easy: 0, medium: 5, hard: 10 };
-const BASE_SOLVE_COINS = 10;
 
 const REVISION_INTERVALS: Record<Rating, readonly number[]> = {
   easy:   [14, 28],
@@ -28,7 +31,7 @@ function parseRating(value: unknown): Rating {
 }
 
 function bonusFor(rating: string | null | undefined): number {
-  return rating && rating in RATING_BONUS ? RATING_BONUS[rating as Rating] : 0;
+  return calculateRatingBonus(rating);
 }
 
 /**
@@ -63,7 +66,7 @@ async function regenerateRevisions(
   tz: string = env.DEFAULT_TIMEZONE,
 ): Promise<void> {
   await tx.revision.deleteMany({ where: { parentTaskId: parent.id, status: { in: ['pending', 'backlog'] } } });
-  await tx.task.deleteMany({ where: { parentTaskId: parent.id, status: { in: ['pending', 'backlog'] } } });
+  await tx.task.deleteMany({ where: { parentTaskId: parent.id, taskType: 'revision', status: { in: ['pending', 'backlog'] } } });
 
   const intervals = REVISION_INTERVALS[rating];
   const base = solvedDateMidnightUtc(anchor, tz);
@@ -116,7 +119,7 @@ export const taskCompletionService = {
     const now = new Date();
     const isFirstSolve = task.status !== 'completed';
     const nextRating: Rating | null = rating ?? (task.rating as Rating | null) ?? null;
-    const coinDelta = (isFirstSolve ? BASE_SOLVE_COINS : 0) + (rating ? bonusFor(rating) - bonusFor(task.rating) : 0);
+    const coinDelta = (isFirstSolve ? COIN_REWARDS.solve : 0) + (rating ? bonusFor(rating) - bonusFor(task.rating) : 0);
 
     const result = await prisma.$transaction(async (tx) => {
       const updated = await tx.task.update({
@@ -182,7 +185,7 @@ export const taskCompletionService = {
 
     const result = await prisma.$transaction(async (tx) => {
       await tx.revision.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
-      await tx.task.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
+      await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision', status: { in: ['pending', 'backlog'] } } });
 
       const updated = await tx.task.update({
         where: { id: taskId },
@@ -216,11 +219,11 @@ export const taskCompletionService = {
     if (!task) throw new NotFoundError('Task');
 
     const wasCompleted = task.status === 'completed';
-    const refund = wasCompleted ? BASE_SOLVE_COINS + bonusFor(task.rating) : 0;
+    const refund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
 
     const result = await prisma.$transaction(async (tx) => {
       await tx.revision.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
-      await tx.task.deleteMany({ where: { parentTaskId: taskId, status: { in: ['pending', 'backlog'] } } });
+      await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision', status: { in: ['pending', 'backlog'] } } });
 
       if (task.taskType === 'revision') {
         await tx.revision.updateMany({

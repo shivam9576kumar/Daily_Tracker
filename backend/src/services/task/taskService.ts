@@ -1,7 +1,8 @@
 import prisma from '../../config/database';
 import { taskRepository } from '../../repositories/taskRepository';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import { calculateCoins } from '../../config/rewards';
+import { calculateCompletedTaskCoins } from '../../config/rewards';
+import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolvePlatformValue } from '../../utils/platform';
 
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
@@ -151,32 +152,76 @@ export const taskService = {
     const task = await this.getTaskById(taskId, userId);
 
     await prisma.$transaction(async (tx) => {
-      let refund = task.status === 'completed' ? calculateCoins(task.taskType, task.difficulty) : 0;
+      let refund =
+        task.status === 'completed'
+          ? calculateCompletedTaskCoins(task.taskType, task.rating)
+          : 0;
 
       if (task.taskType === 'new') {
         const doneRevs = await tx.task.count({
-          where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
+          where: {
+            parentTaskId: taskId,
+            taskType: 'revision',
+            status: 'completed',
+          },
         });
-        refund += doneRevs * calculateCoins('revision', null);
-        await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
-        await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+
+        refund += doneRevs * calculateCompletedTaskCoins('revision');
+
+        await tx.task.deleteMany({
+          where: {
+            parentTaskId: taskId,
+            taskType: 'revision',
+          },
+        });
+
+        await tx.revision.deleteMany({
+          where: {
+            parentTaskId: taskId,
+          },
+        });
       } else if (task.taskType === 'revision') {
-        await tx.revision.deleteMany({ where: { revisionTaskId: taskId } });
+        await tx.revision.deleteMany({
+          where: {
+            revisionTaskId: taskId,
+          },
+        });
       } else if (task.taskType === 'potd' && task.potdDateKey) {
         await tx.potdDismissal.upsert({
-          where: { userId_dateKey: { userId, dateKey: task.potdDateKey } },
-          create: { userId, dateKey: task.potdDateKey },
+          where: {
+            userId_dateKey: {
+              userId,
+              dateKey: task.potdDateKey,
+            },
+          },
+          create: {
+            userId,
+            dateKey: task.potdDateKey,
+          },
           update: {},
         });
       }
 
-      await tx.task.delete({ where: { id: taskId } });
+      await tx.task.delete({
+        where: { id: taskId },
+      });
 
       if (refund > 0) {
-        const u = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
-        await tx.user.update({ where: { id: userId }, data: { coins: Math.max(0, (u?.coins ?? 0) - refund) } });
+        const user = await tx.user.findUnique({
+          where: { id: userId },
+          select: { coins: true },
+        });
+
+        await tx.user.update({
+          where: { id: userId },
+          data: {
+            coins: Math.max(0, (user?.coins ?? 0) - refund),
+          },
+        });
       }
     });
+
+    invalidateUserCache(userId);
 
     return { ok: true };
   },
