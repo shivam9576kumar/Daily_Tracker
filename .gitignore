@@ -34,6 +34,8 @@ coverage/
 # Scratch
 scratch/
 
-# AI Context
+# AI Context & Batches
 PROJECT_CONTEXT.md
+Batch*
+
 
