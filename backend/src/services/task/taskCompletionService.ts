@@ -173,31 +173,39 @@ export const taskCompletionService = {
   /**
    * Un-rate: remove the revision plan, KEEP the solve.
    *  - rating cleared (null)
-   *  - pending/backlog child revisions deleted
+   *  - all child revisions deleted (pending, backlog, completed)
    *  - status stays 'completed', completedAt unchanged
-   *  - bonus coins refunded (base solve coins kept)
+   *  - bonus coins + completed revision coins refunded (base solve coins kept)
    */
   async unrateTask(userId: string, taskId: string) {
     const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
     if (!task) throw new NotFoundError('Task');
 
-    const bonusRefund = bonusFor(task.rating);
-
     const result = await prisma.$transaction(async (tx) => {
+      // Step 1: Count completed revisions BEFORE deleting them
       const doneRevs = await tx.task.count({
         where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
       });
-      const revRefund = doneRevs * COIN_REWARDS.revision;
 
+      // Step 2: Compute total refund = ratingBonus(task.rating) + (doneRevs * 10)
+      // Parent remains solved, so COIN_REWARDS.solve (10) is NOT refunded.
+      const bonusRefund = bonusFor(task.rating);
+      const revRefund = doneRevs * COIN_REWARDS.revision;
+      const totalRefund = bonusRefund + revRefund;
+
+      // Step 3: Delete Revision records
       await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+
+      // Step 4: Delete revision tasks
       await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
 
+      // Step 5: Update parent
       const updated = await tx.task.update({
         where: { id: taskId },
         data: { rating: null },
       });
 
-      const totalRefund = bonusRefund + revRefund;
+      // Step 6: Apply coin decrement
       if (totalRefund > 0) {
         const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
         if (user) {
@@ -225,15 +233,23 @@ export const taskCompletionService = {
     if (!task) throw new NotFoundError('Task');
 
     const wasCompleted = task.status === 'completed';
-    const baseRefund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
 
     const result = await prisma.$transaction(async (tx) => {
+      // Step 1: Count completed revisions BEFORE deleting them
       const doneRevs = await tx.task.count({
         where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
       });
-      const revRefund = doneRevs * COIN_REWARDS.revision;
 
+      // Step 2: Compute total refund = (wasCompleted ? 10 + ratingBonus : 0) + (doneRevs * 10)
+      // Single calculation preventing double-refund of rating bonus or base solve.
+      const baseRefund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
+      const revRefund = doneRevs * COIN_REWARDS.revision;
+      const totalRefund = baseRefund + revRefund;
+
+      // Step 3: Delete Revision records
       await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+
+      // Step 4: Delete revision tasks
       await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
 
       if (task.taskType === 'revision') {
@@ -243,12 +259,13 @@ export const taskCompletionService = {
         });
       }
 
+      // Step 5: Update parent
       const updated = await tx.task.update({
         where: { id: taskId },
         data: { status: 'pending', rating: null, completedAt: null, isBacklog: false },
       });
 
-      const totalRefund = baseRefund + revRefund;
+      // Step 6: Apply coin decrement
       if (wasCompleted && totalRefund > 0) {
         const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
         if (user) {

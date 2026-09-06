@@ -138,6 +138,15 @@ export const planGenerationService = {
           },
         });
 
+        const SOURCE_DEFAULT_PLATFORM: Record<string, string> = {
+          striver: 'striver',
+          strivera2z: 'striver',
+          takeuforward: 'striver',
+          coderarmy: 'custom',
+          neetcode150: 'leetcode',
+        };
+        const sourceFallback = SOURCE_DEFAULT_PLATFORM[input.source] ?? 'custom';
+
         // 3. Batch insert tasks
         const tasksData: any[] = [];
         for (const day of preview.days) {
@@ -151,7 +160,7 @@ export const planGenerationService = {
               topic: q.question.topic,
               difficulty: q.question.difficulty,
               problemUrl: q.question.url || null,
-              platform: resolvePlatformValue(q.question.url, (q.question as any).platform ?? 'leetcode'),
+              platform: resolvePlatformValue(q.question.url, (q.question as any).platform ?? sourceFallback),
               taskType: 'new',
               status: 'pending',
               scheduledDate,

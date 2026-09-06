@@ -1,6 +1,7 @@
 import prisma from '../config/database';
 import { Prisma } from '@prisma/client';
-import { todayKey } from '../utils/dateKeys';
+import { todayKey, zonedDayRangeUtc } from '../utils/dateKeys';
+import { env } from '../config/env';
 
 /**
  * Task Repository — data access layer for the tasks table.
@@ -42,18 +43,14 @@ export const taskRepository = {
    *   3. anything SOLVED TODAY — by completedAt — regardless of when it was scheduled.
    *      Without (3) a backlog item vanishes the moment you solve it. (3) also makes
    *      "Completed Today" clear itself at midnight: the window simply moves.
+   *
+   * Uses half-open [start, end) range produced by zonedDayRangeUtc for exact wall-clock day coverage.
+   * TODO (BUG 8 / BUG 9): Use zonedDayRangeUtc for crons and revision scheduledDate calculations.
    */
   async getTodaysTasks(userId: string, tz?: string) {
-    const currentKey = todayKey(tz);
-    const [yStr, mStr, dStr] = currentKey.split('-');
-    const year = parseInt(yStr, 10);
-    const month = parseInt(mStr, 10);
-    const day = parseInt(dStr, 10);
-
-    // Center the window on local noon UTC, then expand 18h in each direction to cover all timezone offsets
-    const noonUTC = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
-    const startWindow = new Date(noonUTC.getTime() - 18 * 60 * 60 * 1000);
-    const endWindow = new Date(noonUTC.getTime() + 18 * 60 * 60 * 1000);
+    const userTz = tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
+    const currentKey = todayKey(userTz);
+    const { start, end } = zonedDayRangeUtc(currentKey, userTz);
 
     return prisma.task.findMany({
       where: {
@@ -62,12 +59,12 @@ export const taskRepository = {
         AND: [
           {
             OR: [
-              // scheduled today (in local timezone window)
-              { scheduledDate: { gte: startWindow, lte: endWindow } },
+              // scheduled today (exact local calendar day half-open window)
+              { scheduledDate: { gte: start, lt: end } },
               // open backlog
               { isBacklog: true, status: 'backlog' },
-              // completed today (in local timezone window)
-              { status: 'completed', completedAt: { gte: startWindow, lte: endWindow } },
+              // completed today (exact local calendar day half-open window)
+              { status: 'completed', completedAt: { gte: start, lt: end } },
             ],
           },
           // ── LEAK FIX: ignore archived plans ──

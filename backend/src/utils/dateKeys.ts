@@ -81,3 +81,49 @@ export function lowerBoundForKey(key: string): Date {
   d.setUTCDate(d.getUTCDate() - 1);
   return d;
 }
+
+/** Offset (ms) such that: utcInstant + offset = wall-clock time in tz. */
+function tzOffsetMs(date: Date, tz: string): number {
+  const dtf = new Intl.DateTimeFormat('en-US', {
+    timeZone: tz,
+    hour12: false,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+  const parts = dtf.formatToParts(date);
+  const get = (t: string) => Number(parts.find((p) => p.type === t)?.value ?? 0);
+  const asUTC = Date.UTC(
+    get('year'),
+    get('month') - 1,
+    get('day'),
+    get('hour') % 24,
+    get('minute'),
+    get('second')
+  );
+  return asUTC - date.getTime();
+}
+
+/** Exact UTC instant of 00:00 local time on `dateKey` in `tz`. DST-safe. */
+export function zonedDayStartUtc(dateKey: string, tz: string): Date {
+  const naive = Date.parse(`${dateKey}T00:00:00Z`);
+  const o1 = tzOffsetMs(new Date(naive), tz);
+  let ts = naive - o1;
+  const o2 = tzOffsetMs(new Date(ts), tz);
+  if (o2 !== o1) ts = naive - o2; // refine across DST boundaries
+  return new Date(ts);
+}
+
+/**
+ * Half-open UTC range [start, end) covering the local calendar day.
+ * TODO (BUG 8 / BUG 9): Use zonedDayRangeUtc for crons and revision scheduledDate calculations.
+ */
+export function zonedDayRangeUtc(dateKey: string, tz: string): { start: Date; end: Date } {
+  return {
+    start: zonedDayStartUtc(dateKey, tz),
+    end: zonedDayStartUtc(addDaysToKey(dateKey, 1), tz),
+  };
+}

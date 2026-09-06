@@ -6,7 +6,7 @@ import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolvePlatformValue } from '../../utils/platform';
 
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
-const TASK_TYPES = ['new', 'assignment'];
+const TASK_TYPES = ['new'];
 
 export interface CreateTaskInput {
   title: string;

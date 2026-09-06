@@ -1,6 +1,6 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Rating = 'easy' | 'medium' | 'hard';
-export type TaskType = 'new' | 'revision' | 'assignment' | 'potd';
+export type TaskType = 'new' | 'revision' | 'potd';
 export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired';
 
 export interface Task {

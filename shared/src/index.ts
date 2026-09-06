@@ -12,7 +12,7 @@ export const BACKLOG_EXPIRY_DAYS = 7;
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Rating = 'easy' | 'medium' | 'hard';
-export type TaskType = 'new' | 'revision' | 'assignment';
+export type TaskType = 'new' | 'revision' | 'potd';
 export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired';
 export type Platform =
   | 'leetcode'

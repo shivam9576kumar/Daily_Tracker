@@ -1,3 +1,7 @@
+// KEEP IN SYNC with the mirrored file in frontend/src/utils/platform.ts.
+import logger from './logger';
+import { env } from '../config/env';
+
 const PLATFORM_HOST_MAP: [string, string][] = [
   ['leetcode.com', 'leetcode'],
   ['geeksforgeeks.org', 'gfg'],
@@ -16,6 +20,9 @@ export function platformFromUrl(url?: string | null): string | null {
   const lower = url.toLowerCase();
   for (const [fragment, value] of PLATFORM_HOST_MAP) {
     if (lower.includes(fragment)) return value;
+  }
+  if (env.NODE_ENV === 'development' || env.NODE_ENV === 'test') {
+    logger.warn(`Unmapped problem URL host: ${url}`);
   }
   return null;
 }

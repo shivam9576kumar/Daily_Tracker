@@ -1,3 +1,4 @@
+// KEEP IN SYNC with the mirrored file in backend/src/utils/platform.ts.
 const PLATFORM_HOST_MAP: [string, string, string][] = [
   // [hostname fragment, platform value, display label]
   ['leetcode.com', 'leetcode', 'LeetCode'],
