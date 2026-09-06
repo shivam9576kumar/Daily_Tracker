@@ -103,7 +103,12 @@ export const planGenerationService = {
       );
     }
 
-    const defaultTitle = input.source === 'coderarmy' ? 'Coder Army' : 'NeetCode 150';
+    const defaultTitle =
+      input.source === 'coderarmy'
+        ? 'Coder Army'
+        : input.source === 'striver'
+          ? "Striver's A2Z Sheet"
+          : 'NeetCode 150';
     const planName =
       input.name?.trim() || `${defaultTitle} - ${input.durationDays} Day Plan`;
     const startDate = new Date(`${preview.summary.startDate}T00:00:00.000Z`);
