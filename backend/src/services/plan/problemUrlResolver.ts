@@ -1,20 +1,10 @@
-import { QuestionBankEntry, normalizePlanSource, isGfgUrlValidAndEquivalent } from './questionBankLoader';
+import { QuestionBankEntry, normalizePlanSource } from './questionBankLoader';
 import { resolvePlatformValue } from '../../utils/platform';
-import striverGfgMapping from '../../data/striverGfgMapping.json';
-
-const striverMappings = striverGfgMapping as Record<string, any>;
 
 export function resolveQuestionUrl(
   question: QuestionBankEntry,
   source: string
 ): string {
-  const canonicalSource = normalizePlanSource(source);
-  if (canonicalSource === 'striver') {
-    const mapping = striverMappings[question.id];
-    if (question.gfgUrl && isGfgUrlValidAndEquivalent(question, mapping)) {
-      return question.gfgUrl;
-    }
-  }
   return question.url;
 }
 

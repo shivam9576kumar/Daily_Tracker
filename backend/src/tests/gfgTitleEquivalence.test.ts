@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { titlesAreEquivalent, FORCE_REJECT } from '../services/plan/gfgTitleEquivalence';
 import striverSheetData from '../data/striverSheet.json';
-import striverGfgMappingData from '../data/striverGfgMapping.json';
+import striverGfgMappingData from '../data/striverGfgMapping.v1.backup.json';
 
 interface StriverQuestion {
   id: string;

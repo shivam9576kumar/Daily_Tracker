@@ -156,6 +156,7 @@ export const planGenerationService = {
               topic: questionObj.topic,
               difficulty: questionObj.difficulty,
               problemUrl: problemUrl || null,
+              sourceUrl: questionObj.sourceUrl || null,
               platform,
               taskType: 'new',
               status: 'pending',

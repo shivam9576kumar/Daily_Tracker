@@ -13,6 +13,7 @@ export interface Task {
   difficulty: Difficulty | null;
   platform: string | null;
   problemUrl: string | null;
+  sourceUrl?: string | null;
   taskType: TaskType;
   status: TaskStatus;
   scheduledDate: string;

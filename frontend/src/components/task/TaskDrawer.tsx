@@ -149,6 +149,18 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
         </a>
       )}
 
+      {task.problemUrl && task.sourceUrl && task.problemUrl !== task.sourceUrl && (
+        <a
+          href={task.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-ghost"
+          style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 8 }}
+        >
+          View Striver Explanation ↗
+        </a>
+      )}
+
       {!completed ? (
         <button
           type="button"

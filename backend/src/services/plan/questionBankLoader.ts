@@ -1,10 +1,9 @@
 import neetcodeSample from '../../data/neetcodeSample.json';
 import coderArmySheet from '../../data/coderArmySheet.json';
 import striverSheet from '../../data/striverSheet.json';
-import striverGfgMapping from '../../data/striverGfgMapping.json';
 import { ValidationError } from '../../utils/error';
 import { resolvePlatformValue } from '../../utils/platform';
-import { titlesAreEquivalent, FORCE_REJECT } from './gfgTitleEquivalence';
+import { resolveGfgUrlForQuestion } from './striverGfgMap';
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
@@ -14,20 +13,12 @@ export interface QuestionBankEntry {
   topic: string;
   difficulty: Difficulty;
   url: string;
+  sourceUrl?: string;
   gfgUrl?: string;
   gfgTitle?: string;
   order: number;
   tags?: string[];
 }
-
-interface GfgMappingRecord {
-  gfgUrl: string;
-  gfgTitle: string;
-  status?: 'verified' | 'rejected';
-  equivalenceVerified?: boolean;
-}
-
-const striverMappings = striverGfgMapping as Record<string, GfgMappingRecord>;
 
 export function normalizePlanSource(source: string = 'neetcode150'): string {
   const lower = (source || '').toLowerCase().trim();
@@ -43,25 +34,6 @@ export function normalizePlanSource(source: string = 'neetcode150'): string {
   return lower;
 }
 
-export function isGfgUrlValidAndEquivalent(question: QuestionBankEntry, mapping?: GfgMappingRecord): boolean {
-  if (!mapping) return false;
-  if (FORCE_REJECT.has(question.id)) return false;
-  if (mapping.status !== 'verified') return false;
-  if (mapping.equivalenceVerified !== true) return false;
-  if (!mapping.gfgUrl || !mapping.gfgTitle) return false;
-
-  try {
-    const parsed = new URL(mapping.gfgUrl);
-    if (parsed.hostname !== 'geeksforgeeks.org' && parsed.hostname !== 'www.geeksforgeeks.org') {
-      return false;
-    }
-  } catch (err) {
-    return false;
-  }
-
-  return titlesAreEquivalent(question.title, mapping.gfgTitle, question.id);
-}
-
 export function loadQuestionBank(source: string = 'neetcode150'): QuestionBankEntry[] {
   const canonicalSource = normalizePlanSource(source);
   let rawQuestions: QuestionBankEntry[];
@@ -72,15 +44,20 @@ export function loadQuestionBank(source: string = 'neetcode150'): QuestionBankEn
     rawQuestions = coderArmySheet as QuestionBankEntry[];
   } else if (canonicalSource === 'striver') {
     rawQuestions = (striverSheet as QuestionBankEntry[]).map((q) => {
-      const mapping = striverMappings[q.id];
-      if (isGfgUrlValidAndEquivalent(q, mapping)) {
+      const gfg = resolveGfgUrlForQuestion(q);
+      if (gfg) {
         return {
           ...q,
-          gfgUrl: mapping.gfgUrl,
-          gfgTitle: mapping.gfgTitle,
+          url: gfg,
+          sourceUrl: q.url,
+          gfgUrl: gfg,
+          tags: [...(q.tags ?? []), 'gfg', 'striver'],
         };
       }
-      return q;
+      return {
+        ...q,
+        sourceUrl: q.url,
+      };
     });
   } else {
     throw new ValidationError(`Unsupported source: "${source}". Supported sources are "neetcode150", "coderarmy", and "striver".`);
@@ -92,14 +69,10 @@ export function loadQuestionBank(source: string = 'neetcode150'): QuestionBankEn
 }
 
 export function getOriginalQuestionUrl(question: QuestionBankEntry): string {
-  return question.url;
+  return question.sourceUrl || question.url;
 }
 
 export function getPreferredQuestionUrl(question: QuestionBankEntry, source: string): string {
-  const canonicalSource = normalizePlanSource(source);
-  if (canonicalSource === 'striver' && question.gfgUrl) {
-    return question.gfgUrl;
-  }
   return question.url;
 }
 

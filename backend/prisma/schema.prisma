@@ -61,6 +61,7 @@ model Task {
   difficulty        String?   @default("medium") // easy | medium | hard
   platform          String?   @default("custom") // coderarmy | striver | neetcode | leetcode | etc.
   problemUrl        String?   @map("problem_url")
+  sourceUrl         String?   @map("source_url")
   taskType          String    @default("new") @map("task_type") // new | revision | assignment
   status            String    @default("pending") // pending | completed | backlog | expired
   scheduledDate     DateTime  @default(now()) @map("scheduled_date")
