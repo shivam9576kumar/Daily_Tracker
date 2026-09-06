@@ -20,7 +20,7 @@ function buildPlannerContext(
   hasActivePlan: boolean
 ) {
   const makeSource = (
-    id: 'neetcode150' | 'coderarmy',
+    id: 'neetcode150' | 'coderarmy' | 'striver',
     name: string
   ) => {
     const questions = loadQuestionBank(id);
@@ -43,6 +43,7 @@ function buildPlannerContext(
     sources: [
       makeSource('neetcode150', 'NeetCode 150'),
       makeSource('coderarmy', 'Coder Army Sheet'),
+      makeSource('striver', "Striver's A2Z Sheet"),
     ],
   };
 }

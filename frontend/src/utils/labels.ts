@@ -9,6 +9,8 @@ const PLATFORM: Record<string, string> = {
   hackerrank: 'HackerRank',
   atcoder: 'AtCoder',
   spoj: 'SPOJ',
+  striver: 'Striver (takeuforward)',
+  takeuforward: 'Striver (takeuforward)',
   custom: 'Custom',
 };
 
@@ -22,4 +24,7 @@ export const SOURCE_LABEL: Record<string, string> = {
   coderarmy: 'Coder Army Sheet',
   coderarmy700: 'Coder Army Sheet',
   neetcode150: 'NeetCode 150',
+  striver: "Striver's A2Z Sheet",
+  strivera2z: "Striver's A2Z Sheet",
+  takeuforward: "Striver's A2Z Sheet",
 };

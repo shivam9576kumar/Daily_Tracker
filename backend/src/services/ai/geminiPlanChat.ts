@@ -39,7 +39,7 @@ export interface AIPlannerContext {
   timezone: string;
   hasActivePlan: boolean;
   sources: {
-    id: 'neetcode150' | 'coderarmy';
+    id: 'neetcode150' | 'coderarmy' | 'striver';
     name: string;
     total: number;
     topics: {
@@ -67,7 +67,7 @@ export interface AIChatResponse {
   assumptions: string[];
 }
 
-const VALID_SOURCES = ['neetcode150', 'coderarmy'];
+const VALID_SOURCES = ['neetcode150', 'coderarmy', 'striver', 'strivera2z', 'takeuforward'];
 const VALID_INTENTS: AIIntent[] = ['general_chat', 'plan_building', 'request_preview', 'request_commit', 'off_topic'];
 
 function isPlanningIntent(intent: AIIntent): boolean {
@@ -95,7 +95,7 @@ interface BankTopicMeta {
 }
 
 interface BankSourceMeta {
-  id: 'neetcode150' | 'coderarmy';
+  id: 'neetcode150' | 'coderarmy' | 'striver';
   name: string;
   total: number;
   topics: BankTopicMeta[];

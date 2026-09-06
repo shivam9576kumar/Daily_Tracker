@@ -8,11 +8,11 @@ interface Props {
 
 const SOURCES = [
   {
-    id: 'neetcode150' as PlanSource,
-    name: 'NeetCode 150 Sample',
-    icon: '🚀',
-    description: '20 essential curated DSA patterns (Arrays, Two Pointers, Trees, Sliding Window, DP, etc.)',
-    meta: '20 problems',
+    id: 'striver' as PlanSource,
+    name: "Striver's A2Z DSA Sheet",
+    icon: '⚡',
+    description: '435 structured problems across 20 topics from Basics to DP, Graphs & Tries',
+    meta: '435 problems · 20 topics',
   },
   {
     id: 'coderarmy' as PlanSource,
@@ -20,6 +20,13 @@ const SOURCES = [
     icon: '⚔️',
     description: '715 comprehensive DSA problems across 17 topics (Arrays, DP, Graphs, Trees, Heaps, Backtracking, etc.)',
     meta: '715 problems · 17 topics',
+  },
+  {
+    id: 'neetcode150' as PlanSource,
+    name: 'NeetCode 150 Sample',
+    icon: '🚀',
+    description: '20 essential curated DSA patterns (Arrays, Two Pointers, Trees, Sliding Window, DP, etc.)',
+    meta: '20 problems',
   },
 ];
 

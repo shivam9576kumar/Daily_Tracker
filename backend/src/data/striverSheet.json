@@ -1,0 +1,4787 @@
+[
+  {
+    "id": "striver-001",
+    "title": "What are arrays, strings?",
+    "topic": "Basics",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/cpp?utm=codolio",
+    "order": 1,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-002",
+    "title": "For loops",
+    "topic": "Basics",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/for-loop/understanding-for-loop/?utm=codolio",
+    "order": 2,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-003",
+    "title": "While loops",
+    "topic": "Basics",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/while-loop/while-loops-in-programming/?utm=codolio",
+    "order": 3,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-004",
+    "title": "Functions (Pass by Reference and Value)",
+    "topic": "Basics",
+    "difficulty": "easy",
+    "url": "https://www.hackerrank.com/challenges/c-tutorial-functions/problem?isFullScreen=true&utm=codolio",
+    "order": 4,
+    "tags": [
+      "hackerrank"
+    ]
+  },
+  {
+    "id": "striver-005",
+    "title": "Time Complexity [Learn Basics, and then analyse in next Steps]",
+    "topic": "Basics",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/time-complexity/time-and-space-complexity-strivers-a2z-dsa-course/?utm=codolio",
+    "order": 5,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-006",
+    "title": "Patterns",
+    "topic": "Basics",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/strivers-a2z-dsa-course/must-do-pattern-problems-before-starting-dsa/?utm=codolio",
+    "order": 6,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-007",
+    "title": "C++ STL",
+    "topic": "Basics",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/c/c-stl-tutorial-most-frequent-used-stl-containers/?utm=codolio",
+    "order": 7,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-008",
+    "title": "Java Collections",
+    "topic": "Basics",
+    "difficulty": "easy",
+    "url": "https://codolio.com/question-tracker/sheet/strivers-a2z-dsa-sheet?category=custom#",
+    "order": 8,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-009",
+    "title": "Count Digits",
+    "topic": "Math",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-all-digits-of-a-number?utm=codolio",
+    "order": 9,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-010",
+    "title": "Reverse a Number",
+    "topic": "Math",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/reverse-integer?utm=codolio",
+    "order": 10,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-011",
+    "title": "Check Palindrome",
+    "topic": "Math",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/palindrome-number?utm=codolio",
+    "order": 11,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-012",
+    "title": "Armstrong Numbers",
+    "topic": "Math",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/armstrong-number?utm=codolio",
+    "order": 12,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-013",
+    "title": "Print all Divisors",
+    "topic": "Math",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/divisors-of-a-number?utm=codolio",
+    "order": 13,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-014",
+    "title": "Check for Prime",
+    "topic": "Math",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/check-for-prime-number?utm=codolio",
+    "order": 14,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-015",
+    "title": "Print name N times using recursion",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/recursion/print-name-n-times-using-recursion/?utm=codolio",
+    "order": 15,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-016",
+    "title": "Print N to 1 using recursion",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/print-n-to-1-using-recursion?utm=codolio",
+    "order": 16,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-017",
+    "title": "Factorial of N numbers",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/factorial-of-a-given-number?utm=codolio",
+    "order": 17,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-018",
+    "title": "Reverse an array",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/reverse-string?utm=codolio",
+    "order": 18,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-019",
+    "title": "Check if a string is palindrome or not",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/valid-palindrome?utm=codolio",
+    "order": 19,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-020",
+    "title": "Fibonacci Number",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/fibonacci-number?utm=codolio",
+    "order": 20,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-021",
+    "title": "Hashing Theory",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/hashing/hashing-maps-time-complexity-collisions-division-rule-of-hashing-strivers-a2z-dsa-course/?utm=codolio",
+    "order": 21,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-022",
+    "title": "Counting frequencies of array elements",
+    "topic": "Hashing",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/counting-frequencies-of-array-elements?utm=codolio",
+    "order": 22,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-023",
+    "title": "Find the highest/lowest frequency element",
+    "topic": "Hashing",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/frequency-of-the-most-frequent-element?utm=codolio",
+    "order": 23,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-024",
+    "title": "Selection Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/selection-sort?utm=codolio",
+    "order": 24,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-025",
+    "title": "Bubble Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/bubble-sort?utm=codolio",
+    "order": 25,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-026",
+    "title": "Insertion Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/recursive-insertion-sort?utm=codolio",
+    "order": 26,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-027",
+    "title": "Merge Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/merge-sorting?utm=codolio",
+    "order": 27,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-028",
+    "title": "Recursive Bubble Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/recursive-bubble-sort?utm=codolio",
+    "order": 28,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-029",
+    "title": "Recursive Insertion Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/recursive-insertion-sort?utm=codolio",
+    "order": 29,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-030",
+    "title": "Quick Sort",
+    "topic": "Sorting & Searching",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/quick-sorting?utm=codolio",
+    "order": 30,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-031",
+    "title": "Second Largest Element in an Array without sorting",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/second-largest-element?utm=codolio",
+    "order": 31,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-032",
+    "title": "Check if the array is sorted",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/check-if-array-is-sorted-and-rotated?utm=codolio",
+    "order": 32,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-033",
+    "title": "Remove duplicates from Sorted array",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array?utm=codolio",
+    "order": 33,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-034",
+    "title": "Left Rotate an array by one place",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/rotate-array?utm=codolio",
+    "order": 34,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-035",
+    "title": "Left rotate an array by D places",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/rotate-array?utm=codolio",
+    "order": 35,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-036",
+    "title": "Move Zeros to end",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/move-zeroes?utm=codolio",
+    "order": 36,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-037",
+    "title": "Find the Union",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/union-of-two-sorted-arrays?utm=codolio",
+    "order": 37,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-038",
+    "title": "Find missing number in an array",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/missing-number?utm=codolio",
+    "order": 38,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-039",
+    "title": "Maximum Consecutive Ones",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/max-consecutive-ones?utm=codolio",
+    "order": 39,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-040",
+    "title": "Find the number that appears once, and other numbers twice.",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/single-number?utm=codolio",
+    "order": 40,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-041",
+    "title": "Longest subarray with given sum K(positives)",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k?utm=codolio",
+    "order": 41,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-042",
+    "title": "Longest subarray with sum K (Positives + Negatives)",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k?utm=codolio",
+    "order": 42,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-043",
+    "title": "2Sum Problem",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/two-sum?utm=codolio",
+    "order": 43,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-044",
+    "title": "Sort an array of 0's 1's and 2's",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/sort-colors?utm=codolio",
+    "order": 44,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-045",
+    "title": "Majority Element (>n/2 times)",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/majority-element?utm=codolio",
+    "order": 45,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-046",
+    "title": "Kadane's Algorithm, maximum subarray sum",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/maximum-subarray?utm=codolio",
+    "order": 46,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-047",
+    "title": "Print subarray with maximum subarray sum (extended version of above problem)",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/kadane's-algorithm?utm=codolio",
+    "order": 47,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-048",
+    "title": "Stock Buy and Sell",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock?utm=codolio",
+    "order": 48,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-049",
+    "title": "Rearrange the array in alternating positive and negative items",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/rearrange-array-elements-by-sign?utm=codolio",
+    "order": 49,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-050",
+    "title": "Next Permutation",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/next-permutation?utm=codolio",
+    "order": 50,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-051",
+    "title": "Leaders in an Array problem",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/leaders-in-an-array?utm=codolio",
+    "order": 51,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-052",
+    "title": "Longest Consecutive Sequence in an Array",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-consecutive-sequence?utm=codolio",
+    "order": 52,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-053",
+    "title": "Set Matrix Zeros",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/set-matrix-zeroes?utm=codolio",
+    "order": 53,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-054",
+    "title": "Rotate Matrix by 90 degrees",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/rotate-image?utm=codolio",
+    "order": 54,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-055",
+    "title": "Print the matrix in spiral manner",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/spiral-matrix?utm=codolio",
+    "order": 55,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-056",
+    "title": "Count subarrays with given sum",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/subarray-sum-equals-k?utm=codolio",
+    "order": 56,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-057",
+    "title": "Pascal's Triangle",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/pascals-triangle?utm=codolio",
+    "order": 57,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-058",
+    "title": "Majority Element (n/3 times)",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/majority-element-ii?utm=codolio",
+    "order": 58,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-059",
+    "title": "3-Sum Problem",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/3sum?utm=codolio",
+    "order": 59,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-060",
+    "title": "4-Sum Problem",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/4sum?utm=codolio",
+    "order": 60,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-061",
+    "title": "Largest Subarray with 0 Sum",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/largest-subarray-with-sum-0?utm=codolio",
+    "order": 61,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-062",
+    "title": "Count number of subarrays with given xor K",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/subarray-with-given-xor?utm=codolio",
+    "order": 62,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "striver-063",
+    "title": "Merge Overlapping Subintervals",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/merge-intervals?utm=codolio",
+    "order": 63,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-064",
+    "title": "Merge two sorted arrays without extra space",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/merge-sorted-array?utm=codolio",
+    "order": 64,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-065",
+    "title": "Find the repeating and missing number",
+    "topic": "Arrays",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?utm=codolio",
+    "order": 65,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-066",
+    "title": "Count Inversions",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-inversions?utm=codolio",
+    "order": 66,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-067",
+    "title": "Reverse Pairs",
+    "topic": "Arrays",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/reverse-pairs?utm=codolio",
+    "order": 67,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-068",
+    "title": "Maximum Product Subarray",
+    "topic": "Arrays",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/maximum-product-subarray?utm=codolio",
+    "order": 68,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-069",
+    "title": "Binary Search to find X in sorted array",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-search?utm=codolio",
+    "order": 69,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-070",
+    "title": "Implement Lower Bound",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/lower-bound-?utm=codolio",
+    "order": 70,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-071",
+    "title": "Implement Upper Bound",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/upper-bound?utm=codolio",
+    "order": 71,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-072",
+    "title": "Search Insert Position",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/search-insert-position?utm=codolio",
+    "order": 72,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-073",
+    "title": "Floor/Ceil in Sorted Array",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/floor-and-ceil-in-sorted-array?utm=codolio",
+    "order": 73,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-074",
+    "title": "Find the first or last occurrence of a given number in a sorted array",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array?utm=codolio",
+    "order": 74,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-075",
+    "title": "Count occurrences of a number in a sorted array with duplicates",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-occurrences-in-a-sorted-array?utm=codolio",
+    "order": 75,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-076",
+    "title": "Search in Rotated Sorted Array I",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/search-in-rotated-sorted-array?utm=codolio",
+    "order": 76,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-077",
+    "title": "Search in Rotated Sorted Array II",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii?utm=codolio",
+    "order": 77,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-078",
+    "title": "Find minimum in Rotated Sorted Array",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array?utm=codolio",
+    "order": 78,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-079",
+    "title": "Find out how many times has an array been rotated",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-out-how-many-times-the-array-is-rotated?utm=codolio",
+    "order": 79,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-080",
+    "title": "Single element in a Sorted Array",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/single-element-in-a-sorted-array?utm=codolio",
+    "order": 80,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-081",
+    "title": "Find peak element",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/find-peak-element?utm=codolio",
+    "order": 81,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-082",
+    "title": "Find square root of a number in log n",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-square-root-of-a-number?utm=codolio",
+    "order": 82,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-083",
+    "title": "Find the Nth root of a number using binary search",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-nth-root-of-a-number?utm=codolio",
+    "order": 83,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-084",
+    "title": "Koko Eating Bananas",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/koko-eating-bananas?utm=codolio",
+    "order": 84,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-085",
+    "title": "Minimum days to make M bouquets",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets?utm=codolio",
+    "order": 85,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-086",
+    "title": "Find the smallest Divisor",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold?utm=codolio",
+    "order": 86,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-087",
+    "title": "Capacity to Ship Packages within D Days",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days?utm=codolio",
+    "order": 87,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-088",
+    "title": "Kth Missing Positive Number",
+    "topic": "Binary Search",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/kth-missing-positive-number?utm=codolio",
+    "order": 88,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-089",
+    "title": "Aggressive Cows",
+    "topic": "Binary Search",
+    "difficulty": "hard",
+    "url": "https://www.spoj.com/problems/AGGRCOW/?utm=codolio",
+    "order": 89,
+    "tags": [
+      "spoj"
+    ]
+  },
+  {
+    "id": "striver-090",
+    "title": "Book Allocation Problem",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/book-allocation-problem?utm=codolio",
+    "order": 90,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-091",
+    "title": "Split array - Largest Sum",
+    "topic": "Binary Search",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/split-array-largest-sum?utm=codolio",
+    "order": 91,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-092",
+    "title": "Painter's partition",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/painters-partition?utm=codolio",
+    "order": 92,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-093",
+    "title": "Minimize Max Distance to Gas Station",
+    "topic": "Binary Search",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimize-max-distance-to-gas-station?utm=codolio",
+    "order": 93,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-094",
+    "title": "Median of 2 sorted arrays",
+    "topic": "Binary Search",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/median-of-two-sorted-arrays?utm=codolio",
+    "order": 94,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-095",
+    "title": "Kth element of 2 sorted arrays",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/kth-element-of-2-sorted-arrays?utm=codolio",
+    "order": 95,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-096",
+    "title": "Find the row with maximum number of 1's",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-row-with-maximum-1's?utm=codolio",
+    "order": 96,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-097",
+    "title": "Search in a 2 D matrix",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/search-a-2d-matrix?utm=codolio",
+    "order": 97,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-098",
+    "title": "Search in a row and column wise sorted matrix",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/search-a-2d-matrix-ii?utm=codolio",
+    "order": 98,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-099",
+    "title": "Find Peak Element (2D Matrix)",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/find-a-peak-element-ii?utm=codolio",
+    "order": 99,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-100",
+    "title": "Matrix Median",
+    "topic": "Binary Search",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/matrix-median?utm=codolio",
+    "order": 100,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-101",
+    "title": "Remove outermost Paranthesis",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/remove-outermost-parentheses?utm=codolio",
+    "order": 101,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-102",
+    "title": "Reverse words in a given string / Palindrome Check",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/reverse-words-in-a-string?utm=codolio",
+    "order": 102,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-103",
+    "title": "Largest odd number in a string",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/largest-odd-number-in-string?utm=codolio",
+    "order": 103,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-104",
+    "title": "Longest Common Prefix",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/longest-common-prefix?utm=codolio",
+    "order": 104,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-105",
+    "title": "Isomorphic String",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/isomorphic-strings?utm=codolio",
+    "order": 105,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-106",
+    "title": "check whether one string is a rotation of another",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/rotate-string?utm=codolio",
+    "order": 106,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-107",
+    "title": "Check if two strings are anagram of each other",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/valid-anagram?utm=codolio",
+    "order": 107,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-108",
+    "title": "Sort Characters by frequency",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/sort-characters-by-frequency?utm=codolio",
+    "order": 108,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-109",
+    "title": "Maximum Nesting Depth of Paranthesis",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses?utm=codolio",
+    "order": 109,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-110",
+    "title": "Roman Number to Integer and vice versa",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/roman-to-integer?utm=codolio",
+    "order": 110,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-111",
+    "title": "Implement Atoi",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/string-to-integer-atoi?utm=codolio",
+    "order": 111,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-112",
+    "title": "Count Number of Substrings",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/subarrays-with-k-different-integers?utm=codolio",
+    "order": 112,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-113",
+    "title": "Longest Palindromic Substring[Do it without DP]",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-palindromic-substring?utm=codolio",
+    "order": 113,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-114",
+    "title": "Sum of Beauty of all substring",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/sum-of-beauty-of-all-substrings?utm=codolio",
+    "order": 114,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-115",
+    "title": "Reverse Every Word in A String",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/reverse-words-in-a-string?utm=codolio",
+    "order": 115,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-116",
+    "title": "Introduction to LinkedList, learn about struct, and how is node represented",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/linked-list/linked-list-introduction?utm=codolio",
+    "order": 116,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-117",
+    "title": "Deleting a node in LinkedList",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/delete-node-in-a-linked-list?utm=codolio",
+    "order": 117,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-118",
+    "title": "Search an element in the LL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/search-in-linked-list?utm=codolio",
+    "order": 118,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-119",
+    "title": "Introduction to DLL, learn about struct, and how is node represented",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/introduction-to-doubly-ll?utm=codolio",
+    "order": 119,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-120",
+    "title": "Insert a node in DLL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/insert-node-before-head-in-dll?utm=codolio",
+    "order": 120,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-121",
+    "title": "Delete a node in DLL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/delete-head-of-dll?utm=codolio",
+    "order": 121,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-122",
+    "title": "Reverse a DLL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/reverse-a-doubly-linked-list?utm=codolio",
+    "order": 122,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-123",
+    "title": "Middle of a LinkedList [TortoiseHare Method]",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/middle-of-the-linked-list?utm=codolio",
+    "order": 123,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-124",
+    "title": "Reverse a LinkedList [Iterative]",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/reverse-linked-list?utm=codolio",
+    "order": 124,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-125",
+    "title": "Reverse a LL [Recursive]",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/reverse-linked-list?utm=codolio",
+    "order": 125,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-126",
+    "title": "Detect a loop in LL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/linked-list-cycle?utm=codolio",
+    "order": 126,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-127",
+    "title": "Find the starting point in LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "order": 127,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-128",
+    "title": "Length of Loop in LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/length-of-loop-in-ll?utm=codolio",
+    "order": 128,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-129",
+    "title": "Check if LL is palindrome or not",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/palindrome-linked-list?utm=codolio",
+    "order": 129,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-130",
+    "title": "Segrregate odd and even nodes in LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/odd-even-linked-list?utm=codolio",
+    "order": 130,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-131",
+    "title": "Remove Nth node from the back of the LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list?utm=codolio",
+    "order": 131,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-132",
+    "title": "Delete the middle node of LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list?utm=codolio",
+    "order": 132,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-133",
+    "title": "Sort LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/sort-list?utm=codolio",
+    "order": 133,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-134",
+    "title": "Sort a LL of 0's 1's and 2's by changing links",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/sort-a-ll-of-0's-1's-and-2's?utm=codolio",
+    "order": 134,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-135",
+    "title": "Find the intersection point of Y LL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/intersection-of-two-linked-lists?utm=codolio",
+    "order": 135,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-136",
+    "title": "Add 1 to a number represented by LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/add-one-to-a-number-represented-by-ll/?utm=codolio",
+    "order": 136,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-137",
+    "title": "Add 2 numbers in LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/add-two-numbers?utm=codolio",
+    "order": 137,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-138",
+    "title": "Delete all occurrences of a key in DLL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/delete-all-occurrences-of-a-key-in-dll?utm=codolio",
+    "order": 138,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-139",
+    "title": "Find pairs with given sum in DLL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-pairs-with-given-sum-in-doubly-linked-list?utm=codolio",
+    "order": 139,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-140",
+    "title": "Remove duplicates from sorted DLL",
+    "topic": "Linked List",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/remove-duplicated-from-sorted-dll?utm=codolio",
+    "order": 140,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-141",
+    "title": "Reverse LL in group of given size K",
+    "topic": "Linked List",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/reverse-nodes-in-k-group?utm=codolio",
+    "order": 141,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-142",
+    "title": "Rotate a LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/rotate-list?utm=codolio",
+    "order": 142,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-143",
+    "title": "Flattening of LL",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/flattening-of-ll?utm=codolio",
+    "order": 143,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-144",
+    "title": "Clone a Linked List with random and next pointer",
+    "topic": "Linked List",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/copy-list-with-random-pointer?utm=codolio",
+    "order": 144,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-145",
+    "title": "Recursive Implementation of atoi()",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/string-to-integer-atoi?utm=codolio",
+    "order": 145,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-146",
+    "title": "Pow(x, n)",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/powx-n?utm=codolio",
+    "order": 146,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-147",
+    "title": "Count Good numbers",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-good-numbers?utm=codolio",
+    "order": 147,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-148",
+    "title": "Sort a stack using recursion",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/sort-a-stack?utm=codolio",
+    "order": 148,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-149",
+    "title": "Reverse a stack using recursion",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/reverse-a-stack?utm=codolio",
+    "order": 149,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-150",
+    "title": "Generate all binary strings",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/generate-binary-strings-without-consecutive-1s?utm=codolio",
+    "order": 150,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-151",
+    "title": "Generate Paranthesis",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/generate-parentheses?utm=codolio",
+    "order": 151,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-152",
+    "title": "Print all subsequences/Power Set",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/subsets?utm=codolio",
+    "order": 152,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-153",
+    "title": "Learn All Patterns of Subsequences (Theory)",
+    "topic": "Recursion",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/distinct-subsequences-ii?utm=codolio",
+    "order": 153,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-154",
+    "title": "Count all subsequences with sum K",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-all-subsequences-with-sum-k?utm=codolio",
+    "order": 154,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-155",
+    "title": "Check if there exists a subsequence with sum K",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/check-if-there-exists-a-subsequence-with-sum-k?utm=codolio",
+    "order": 155,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-156",
+    "title": "Combination Sum",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/combination-sum?utm=codolio",
+    "order": 156,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-157",
+    "title": "Combination Sum-II",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/combination-sum-ii?utm=codolio",
+    "order": 157,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-158",
+    "title": "Subset Sum-I",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/subsets-i?utm=codolio",
+    "order": 158,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-159",
+    "title": "Subset Sum-II",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/subsets-ii?utm=codolio",
+    "order": 159,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-160",
+    "title": "Combination Sum - III",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/combination-sum-iii?utm=codolio",
+    "order": 160,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-161",
+    "title": "Letter Combinations of a Phone number",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number?utm=codolio",
+    "order": 161,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-162",
+    "title": "Palindrome Partitioning",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/palindrome-partitioning?utm=codolio",
+    "order": 162,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-163",
+    "title": "Word Search",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/word-search?utm=codolio",
+    "order": 163,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-164",
+    "title": "N Queen",
+    "topic": "Backtracking",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/n-queens?utm=codolio",
+    "order": 164,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-165",
+    "title": "Rat in a Maze",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/rat-in-a-maze?utm=codolio",
+    "order": 165,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-166",
+    "title": "Word Break",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/word-break?utm=codolio",
+    "order": 166,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-167",
+    "title": "M Coloring Problem",
+    "topic": "Backtracking",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/m-coloring-problem?utm=codolio",
+    "order": 167,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-168",
+    "title": "Sudoko Solver",
+    "topic": "Backtracking",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/sudoku-solver?utm=codolio",
+    "order": 168,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-169",
+    "title": "Expression Add Operators",
+    "topic": "Backtracking",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/expression-add-operators?utm=codolio",
+    "order": 169,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-170",
+    "title": "Introduction to Bit Manipulation [Theory]",
+    "topic": "Bit Manipulation",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/introduction-to-bits-and-tricks?utm=codolio",
+    "order": 170,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-171",
+    "title": "Check if the i-th bit is set or not",
+    "topic": "Bit Manipulation",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/check-if-the-i-th-bit-is-set-or-not?utm=codolio",
+    "order": 171,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-172",
+    "title": "Check if a number is power of 2 or not",
+    "topic": "Bit Manipulation",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/power-of-two?utm=codolio",
+    "order": 172,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-173",
+    "title": "Count the number of set bits",
+    "topic": "Bit Manipulation",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-the-number-of-set-bits?utm=codolio",
+    "order": 173,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-174",
+    "title": "Set/Unset the rightmost unset bit",
+    "topic": "Bit Manipulation",
+    "difficulty": "easy",
+    "url": "https://www.hackerrank.com/challenges/maximizing-xor?utm=codolio",
+    "order": 174,
+    "tags": [
+      "hackerrank"
+    ]
+  },
+  {
+    "id": "striver-175",
+    "title": "Divide two integers without using multiplication, division and mod operator",
+    "topic": "Bit Manipulation",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/divide-two-integers?utm=codolio",
+    "order": 175,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-176",
+    "title": "Count number of bits to be flipped to convert A to B",
+    "topic": "Bit Manipulation",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/minimum-bit-flips-to-convert-number?utm=codolio",
+    "order": 176,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-177",
+    "title": "Find the number that appears odd number of times",
+    "topic": "Bit Manipulation",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/single-number?utm=codolio",
+    "order": 177,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-178",
+    "title": "Power Set",
+    "topic": "Bit Manipulation",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/subsets?utm=codolio",
+    "order": 178,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-179",
+    "title": "Find xor of numbers from L to R",
+    "topic": "Bit Manipulation",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/xor-of-numbers-in-a-given-range?utm=codolio",
+    "order": 179,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-180",
+    "title": "Find the two numbers appearing odd number of times",
+    "topic": "Bit Manipulation",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/single-number---iii?utm=codolio",
+    "order": 180,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-181",
+    "title": "Print Prime Factors of a Number",
+    "topic": "Math",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/prime-factorisation-of-a-number?utm=codolio",
+    "order": 181,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-182",
+    "title": "All Divisors of a Number",
+    "topic": "Math",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/divisors-of-a-number?utm=codolio",
+    "order": 182,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-183",
+    "title": "Sieve of Eratosthenes",
+    "topic": "Math",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-primes?utm=codolio",
+    "order": 183,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-184",
+    "title": "Find Prime Factorisation of a Number using Sieve",
+    "topic": "Math",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/prime-factorisation-of-a-number?utm=codolio",
+    "order": 184,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-185",
+    "title": "Power(n, x)",
+    "topic": "Math",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/powx-n?utm=codolio",
+    "order": 185,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-186",
+    "title": "Implement Stack using Arrays",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/implement-stack-using-arrays?utm=codolio",
+    "order": 186,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-187",
+    "title": "Implement Stack using Queue",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/implement-stack-using-queues?utm=codolio",
+    "order": 187,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-188",
+    "title": "Implement Queue using Stack",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/implement-queue-using-stacks?utm=codolio",
+    "order": 188,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-189",
+    "title": "Implement stack using Linkedlist",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/implement-stack-using-linkedlist?utm=codolio",
+    "order": 189,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-190",
+    "title": "Check for balanced paranthesis",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/valid-parentheses?utm=codolio",
+    "order": 190,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-191",
+    "title": "Implement Min Stack",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/min-stack?utm=codolio",
+    "order": 191,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-192",
+    "title": "Infix to Postfix Conversion using Stack",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/infix-to-postfix-conversion?utm=codolio",
+    "order": 192,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-193",
+    "title": "Prefix to Infix Conversion",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/prefix-to-infix-conversion?utm=codolio",
+    "order": 193,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-194",
+    "title": "Prefix to Postfix Conversion",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/prefix-to-postfix-conversion?utm=codolio",
+    "order": 194,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-195",
+    "title": "Postfix to Prefix Conversion",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/postfix-to-prefix-conversion?utm=codolio",
+    "order": 195,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-196",
+    "title": "Postfix to Infix",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.hackerrank.com/contests/ds-day-10/challenges/ques-14-d10/problem?utm=codolio",
+    "order": 196,
+    "tags": [
+      "hackerrank"
+    ]
+  },
+  {
+    "id": "striver-197",
+    "title": "Convert Infix To Prefix Notation",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/infix-to-postfix-conversion?utm=codolio",
+    "order": 197,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-198",
+    "title": "Next Greater Element",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/next-greater-element-i?utm=codolio",
+    "order": 198,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-199",
+    "title": "Next Greater Element 2",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/next-greater-element-ii?utm=codolio",
+    "order": 199,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-200",
+    "title": "Next Smaller Element",
+    "topic": "Stack",
+    "difficulty": "easy",
+    "url": "https://www.interviewbit.com/problems/nearest-smaller-element?utm=codolio",
+    "order": 200,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "striver-201",
+    "title": "Number of NGEs to the right",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/number-of-greater-elements-to-the-right?utm=codolio",
+    "order": 201,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-202",
+    "title": "Trapping Rainwater",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/trapping-rain-water?utm=codolio",
+    "order": 202,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-203",
+    "title": "Sum of subarray minimum",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/sum-of-subarray-minimums?utm=codolio",
+    "order": 203,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-204",
+    "title": "Asteroid Collision",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/asteroid-collision?utm=codolio",
+    "order": 204,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-205",
+    "title": "Sum of subarray ranges",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/sum-of-subarray-ranges?utm=codolio",
+    "order": 205,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-206",
+    "title": "Remove k Digits",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/remove-k-digits?utm=codolio",
+    "order": 206,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-207",
+    "title": "Largest rectangle in a histogram",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/largest-rectangle-in-histogram?utm=codolio",
+    "order": 207,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-208",
+    "title": "Maximal Rectangles",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/maximal-rectangle?utm=codolio",
+    "order": 208,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-209",
+    "title": "Sliding Window maximum",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/sliding-window-maximum?utm=codolio",
+    "order": 209,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-210",
+    "title": "Stock span problem",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/online-stock-span?utm=codolio",
+    "order": 210,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-211",
+    "title": "The Celebrity Problem",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/word-break?utm=codolio",
+    "order": 211,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-212",
+    "title": "LRU cache (IMPORTANT)",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/lru-cache?utm=codolio",
+    "order": 212,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-213",
+    "title": "LFU cache",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/lfu-cache?utm=codolio",
+    "order": 213,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-214",
+    "title": "Longest Substring Without Repeating Characters",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters?utm=codolio",
+    "order": 214,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-215",
+    "title": "Max Consecutive Ones III",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/max-consecutive-ones-iii?utm=codolio",
+    "order": 215,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-216",
+    "title": "Fruit Into Baskets",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/fruit-into-baskets?utm=codolio",
+    "order": 216,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-217",
+    "title": "longest repeating character replacement",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-repeating-character-replacement?utm=codolio",
+    "order": 217,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-218",
+    "title": "Binary subarray with sum",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/binary-subarrays-with-sum?utm=codolio",
+    "order": 218,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-219",
+    "title": "Count number of nice subarrays",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-number-of-nice-subarrays?utm=codolio",
+    "order": 219,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-220",
+    "title": "Number of substring containing all three characters",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/number-of-substrings-containing-all-three-characters?utm=codolio",
+    "order": 220,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-221",
+    "title": "Maximum point you can obtain from cards",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards?utm=codolio",
+    "order": 221,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-222",
+    "title": "Longest Substring with At Most K Distinct Characters",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters?utm=codolio",
+    "order": 222,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-223",
+    "title": "Subarray with k different integers",
+    "topic": "Sliding Window",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/subarrays-with-k-different-integers?utm=codolio",
+    "order": 223,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-224",
+    "title": "Minimum Window Substring",
+    "topic": "Sliding Window",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimum-window-substring?utm=codolio",
+    "order": 224,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-225",
+    "title": "Minimum Window Subsequence",
+    "topic": "Sliding Window",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimum-window-subsequence?utm=codolio",
+    "order": 225,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-226",
+    "title": "Introduction to Priority Queues using Binary Heaps",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/data-structure/introduction-to-priority-queues-using-binary-heaps?utm=codolio",
+    "order": 226,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-227",
+    "title": "Min Heap and Max Heap Implementation",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/implement-min-heap?utm=codolio",
+    "order": 227,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-228",
+    "title": "Check if an array represents a min-heap or not",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/check-if-an-array-represents-a-min-heap-?utm=codolio",
+    "order": 228,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-229",
+    "title": "Convert min Heap to max Heap",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/convert-min-heap-to-max-heap?utm=codolio",
+    "order": 229,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-230",
+    "title": "Kth largest element in an array [use priority queue]",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/kth-largest-element-in-an-array?utm=codolio",
+    "order": 230,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-231",
+    "title": "Kth smallest element in an array [use priority queue]",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/data-structure/kth-largest-smallest-element-in-an-array/?utm=codolio",
+    "order": 231,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-232",
+    "title": "Sort K sorted array",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists?utm=codolio",
+    "order": 232,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-233",
+    "title": "Merge M sorted Lists",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/merge-k-sorted-lists?utm=codolio",
+    "order": 233,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-234",
+    "title": "Replace each array element by its corresponding rank",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/data-structure/replace-elements-by-its-rank-in-the-array/?utm=codolio",
+    "order": 234,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-235",
+    "title": "Task Scheduler",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/task-scheduler?utm=codolio",
+    "order": 235,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-236",
+    "title": "Hands of Straights",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/hand-of-straights?utm=codolio",
+    "order": 236,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-237",
+    "title": "Design twitter",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/design-twitter?utm=codolio",
+    "order": 237,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-238",
+    "title": "Connect `n` ropes with minimal cost",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/minimum-cost-to-connect-sticks?utm=codolio",
+    "order": 238,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-239",
+    "title": "Kth largest element in a stream of running integers",
+    "topic": "Heap",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream?utm=codolio",
+    "order": 239,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-240",
+    "title": "Maximum Sum Combination",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://www.interviewbit.com/problems/maximum-sum-combinations?utm=codolio",
+    "order": 240,
+    "tags": [
+      "interviewbit"
+    ]
+  },
+  {
+    "id": "striver-241",
+    "title": "Find Median from Data Stream",
+    "topic": "Heap",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/find-median-from-data-stream?utm=codolio",
+    "order": 241,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-242",
+    "title": "K most frequent elements",
+    "topic": "Heap",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/top-k-frequent-elements?utm=codolio",
+    "order": 242,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-243",
+    "title": "Assign Cookies",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/assign-cookies?utm=codolio",
+    "order": 243,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-244",
+    "title": "Fractional Knapsack Problem",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/fractional-knapsack?utm=codolio",
+    "order": 244,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-245",
+    "title": "Greedy algorithm to find minimum number of coins",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/minimum-coins?utm=codolio",
+    "order": 245,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-246",
+    "title": "Lemonade Change",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/lemonade-change?utm=codolio",
+    "order": 246,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-247",
+    "title": "Valid Paranthesis Checker",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/valid-parenthesis-string?utm=codolio",
+    "order": 247,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-248",
+    "title": "N meetings in one room",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/n-meetings-in-one-room?utm=codolio",
+    "order": 248,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-249",
+    "title": "Jump Game",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/jump-game?utm=codolio",
+    "order": 249,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-250",
+    "title": "Jump Game 2",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/jump-game-ii?utm=codolio",
+    "order": 250,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-251",
+    "title": "Minimum number of platforms required for a railway",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/minimum-number-of-platforms-required-for-a-railway?utm=codolio",
+    "order": 251,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-252",
+    "title": "Job sequencing Problem",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/job-sequencing-problem?utm=codolio",
+    "order": 252,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-253",
+    "title": "Add Revision",
+    "topic": "Greedy",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/candy?utm=codolio",
+    "order": 253,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-254",
+    "title": "Program for Shortest Job First (or SJF) CPU Scheduling",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/shortest-job-first?utm=codolio",
+    "order": 254,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-255",
+    "title": "Program for Least Recently Used (LRU) Page Replacement Algorithm",
+    "topic": "Greedy",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/lru-cache?utm=codolio",
+    "order": 255,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-256",
+    "title": "Insert Interval",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/insert-interval?utm=codolio",
+    "order": 256,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-257",
+    "title": "Merge Intervals",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/merge-intervals?utm=codolio",
+    "order": 257,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-258",
+    "title": "Non-overlapping Intervals",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/non-overlapping-intervals?utm=codolio",
+    "order": 258,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-259",
+    "title": "Introduction to Trees",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/binary-tree/introduction-to-trees/?utm=codolio",
+    "order": 259,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-260",
+    "title": "Binary Tree Representation in C++",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/binary-tree/binary-tree-representation-in-c/?utm=codolio",
+    "order": 260,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-261",
+    "title": "Binary Tree Representation in Java",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/binary-tree/binary-tree-representation-in-java/?utm=codolio",
+    "order": 261,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-262",
+    "title": "Binary Tree Traversals in Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/binary-tree/binary-tree-traversal-inorder-preorder-postorder/?utm=codolio",
+    "order": 262,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-263",
+    "title": "Preorder Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-preorder-traversal?utm=codolio",
+    "order": 263,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-264",
+    "title": "Inorder Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "order": 264,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-265",
+    "title": "Post-order Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-postorder-traversal?utm=codolio",
+    "order": 265,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-266",
+    "title": "Level order Traversal / Level order traversal in spiral form",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/binary-tree-level-order-traversal?utm=codolio",
+    "order": 266,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-267",
+    "title": "Iterative Preorder Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-preorder-traversal?utm=codolio",
+    "order": 267,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-268",
+    "title": "Iterative Inorder Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "order": 268,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-269",
+    "title": "Post-order Traversal of Binary Tree using 2 stack",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-postorder-traversal?utm=codolio",
+    "order": 269,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-270",
+    "title": "Post-order Traversal of Binary Tree using 1 stack",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-postorder-traversal?utm=codolio",
+    "order": 270,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-271",
+    "title": "Preorder, Inorder, and Postorder Traversal in one Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/pre,-post,-inorder-in-one-traversal?utm=codolio",
+    "order": 271,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-272",
+    "title": "Height of a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree?utm=codolio",
+    "order": 272,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-273",
+    "title": "Check if the Binary tree is height-balanced or not",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/balanced-binary-tree?utm=codolio",
+    "order": 273,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-274",
+    "title": "Diameter of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/diameter-of-binary-tree?utm=codolio",
+    "order": 274,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-275",
+    "title": "Maximum path sum",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum?utm=codolio",
+    "order": 275,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-276",
+    "title": "Check if two trees are identical or not",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/same-tree?utm=codolio",
+    "order": 276,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-277",
+    "title": "Zig Zag Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal?utm=codolio",
+    "order": 277,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-278",
+    "title": "Boundary Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/boundary-of-binary-tree?utm=codolio",
+    "order": 278,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-279",
+    "title": "Vertical Order Traversal of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree?utm=codolio",
+    "order": 279,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-280",
+    "title": "Top View of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/top-view-of-bt?utm=codolio",
+    "order": 280,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-281",
+    "title": "Bottom View of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/bottom-view-of-bt?utm=codolio",
+    "order": 281,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-282",
+    "title": "Right/Left View of Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/binary-tree-right-side-view?utm=codolio",
+    "order": 282,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-283",
+    "title": "Symmetric Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/symmetric-tree?utm=codolio",
+    "order": 283,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-284",
+    "title": "Root to Node Path in Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/print-root-to-note-path-in-bt?utm=codolio",
+    "order": 284,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-285",
+    "title": "LCA in Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree?utm=codolio",
+    "order": 285,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-286",
+    "title": "Maximum width of a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/maximum-width-of-binary-tree?utm=codolio",
+    "order": 286,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-287",
+    "title": "Check for Children Sum Property",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/children-sum-property-in-binary-tree?utm=codolio",
+    "order": 287,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-288",
+    "title": "Print all the Nodes at a distance of K in a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree?utm=codolio",
+    "order": 288,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-289",
+    "title": "Minimum time taken to BURN the Binary Tree from a Node",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/minimum-time-taken-to-burn-the-bt-from-a-given-node?utm=codolio",
+    "order": 289,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-290",
+    "title": "Count total Nodes in a COMPLETE Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-complete-tree-nodes?utm=codolio",
+    "order": 290,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-291",
+    "title": "Requirements needed to construct a Unique Binary Tree | Theory",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/requirements-needed-to-construct-a-unique-bt?utm=codolio",
+    "order": 291,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-292",
+    "title": "Construct Binary Tree from inorder and preorder",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal?utm=codolio",
+    "order": 292,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-293",
+    "title": "Construct the Binary Tree from Postorder and Inorder Traversal",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal?utm=codolio",
+    "order": 293,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-294",
+    "title": "Serialize and deserialize Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree?utm=codolio",
+    "order": 294,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-295",
+    "title": "Morris Preorder Traversal of a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "order": 295,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-296",
+    "title": "Morris Inorder Traversal of a Binary Tree",
+    "topic": "Binary Tree",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "order": 296,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-297",
+    "title": "Flatten Binary Tree to LinkedList",
+    "topic": "Binary Tree",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/flatten-binary-tree-to-linked-list?utm=codolio",
+    "order": 297,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-298",
+    "title": "Introduction to Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/binary-search-tree/introduction-to-binary-search-trees/?utm=codolio",
+    "order": 298,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-299",
+    "title": "Search in a Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/search-in-a-binary-search-tree?utm=codolio",
+    "order": 299,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-300",
+    "title": "Ceil in a Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/floor-and-ceil-in-a-bst?utm=codolio",
+    "order": 300,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-301",
+    "title": "Floor in a Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/floor-and-ceil-in-a-bst?utm=codolio",
+    "order": 301,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-302",
+    "title": "Insert a given Node in Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/insert-into-a-binary-search-tree?utm=codolio",
+    "order": 302,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-303",
+    "title": "Delete a Node in Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/delete-node-in-a-bst?utm=codolio",
+    "order": 303,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-304",
+    "title": "Find K-th smallest/largest element in BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst?utm=codolio",
+    "order": 304,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-305",
+    "title": "Check if a tree is a BST or BT",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/validate-binary-search-tree?utm=codolio",
+    "order": 305,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-306",
+    "title": "LCA in Binary Search Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree?utm=codolio",
+    "order": 306,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-307",
+    "title": "Construct a BST from a preorder traversal",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal?utm=codolio",
+    "order": 307,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-308",
+    "title": "Inorder Successor/Predecessor in BST",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/inorder-successor-in-bst?utm=codolio",
+    "order": 308,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-309",
+    "title": "Merge 2 BST's",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/binary-search-tree-iterator?utm=codolio",
+    "order": 309,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-310",
+    "title": "Two Sum In BST | Check if there exists a pair with Sum K",
+    "topic": "BST",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/two-sum-iv-input-is-a-bst?utm=codolio",
+    "order": 310,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-311",
+    "title": "Recover BST | Correct BST with two nodes swapped",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/recover-binary-search-tree?utm=codolio",
+    "order": 311,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-312",
+    "title": "Largest BST in Binary Tree",
+    "topic": "BST",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/largest-bst-in-binary-tree?utm=codolio",
+    "order": 312,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-313",
+    "title": "Graph and Types",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/graph/introduction-to-graph/?utm=codolio",
+    "order": 313,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-314",
+    "title": "Graph Representation | C++",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/graph/graph-representation-in-c/?utm=codolio",
+    "order": 314,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-315",
+    "title": "Graph Representation | Java",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://www.hackerrank.com/contests/vit-bhopal/challenges/adjacency-list-representation-1/problem?utm=codolio",
+    "order": 315,
+    "tags": [
+      "hackerrank"
+    ]
+  },
+  {
+    "id": "striver-316",
+    "title": "Connected Components | Logic Explanation",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph?utm=codolio",
+    "order": 316,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-317",
+    "title": "Number of provinces (leetcode)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/number-of-provinces?utm=codolio",
+    "order": 317,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-318",
+    "title": "Connected Components Problem in Matrix",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/connected-components?utm=codolio",
+    "order": 318,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-319",
+    "title": "Rotten Oranges",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/rotting-oranges?utm=codolio",
+    "order": 319,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-320",
+    "title": "Flood fill",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/flood-fill?utm=codolio",
+    "order": 320,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-321",
+    "title": "Cycle Detection in unirected Graph (bfs)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/detect-a-cycle-in-an-undirected-graph?utm=codolio",
+    "order": 321,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-322",
+    "title": "Cycle Detection in undirected Graph (dfs)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/detect-a-cycle-in-an-undirected-graph?utm=codolio",
+    "order": 322,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-323",
+    "title": "0/1 Matrix (Bfs Problem)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/01-matrix?utm=codolio",
+    "order": 323,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-324",
+    "title": "Surrounded Regions (dfs)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/surrounded-regions?utm=codolio",
+    "order": 324,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-325",
+    "title": "Number of Enclaves [flood fill implementation - multisource]",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/number-of-enclaves?utm=codolio",
+    "order": 325,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-326",
+    "title": "Word ladder - 1",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/word-ladder?utm=codolio",
+    "order": 326,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-327",
+    "title": "Word ladder - 2",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/word-ladder-ii?utm=codolio",
+    "order": 327,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-328",
+    "title": "Number of Distinct Islands [dfs multisource]",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/number-of-distinct-islands-ii?utm=codolio",
+    "order": 328,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-329",
+    "title": "Bipartite Graph (DFS)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/is-graph-bipartite?utm=codolio",
+    "order": 329,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-330",
+    "title": "Cycle Detection in Directed Graph (DFS)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/course-schedule-ii?utm=codolio",
+    "order": 330,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-331",
+    "title": "Topo Sort",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/topological-sort-or-kahns-algorithm?utm=codolio",
+    "order": 331,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-332",
+    "title": "Kahn's Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/topological-sort-or-kahns-algorithm?utm=codolio",
+    "order": 332,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-333",
+    "title": "Cycle Detection in Directed Graph (BFS)",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/detect-a-cycle-in-a-directed-graph?utm=codolio",
+    "order": 333,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-334",
+    "title": "Course Schedule - I",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/course-schedule?utm=codolio",
+    "order": 334,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-335",
+    "title": "Course Schedule - II",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/course-schedule-ii?utm=codolio",
+    "order": 335,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-336",
+    "title": "Find eventual safe states",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/find-eventual-safe-states?utm=codolio",
+    "order": 336,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-337",
+    "title": "Alien dictionary",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/alien-dictionary?utm=codolio",
+    "order": 337,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-338",
+    "title": "Shortest Path in UG with unit weights",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/shortest-path-in-undirected-graph-with-unit-weights?utm=codolio",
+    "order": 338,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-339",
+    "title": "Shortest Path in DAG",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/shortest-path-in-dag?utm=codolio",
+    "order": 339,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-340",
+    "title": "Djisktra's Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/dijkstra's-algorithm?utm=codolio",
+    "order": 340,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-341",
+    "title": "Why priority Queue is used in Djisktra's Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/dijkstra's-algorithm?utm=codolio",
+    "order": 341,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-342",
+    "title": "Shortest path in a binary maze",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/shortest-path-in-binary-matrix?utm=codolio",
+    "order": 342,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-343",
+    "title": "Path with minimum effort",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/path-with-minimum-effort?utm=codolio",
+    "order": 343,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-344",
+    "title": "Cheapest flights within k stops",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops?utm=codolio",
+    "order": 344,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-345",
+    "title": "Network Delay time",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/network-delay-time?utm=codolio",
+    "order": 345,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-346",
+    "title": "Number of ways to arrive at destination",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/number-of-ways-to-arrive-at-destination?utm=codolio",
+    "order": 346,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-347",
+    "title": "Minimum steps to reach end from start by performing multiplication and mod operations with array elements",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/minimum-multiplications-to-reach-end?utm=codolio",
+    "order": 347,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-348",
+    "title": "Bellman Ford Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/bellman-ford-algorithm?utm=codolio",
+    "order": 348,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-349",
+    "title": "Floyd Warshal Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/floyd-warshall-algorithm?utm=codolio",
+    "order": 349,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-350",
+    "title": "Find the city with the smallest number of neighbors in a threshold distance",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance?utm=codolio",
+    "order": 350,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-351",
+    "title": "Minimum Spanning Tree",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-the-mst-weight?utm=codolio",
+    "order": 351,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-352",
+    "title": "Prim's Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-the-mst-weight?utm=codolio",
+    "order": 352,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-353",
+    "title": "Disjoint Set [Union by Rank]",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/disjoint-set-?utm=codolio",
+    "order": 353,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-354",
+    "title": "Disjoint Set [Union by Size]",
+    "topic": "Graph",
+    "difficulty": "easy",
+    "url": "https://takeuforward.org/plus/dsa/problems/disjoint-set-?utm=codolio",
+    "order": 354,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-355",
+    "title": "Kruskal's Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/find-the-mst-weight?utm=codolio",
+    "order": 355,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-356",
+    "title": "Number of operations to make network connected",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/number-of-operations-to-make-network-connected?utm=codolio",
+    "order": 356,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-357",
+    "title": "Most stones removed with same rows or columns",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/most-stones-removed-with-same-row-or-column?utm=codolio",
+    "order": 357,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-358",
+    "title": "Accounts merge",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/accounts-merge?utm=codolio",
+    "order": 358,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-359",
+    "title": "Number of island II",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/number-of-islands-ii?utm=codolio",
+    "order": 359,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-360",
+    "title": "Making a Large Island",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/making-a-large-island?utm=codolio",
+    "order": 360,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-361",
+    "title": "Swim in rising water",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/swim-in-rising-water?utm=codolio",
+    "order": 361,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-362",
+    "title": "Bridges in Graph",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/critical-connections-in-a-network?utm=codolio",
+    "order": 362,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-363",
+    "title": "Articulation Point",
+    "topic": "Graph",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/articulation-point-in-graph?utm=codolio",
+    "order": 363,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-364",
+    "title": "Kosaraju's Algorithm",
+    "topic": "Graph",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/kosaraju's-algorithm?utm=codolio",
+    "order": 364,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-365",
+    "title": "Dynamic Programming Introduction",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/introduction-to-dp?utm=codolio",
+    "order": 365,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-366",
+    "title": "Climbing Stars",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/climbing-stairs?utm=codolio",
+    "order": 366,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-367",
+    "title": "Frog Jump(DP-3)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/frog-jump?utm=codolio",
+    "order": 367,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-368",
+    "title": "Frog Jump with k distances(DP-4)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/frog-jump-with-k-distances?utm=codolio",
+    "order": 368,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-369",
+    "title": "Maximum sum of non-adjacent elements (DP 5)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/house-robber?utm=codolio",
+    "order": 369,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-370",
+    "title": "House Robber (DP 6)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/house-robber-ii?utm=codolio",
+    "order": 370,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-371",
+    "title": "Ninja's Training (DP 7)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/ninja's-training?utm=codolio",
+    "order": 371,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-372",
+    "title": "Grid Unique Paths : DP on Grids (DP8)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/unique-paths?utm=codolio",
+    "order": 372,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-373",
+    "title": "Grid Unique Paths 2 (DP 9)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/unique-paths-ii?utm=codolio",
+    "order": 373,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-374",
+    "title": "Minimum path sum in Grid (DP 10)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/minimum-path-sum?utm=codolio",
+    "order": 374,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-375",
+    "title": "Minimum path sum in Triangular Grid (DP 11)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/triangle?utm=codolio",
+    "order": 375,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-376",
+    "title": "Minimum/Maximum Falling Path Sum (DP-12)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/minimum-falling-path-sum?utm=codolio",
+    "order": 376,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-377",
+    "title": "3-d DP : Ninja and his friends (DP-13)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/ninja-and-his-friends?utm=codolio",
+    "order": 377,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-378",
+    "title": "Subset sum equal to target (DP- 14)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/check-if-there-exists-a-subsequence-with-sum-k?utm=codolio",
+    "order": 378,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-379",
+    "title": "Partition Equal Subset Sum (DP- 15)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/partition-equal-subset-sum?utm=codolio",
+    "order": 379,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-380",
+    "title": "Partition Set Into 2 Subsets With Min Absolute Sum Diff (DP- 16)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference?utm=codolio",
+    "order": 380,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-381",
+    "title": "Count Subsets with Sum K (DP - 17)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-all-subsequences-with-sum-k?utm=codolio",
+    "order": 381,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-382",
+    "title": "Count Partitions with Given Difference (DP - 18)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-partitions-with-given-difference?utm=codolio",
+    "order": 382,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-383",
+    "title": "Minimum Coins (DP - 20)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/coin-change?utm=codolio",
+    "order": 383,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-384",
+    "title": "Target Sum (DP - 21)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/target-sum?utm=codolio",
+    "order": 384,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-385",
+    "title": "Coin Change 2 (DP - 22)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/coin-change-ii?utm=codolio",
+    "order": 385,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-386",
+    "title": "Unbounded Knapsack (DP - 23)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/unbounded-knapsack?utm=codolio",
+    "order": 386,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-387",
+    "title": "Rod Cutting Problem | (DP - 24)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/minimum-cost-to-connect-sticks?utm=codolio",
+    "order": 387,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-388",
+    "title": "Longest Common Subsequence | (DP - 25)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-common-subsequence?utm=codolio",
+    "order": 388,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-389",
+    "title": "Print Longest Common Subsequence | (DP - 26)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-common-subsequence?utm=codolio",
+    "order": 389,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-390",
+    "title": "Longest Common Substring | (DP - 27)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-common-substring?utm=codolio",
+    "order": 390,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-391",
+    "title": "Longest Palindromic Subsequence | (DP-28)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-palindromic-subsequence?utm=codolio",
+    "order": 391,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-392",
+    "title": "Minimum insertions to make string palindrome | DP-29",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome?utm=codolio",
+    "order": 392,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-393",
+    "title": "Minimum Insertions/Deletions to Convert String | (DP- 30)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/delete-operation-for-two-strings?utm=codolio",
+    "order": 393,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-394",
+    "title": "Shortest Common Supersequence | (DP - 31)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/shortest-common-supersequence?utm=codolio",
+    "order": 394,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-395",
+    "title": "Distinct Subsequences| (DP-32)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/distinct-subsequences?utm=codolio",
+    "order": 395,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-396",
+    "title": "Edit Distance | (DP-33)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/edit-distance?utm=codolio",
+    "order": 396,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-397",
+    "title": "Wildcard Matching | (DP-34)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/wildcard-matching?utm=codolio",
+    "order": 397,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-398",
+    "title": "Best Time to Buy and Sell Stock |(DP-35)",
+    "topic": "Dynamic Programming",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock?utm=codolio",
+    "order": 398,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-399",
+    "title": "Buy and Sell Stock - II|(DP-36)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii?utm=codolio",
+    "order": 399,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-400",
+    "title": "Buy and Sell Stocks III|(DP-37)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii?utm=codolio",
+    "order": 400,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-401",
+    "title": "Buy and Stock Sell IV |(DP-38)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv?utm=codolio",
+    "order": 401,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-402",
+    "title": "Buy and Sell Stocks With Cooldown|(DP-39)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown?utm=codolio",
+    "order": 402,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-403",
+    "title": "Buy and Sell Stocks With Transaction Fee|(DP-40)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee?utm=codolio",
+    "order": 403,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-404",
+    "title": "Longest Increasing Subsequence |(DP-41)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-increasing-subsequence?utm=codolio",
+    "order": 404,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-405",
+    "title": "Printing Longest Increasing Subsequence|(DP-42)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/print-longest-increasing-subsequence?utm=codolio",
+    "order": 405,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-406",
+    "title": "Longest Increasing Subsequence |(DP-43)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-increasing-subsequence?utm=codolio",
+    "order": 406,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-407",
+    "title": "Largest Divisible Subset|(DP-44)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/largest-divisible-subset?utm=codolio",
+    "order": 407,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-408",
+    "title": "Longest String Chain|(DP-45)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/longest-string-chain?utm=codolio",
+    "order": 408,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-409",
+    "title": "Longest Bitonic Subsequence |(DP-46)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-bitonic-subsequence?utm=codolio",
+    "order": 409,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-410",
+    "title": "Number of Longest Increasing Subsequences|(DP-47)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/number-of-longest-increasing-subsequence?utm=codolio",
+    "order": 410,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-411",
+    "title": "Matrix Chain Multiplication|(DP-48)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/matrix-chain-multiplication?utm=codolio",
+    "order": 411,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-412",
+    "title": "Matrix Chain Multiplication | Bottom-Up|(DP-49)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/matrix-chain-multiplication?utm=codolio",
+    "order": 412,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-413",
+    "title": "Minimum Cost to Cut the Stick|(DP-50)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/minimum-cost-to-cut-a-stick?utm=codolio",
+    "order": 413,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-414",
+    "title": "Burst Balloons|(DP-51)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/burst-balloons?utm=codolio",
+    "order": 414,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-415",
+    "title": "Evaluate Boolean Expression to True|(DP-52)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/parsing-a-boolean-expression?utm=codolio",
+    "order": 415,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-416",
+    "title": "Palindrome Partitioning - II|(DP-53)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/palindrome-partitioning-ii?utm=codolio",
+    "order": 416,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-417",
+    "title": "Partition Array for Maximum Sum|(DP-54)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/partition-array-for-maximum-sum?utm=codolio",
+    "order": 417,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-418",
+    "title": "Maximum Rectangle Area with all 1's|(DP-55)",
+    "topic": "Dynamic Programming",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/maximal-rectangle?utm=codolio",
+    "order": 418,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-419",
+    "title": "Count Square Submatrices with All Ones|(DP-56)",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-square-submatrices-with-all-ones?utm=codolio",
+    "order": 419,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-420",
+    "title": "Implement TRIE | INSERT | SEARCH | STARTSWITH",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/implement-trie-prefix-tree?utm=codolio",
+    "order": 420,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-421",
+    "title": "Implement Trie - 2 (Prefix Tree)",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/trie-implementation-and-advanced-operations?utm=codolio",
+    "order": 421,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-422",
+    "title": "Longest String with All Prefixes",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://takeuforward.org/plus/dsa/problems/longest-word-with-all-prefixes?utm=codolio",
+    "order": 422,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-423",
+    "title": "Number of Distinct Substrings in a String",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/number-of-distinct-substrings-in-a-string?utm=codolio",
+    "order": 423,
+    "tags": [
+      "striver"
+    ]
+  },
+  {
+    "id": "striver-424",
+    "title": "Bit PreRequisites for TRIE Problems",
+    "topic": "Trie",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/single-number?utm=codolio",
+    "order": 424,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-425",
+    "title": "Maximum XOR of two numbers in an array",
+    "topic": "Trie",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array?utm=codolio",
+    "order": 425,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-426",
+    "title": "Maximum XOR With an Element From Array",
+    "topic": "Trie",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/maximum-xor-with-an-element-from-array?utm=codolio",
+    "order": 426,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-427",
+    "title": "Minimum number of bracket reversals needed to make an expression balanced",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid?utm=codolio",
+    "order": 427,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-428",
+    "title": "Count and say",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/count-and-say?utm=codolio",
+    "order": 428,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-429",
+    "title": "Hashing In Strings | Theory",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string?utm=codolio",
+    "order": 429,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-430",
+    "title": "Rabin Karp",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://leetcode.com/problems/repeated-string-match?utm=codolio",
+    "order": 430,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-431",
+    "title": "Z-Function",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string?utm=codolio",
+    "order": 431,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-432",
+    "title": "KMP algo / LPS(pi) array",
+    "topic": "Strings",
+    "difficulty": "easy",
+    "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string?utm=codolio",
+    "order": 432,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-433",
+    "title": "Shortest Palindrome",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/shortest-palindrome?utm=codolio",
+    "order": 433,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-434",
+    "title": "Longest happy prefix",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "url": "https://leetcode.com/problems/longest-happy-prefix?utm=codolio",
+    "order": 434,
+    "tags": [
+      "leetcode"
+    ]
+  },
+  {
+    "id": "striver-435",
+    "title": "Count palindromic subsequence in given string",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "url": "https://takeuforward.org/plus/dsa/problems/count-palindromic-subsequences?utm=codolio",
+    "order": 435,
+    "tags": [
+      "striver"
+    ]
+  }
+]

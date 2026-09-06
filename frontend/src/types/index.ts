@@ -136,7 +136,7 @@ export interface AppNotification {
   createdAt: string;
 }
 
-export type PlanSource = 'neetcode150' | 'coderarmy';
+export type PlanSource = 'neetcode150' | 'coderarmy' | 'striver' | 'strivera2z';
 export type PlanPace = 'relaxed' | 'moderate' | 'intensive' | 'custom';
 
 export interface BusyDayInput {

@@ -8,7 +8,7 @@ import { resolvePlatformValue } from '../../utils/platform';
 
 export interface GeneratePlanInput {
   name?: string;
-  source: 'neetcode150' | 'coderarmy';
+  source: 'neetcode150' | 'coderarmy' | 'striver' | string;
   startDate: string;
   durationDays: number;
   pace: 'relaxed' | 'moderate' | 'intensive' | 'custom';

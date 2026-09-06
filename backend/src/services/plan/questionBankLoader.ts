@@ -1,5 +1,6 @@
 import neetcodeSample from '../../data/neetcodeSample.json';
 import coderArmySheet from '../../data/coderArmySheet.json';
+import striverSheet from '../../data/striverSheet.json';
 import { ValidationError } from '../../utils/error';
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
@@ -21,8 +22,10 @@ export function loadQuestionBank(source: string = 'neetcode150'): QuestionBankEn
     rawQuestions = neetcodeSample as QuestionBankEntry[];
   } else if (source === 'coderarmy' || source === 'coderarmy700') {
     rawQuestions = coderArmySheet as QuestionBankEntry[];
+  } else if (source === 'striver' || source === 'strivera2z' || source === 'takeuforward') {
+    rawQuestions = striverSheet as QuestionBankEntry[];
   } else {
-    throw new ValidationError(`Unsupported source: "${source}". Supported sources are "neetcode150" and "coderarmy".`);
+    throw new ValidationError(`Unsupported source: "${source}". Supported sources are "neetcode150", "coderarmy", and "striver".`);
   }
 
   return rawQuestions
