@@ -11,7 +11,9 @@ export interface WeekGroup {
 const rank = (t: Task) => (t.taskType === 'revision' ? 1 : 0);
 
 const dayKeyOf = (t: Task): string => {
-  if (t.scheduledDateKey) return t.scheduledDateKey;
+  if (t.scheduledDateKey && /^\d{4}-\d{2}-\d{2}$/.test(t.scheduledDateKey)) {
+    return t.scheduledDateKey;
+  }
   return localKey(new Date(t.scheduledDate));
 };
 

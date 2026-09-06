@@ -1,6 +1,6 @@
 import prisma from '../config/database';
 import { env } from '../config/env';
-import { todayKey } from '../utils/dateKeys';
+import { todayKey, dateKeyInTz } from '../utils/dateKeys';
 import { notificationService } from '../services/notification/notificationService';
 import logger from '../utils/logger';
 
@@ -31,6 +31,7 @@ export async function runBacklogCron() {
       select: {
         id: true,
         userId: true,
+        scheduledDate: true,
         scheduledDateKey: true,
         user: { select: { timezone: true } },
       },
@@ -39,7 +40,11 @@ export async function runBacklogCron() {
     // BUG 8: per-user tz. 'YYYY-MM-DD' compares lexicographically = chronologically.
     const overdue = candidates.filter((t) => {
       const tz = t.user.timezone || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
-      return t.scheduledDateKey < todayKey(tz);
+      const logicalKey = t.scheduledDateKey && /^\d{4}-\d{2}-\d{2}$/.test(t.scheduledDateKey)
+        ? t.scheduledDateKey
+        : dateKeyInTz(t.scheduledDate, tz);
+
+      return logicalKey < todayKey(tz);
     });
 
     const overdueIds = overdue.map((t) => t.id);

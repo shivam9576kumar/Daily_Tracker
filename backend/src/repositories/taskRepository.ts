@@ -52,17 +52,28 @@ export const taskRepository = {
     const currentKey = todayKey(userTz);
     const { start, end } = zonedDayRangeUtc(currentKey, userTz);
 
-    const todayConditions: Prisma.TaskWhereInput[] = [
+    const todayOr: Prisma.TaskWhereInput[] = [
       { scheduledDateKey: currentKey },
+
+      // Legacy rows: empty/null key, but the instant falls on the user's local day
+      {
+        AND: [
+          {
+            OR: [
+              { scheduledDateKey: '' },
+            ],
+          },
+          { scheduledDate: { gte: start, lt: end } },
+        ],
+      },
+
       { isBacklog: true, status: 'backlog' },
+
       { status: 'completed', completedAt: { gte: start, lt: end } },
     ];
 
     if (potdDateKey) {
-      todayConditions.push({
-        taskType: 'potd',
-        potdDateKey,
-      });
+      todayOr.push({ taskType: 'potd', potdDateKey });
     }
 
     return prisma.task.findMany({
@@ -70,7 +81,7 @@ export const taskRepository = {
         userId,
         isExpired: false,
         AND: [
-          { OR: todayConditions },
+          { OR: todayOr },
           {
             OR: [
               { planId: null },
@@ -79,7 +90,12 @@ export const taskRepository = {
           },
         ],
       },
-      orderBy: [{ status: 'asc' }, { isBacklog: 'desc' }, { taskType: 'asc' }, { scheduledDate: 'asc' }],
+      orderBy: [
+        { status: 'asc' },
+        { isBacklog: 'desc' },
+        { taskType: 'asc' },
+        { scheduledDate: 'asc' },
+      ],
     });
   },
 
