@@ -1,5 +1,7 @@
 import prisma from '../../config/database';
 import { NotFoundError, ValidationError } from '../../utils/error';
+import { dateKeyInTz } from '../../utils/dateKeys';
+import { env } from '../../config/env';
 
 function startOfToday(): Date {
   const d = new Date(); d.setHours(0,0,0,0); return d;
@@ -9,14 +11,16 @@ function minusDays(d: Date, n: number): Date {
 }
 
 export const planService = {
-  async getActivePlan(userId: string) {
+  async getActivePlan(userId: string, tz?: string) {
     const plan = await prisma.plan.findFirst({
       where: { userId, status: 'active' },
       orderBy: { createdAt: 'desc' },
     });
 
+    const userTz = tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
     const today = startOfToday();
     const origin = plan ? new Date(Math.min(new Date(plan.startDate).getTime(), today.getTime())) : today;
+    const originKey = dateKeyInTz(origin, userTz);
 
     const [tasks, revisions] = await Promise.all([
       plan ? prisma.task.findMany({
@@ -35,7 +39,7 @@ export const planService = {
       }),
     ]);
 
-    return { plan, tasks, revisions, origin: origin.toISOString() };
+    return { plan, tasks, revisions, origin: origin.toISOString(), originKey };
   },
 
   async getArchivedPlans(userId: string) {

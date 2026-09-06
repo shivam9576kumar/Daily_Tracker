@@ -11,6 +11,7 @@
     "db:push": "prisma db push --accept-data-loss",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
+    "db:backfill-scheduled-keys": "tsx scripts/backfillScheduledDateKeys.ts",
     "backfill:platform": "tsx scripts/backfillPlatform.ts",
     "typecheck": "tsc --noEmit"
   },

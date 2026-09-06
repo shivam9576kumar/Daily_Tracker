@@ -131,7 +131,7 @@ export const planController = {
   async getActive(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await planService.getActivePlan(user.id));
+      sendSuccess(res, await planService.getActivePlan(user.id, getTz(req)));
     } catch (err) { next(err); }
   },
 

@@ -12,15 +12,22 @@ import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakServ
  */
 export const dashboardService = {
   async getDashboardData(userId: string, tz: string) {
-    let potdMeta: { dateKey: string; stale: boolean } | null = null;
+    let ensuredPotd: Awaited<ReturnType<typeof ensurePotdTaskForUser>> = {
+      taskId: null,
+      potd: null,
+      stale: false,
+    };
     try {
-      const { potd, stale } = await ensurePotdTaskForUser(userId, tz);
-      if (potd) potdMeta = { dateKey: potd.dateKey, stale };
+      ensuredPotd = await ensurePotdTaskForUser(userId, tz);
     } catch (err) {
       logger.warn('dashboardService: POTD ensure failed, continuing without it', {
         message: (err as Error)?.message,
       });
     }
+
+    const potdMeta = ensuredPotd.potd
+      ? { dateKey: ensuredPotd.potd.dateKey, stale: ensuredPotd.stale }
+      : null;
 
     let potdStreak: PotdStreakResult | null = null;
     try {
@@ -33,7 +40,7 @@ export const dashboardService = {
 
     // Run queries in small batches to stay well under the pool size limit (15)
     const [todaysTasks, totalQuestions, user, activePlan] = await Promise.all([
-      taskRepository.getTodaysTasks(userId, tz),
+      taskRepository.getTodaysTasks(userId, tz, ensuredPotd.potd?.dateKey ?? null),
       // Total unique problems actually solved (new tasks + potd, not revisions)
       prisma.task.count({
         where: { userId, taskType: { in: ['new', 'potd'] }, status: 'completed' },

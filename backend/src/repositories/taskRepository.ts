@@ -47,27 +47,30 @@ export const taskRepository = {
    * Uses half-open [start, end) range produced by zonedDayRangeUtc for exact wall-clock day coverage.
    * TODO (BUG 8 / BUG 9): Use zonedDayRangeUtc for crons and revision scheduledDate calculations.
    */
-  async getTodaysTasks(userId: string, tz?: string) {
+  async getTodaysTasks(userId: string, tz?: string, potdDateKey?: string | null) {
     const userTz = tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
     const currentKey = todayKey(userTz);
     const { start, end } = zonedDayRangeUtc(currentKey, userTz);
+
+    const todayConditions: Prisma.TaskWhereInput[] = [
+      { scheduledDateKey: currentKey },
+      { isBacklog: true, status: 'backlog' },
+      { status: 'completed', completedAt: { gte: start, lt: end } },
+    ];
+
+    if (potdDateKey) {
+      todayConditions.push({
+        taskType: 'potd',
+        potdDateKey,
+      });
+    }
 
     return prisma.task.findMany({
       where: {
         userId,
         isExpired: false,
         AND: [
-          {
-            OR: [
-              // scheduled today (logical date key)
-              { scheduledDateKey: currentKey },
-              // open backlog
-              { isBacklog: true, status: 'backlog' },
-              // completed today (exact local calendar day half-open window)
-              { status: 'completed', completedAt: { gte: start, lt: end } },
-            ],
-          },
-          // ── LEAK FIX: ignore archived plans ──
+          { OR: todayConditions },
           {
             OR: [
               { planId: null },

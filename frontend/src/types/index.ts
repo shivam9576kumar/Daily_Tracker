@@ -285,6 +285,7 @@ export interface ActivePlanResponse {
   tasks: Task[];       // the active plan's problems only (never revisions)
   revisions: Task[];   // ALL revision tasks, any source, not expired, dated on/after origin
   origin: string;      // ISO — Roadmap week 1 starts here (min of plan start, today)
+  originKey?: string;
 }
 
 export interface ParsedPlanSettings {

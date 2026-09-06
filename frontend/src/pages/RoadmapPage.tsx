@@ -25,18 +25,35 @@ export default function RoadmapPage() {
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
-  useEffect(() => { fetchActive(); fetchArchived(); }, [fetchActive, fetchArchived]);
+  useEffect(() => {
+    fetchActive();
+    fetchArchived();
+  }, [fetchActive, fetchArchived]);
 
-  const handleDeleteActive = () => {
+  const handleClearRevisions = useCallback(async () => {
+    if (!window.confirm('Clear ALL pending revisions? Completed revisions and solved history are kept.')) return;
+    setBusyId('clear-revs');
+    try {
+      const { cleared } = await taskApi.clearPendingRevisions();
+      toast(cleared ? `Cleared ${cleared} pending revisions` : 'No pending revisions', 'info');
+      await Promise.all([fetchActive(), dashboardFetch(true)]);
+    } catch (err) {
+      toast(getErrorMessage(err), 'error');
+    } finally {
+      setBusyId(null);
+    }
+  }, [fetchActive, dashboardFetch, toast]);
+
+  const handleDeleteActive = useCallback(() => {
     if (!data?.plan) return;
     setDeleteTargetId(data.plan.id);
     setDeleteOpen(true);
-  };
+  }, [data?.plan]);
 
-  const handleDeleteArchived = (id: string) => {
+  const handleDeleteArchived = useCallback((id: string) => {
     setDeleteTargetId(id);
     setDeleteOpen(true);
-  };
+  }, []);
 
   const confirmDelete = useCallback(async () => {
     if (!deleteTargetId) return;
@@ -84,8 +101,8 @@ export default function RoadmapPage() {
 
   if (!data) return null;
 
-  const { plan, tasks, revisions, origin } = data;
-  const originKey = localKey(new Date(origin));
+  const { plan, tasks, revisions, origin, originKey: backendOriginKey } = data;
+  const originKey = backendOriginKey ?? (origin ? localKey(new Date(origin)) : '');
   const deleteTargetPlan = deleteTargetId === plan?.id ? plan : archived.find(p => p.id === deleteTargetId) ?? null;
 
   if (!plan && revisions.length === 0 && archived.length === 0) {
@@ -104,20 +121,6 @@ export default function RoadmapPage() {
       </div>
     );
   }
-
-  const handleClearRevisions = useCallback(async () => {
-    if (!window.confirm('Clear ALL pending revisions? Completed revisions and solved history are kept.')) return;
-    setBusyId('clear-revs');
-    try {
-      const { cleared } = await taskApi.clearPendingRevisions();
-      toast(cleared ? `Cleared ${cleared} pending revisions` : 'No pending revisions', 'info');
-      await Promise.all([fetchActive(), dashboardFetch(true)]);
-    } catch (err) {
-      toast(getErrorMessage(err), 'error');
-    } finally {
-      setBusyId(null);
-    }
-  }, [fetchActive, dashboardFetch, toast]);
 
   if (!plan) {
     const noPlanPendingRevs = revisions.filter(r => r.status !== 'completed').length;

@@ -64,7 +64,7 @@ model Task {
   taskType          String    @default("new") @map("task_type") // new | revision | assignment
   status            String    @default("pending") // pending | completed | backlog | expired
   scheduledDate     DateTime  @default(now()) @map("scheduled_date")
-  scheduledDateKey  String    @default("") @map("scheduled_date_key")
+  scheduledDateKey  String    @map("scheduled_date_key")
   originalSolveDate DateTime? @map("original_solve_date")
   completedAt       DateTime? @map("completed_at")
   rating            String? // easy | medium | hard

@@ -1,5 +1,6 @@
 import prisma from '../../config/database';
-import { todayKey, addDaysToKey } from '../../utils/dateKeys';
+import { addDaysToKey } from '../../utils/dateKeys';
+import { currentPotdDateKey } from './potdService';
 
 export interface PotdStreakResult {
   currentStreak: number;
@@ -25,7 +26,7 @@ const EMPTY: PotdStreakResult = {
  */
 export async function computePotdStreak(
   userId: string,
-  timezone: string,
+  _timezone?: string,
 ): Promise<PotdStreakResult> {
   const rows = await prisma.task.findMany({
     where: {
@@ -43,7 +44,7 @@ export async function computePotdStreak(
 
   if (solved.size === 0) return EMPTY;
 
-  const today = todayKey(timezone);
+  const today = currentPotdDateKey();
   const solvedToday = solved.has(today);
 
   // currentStreak: walk backward from today (or yesterday if today not yet solved).
