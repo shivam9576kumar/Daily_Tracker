@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { Prisma, type Task } from '@prisma/client';
 import prisma from '../../config/database';
 import { env } from '../../config/env';
-import { dateKeyInTz } from '../../utils/dateKeys';
+import { dateKeyInTz, todayKey, addDaysToKey, maxKey } from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolvePlatformValue } from '../../utils/platform';
@@ -53,9 +53,23 @@ function addUtcDays(d: Date, days: number): Date {
 type ParentTask = Pick<Task, 'id' | 'planId' | 'title' | 'topic' | 'difficulty' | 'platform' | 'problemUrl'>;
 
 /**
- * Replace this task's pending/backlog revisions with a fresh rating-based set.
- * Idempotent: re-rating never duplicates.
- * Anchor is strictly the calendar date x of the solved-on day in the user's timezone.
+ * OPTION B (product decision): re-rating PRESERVES completed revisions.
+ * Their coins stay; their history stays on the roadmap. Only pending/backlog
+ * revisions are replaced, and numbering CONTINUES from completed work
+ * (kills BUG 23 duplicate-numbering without deleting history).
+ *
+ * Count rule:
+ *   targetTotal  = REVISION_INTERVALS[rating].length
+ *   nextPosition = max(count of completed revisions, max existing revisionNumber)
+ *   create       = (targetTotal - nextPosition) new pending revisions at
+ *                  positions nextPosition+1..targetTotal
+ *   if nextPosition >= targetTotal → create nothing.
+ *
+ * BUG 12: baseKey = max(solve-day, today) so re-rating an old solve never
+ * schedules revisions in the past.
+ *
+ * Returns void — NO refund is ever owed here (nothing completed is deleted;
+ * pending revisions earned 0 coins).
  */
 async function regenerateRevisions(
   tx: Prisma.TransactionClient,
@@ -65,39 +79,71 @@ async function regenerateRevisions(
   rating: Rating,
   tz: string = env.DEFAULT_TIMEZONE,
 ): Promise<void> {
-  await tx.revision.deleteMany({ where: { parentTaskId: parent.id, status: { in: ['pending', 'backlog'] } } });
-  await tx.task.deleteMany({ where: { parentTaskId: parent.id, taskType: 'revision', status: { in: ['pending', 'backlog'] } } });
+  // 1. Wipe ONLY unfinished revisions
+  await tx.revision.deleteMany({
+    where: { parentTaskId: parent.id, status: { in: ['pending', 'backlog'] } },
+  });
+  await tx.task.deleteMany({
+    where: { parentTaskId: parent.id, taskType: 'revision', status: { in: ['pending', 'backlog'] } },
+  });
+
+  // 2. How much of the new plan is already fulfilled by completed work?
+  const completed = await tx.task.findMany({
+    where: { parentTaskId: parent.id, taskType: 'revision', status: 'completed' },
+    select: { revisionNumber: true },
+  });
+  const alreadyDone = completed.length;
+  const maxExistingNumber = completed.reduce((m, r) => Math.max(m, r.revisionNumber), 0);
+  const nextPosition = Math.max(alreadyDone, maxExistingNumber);
 
   const intervals = REVISION_INTERVALS[rating];
-  const base = solvedDateMidnightUtc(anchor, tz);
-  const ids = intervals.map(() => randomUUID());
+  const targetTotal = intervals.length;
+  const createCount = Math.max(0, targetTotal - nextPosition);
+  if (createCount === 0) return; // completed work already satisfies the plan
+
+  // 3. BUG 12 clamp: never schedule in the past
+  const solvedKey = dateKeyInTz(anchor, tz);
+  const baseKey = maxKey(solvedKey, todayKey(tz));
+  const baseMidnight = new Date(`${baseKey}T00:00:00.000Z`);
+
+  // 4. Create the shortfall with CONTINUED numbering
+  const ids = Array.from({ length: createCount }, () => randomUUID());
 
   await tx.task.createMany({
-    data: intervals.map((days, i) => ({
-      id: ids[i],
-      userId,
-      planId: parent.planId,
-      parentTaskId: parent.id,
-      title: parent.title,
-      topic: parent.topic,
-      difficulty: parent.difficulty,
-      platform: resolvePlatformValue(parent.problemUrl, parent.platform),
-      problemUrl: parent.problemUrl,
-      taskType: 'revision',
-      status: 'pending',
-      scheduledDate: addUtcDays(base, days),
-      revisionNumber: i + 1,
-    })),
+    data: Array.from({ length: createCount }, (_, i) => {
+      const position = nextPosition + 1 + i;          // 1-based plan position
+      const days = intervals[position - 1];
+      return {
+        id: ids[i],
+        userId,
+        planId: parent.planId,
+        parentTaskId: parent.id,
+        title: parent.title,
+        topic: parent.topic,
+        difficulty: parent.difficulty,
+        platform: resolvePlatformValue(parent.problemUrl, parent.platform),
+        problemUrl: parent.problemUrl,
+        taskType: 'revision',
+        status: 'pending',
+        scheduledDate: addUtcDays(baseMidnight, days),   // ordering only
+        scheduledDateKey: addDaysToKey(baseKey, days),   // ← logical day (BUG 9)
+        revisionNumber: position,
+      };
+    }),
   });
 
   await tx.revision.createMany({
-    data: intervals.map((days, i) => ({
-      parentTaskId: parent.id,
-      revisionTaskId: ids[i],
-      revisionNumber: i + 1,
-      scheduledDate: addUtcDays(base, days),
-      status: 'pending',
-    })),
+    data: Array.from({ length: createCount }, (_, i) => {
+      const position = nextPosition + 1 + i;
+      const days = intervals[position - 1];
+      return {
+        parentTaskId: parent.id,
+        revisionTaskId: ids[i],
+        revisionNumber: position,
+        scheduledDate: addUtcDays(baseMidnight, days),
+        status: 'pending',
+      };
+    }),
   });
 }
 
@@ -232,51 +278,48 @@ export const taskCompletionService = {
     const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
     if (!task) throw new NotFoundError('Task');
 
+    const isRevision = task.taskType === 'revision';
     const wasCompleted = task.status === 'completed';
+    const refund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
 
     const result = await prisma.$transaction(async (tx) => {
-      // Step 1: Count completed revisions BEFORE deleting them
-      const doneRevs = await tx.task.count({
-        where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
-      });
-
-      // Step 2: Compute total refund = (wasCompleted ? 10 + ratingBonus : 0) + (doneRevs * 10)
-      // Single calculation preventing double-refund of rating bonus or base solve.
-      const baseRefund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
-      const revRefund = doneRevs * COIN_REWARDS.revision;
-      const totalRefund = baseRefund + revRefund;
-
-      // Step 3: Delete Revision records
-      await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
-
-      // Step 4: Delete revision tasks
-      await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
-
-      if (task.taskType === 'revision') {
+      if (!isRevision) {
+        // Parent path: undo cancels EVERYTHING — wipe all revisions, refund their coins.
+        const doneRevs = await tx.task.count({
+          where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
+        });
+        await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+        await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
+        if (doneRevs > 0) {
+          const u = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+          await tx.user.update({
+            where: { id: userId },
+            data: { coins: Math.max(0, (u?.coins ?? 0) - doneRevs * COIN_REWARDS.revision) },
+          });
+        }
+      } else {
+        // Revision path: ONLY reset the Revision row — no child deletes (BUG 11)
         await tx.revision.updateMany({
           where: { revisionTaskId: taskId },
           data: { status: 'pending', completedAt: null },
         });
       }
 
-      // Step 5: Update parent
       const updated = await tx.task.update({
         where: { id: taskId },
         data: { status: 'pending', rating: null, completedAt: null, isBacklog: false },
       });
 
-      // Step 6: Apply coin decrement
-      if (wasCompleted && totalRefund > 0) {
-        const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
-        if (user) {
-          await tx.user.update({
-            where: { id: userId },
-            data: { coins: Math.max(0, user.coins - totalRefund) },
-          });
-        }
+      if (wasCompleted && refund > 0) {
+        const u = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+        await tx.user.update({
+          where: { id: userId },
+          data: { coins: Math.max(0, (u?.coins ?? 0) - refund) },
+        });
       }
       return updated;
     }, TX_OPTIONS);
+
     invalidateUserCache(userId);
     return result;
   },

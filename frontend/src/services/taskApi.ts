@@ -42,4 +42,8 @@ export const taskApi = {
     const res = await api.post<ApiResponse<Task>>(`/tasks/${id}/undo`);
     return res.data.data;
   },
+  async clearPendingRevisions(): Promise<{ cleared: number }> {
+    const res = await api.post<ApiResponse<{ cleared: number }>>('/tasks/revisions/clear-pending');
+    return res.data.data;
+  },
 };

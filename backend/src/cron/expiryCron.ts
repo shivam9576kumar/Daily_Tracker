@@ -1,5 +1,6 @@
 import prisma from '../config/database';
-import { taskRepository } from '../repositories/taskRepository';
+import { env } from '../config/env';
+import { todayKey, addDaysToKey, zonedDayStartUtc } from '../utils/dateKeys';
 import { BACKLOG_EXPIRY_DAYS } from '@dsa-planner/shared';
 import { notificationService } from '../services/notification/notificationService';
 import logger from '../utils/logger';
@@ -8,7 +9,7 @@ import logger from '../utils/logger';
  * Expiry Cron
  *
  * Rule:
- * backlog task older than BACKLOG_EXPIRY_DAYS
+ * backlog task older than BACKLOG_EXPIRY_DAYS in user timezone
  * → status = expired
  * → isExpired = true
  *
@@ -19,42 +20,59 @@ export async function runExpiryCron() {
   logger.info('💀 Expiry cron started');
 
   try {
-    const expiredTasks = await taskRepository.findExpiredBacklogTasks(
-      BACKLOG_EXPIRY_DAYS
-    );
+    const candidates = await prisma.task.findMany({
+      where: {
+        isBacklog: true,
+        isExpired: false,
+        status: { not: 'completed' },
+        OR: [{ planId: null }, { plan: { status: 'active' } }],
+      },
+      select: {
+        id: true,
+        userId: true,
+        backlogSince: true,
+        user: { select: { timezone: true } },
+      },
+    });
 
-    if (expiredTasks.length === 0) {
+    // backlogSince is an instant → compare against the exact user-local
+    // midnight of (userToday − N days).
+    const expired = candidates.filter((t) => {
+      if (!t.backlogSince) return false;
+      const tz = t.user.timezone || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
+      const cutoffKey = addDaysToKey(todayKey(tz), -BACKLOG_EXPIRY_DAYS);
+      return t.backlogSince.getTime() <= zonedDayStartUtc(cutoffKey, tz).getTime();
+    });
+
+    const expiredIds = expired.map((t) => t.id);
+    if (expiredIds.length === 0) {
       logger.info('💀 Expiry cron finished: 0 tasks expired');
       return { expired: 0 };
     }
 
     const expiredByUser = new Map<string, number>();
-    let expiredCount = 0;
-
-    for (const task of expiredTasks) {
-      const result = await prisma.task.updateMany({
-        where: {
-          id: task.id,
-          isBacklog: true,
-          isExpired: false,
-          status: {
-            not: 'completed',
-          },
+    const result = await prisma.task.updateMany({
+      where: {
+        id: { in: expiredIds },
+        isBacklog: true,
+        isExpired: false,
+        status: {
+          not: 'completed',
         },
-        data: {
-          status: 'expired',
-          isExpired: true,
-        },
-      });
+      },
+      data: {
+        status: 'expired',
+        isExpired: true,
+      },
+    });
 
-      if (result.count > 0) {
-        expiredCount++;
-        expiredByUser.set(
-          task.userId,
-          (expiredByUser.get(task.userId) || 0) + 1
-        );
-      }
+    for (const task of expired) {
+      expiredByUser.set(
+        task.userId,
+        (expiredByUser.get(task.userId) || 0) + 1
+      );
     }
+    const expiredCount = result.count;
 
     for (const [userId, count] of expiredByUser.entries()) {
       await notificationService.create({

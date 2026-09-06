@@ -6,6 +6,7 @@ const router = Router();
 router.use(authMiddleware);
 
 router.get('/', taskController.getAll);
+router.post('/revisions/clear-pending', taskController.clearPendingRevisions);
 router.get('/:id', taskController.getById);
 router.post('/', taskController.create);
 router.patch('/:id', taskController.update);

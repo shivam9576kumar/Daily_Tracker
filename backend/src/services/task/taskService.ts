@@ -3,6 +3,8 @@ import { taskRepository } from '../../repositories/taskRepository';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { calculateCompletedTaskCoins } from '../../config/rewards';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
+import { dateKeyInTz } from '../../utils/dateKeys';
+import { env } from '../../config/env';
 import { resolvePlatformValue } from '../../utils/platform';
 
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
@@ -45,7 +47,7 @@ export const taskService = {
     return taskRepository.getAllTasks(userId, filters);
   },
 
-  async createTask(userId: string, data: CreateTaskInput) {
+  async createTask(userId: string, data: CreateTaskInput, tz?: string) {
     // ─── Validation ───
     if (!data.title || !data.title.trim()) {
       throw new ValidationError('Title is required');
@@ -85,6 +87,10 @@ export const taskService = {
       throw new ValidationError('scheduledDate is not a valid date');
     }
 
+    const scheduledDateKey = /^\d{4}-\d{2}-\d{2}$/.test(data.scheduledDate || '')
+      ? data.scheduledDate
+      : dateKeyInTz(scheduled, tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
+
     if (data.problemUrl && !/^https?:\/\//i.test(data.problemUrl)) {
       throw new ValidationError('problemUrl must start with http:// or https://');
     }
@@ -98,6 +104,7 @@ export const taskService = {
       problemUrl: data.problemUrl?.trim() || null,
       taskType: data.taskType || 'new',
       scheduledDate: scheduled,
+      scheduledDateKey,
       ...(data.planId ? { plan: { connect: { id: data.planId } } } : {}),
     });
   },
@@ -112,7 +119,8 @@ export const taskService = {
       platform?: string;
       problemUrl?: string;
       scheduledDate?: string;
-    }
+    },
+    tz?: string
   ) {
     await this.getTaskById(taskId, userId);
 
@@ -123,6 +131,7 @@ export const taskService = {
     }
 
     let scheduledDate: Date | undefined;
+    let scheduledDateKey: string | undefined;
     if (data.scheduledDate) {
       scheduledDate = data.scheduledDate.includes('T')
         ? new Date(data.scheduledDate)
@@ -130,6 +139,9 @@ export const taskService = {
       if (isNaN(scheduledDate.getTime())) {
         throw new ValidationError('scheduledDate is not a valid date');
       }
+      scheduledDateKey = /^\d{4}-\d{2}-\d{2}$/.test(data.scheduledDate)
+        ? data.scheduledDate
+        : dateKeyInTz(scheduledDate, tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
     }
 
     return taskRepository.updateTask(taskId, {
@@ -141,6 +153,7 @@ export const taskService = {
         problemUrl: data.problemUrl || null,
       }),
       ...(scheduledDate && { scheduledDate }),
+      ...(scheduledDateKey && { scheduledDateKey }),
     });
   },
 
@@ -224,5 +237,20 @@ export const taskService = {
     invalidateUserCache(userId);
 
     return { ok: true };
+  },
+
+  /** BUG 10: bulk-clear pending/backlog revision tasks. Completed stay (their coins stay). Pending earned 0 coins → no refund. */
+  async clearPendingRevisions(userId: string) {
+    return prisma.$transaction(async (tx) => {
+      const victims = await tx.task.findMany({
+        where: { userId, taskType: 'revision', status: { in: ['pending', 'backlog'] } },
+        select: { id: true },
+      });
+      const ids = victims.map((v) => v.id);
+      if (ids.length === 0) return { cleared: 0 };
+      await tx.revision.deleteMany({ where: { revisionTaskId: { in: ids } } });
+      await tx.task.deleteMany({ where: { id: { in: ids } } });
+      return { cleared: ids.length };
+    });
   },
 };

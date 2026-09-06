@@ -10,6 +10,7 @@ import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
 import { localKey } from '../utils/dateKeys';
 import { planApi } from '../services/planApi';
+import { taskApi } from '../services/taskApi';
 import { getErrorMessage } from '../services/api';
 import { useUIStore } from '../store/uiStore';
 import '../components/roadmap/roadmap.css';
@@ -104,7 +105,22 @@ export default function RoadmapPage() {
     );
   }
 
+  const handleClearRevisions = useCallback(async () => {
+    if (!window.confirm('Clear ALL pending revisions? Completed revisions and solved history are kept.')) return;
+    setBusyId('clear-revs');
+    try {
+      const { cleared } = await taskApi.clearPendingRevisions();
+      toast(cleared ? `Cleared ${cleared} pending revisions` : 'No pending revisions', 'info');
+      await Promise.all([fetchActive(), dashboardFetch(true)]);
+    } catch (err) {
+      toast(getErrorMessage(err), 'error');
+    } finally {
+      setBusyId(null);
+    }
+  }, [fetchActive, dashboardFetch, toast]);
+
   if (!plan) {
+    const noPlanPendingRevs = revisions.filter(r => r.status !== 'completed').length;
     return (
       <div className="roadmap-page">
         <header className="roadmap-head">
@@ -118,6 +134,11 @@ export default function RoadmapPage() {
             </p>
           </div>
           <div className="roadmap-head__actions">
+            {noPlanPendingRevs > 0 && (
+              <button type="button" className="btn-secondary" disabled={busyId === 'clear-revs'} onClick={handleClearRevisions}>
+                Clear pending revisions ({noPlanPendingRevs})
+              </button>
+            )}
             <button type="button" className="btn-primary" onClick={() => navigate('/generate-plan')}>
               Generate Plan
             </button>
@@ -154,6 +175,11 @@ export default function RoadmapPage() {
           </p>
         </div>
         <div className="roadmap-head__actions">
+          {pendingRevs > 0 && (
+            <button type="button" className="btn-secondary" disabled={busyId === 'clear-revs'} onClick={handleClearRevisions}>
+              Clear pending revisions ({pendingRevs})
+            </button>
+          )}
           <button type="button" className="btn-secondary" onClick={() => navigate('/generate-plan')}>
             + New Plan
           </button>

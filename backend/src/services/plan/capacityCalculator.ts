@@ -50,20 +50,18 @@ export function calculateDailyCapacities(params: {
     const isBufferDay = dayOfWeek === bufferDay;
 
     let baseLoad = isWeekend ? weekendLoad : weekdayLoad;
-
-    // Buffer day reduction (70% less)
-    if (isBufferDay) {
-      baseLoad *= 0.3;
-    }
-
-    // Busy day reduction
-    const busy = busyMap.get(dateStr);
     let busyReason: string | undefined;
 
+    const busy = busyMap.get(dateStr);
+
     if (busy) {
+      // BUG 20 FIX: busy-day override takes priority over buffer-day default
       busyReason = busy.reason || 'Busy day';
       const factor = Math.max(0, 1 - (busy.loadReduction || 0.5));
       baseLoad *= factor;
+    } else if (isBufferDay) {
+      // Buffer-day reduction applies only when no explicit busy-day override exists
+      baseLoad *= 0.3;
     }
 
     // Round to nearest 0.5 and floor at 0

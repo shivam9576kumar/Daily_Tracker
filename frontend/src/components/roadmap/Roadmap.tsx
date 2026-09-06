@@ -10,11 +10,14 @@ export interface WeekGroup {
 /** Plan problems first, then revisions; then alphabetical. */
 const rank = (t: Task) => (t.taskType === 'revision' ? 1 : 0);
 
+const dayKeyOf = (t: Task): string =>
+  t.scheduledDateKey ?? localKey(new Date(t.scheduledDate)); // fallback one release
+
 export function groupIntoWeeks(items: Task[], originKey: string): WeekGroup[] {
   // 1. bucket by LOCAL calendar day (fixes the off-by-one for revision/manual tasks)
   const byDate = new Map<string, Task[]>();
   for (const t of items) {
-    const key = localKey(new Date(t.scheduledDate));
+    const key = dayKeyOf(t);
     if (!byDate.has(key)) byDate.set(key, []);
     byDate.get(key)!.push(t);
   }

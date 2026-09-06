@@ -164,6 +164,7 @@ export const planGenerationService = {
               taskType: 'new',
               status: 'pending',
               scheduledDate,
+              scheduledDateKey: day.date,
             });
           }
         }

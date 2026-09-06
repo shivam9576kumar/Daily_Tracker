@@ -1,6 +1,6 @@
 import { QuestionBankEntry } from './questionBankLoader';
 import { DailyCapacity } from './capacityCalculator';
-import { getDifficultyLoad } from './difficultyWeights';
+import { getDifficultyLoad, DIFFICULTY_LOAD } from './difficultyWeights';
 import { resolveTopic, topicKey } from '../../utils/topicNormalize';
 
 export type ScheduleMode = 'balanced' | 'sequential';
@@ -206,8 +206,8 @@ export function scheduleQuestions(params: {
     let currentDayLoad = 0;
     const targetCapacity = day.capacityLoad;
 
-    // If capacity is 0 (e.g. heavy busy day / zero capacity day), schedule 0 tasks
-    if (targetCapacity > 0 && remainingPool.length > 0) {
+    // If capacity is > 0 (or in sequential mode), schedule tasks
+    if (remainingPool.length > 0 && (targetCapacity > 0 || scheduleMode === 'sequential')) {
       const maxAllowedLoad = targetCapacity + 0.5;
 
       if (scheduleMode === 'sequential') {
@@ -216,8 +216,13 @@ export function scheduleQuestions(params: {
           const cand = remainingPool[0];
           const candLoad = getDifficultyLoad(cand.difficulty);
 
-          if (currentDayLoad > 0 && currentDayLoad + candLoad > maxAllowedLoad) {
-            break;
+          if (currentDayLoad > 0) {
+            if (currentDayLoad + candLoad > maxAllowedLoad) break;
+          } else {
+            // BUG 19 FIX: first item of the day (Option B: >= threshold skips zero-capacity/overly tight days)
+            if (candLoad >= targetCapacity + DIFFICULTY_LOAD.hard) {
+              break;
+            }
           }
 
           const chosen = remainingPool.shift()!;
@@ -323,25 +328,70 @@ export function scheduleQuestions(params: {
     });
   }
 
-  // 3. If remaining questions were not scheduled, try a second pass filling days up to capacityLoad + 0.5 (balanced mode only)
+  // 3. BUG 18 FIX: Quality-aware second pass with relaxed capacity (+1.0 instead of +0.5), same quality rules (balanced mode only)
   if (scheduleMode !== 'sequential' && remainingPool.length > 0) {
     for (const day of days) {
       if (remainingPool.length === 0) break;
       if (day.capacityLoad === 0) continue;
 
-      const maxAllowed = day.capacityLoad + 0.5;
-      for (let i = 0; i < remainingPool.length; i++) {
-        const cand = remainingPool[i];
-        const candLoad = getDifficultyLoad(cand.difficulty);
-        if (day.usedLoad + candLoad <= maxAllowed) {
-          remainingPool.splice(i, 1);
-          day.usedLoad += candLoad;
+      const relaxedMax = day.capacityLoad + 1.0;
+
+      let hardCountToday = day.questions.filter(
+        (dq) => dq.question.difficulty === 'hard'
+      ).length;
+
+      let madeProgress = true;
+      while (madeProgress && remainingPool.length > 0) {
+        madeProgress = false;
+        let bestIdx = -1;
+        let bestScore = -Infinity;
+
+        for (let i = 0; i < remainingPool.length; i++) {
+          const cand = remainingPool[i];
+          const candLoad = getDifficultyLoad(cand.difficulty);
+
+          if (day.usedLoad + candLoad > relaxedMax) continue;
+
+          // BUG 18 FIX: apply the SAME quality rules as pass 1
+
+          // Hard limit (same as pass 1)
+          if (cand.difficulty === 'hard') {
+            if (hardCountToday >= 1 && day.capacityLoad < 3.0) continue;
+            if (day.isBufferDay || (day.busyReason && day.capacityLoad < 1.5)) continue;
+          }
+
+          // Scoring (same formula as pass 1)
+          let score = 100;
+          const newLoad = day.usedLoad + candLoad;
+          score -= Math.abs(relaxedMax - newLoad) * 30;
+
+          const candTopic = cand.topic;
+          const lastTopic = day.questions.length > 0
+            ? day.questions[day.questions.length - 1].question.topic
+            : '';
+          if (candTopic === lastTopic) score -= 25;
+          if (day.questions.some((dq) => dq.question.topic === candTopic)) score -= 35;
+          if (resolvedFocus.has(candTopic)) score += 40;
+          score -= (cand.order || 0) * 0.1;
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestIdx = i;
+          }
+        }
+
+        if (bestIdx !== -1) {
+          const chosen = remainingPool.splice(bestIdx, 1)[0];
+          const chosenLoad = getDifficultyLoad(chosen.difficulty);
+          if (chosen.difficulty === 'hard') hardCountToday++;
+
+          day.usedLoad += chosenLoad;
           day.questions.push({
-            question: cand,
+            question: chosen,
             scheduledDate: day.date,
-            load: candLoad,
+            load: chosenLoad,
           });
-          i--;
+          madeProgress = true;
         }
       }
     }

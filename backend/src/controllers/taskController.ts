@@ -30,7 +30,8 @@ export const taskController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendCreated(res, await taskService.createTask(user.id, req.body));
+      const tz = getTz(req);
+      sendCreated(res, await taskService.createTask(user.id, req.body, tz));
     } catch (err) { next(err); }
   },
 
@@ -38,7 +39,8 @@ export const taskController = {
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await taskService.updateTask(req.params.id as string, user.id, req.body));
+      const tz = getTz(req);
+      sendSuccess(res, await taskService.updateTask(req.params.id as string, user.id, req.body, tz));
     } catch (err) { next(err); }
   },
 
@@ -94,6 +96,14 @@ export const taskController = {
       const user = getAuthUser(req);
       const task = await taskService.getTaskById(req.params.id as string, user.id);
       sendSuccess(res, task.revisions || []);
+    } catch (err) { next(err); }
+  },
+
+  /** POST /api/tasks/revisions/clear-pending */
+  async clearPendingRevisions(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = getAuthUser(req);
+      sendSuccess(res, await taskService.clearPendingRevisions(user.id));
     } catch (err) { next(err); }
   },
 };

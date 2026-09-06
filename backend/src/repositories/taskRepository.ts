@@ -59,8 +59,8 @@ export const taskRepository = {
         AND: [
           {
             OR: [
-              // scheduled today (exact local calendar day half-open window)
-              { scheduledDate: { gte: start, lt: end } },
+              // scheduled today (logical date key)
+              { scheduledDateKey: currentKey },
               // open backlog
               { isBacklog: true, status: 'backlog' },
               // completed today (exact local calendar day half-open window)

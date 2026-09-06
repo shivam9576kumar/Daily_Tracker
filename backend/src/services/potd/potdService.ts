@@ -190,6 +190,7 @@ export async function ensurePotdTaskForUser(
         platform: resolvePlatformValue(potd.url, 'leetcode'),
         problemUrl: potd.url,
         scheduledDate,
+        scheduledDateKey: potd.dateKey,
         potdDateKey: potd.dateKey,
       },
       select: { id: true },

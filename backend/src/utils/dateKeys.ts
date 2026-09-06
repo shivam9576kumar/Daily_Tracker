@@ -42,6 +42,11 @@ export function todayKey(tz?: string): string {
   return dateKeyInTz(new Date(), tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
 }
 
+/** Later of two 'YYYY-MM-DD' keys (lexicographic = chronological). */
+export function maxKey(a: string, b: string): string {
+  return a >= b ? a : b;
+}
+
 /** Add days to a key without any timezone/DST drift. */
 export function addDaysToKey(key: string, days: number): string {
   const d = new Date(`${key}T00:00:00Z`);

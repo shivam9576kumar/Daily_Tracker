@@ -10,6 +10,7 @@ import { useUIStore } from '../../store/uiStore';
 import { useTaskActions } from '../../hooks/useTaskActions';
 import type { Task } from '../../types';
 import { resolvePlatform } from '../../utils/platform';
+import { formatKey } from '../../utils/dateKeys';
 import '../dashboard/dashboard.css';
 import './task.css';
 
@@ -224,7 +225,11 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
             </div>
             <div className="kv__row">
               <dt className="kv__k">Scheduled</dt>
-              <dd className="kv__v">{fmt(task.scheduledDate)}</dd>
+              <dd className="kv__v">
+                {task.scheduledDateKey
+                  ? formatKey(task.scheduledDateKey, { day: 'numeric', month: 'short', year: 'numeric' })
+                  : fmt(task.scheduledDate)}
+              </dd>
             </div>
             {task.completedAt && (
               <div className="kv__row">
@@ -277,7 +282,7 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
               <p className="revise-help">
                 {task.rating ? (
                   <>
-                    Rated <strong>{titleCase(task.rating)}</strong> · {revPending} upcoming{revDone > 0 ? `, ${revDone} done` : ''}. Tap the pill again to remove the plan — the solve still counts.
+                    Rated <strong>{titleCase(task.rating)}</strong> · {revPending} upcoming{revDone > 0 ? `, ${revDone} done` : ''}. Re-rating keeps your completed revisions and their coins — only upcoming ones are rescheduled.
                   </>
                 ) : (
                   <>Easy: +14 and +28 days. Medium: +1, +3, +7, +14. Hard: +1, +3, +7, +14, +28.</>
