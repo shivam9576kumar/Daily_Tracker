@@ -4,7 +4,7 @@ import { calculateDailyCapacities, BusyDayInput } from './capacityCalculator';
 import { scheduleQuestions, SchedulerResult, TopicQuota, ScheduleMode } from './weightedScheduler';
 import { todayKey } from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import { resolvePlatformValue } from '../../utils/platform';
+import { resolveQuestionUrl, resolveQuestionPlatform } from './problemUrlResolver';
 
 export interface GeneratePlanInput {
   name?: string;
@@ -106,7 +106,7 @@ export const planGenerationService = {
     const defaultTitle =
       input.source === 'coderarmy'
         ? 'Coder Army'
-        : input.source === 'striver'
+        : input.source === 'striver' || input.source === 'strivera2z' || input.source === 'takeuforward'
           ? "Striver's A2Z Sheet"
           : 'NeetCode 150';
     const planName =
@@ -138,29 +138,25 @@ export const planGenerationService = {
           },
         });
 
-        const SOURCE_DEFAULT_PLATFORM: Record<string, string> = {
-          striver: 'striver',
-          strivera2z: 'striver',
-          takeuforward: 'striver',
-          coderarmy: 'custom',
-          neetcode150: 'leetcode',
-        };
-        const sourceFallback = SOURCE_DEFAULT_PLATFORM[input.source] ?? 'custom';
-
         // 3. Batch insert tasks
         const tasksData: any[] = [];
         for (const day of preview.days) {
           const scheduledDate = new Date(`${day.date}T00:00:00.000Z`);
 
           for (const q of day.questions) {
+            const questionObj = q.question as QuestionBankEntry;
+            const problemUrl = resolveQuestionUrl(questionObj, input.source);
+            const platform = resolveQuestionPlatform(questionObj, input.source);
+
             tasksData.push({
               userId,
               planId: plan.id,
-              title: q.question.title,
-              topic: q.question.topic,
-              difficulty: q.question.difficulty,
-              problemUrl: q.question.url || null,
-              platform: resolvePlatformValue(q.question.url, (q.question as any).platform ?? sourceFallback),
+              questionBankId: questionObj.id || null,
+              title: questionObj.title,
+              topic: questionObj.topic,
+              difficulty: questionObj.difficulty,
+              problemUrl: problemUrl || null,
+              platform,
               taskType: 'new',
               status: 'pending',
               scheduledDate,

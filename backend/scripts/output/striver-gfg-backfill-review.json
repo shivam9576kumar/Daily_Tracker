@@ -1,0 +1,2600 @@
+[
+  {
+    "taskId": "363fb0f6-45cd-4a16-b8d0-faf4c3447b69",
+    "title": "Aggressive Cows",
+    "currentUrl": "https://www.spoj.com/problems/AGGRCOW/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-089'"
+  },
+  {
+    "taskId": "831b50ec-51aa-4835-af14-48714974c9bc",
+    "title": "Learn All Patterns of Subsequences (Theory)",
+    "currentUrl": "https://leetcode.com/problems/distinct-subsequences-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-153'"
+  },
+  {
+    "taskId": "f5e97ad2-afa8-40d5-a07d-b08dc683ef2f",
+    "title": "C++ STL",
+    "currentUrl": "https://takeuforward.org/c/c-stl-tutorial-most-frequent-used-stl-containers/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-007'"
+  },
+  {
+    "taskId": "cff102d4-c292-44e8-9c76-7fb808f9ef9e",
+    "title": "Reverse a Number",
+    "currentUrl": "https://leetcode.com/problems/reverse-integer?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-010'"
+  },
+  {
+    "taskId": "d745de24-cb28-4bdf-bdb6-0ba76a213a8e",
+    "title": "Split array - Largest Sum",
+    "currentUrl": "https://leetcode.com/problems/split-array-largest-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-091'"
+  },
+  {
+    "taskId": "8d02f53f-6c13-4faa-8915-3a44ca1b3d24",
+    "title": "N Queen",
+    "currentUrl": "https://leetcode.com/problems/n-queens?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-164'"
+  },
+  {
+    "taskId": "68121e16-cba3-4820-9c03-7088093d5b6b",
+    "title": "Merge Sort",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/merge-sorting?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-027'"
+  },
+  {
+    "taskId": "a275735d-ca6d-4d1b-b279-8904dc810452",
+    "title": "Left Rotate an array by one place",
+    "currentUrl": "https://leetcode.com/problems/rotate-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-035'"
+  },
+  {
+    "taskId": "1848a1ce-c29a-4b79-933d-4dcf1cd3f2f8",
+    "title": "Trapping Rainwater",
+    "currentUrl": "https://leetcode.com/problems/trapping-rain-water?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-202'"
+  },
+  {
+    "taskId": "da9fc505-b78b-47b2-80c7-a4167eb1a4c8",
+    "title": "Subarray with k different integers",
+    "currentUrl": "https://leetcode.com/problems/subarrays-with-k-different-integers?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-223'"
+  },
+  {
+    "taskId": "08dd671f-6705-4e69-99c0-942659f97051",
+    "title": "Sudoko Solver",
+    "currentUrl": "https://leetcode.com/problems/sudoku-solver?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-168'"
+  },
+  {
+    "taskId": "b8d38915-8ef6-4882-9600-72b032c0d829",
+    "title": "Quick Sort",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/quick-sorting?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-030'"
+  },
+  {
+    "taskId": "37c70d9a-b8ad-40bc-8e9d-cccec9194e18",
+    "title": "Left rotate an array by D places",
+    "currentUrl": "https://leetcode.com/problems/rotate-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-035'"
+  },
+  {
+    "taskId": "d9e0829a-b616-4f41-8142-46fc04bc10a0",
+    "title": "Largest rectangle in a histogram",
+    "currentUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-207'"
+  },
+  {
+    "taskId": "7368acc8-b62c-4613-9914-2e7c45c47239",
+    "title": "Reverse words in a given string / Palindrome Check",
+    "currentUrl": "https://leetcode.com/problems/reverse-words-in-a-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-115'"
+  },
+  {
+    "taskId": "f3822a73-0c0a-4932-89a4-2378bdaf7acc",
+    "title": "Find the Union",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/union-of-two-sorted-arrays?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-037'"
+  },
+  {
+    "taskId": "498bebdd-4b38-458d-bacf-32c77a9f7c89",
+    "title": "Floor/Ceil in Sorted Array",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/floor-and-ceil-in-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-073'"
+  },
+  {
+    "taskId": "1d34a053-f11d-440c-90c7-85a0af176bf7",
+    "title": "Sort Characters by frequency",
+    "currentUrl": "https://leetcode.com/problems/sort-characters-by-frequency?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-108'"
+  },
+  {
+    "taskId": "b6ef0614-9159-424c-8996-4d9b74816e69",
+    "title": "Median of 2 sorted arrays",
+    "currentUrl": "https://leetcode.com/problems/median-of-two-sorted-arrays?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-094'"
+  },
+  {
+    "taskId": "747c61b6-c69b-4f71-b62e-3372c0106485",
+    "title": "Expression Add Operators",
+    "currentUrl": "https://leetcode.com/problems/expression-add-operators?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-169'"
+  },
+  {
+    "taskId": "e0c3be63-eb62-4cf9-97f9-2af9ca319e7d",
+    "title": "Longest subarray with given sum K(positives)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-042'"
+  },
+  {
+    "taskId": "f63aeb22-b300-49fb-87c0-20bca6e840d7",
+    "title": "Maximal Rectangles",
+    "currentUrl": "https://leetcode.com/problems/maximal-rectangle?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-418'"
+  },
+  {
+    "taskId": "3c64585c-048b-4ac4-8dd8-3104e89fe65e",
+    "title": "Minimum Window Subsequence",
+    "currentUrl": "https://leetcode.com/problems/minimum-window-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-225'"
+  },
+  {
+    "taskId": "947e1f4d-a2e7-4608-86ae-ac690286495f",
+    "title": "Sort K sorted array",
+    "currentUrl": "https://leetcode.com/problems/merge-k-sorted-lists?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-233'"
+  },
+  {
+    "taskId": "bf60a903-95de-4a74-8f88-692f9467b9d7",
+    "title": "Add Revision",
+    "currentUrl": "https://leetcode.com/problems/candy?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-253'"
+  },
+  {
+    "taskId": "45ce291a-5b67-4939-b9d7-577aff6786b7",
+    "title": "Sliding Window maximum",
+    "currentUrl": "https://leetcode.com/problems/sliding-window-maximum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-209'"
+  },
+  {
+    "taskId": "6e17bbd9-c451-490a-b4ed-05f2e4e43ac3",
+    "title": "Merge M sorted Lists",
+    "currentUrl": "https://leetcode.com/problems/merge-k-sorted-lists?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-233'"
+  },
+  {
+    "taskId": "7d0bb84c-ba6c-456f-ba35-0adc568ee48b",
+    "title": "Implement Atoi",
+    "currentUrl": "https://leetcode.com/problems/string-to-integer-atoi?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-145'"
+  },
+  {
+    "taskId": "dc0647fb-3344-43e1-b7aa-be240d01ff58",
+    "title": "Deleting a node in LinkedList",
+    "currentUrl": "https://leetcode.com/problems/delete-node-in-a-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-117'"
+  },
+  {
+    "taskId": "8fb0a3b9-6a57-4ace-9ec1-6149188541d9",
+    "title": "Recursive Implementation of atoi()",
+    "currentUrl": "https://leetcode.com/problems/string-to-integer-atoi?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-145'"
+  },
+  {
+    "taskId": "5de0a7a2-c188-48d7-9c1e-d7d80af4923e",
+    "title": "Sort an array of 0's 1's and 2's",
+    "currentUrl": "https://leetcode.com/problems/sort-colors?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-044'"
+  },
+  {
+    "taskId": "89147654-390a-4674-8563-4190263d7fb0",
+    "title": "LFU cache",
+    "currentUrl": "https://leetcode.com/problems/lfu-cache?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-213'"
+  },
+  {
+    "taskId": "9ef31692-182a-49d0-a4c7-0a61a07a66d6",
+    "title": "Find Median from Data Stream",
+    "currentUrl": "https://leetcode.com/problems/find-median-from-data-stream?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-241'"
+  },
+  {
+    "taskId": "2e53549d-a5f2-462c-9516-acf7b6c7db70",
+    "title": "Longest Palindromic Substring[Do it without DP]",
+    "currentUrl": "https://leetcode.com/problems/longest-palindromic-substring?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-113'"
+  },
+  {
+    "taskId": "5dfa2432-3422-42db-93b2-8abd01ee4e05",
+    "title": "Pow(x, n)",
+    "currentUrl": "https://leetcode.com/problems/powx-n?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-185'"
+  },
+  {
+    "taskId": "8e605f4a-38bf-441d-869a-7ddd26352f59",
+    "title": "What are arrays, strings?",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/cpp?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-001'"
+  },
+  {
+    "taskId": "08fea76c-91ba-48d4-953f-66e8253ec267",
+    "title": "Kadane's Algorithm, maximum subarray sum",
+    "currentUrl": "https://leetcode.com/problems/maximum-subarray?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-046'"
+  },
+  {
+    "taskId": "ee75e305-c3d2-4c5a-8211-a956e57a719c",
+    "title": "Length of Loop in LL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/length-of-loop-in-ll?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-128'"
+  },
+  {
+    "taskId": "2e79c997-857b-411a-8d0f-d96b110f9207",
+    "title": "Minimum time taken to BURN the Binary Tree from a Node",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/minimum-time-taken-to-burn-the-bt-from-a-given-node?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-289'"
+  },
+  {
+    "taskId": "562acf0c-be37-4a60-a14d-22c458eaa986",
+    "title": "Count Good numbers",
+    "currentUrl": "https://leetcode.com/problems/count-good-numbers?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-147'"
+  },
+  {
+    "taskId": "1600c960-02ee-4a44-b9be-e2771ffea92e",
+    "title": "For loops",
+    "currentUrl": "https://takeuforward.org/for-loop/understanding-for-loop/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-002'"
+  },
+  {
+    "taskId": "75311a04-70f8-44f7-a730-e192dc54fd01",
+    "title": "Count the number of set bits",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/count-the-number-of-set-bits?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-173'"
+  },
+  {
+    "taskId": "ef229dab-228c-4857-8ce2-f9040722c4e3",
+    "title": "Print Prime Factors of a Number",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/prime-factorisation-of-a-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-184'"
+  },
+  {
+    "taskId": "61960319-0410-4536-813d-d5db14df07e3",
+    "title": "Print subarray with maximum subarray sum (extended version of above problem)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/kadane's-algorithm?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-047'"
+  },
+  {
+    "taskId": "55ed1d9c-8226-41a7-9327-12220a61b370",
+    "title": "Search in Rotated Sorted Array II",
+    "currentUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-077'"
+  },
+  {
+    "taskId": "028354f2-2595-45d8-95dc-6a2993987dd8",
+    "title": "Reverse Every Word in A String",
+    "currentUrl": "https://leetcode.com/problems/reverse-words-in-a-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-115'"
+  },
+  {
+    "taskId": "1ef327f7-2bd8-40a7-9c29-61e80c450d5a",
+    "title": "Segrregate odd and even nodes in LL",
+    "currentUrl": "https://leetcode.com/problems/odd-even-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-130'"
+  },
+  {
+    "taskId": "abab480a-1e0c-4798-994a-f72d100c3238",
+    "title": "Serialize and deserialize Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-294'"
+  },
+  {
+    "taskId": "4509fe2e-3618-452a-bf01-3a08b171ce71",
+    "title": "Sort a stack using recursion",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/sort-a-stack?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-148'"
+  },
+  {
+    "taskId": "6abc398e-f12e-4eda-b489-0f824c2e4c88",
+    "title": "While loops",
+    "currentUrl": "https://takeuforward.org/while-loop/while-loops-in-programming/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-003'"
+  },
+  {
+    "taskId": "1fa1d441-74b9-4d17-adb4-874f99813900",
+    "title": "Combination Sum",
+    "currentUrl": "https://leetcode.com/problems/combination-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-156'"
+  },
+  {
+    "taskId": "b6d6e70e-37bc-42cf-beca-c8cfdd35d958",
+    "title": "Count Number of Substrings",
+    "currentUrl": "https://leetcode.com/problems/subarrays-with-k-different-integers?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-223'"
+  },
+  {
+    "taskId": "bb863684-381d-4492-a95a-68d9eb947420",
+    "title": "Disjoint Set [Union by Rank]",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/disjoint-set-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-354'"
+  },
+  {
+    "taskId": "f0365073-f159-48cf-9b5d-c396cdc3d3c4",
+    "title": "Height of a Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-272'"
+  },
+  {
+    "taskId": "84c042c8-2ae1-4663-a174-968001f103b8",
+    "title": "Height of a Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-272'"
+  },
+  {
+    "taskId": "87797107-6616-43c1-8280-369570bd6edc",
+    "title": "Height of a Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-272'"
+  },
+  {
+    "taskId": "465e8671-8307-475b-9e34-3551e659c524",
+    "title": "Maximum path sum",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-maximum-path-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-275'"
+  },
+  {
+    "taskId": "7ea42743-aa19-4e1a-a784-7ea1fc52d79a",
+    "title": "Check if a tree is a BST or BT",
+    "currentUrl": "https://leetcode.com/problems/validate-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-305'"
+  },
+  {
+    "taskId": "3032bd92-117e-484e-80c2-ee96f55ebce7",
+    "title": "Check if a tree is a BST or BT",
+    "currentUrl": "https://leetcode.com/problems/validate-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-305'"
+  },
+  {
+    "taskId": "0c4defcb-7830-42ad-8adc-e8da7dc9b244",
+    "title": "Check if a tree is a BST or BT",
+    "currentUrl": "https://leetcode.com/problems/validate-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-305'"
+  },
+  {
+    "taskId": "8dad48b6-770f-4df3-8d6e-cc452329de6f",
+    "title": "Check if a tree is a BST or BT",
+    "currentUrl": "https://leetcode.com/problems/validate-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-305'"
+  },
+  {
+    "taskId": "400c9011-b2aa-4888-ac42-cb2fb08175db",
+    "title": "Check if a tree is a BST or BT",
+    "currentUrl": "https://leetcode.com/problems/validate-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-305'"
+  },
+  {
+    "taskId": "507dd690-6c4b-4418-be43-a206723ef805",
+    "title": "Check if a tree is a BST or BT",
+    "currentUrl": "https://leetcode.com/problems/validate-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-305'"
+  },
+  {
+    "taskId": "b33a1609-720c-47ce-85f8-72342ae4358a",
+    "title": "Find the starting point in LL",
+    "currentUrl": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-127'"
+  },
+  {
+    "taskId": "ca99d796-1842-4385-af66-63d9c0d1afbe",
+    "title": "Find the starting point in LL",
+    "currentUrl": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-127'"
+  },
+  {
+    "taskId": "e77af0f8-7f9c-49f9-99fe-16284dcf62f7",
+    "title": "Reverse Pairs",
+    "currentUrl": "https://leetcode.com/problems/reverse-pairs?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-067'"
+  },
+  {
+    "taskId": "338beb13-8859-4883-94cb-53546ea0a265",
+    "title": "Find the city with the smallest number of neighbors in a threshold distance",
+    "currentUrl": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-350'"
+  },
+  {
+    "taskId": "8a65f55b-bf11-4139-8a69-6dc131dfc2a5",
+    "title": "Matrix Chain Multiplication|(DP-48)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/matrix-chain-multiplication?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-412'"
+  },
+  {
+    "taskId": "260afb2e-7789-427a-bb57-884c08b331b5",
+    "title": "Prim's Algorithm",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-the-mst-weight?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-355'"
+  },
+  {
+    "taskId": "a2236851-975e-4f2f-b70e-7fb79135db59",
+    "title": "Find the highest/lowest frequency element",
+    "currentUrl": "https://leetcode.com/problems/frequency-of-the-most-frequent-element?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-023'"
+  },
+  {
+    "taskId": "a1592897-6965-4b26-bd10-d884322dbcfb",
+    "title": "Kruskal's Algorithm",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-the-mst-weight?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-355'"
+  },
+  {
+    "taskId": "f6c3e88b-0a3f-4f2b-8fb6-351e1956b71b",
+    "title": "Longest Common Subsequence | (DP - 25)",
+    "currentUrl": "https://leetcode.com/problems/longest-common-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-388'"
+  },
+  {
+    "taskId": "7c5d5710-7d82-47bf-b3b6-15eaa62bc8f4",
+    "title": "Number of operations to make network connected",
+    "currentUrl": "https://leetcode.com/problems/number-of-operations-to-make-network-connected?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-356'"
+  },
+  {
+    "taskId": "a7c6920a-5738-4bc2-a3f9-277e708fa1f3",
+    "title": "Most stones removed with same rows or columns",
+    "currentUrl": "https://leetcode.com/problems/most-stones-removed-with-same-row-or-column?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-357'"
+  },
+  {
+    "taskId": "5073b5b8-5f38-4399-bb60-3eca847b0fe3",
+    "title": "Matrix Chain Multiplication | Bottom-Up|(DP-49)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/matrix-chain-multiplication?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-412'"
+  },
+  {
+    "taskId": "5bc77c16-7701-4970-a257-6106f4776b97",
+    "title": "Accounts merge",
+    "currentUrl": "https://leetcode.com/problems/accounts-merge?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-358'"
+  },
+  {
+    "taskId": "01bfebf6-6b8b-41e4-bd4e-3beb5b6539f2",
+    "title": "Check if two trees are identical or not",
+    "currentUrl": "https://leetcode.com/problems/same-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-276'"
+  },
+  {
+    "taskId": "619dc9c4-187a-4783-bf8b-87da0a2a0112",
+    "title": "Reverse LL in group of given size K",
+    "currentUrl": "https://leetcode.com/problems/reverse-nodes-in-k-group?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-141'"
+  },
+  {
+    "taskId": "189177fc-9f8d-4081-bd0c-09af611baf88",
+    "title": "Minimize Max Distance to Gas Station",
+    "currentUrl": "https://leetcode.com/problems/minimize-max-distance-to-gas-station?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-093'"
+  },
+  {
+    "taskId": "86da4efe-37d5-4686-842c-796af0df4fdf",
+    "title": "Minimum Window Substring",
+    "currentUrl": "https://leetcode.com/problems/minimum-window-substring?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-224'"
+  },
+  {
+    "taskId": "4848edb2-4409-4283-8877-cd125f151dd4",
+    "title": "Longest subarray with sum K (Positives + Negatives)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/longest-subarray-with-sum-k?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-042'"
+  },
+  {
+    "taskId": "a5cfbf21-0007-4070-9654-afc76885eb4d",
+    "title": "Vertical Order Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-279'"
+  },
+  {
+    "taskId": "a10e01e4-6911-4618-8d63-254cd1c574b6",
+    "title": "Search in Rotated Sorted Array I",
+    "currentUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-076'"
+  },
+  {
+    "taskId": "b8206f40-b7a3-43c2-8a82-60a4ca4fee31",
+    "title": "Sum of Beauty of all substring",
+    "currentUrl": "https://leetcode.com/problems/sum-of-beauty-of-all-substrings?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-114'"
+  },
+  {
+    "taskId": "163a7cca-95e6-4e68-a3fe-41c5e0ae6e9d",
+    "title": "Divide two integers without using multiplication, division and mod operator",
+    "currentUrl": "https://leetcode.com/problems/divide-two-integers?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-175'"
+  },
+  {
+    "taskId": "14b7d501-8488-4699-9f86-ca0d7bb99c61",
+    "title": "Sieve of Eratosthenes",
+    "currentUrl": "https://leetcode.com/problems/count-primes?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-183'"
+  },
+  {
+    "taskId": "640ed367-647e-49f2-acc5-7a6d33544ecd",
+    "title": "Rearrange the array in alternating positive and negative items",
+    "currentUrl": "https://leetcode.com/problems/rearrange-array-elements-by-sign?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-049'"
+  },
+  {
+    "taskId": "cb61ba88-ea05-4c7f-b756-240dba688181",
+    "title": "Find minimum in Rotated Sorted Array",
+    "currentUrl": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-078'"
+  },
+  {
+    "taskId": "f594f07e-df38-4cee-9707-91aa4ed26388",
+    "title": "Remove Nth node from the back of the LL",
+    "currentUrl": "https://leetcode.com/problems/remove-nth-node-from-end-of-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-131'"
+  },
+  {
+    "taskId": "14036cd0-5b22-4e8f-9f42-728e807cf2a0",
+    "title": "Reverse a stack using recursion",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/reverse-a-stack?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-149'"
+  },
+  {
+    "taskId": "940586aa-dd47-45a9-9695-6ab1741dd79b",
+    "title": "Functions (Pass by Reference and Value)",
+    "currentUrl": "https://www.hackerrank.com/challenges/c-tutorial-functions/problem?isFullScreen=true&utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-004'"
+  },
+  {
+    "taskId": "74906260-465d-478c-8dba-b595126b89ae",
+    "title": "Print the matrix in spiral manner",
+    "currentUrl": "https://leetcode.com/problems/spiral-matrix?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-055'"
+  },
+  {
+    "taskId": "d699ce5c-b501-4f1d-a30f-ab1b78d7da15",
+    "title": "Minimum days to make M bouquets",
+    "currentUrl": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-085'"
+  },
+  {
+    "taskId": "e404998a-d84c-407d-8ad9-5fffcf213fc3",
+    "title": "Longest Palindromic Subsequence | (DP-28)",
+    "currentUrl": "https://leetcode.com/problems/longest-palindromic-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-391'"
+  },
+  {
+    "taskId": "b24cf31f-7830-49fb-acbd-af1e20e329e1",
+    "title": "Symmetric Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/symmetric-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-283'"
+  },
+  {
+    "taskId": "52b31fb2-9bde-4009-806d-ff13db07a12e",
+    "title": "Minimum Insertions/Deletions to Convert String | (DP- 30)",
+    "currentUrl": "https://leetcode.com/problems/delete-operation-for-two-strings?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-393'"
+  },
+  {
+    "taskId": "e03ad1c9-30cc-48d1-868a-339fba83ffe0",
+    "title": "Requirements needed to construct a Unique Binary Tree | Theory",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/requirements-needed-to-construct-a-unique-bt?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-291'"
+  },
+  {
+    "taskId": "9d814bda-921e-449d-8cd6-0556c9387f05",
+    "title": "Edit Distance | (DP-33)",
+    "currentUrl": "https://leetcode.com/problems/edit-distance?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-396'"
+  },
+  {
+    "taskId": "e6c331d2-bad6-4df2-8a03-3dc58b599477",
+    "title": "Morris Preorder Traversal of a Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-296'"
+  },
+  {
+    "taskId": "46122672-e26f-4f5c-ba10-98009df4efc0",
+    "title": "Buy and Sell Stock - II|(DP-36)",
+    "currentUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-399'"
+  },
+  {
+    "taskId": "02428b72-4f07-423b-a04c-913337dfd4f2",
+    "title": "Word Search",
+    "currentUrl": "https://leetcode.com/problems/word-search?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-163'"
+  },
+  {
+    "taskId": "e2876973-5529-412d-bb7c-4bbefe06e596",
+    "title": "Combination Sum-II",
+    "currentUrl": "https://leetcode.com/problems/combination-sum-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-157'"
+  },
+  {
+    "taskId": "525d543f-e303-4a2f-83c3-ab6dc8fbaacb",
+    "title": "Power Set",
+    "currentUrl": "https://leetcode.com/problems/subsets?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-178'"
+  },
+  {
+    "taskId": "69b5fe71-1860-41d6-ba9a-6faee2062330",
+    "title": "Find Prime Factorisation of a Number using Sieve",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/prime-factorisation-of-a-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-184'"
+  },
+  {
+    "taskId": "a2337da4-767b-4180-8d1e-8a4bbc74dbd4",
+    "title": "Implement Min Stack",
+    "currentUrl": "https://leetcode.com/problems/min-stack?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-191'"
+  },
+  {
+    "taskId": "a18d9ce3-7337-439c-bf42-dcbba6db004a",
+    "title": "Longest Substring Without Repeating Characters",
+    "currentUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-214'"
+  },
+  {
+    "taskId": "1ce12fbb-ac0f-4bc8-8936-ed30ab5c3137",
+    "title": "Next Permutation",
+    "currentUrl": "https://leetcode.com/problems/next-permutation?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-050'"
+  },
+  {
+    "taskId": "83d28240-981a-4964-9159-eae83270e18a",
+    "title": "Single element in a Sorted Array",
+    "currentUrl": "https://leetcode.com/problems/single-element-in-a-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-080'"
+  },
+  {
+    "taskId": "1276ba0c-ecab-4ded-a62f-02049e73dd2f",
+    "title": "Delete the middle node of LL",
+    "currentUrl": "https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-132'"
+  },
+  {
+    "taskId": "09362d7b-5a41-46fc-94a1-8588a23621ee",
+    "title": "Longest Consecutive Sequence in an Array",
+    "currentUrl": "https://leetcode.com/problems/longest-consecutive-sequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-052'"
+  },
+  {
+    "taskId": "0cc815e2-cd74-46ac-9693-4f444c6d5533",
+    "title": "Find peak element",
+    "currentUrl": "https://leetcode.com/problems/find-peak-element?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-081'"
+  },
+  {
+    "taskId": "5ace20f8-4546-4e8d-81a3-2d039f2aad7d",
+    "title": "Sort LL",
+    "currentUrl": "https://leetcode.com/problems/sort-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-133'"
+  },
+  {
+    "taskId": "54e95772-a15a-4147-9fed-a448b4fe9951",
+    "title": "Generate Paranthesis",
+    "currentUrl": "https://leetcode.com/problems/generate-parentheses?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-151'"
+  },
+  {
+    "taskId": "9d9158b5-bcb4-43ab-a8e7-67dbd61624f8",
+    "title": "Time Complexity [Learn Basics, and then analyse in next Steps]",
+    "currentUrl": "https://takeuforward.org/time-complexity/time-and-space-complexity-strivers-a2z-dsa-course/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-005'"
+  },
+  {
+    "taskId": "3f6ca17e-a5f1-41f5-90dd-cdbb5b0efc31",
+    "title": "Subset Sum-I",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/subsets-i?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-158'"
+  },
+  {
+    "taskId": "053587a7-cf26-4579-8da2-332d39b082b4",
+    "title": "Find the two numbers appearing odd number of times",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/single-number---iii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-180'"
+  },
+  {
+    "taskId": "245dd000-a3f1-415c-a4fd-9201aca33d52",
+    "title": "Power(n, x)",
+    "currentUrl": "https://leetcode.com/problems/powx-n?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-185'"
+  },
+  {
+    "taskId": "696b0b70-3aec-4bbc-83d8-3fc6c5739f7f",
+    "title": "Infix to Postfix Conversion using Stack",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/infix-to-postfix-conversion?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-197'"
+  },
+  {
+    "taskId": "08698d84-19b1-485d-bf5a-c882135ec8ee",
+    "title": "Max Consecutive Ones III",
+    "currentUrl": "https://leetcode.com/problems/max-consecutive-ones-iii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-215'"
+  },
+  {
+    "taskId": "178b39bd-22d1-4fb5-9804-75b33599f1b6",
+    "title": "Bubble Sort",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/bubble-sort?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-025'"
+  },
+  {
+    "taskId": "978e6c6d-5913-4ae3-972b-3cbc8673ef72",
+    "title": "Set Matrix Zeros",
+    "currentUrl": "https://leetcode.com/problems/set-matrix-zeroes?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-053'"
+  },
+  {
+    "taskId": "5cdac9f4-3fb6-44e8-bb5a-4f7e500c9098",
+    "title": "Find the Nth root of a number using binary search",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-nth-root-of-a-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-083'"
+  },
+  {
+    "taskId": "16d8d4d6-c78d-4835-b0b5-9a5e0db6e099",
+    "title": "Sort a LL of 0's 1's and 2's by changing links",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/sort-a-ll-of-0's-1's-and-2's?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-134'"
+  },
+  {
+    "taskId": "97661b3e-384a-45c1-beea-55cdeef40064",
+    "title": "Print all subsequences/Power Set",
+    "currentUrl": "https://leetcode.com/problems/subsets?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-178'"
+  },
+  {
+    "taskId": "c3e0f4e7-1e69-41f9-8ae1-4bc136aa942e",
+    "title": "Patterns",
+    "currentUrl": "https://takeuforward.org/strivers-a2z-dsa-course/must-do-pattern-problems-before-starting-dsa/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-006'"
+  },
+  {
+    "taskId": "1cb45ae2-c396-4178-a2bd-1bc81d45d2e0",
+    "title": "Subset Sum-II",
+    "currentUrl": "https://leetcode.com/problems/subsets-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-159'"
+  },
+  {
+    "taskId": "273ab44c-ca74-4328-a428-cc6c1bb03552",
+    "title": "Prefix to Infix Conversion",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/prefix-to-infix-conversion?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-193'"
+  },
+  {
+    "taskId": "c38ea8ff-5da9-4d88-b906-53032f045e7f",
+    "title": "Fruit Into Baskets",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/fruit-into-baskets?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-216'"
+  },
+  {
+    "taskId": "e2bd4822-0d90-43a8-9945-6d2f4479aaf4",
+    "title": "Min Heap and Max Heap Implementation",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/implement-min-heap?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-227'"
+  },
+  {
+    "taskId": "a04b0e23-f70a-47d8-9054-949b47f9fa8a",
+    "title": "Fractional Knapsack Problem",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/fractional-knapsack?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-244'"
+  },
+  {
+    "taskId": "c8dde7e0-a4ad-4b9a-8c6c-a1ed5d0912bf",
+    "title": "Rotate Matrix by 90 degrees",
+    "currentUrl": "https://leetcode.com/problems/rotate-image?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-054'"
+  },
+  {
+    "taskId": "46e030f1-a8b0-4200-b546-b64f5388be08",
+    "title": "Koko Eating Bananas",
+    "currentUrl": "https://leetcode.com/problems/koko-eating-bananas?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-084'"
+  },
+  {
+    "taskId": "55cc41e5-8488-4c9c-bbdc-d8d39c4ca232",
+    "title": "Add 1 to a number represented by LL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/add-one-to-a-number-represented-by-ll/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-136'"
+  },
+  {
+    "taskId": "4ea15481-5449-48fc-9157-8120005f5c89",
+    "title": "Count all subsequences with sum K",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/count-all-subsequences-with-sum-k?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-381'"
+  },
+  {
+    "taskId": "17e82ef5-4342-404f-85cc-550f2a768024",
+    "title": "Java Collections",
+    "currentUrl": "https://codolio.com/question-tracker/sheet/strivers-a2z-dsa-sheet?category=custom#",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-008'"
+  },
+  {
+    "taskId": "bee9a54a-675d-4a30-95c9-ec289b38e40d",
+    "title": "Combination Sum - III",
+    "currentUrl": "https://leetcode.com/problems/combination-sum-iii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-160'"
+  },
+  {
+    "taskId": "c7228398-e979-4ecd-aca9-c688793bab5b",
+    "title": "Prefix to Postfix Conversion",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/prefix-to-postfix-conversion?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-194'"
+  },
+  {
+    "taskId": "7769873d-f91f-4bd2-bf6a-ce49c508997c",
+    "title": "longest repeating character replacement",
+    "currentUrl": "https://leetcode.com/problems/longest-repeating-character-replacement?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-217'"
+  },
+  {
+    "taskId": "5e8dd46a-6606-4275-a604-877b96a45667",
+    "title": "Convert min Heap to max Heap",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/convert-min-heap-to-max-heap?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-229'"
+  },
+  {
+    "taskId": "ebce3828-52d3-4ddb-88f5-0e7884ac7f47",
+    "title": "Valid Paranthesis Checker",
+    "currentUrl": "https://leetcode.com/problems/valid-parenthesis-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-247'"
+  },
+  {
+    "taskId": "407a0046-9d89-471e-b3b9-2654d9f85177",
+    "title": "Check Palindrome",
+    "currentUrl": "https://leetcode.com/problems/palindrome-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-011'"
+  },
+  {
+    "taskId": "4fcf2440-c566-4ceb-8ebb-4bb90415e488",
+    "title": "Add 2 numbers in LL",
+    "currentUrl": "https://leetcode.com/problems/add-two-numbers?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-137'"
+  },
+  {
+    "taskId": "b83d451e-57d7-4daf-ae8b-c7b73f6cb0d0",
+    "title": "Letter Combinations of a Phone number",
+    "currentUrl": "https://leetcode.com/problems/letter-combinations-of-a-phone-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-161'"
+  },
+  {
+    "taskId": "ef04225c-7487-43c9-b99d-3fe3921c4a21",
+    "title": "Armstrong Numbers",
+    "currentUrl": "https://leetcode.com/problems/armstrong-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-012'"
+  },
+  {
+    "taskId": "1f31a6f4-c6ad-42b3-81f1-e8cef12d0cc3",
+    "title": "Postfix to Prefix Conversion",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/postfix-to-prefix-conversion?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-195'"
+  },
+  {
+    "taskId": "25a50938-c9ee-41f6-9d60-8c526767f612",
+    "title": "Binary subarray with sum",
+    "currentUrl": "https://leetcode.com/problems/binary-subarrays-with-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-218'"
+  },
+  {
+    "taskId": "97aa2c37-ad98-430d-a2bb-82b9666c259a",
+    "title": "Jump Game",
+    "currentUrl": "https://leetcode.com/problems/jump-game?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-249'"
+  },
+  {
+    "taskId": "e8460882-7f01-433f-937c-cdbb35047001",
+    "title": "Level order Traversal / Level order traversal in spiral form",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-level-order-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-266'"
+  },
+  {
+    "taskId": "426eb9ee-518d-42bd-abe1-e55c024ae0fd",
+    "title": "Count subarrays with given sum",
+    "currentUrl": "https://leetcode.com/problems/subarray-sum-equals-k?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-056'"
+  },
+  {
+    "taskId": "e9c1a550-e934-4e32-9721-8ce7c0d45dcf",
+    "title": "Find the smallest Divisor",
+    "currentUrl": "https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-086'"
+  },
+  {
+    "taskId": "c755c767-63b6-42d1-b001-7ff3137b627c",
+    "title": "Delete all occurrences of a key in DLL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/delete-all-occurrences-of-a-key-in-dll?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-138'"
+  },
+  {
+    "taskId": "e411b450-99f9-4435-bca5-3b6326be5f03",
+    "title": "Palindrome Partitioning",
+    "currentUrl": "https://leetcode.com/problems/palindrome-partitioning?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-162'"
+  },
+  {
+    "taskId": "d93c3d60-1057-4817-ab20-af15ec2bd322",
+    "title": "Print all Divisors",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/divisors-of-a-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-182'"
+  },
+  {
+    "taskId": "34dc86b5-2da1-45af-beaa-9808be035401",
+    "title": "Convert Infix To Prefix Notation",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/infix-to-postfix-conversion?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-197'"
+  },
+  {
+    "taskId": "0c48eddb-e4fa-4707-a820-f2e74278bbf2",
+    "title": "Kth smallest element in an array [use priority queue]",
+    "currentUrl": "https://takeuforward.org/data-structure/kth-largest-smallest-element-in-an-array/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-231'"
+  },
+  {
+    "taskId": "760423c2-ca56-4120-b3fa-1c7778785cb0",
+    "title": "Jump Game 2",
+    "currentUrl": "https://leetcode.com/problems/jump-game-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-250'"
+  },
+  {
+    "taskId": "8ddba62a-8e45-4ca7-9e02-3f5d7222f17a",
+    "title": "Preorder, Inorder, and Postorder Traversal in one Traversal",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/pre,-post,-inorder-in-one-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-271'"
+  },
+  {
+    "taskId": "7a466aaa-5d33-4b5f-a671-e760411b8f0d",
+    "title": "Majority Element (n/3 times)",
+    "currentUrl": "https://leetcode.com/problems/majority-element-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-058'"
+  },
+  {
+    "taskId": "2b744f3a-051f-44d9-9fe9-2ef180da7151",
+    "title": "Capacity to Ship Packages within D Days",
+    "currentUrl": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-087'"
+  },
+  {
+    "taskId": "0f1604e4-7c70-4f39-809e-b30b5f9a0ecb",
+    "title": "Rotate a LL",
+    "currentUrl": "https://leetcode.com/problems/rotate-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-142'"
+  },
+  {
+    "taskId": "df0d71e9-86ab-4e0b-b92d-345bd7ef5533",
+    "title": "Factorial of N numbers",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/factorial-of-a-given-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-017'"
+  },
+  {
+    "taskId": "cbf7ccef-6c04-4c62-b3e2-54c7d5c68b2b",
+    "title": "Next Greater Element 2",
+    "currentUrl": "https://leetcode.com/problems/next-greater-element-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-199'"
+  },
+  {
+    "taskId": "e3fc9ee5-a036-499b-afcd-8339d7c6126a",
+    "title": "Number of substring containing all three characters",
+    "currentUrl": "https://leetcode.com/problems/number-of-substrings-containing-all-three-characters?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-220'"
+  },
+  {
+    "taskId": "19e5701b-cbfc-4349-8809-7e91ee4ef24b",
+    "title": "Replace each array element by its corresponding rank",
+    "currentUrl": "https://takeuforward.org/data-structure/replace-elements-by-its-rank-in-the-array/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-234'"
+  },
+  {
+    "taskId": "0ed0e558-d606-4c7c-9b68-4a31db3d4acc",
+    "title": "Minimum number of platforms required for a railway",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/minimum-number-of-platforms-required-for-a-railway?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-251'"
+  },
+  {
+    "taskId": "5ba7710d-5c4a-4ac1-ae92-6d1dff4c7197",
+    "title": "Zig Zag Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-277'"
+  },
+  {
+    "taskId": "c35dc4a1-ab32-43ee-aea9-6b080b820154",
+    "title": "Insertion Sort",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/recursive-insertion-sort?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-029'"
+  },
+  {
+    "taskId": "8b4a5d44-9f5c-4f62-9fd3-9f1a9cbda047",
+    "title": "3-Sum Problem",
+    "currentUrl": "https://leetcode.com/problems/3sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-059'"
+  },
+  {
+    "taskId": "a8a1dfc2-9558-4cfb-978f-c219db18cc8b",
+    "title": "Book Allocation Problem",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/book-allocation-problem?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-090'"
+  },
+  {
+    "taskId": "d78ff135-fe9c-49b7-b941-e56e3ef337ee",
+    "title": "Flattening of LL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/flattening-of-ll?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-143'"
+  },
+  {
+    "taskId": "9600d5fc-00d0-4876-a846-4f9e02931b17",
+    "title": "4-Sum Problem",
+    "currentUrl": "https://leetcode.com/problems/4sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-060'"
+  },
+  {
+    "taskId": "85d13c72-fbe7-4c4e-97bd-46445697af74",
+    "title": "Painter's partition",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/painters-partition?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-092'"
+  },
+  {
+    "taskId": "6f1e3663-8e40-4bbb-8ea4-ce5c0a535516",
+    "title": "Clone a Linked List with random and next pointer",
+    "currentUrl": "https://leetcode.com/problems/copy-list-with-random-pointer?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-144'"
+  },
+  {
+    "taskId": "c8bc090f-0e74-4873-a62b-494ee819fb44",
+    "title": "Rat in a Maze",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/rat-in-a-maze?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-165'"
+  },
+  {
+    "taskId": "d3691942-7538-40db-91d0-6f4eb86b6532",
+    "title": "Reverse an array",
+    "currentUrl": "https://leetcode.com/problems/reverse-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-018'"
+  },
+  {
+    "taskId": "332bb59b-b127-4f10-be72-bb73c25fac06",
+    "title": "Number of NGEs to the right",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/number-of-greater-elements-to-the-right?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-201'"
+  },
+  {
+    "taskId": "c0761f8d-015f-402c-9280-2895814cdf12",
+    "title": "Maximum point you can obtain from cards",
+    "currentUrl": "https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-221'"
+  },
+  {
+    "taskId": "6e947f75-83fc-41fe-9b41-60e5716c2674",
+    "title": "Task Scheduler",
+    "currentUrl": "https://leetcode.com/problems/task-scheduler?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-235'"
+  },
+  {
+    "taskId": "96161323-45c3-4dbc-aa45-cf4d423f641c",
+    "title": "Job sequencing Problem",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/job-sequencing-problem?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-252'"
+  },
+  {
+    "taskId": "49a87fa4-0f22-4d80-b997-5899d38a1712",
+    "title": "Recursive Bubble Sort",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/recursive-bubble-sort?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-028'"
+  },
+  {
+    "taskId": "05dd5827-4095-482e-a7a8-f4c686a65ccb",
+    "title": "Largest Subarray with 0 Sum",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/largest-subarray-with-sum-0?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-061'"
+  },
+  {
+    "taskId": "4d40726f-df92-4893-ba30-8fc59faf30cd",
+    "title": "Kth element of 2 sorted arrays",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/kth-element-of-2-sorted-arrays?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-095'"
+  },
+  {
+    "taskId": "28b10f76-b35d-4cba-9253-83ae25f4d145",
+    "title": "Word Break",
+    "currentUrl": "https://leetcode.com/problems/word-break?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-166'"
+  },
+  {
+    "taskId": "48a22ecb-e3e4-455a-8bb3-42ca8d710ddc",
+    "title": "Check if a string is palindrome or not",
+    "currentUrl": "https://leetcode.com/problems/valid-palindrome?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-019'"
+  },
+  {
+    "taskId": "5676de78-1ffd-439e-8d51-7f6b7b428924",
+    "title": "Sum of subarray minimum",
+    "currentUrl": "https://leetcode.com/problems/sum-of-subarray-minimums?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-203'"
+  },
+  {
+    "taskId": "7a744096-af06-451d-a5fa-b53b94f843f5",
+    "title": "Longest Substring with At Most K Distinct Characters",
+    "currentUrl": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-222'"
+  },
+  {
+    "taskId": "5fb69a57-d37b-4ce9-92a9-457df75c363d",
+    "title": "Hands of Straights",
+    "currentUrl": "https://leetcode.com/problems/hand-of-straights?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-236'"
+  },
+  {
+    "taskId": "16afa46d-f921-4921-b104-47b73e903671",
+    "title": "Program for Shortest Job First (or SJF) CPU Scheduling",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/shortest-job-first?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-254'"
+  },
+  {
+    "taskId": "d1aceeb3-85aa-4e2c-a692-d8f53849851b",
+    "title": "Top View of Binary Tree",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/top-view-of-bt?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-280'"
+  },
+  {
+    "taskId": "ef2d7ba6-8e1b-4324-a825-e0a6fe90acfe",
+    "title": "Ceil in a Binary Search Tree",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/floor-and-ceil-in-a-bst?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-301'"
+  },
+  {
+    "taskId": "72b27a7c-58f5-4b44-81a1-0baea93e8f19",
+    "title": "Recursive Insertion Sort",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/recursive-insertion-sort?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-029'"
+  },
+  {
+    "taskId": "344f6c13-4458-4fa0-82e9-ec3b11242184",
+    "title": "Count number of subarrays with given xor K",
+    "currentUrl": "https://www.interviewbit.com/problems/subarray-with-given-xor?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-062'"
+  },
+  {
+    "taskId": "653bbd02-3869-4d71-a795-5dded09ca324",
+    "title": "Find the row with maximum number of 1's",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-row-with-maximum-1's?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-096'"
+  },
+  {
+    "taskId": "6fb794b3-53fe-4b0b-b3e9-4eba27ecfe5a",
+    "title": "M Coloring Problem",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/m-coloring-problem?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-167'"
+  },
+  {
+    "taskId": "b3e43eed-bc8a-44d2-b8e8-048b3d863f3b",
+    "title": "Fibonacci Number",
+    "currentUrl": "https://leetcode.com/problems/fibonacci-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-020'"
+  },
+  {
+    "taskId": "c8fb63e1-0abd-4512-8b99-f89ae31a1b15",
+    "title": "Asteroid Collision",
+    "currentUrl": "https://leetcode.com/problems/asteroid-collision?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-204'"
+  },
+  {
+    "taskId": "c0be401f-0a85-4094-8baf-7790546ea51b",
+    "title": "Design twitter",
+    "currentUrl": "https://leetcode.com/problems/design-twitter?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-237'"
+  },
+  {
+    "taskId": "81dd270c-0591-4e78-b4ce-7ac1de67e4fc",
+    "title": "Insert Interval",
+    "currentUrl": "https://leetcode.com/problems/insert-interval?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-256'"
+  },
+  {
+    "taskId": "8462ce1d-b5af-4800-ba62-b197affd75a6",
+    "title": "Bottom View of Binary Tree",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/bottom-view-of-bt?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-281'"
+  },
+  {
+    "taskId": "25a78d87-47c8-4016-a920-7d1bbc6e6d70",
+    "title": "Floor in a Binary Search Tree",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/floor-and-ceil-in-a-bst?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-301'"
+  },
+  {
+    "taskId": "717c1957-56e0-4c1d-8a53-742303fc76fe",
+    "title": "Connected Components | Logic Explanation",
+    "currentUrl": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-316'"
+  },
+  {
+    "taskId": "aa53ef61-661f-4409-8779-060ed9feb53c",
+    "title": "Remove outermost Paranthesis",
+    "currentUrl": "https://leetcode.com/problems/remove-outermost-parentheses?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-101'"
+  },
+  {
+    "taskId": "786aecc1-22d1-414b-98f9-8ea1697634ab",
+    "title": "Merge Overlapping Subintervals",
+    "currentUrl": "https://leetcode.com/problems/merge-intervals?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-257'"
+  },
+  {
+    "taskId": "ddd15da5-d4ae-4a2a-808a-f098b987865b",
+    "title": "Search in a 2 D matrix",
+    "currentUrl": "https://leetcode.com/problems/search-a-2d-matrix?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-097'"
+  },
+  {
+    "taskId": "34ac02f7-8dbb-45af-924f-90b28c74e253",
+    "title": "Word ladder - 1",
+    "currentUrl": "https://leetcode.com/problems/word-ladder?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-326'"
+  },
+  {
+    "taskId": "5d0d4827-f726-4e64-b54b-582cd6437582",
+    "title": "Sum of subarray ranges",
+    "currentUrl": "https://leetcode.com/problems/sum-of-subarray-ranges?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-205'"
+  },
+  {
+    "taskId": "62a1fa11-0966-4d6e-ad3e-da1602d3f67d",
+    "title": "3-d DP : Ninja and his friends (DP-13)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/ninja-and-his-friends?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-377'"
+  },
+  {
+    "taskId": "43bb05ae-d6dd-4f47-948a-f03d2178ee85",
+    "title": "Largest odd number in a string",
+    "currentUrl": "https://leetcode.com/problems/largest-odd-number-in-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-103'"
+  },
+  {
+    "taskId": "b3d56037-b376-41c3-a396-a97bc98e2287",
+    "title": "Merge Intervals",
+    "currentUrl": "https://leetcode.com/problems/merge-intervals?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-257'"
+  },
+  {
+    "taskId": "72a0a4c8-827b-4b55-b64b-7a150b073801",
+    "title": "Right/Left View of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-right-side-view?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-282'"
+  },
+  {
+    "taskId": "90df9ce7-e374-4bbb-b91d-1cc7ab657005",
+    "title": "Introduction to LinkedList, learn about struct, and how is node represented",
+    "currentUrl": "https://takeuforward.org/linked-list/linked-list-introduction?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-116'"
+  },
+  {
+    "taskId": "5ecbf381-84a2-4d30-84a3-72f4d9179df5",
+    "title": "Count Inversions",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/count-inversions?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-066'"
+  },
+  {
+    "taskId": "003acc96-ea72-4c77-bc56-644bc7141205",
+    "title": "Search in a row and column wise sorted matrix",
+    "currentUrl": "https://leetcode.com/problems/search-a-2d-matrix-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-098'"
+  },
+  {
+    "taskId": "6bfc482e-4cd6-4a4c-bc10-ad9dbc837805",
+    "title": "Word ladder - 2",
+    "currentUrl": "https://leetcode.com/problems/word-ladder-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-327'"
+  },
+  {
+    "taskId": "4ae8069c-ee94-4a10-89dc-353ff23d64e9",
+    "title": "Remove k Digits",
+    "currentUrl": "https://leetcode.com/problems/remove-k-digits?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-206'"
+  },
+  {
+    "taskId": "39abdf20-8f70-486f-963e-6763978eaf84",
+    "title": "Partition Set Into 2 Subsets With Min Absolute Sum Diff (DP- 16)",
+    "currentUrl": "https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-380'"
+  },
+  {
+    "taskId": "c6567147-dd97-42f4-9f70-9484a808a3d1",
+    "title": "Maximum Sum Combination",
+    "currentUrl": "https://www.interviewbit.com/problems/maximum-sum-combinations?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-240'"
+  },
+  {
+    "taskId": "1028597c-a464-4a6f-9e34-b6c1f54f5269",
+    "title": "Longest Common Prefix",
+    "currentUrl": "https://leetcode.com/problems/longest-common-prefix?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-104'"
+  },
+  {
+    "taskId": "64cd869c-e483-4151-b010-318c8569c8a5",
+    "title": "Non-overlapping Intervals",
+    "currentUrl": "https://leetcode.com/problems/non-overlapping-intervals?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-258'"
+  },
+  {
+    "taskId": "e6268af2-b95b-4d35-a80b-7ed5af4f748b",
+    "title": "Root to Node Path in Binary Tree",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/print-root-to-note-path-in-bt?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-284'"
+  },
+  {
+    "taskId": "8eb5bb4d-56aa-4988-a3c9-6d03097ae6c6",
+    "title": "Search an element in the LL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/search-in-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-118'"
+  },
+  {
+    "taskId": "6b6cf874-08e6-4437-9a36-0c4e95dec041",
+    "title": "Maximum Product Subarray",
+    "currentUrl": "https://leetcode.com/problems/maximum-product-subarray?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-068'"
+  },
+  {
+    "taskId": "96af910c-d9c6-43ab-926f-b2ab7ad14e54",
+    "title": "Find Peak Element (2D Matrix)",
+    "currentUrl": "https://leetcode.com/problems/find-a-peak-element-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-099'"
+  },
+  {
+    "taskId": "b9c8b030-fc0e-4846-8f35-86f58c307e59",
+    "title": "Number of Distinct Islands [dfs multisource]",
+    "currentUrl": "https://leetcode.com/problems/number-of-distinct-islands-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-328'"
+  },
+  {
+    "taskId": "b3407521-02f3-493c-b7a1-8af56c7788e5",
+    "title": "Stock span problem",
+    "currentUrl": "https://leetcode.com/problems/online-stock-span?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-210'"
+  },
+  {
+    "taskId": "ed350081-41ac-43f2-b4e8-ca11e6e62a56",
+    "title": "Print Longest Common Subsequence | (DP - 26)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/longest-common-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-389'"
+  },
+  {
+    "taskId": "3de75c38-b41a-423a-8e0a-ead5ea0a9883",
+    "title": "K most frequent elements",
+    "currentUrl": "https://leetcode.com/problems/top-k-frequent-elements?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-242'"
+  },
+  {
+    "taskId": "8d571306-f03b-4664-93ae-069186630d52",
+    "title": "Isomorphic String",
+    "currentUrl": "https://leetcode.com/problems/isomorphic-strings?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-105'"
+  },
+  {
+    "taskId": "b3fde691-df0f-4bd0-b998-bc27cc36a42c",
+    "title": "LCA in Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-285'"
+  },
+  {
+    "taskId": "f5324652-2a2e-4c9e-b25e-1e753ff2d9a9",
+    "title": "Insert a given Node in Binary Search Tree",
+    "currentUrl": "https://leetcode.com/problems/insert-into-a-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-302'"
+  },
+  {
+    "taskId": "65015d84-0fb4-4b38-8136-177ea69ea51c",
+    "title": "Introduction to DLL, learn about struct, and how is node represented",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/introduction-to-doubly-ll?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-119'"
+  },
+  {
+    "taskId": "50cad426-f109-413e-bbaf-b4a8379418b0",
+    "title": "Second Largest Element in an Array without sorting",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/second-largest-element?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-031'"
+  },
+  {
+    "taskId": "8003554e-ce5d-4d6e-8f9a-63045cddd5a6",
+    "title": "Maximum width of a Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/maximum-width-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-286'"
+  },
+  {
+    "taskId": "7a61715b-6bf8-4cf8-9738-0f0f1789e6e6",
+    "title": "Binary Search to find X in sorted array",
+    "currentUrl": "https://leetcode.com/problems/binary-search?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-069'"
+  },
+  {
+    "taskId": "c3c8792f-12df-4a34-90fb-0a599075b9a6",
+    "title": "Check if the array is sorted",
+    "currentUrl": "https://leetcode.com/problems/check-if-array-is-sorted-and-rotated?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-032'"
+  },
+  {
+    "taskId": "d171b7b2-858f-4fd2-ac7e-941eb242b790",
+    "title": "LRU cache (IMPORTANT)",
+    "currentUrl": "https://leetcode.com/problems/lru-cache?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-212'"
+  },
+  {
+    "taskId": "1f5efd45-dbda-4d31-9392-c959fa05d458",
+    "title": "Check for Children Sum Property",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/children-sum-property-in-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-287'"
+  },
+  {
+    "taskId": "7548fc92-77be-4556-be0e-e014418ea864",
+    "title": "Delete a Node in Binary Search Tree",
+    "currentUrl": "https://leetcode.com/problems/delete-node-in-a-bst?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-303'"
+  },
+  {
+    "taskId": "b9e180f6-362a-4457-af03-2f32a775e2f7",
+    "title": "Number of provinces (leetcode)",
+    "currentUrl": "https://leetcode.com/problems/number-of-provinces?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-317'"
+  },
+  {
+    "taskId": "f61b2bce-d9a7-43f4-b91c-92c8f597d9da",
+    "title": "Dynamic Programming Introduction",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/introduction-to-dp?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-365'"
+  },
+  {
+    "taskId": "fd57f9a8-4f33-4cdd-b8d9-5f1020a725ed",
+    "title": "check whether one string is a rotation of another",
+    "currentUrl": "https://leetcode.com/problems/rotate-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-106'"
+  },
+  {
+    "taskId": "43b88bd6-d3ae-49e1-931b-db6d4ad21186",
+    "title": "Insert a node in DLL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/insert-node-before-head-in-dll?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-120'"
+  },
+  {
+    "taskId": "b0cf8555-8768-4da7-9ad9-72ba36a980e2",
+    "title": "Implement TRIE | INSERT | SEARCH | STARTSWITH",
+    "currentUrl": "https://leetcode.com/problems/implement-trie-prefix-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-420'"
+  },
+  {
+    "taskId": "c08415cf-9a15-4083-838c-9d6e5a51d1b5",
+    "title": "Generate all binary strings",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/generate-binary-strings-without-consecutive-1s?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-150'"
+  },
+  {
+    "taskId": "324b1d64-dcf0-4d38-86f6-ff99931fd9c8",
+    "title": "Introduction to Bit Manipulation [Theory]",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/introduction-to-bits-and-tricks?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-170'"
+  },
+  {
+    "taskId": "f6a57499-2f27-4154-ad93-dee5e1648f70",
+    "title": "All Divisors of a Number",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/divisors-of-a-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-182'"
+  },
+  {
+    "taskId": "9f2a80b5-7f5e-4c86-b6c3-c7365bf6d23d",
+    "title": "Introduction to Priority Queues using Binary Heaps",
+    "currentUrl": "https://takeuforward.org/data-structure/introduction-to-priority-queues-using-binary-heaps?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-226'"
+  },
+  {
+    "taskId": "370b73e2-2f4e-4cdb-8706-84c3d0d56adb",
+    "title": "Remove duplicates from Sorted array",
+    "currentUrl": "https://leetcode.com/problems/remove-duplicates-from-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-033'"
+  },
+  {
+    "taskId": "d73ca5c6-e8ce-44bb-aeba-3b024371ce16",
+    "title": "Print all the Nodes at a distance of K in a Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-288'"
+  },
+  {
+    "taskId": "12d347db-af1c-432d-8525-dbfe97f630d2",
+    "title": "Find K-th smallest/largest element in BST",
+    "currentUrl": "https://leetcode.com/problems/kth-smallest-element-in-a-bst?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-304'"
+  },
+  {
+    "taskId": "596a6b62-23c9-4f20-b4a7-73deddc07874",
+    "title": "Connected Components Problem in Matrix",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/connected-components?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-318'"
+  },
+  {
+    "taskId": "c1cfe9a4-6776-4849-bb2f-0fd0a8d6751d",
+    "title": "Implement Upper Bound",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/upper-bound?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-071'"
+  },
+  {
+    "taskId": "1e98ef6d-5ab5-4be3-b863-34f2734436a1",
+    "title": "Check if two strings are anagram of each other",
+    "currentUrl": "https://leetcode.com/problems/valid-anagram?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-107'"
+  },
+  {
+    "taskId": "1ed58b69-4e32-470e-b127-a297e8480d3e",
+    "title": "Delete a node in DLL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/delete-head-of-dll?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-121'"
+  },
+  {
+    "taskId": "9b6f70e3-40db-4a92-af7c-2a8b4b8f243f",
+    "title": "Check if the i-th bit is set or not",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/check-if-the-i-th-bit-is-set-or-not?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-171'"
+  },
+  {
+    "taskId": "3cbc18ff-fb9e-43b6-b87c-adae0ff3724d",
+    "title": "Implement Stack using Arrays",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/implement-stack-using-arrays?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-186'"
+  },
+  {
+    "taskId": "fa3f89ea-4eaa-4528-9181-9a08269a5851",
+    "title": "Check if an array represents a min-heap or not",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/check-if-an-array-represents-a-min-heap-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-228'"
+  },
+  {
+    "taskId": "6c34d62d-5ee2-4a0e-972a-49ff0fa1eaa3",
+    "title": "Assign Cookies",
+    "currentUrl": "https://leetcode.com/problems/assign-cookies?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-243'"
+  },
+  {
+    "taskId": "c405aaf1-e77c-4d66-a3ea-996cab261559",
+    "title": "Count total Nodes in a COMPLETE Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/count-complete-tree-nodes?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-290'"
+  },
+  {
+    "taskId": "c0fe6b80-5dc3-4724-b8bf-1cf4694dd8e7",
+    "title": "Move Zeros to end",
+    "currentUrl": "https://leetcode.com/problems/move-zeroes?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-036'"
+  },
+  {
+    "taskId": "b05398b0-f65f-4af1-b0e6-b752d6cdc5d4",
+    "title": "Construct Binary Tree from inorder and preorder",
+    "currentUrl": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-292'"
+  },
+  {
+    "taskId": "d84b7147-c470-4edb-89ad-f0463a775ab4",
+    "title": "Rotten Oranges",
+    "currentUrl": "https://leetcode.com/problems/rotting-oranges?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-319'"
+  },
+  {
+    "taskId": "375c07cc-518c-41eb-b814-e4ed813d8a38",
+    "title": "Frog Jump with k distances(DP-4)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/frog-jump-with-k-distances?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-368'"
+  },
+  {
+    "taskId": "8af4cc4d-484d-4dc1-a359-dcfaa8001ac7",
+    "title": "Search Insert Position",
+    "currentUrl": "https://leetcode.com/problems/search-insert-position?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-072'"
+  },
+  {
+    "taskId": "34c77941-52af-465b-bcc0-98df8fb84ed0",
+    "title": "Maximum Nesting Depth of Paranthesis",
+    "currentUrl": "https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-109'"
+  },
+  {
+    "taskId": "09e39323-63bc-4e38-a220-7a8e8d856fda",
+    "title": "Longest String with All Prefixes",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/longest-word-with-all-prefixes?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-422'"
+  },
+  {
+    "taskId": "d930ddf2-a610-403d-8518-4529761ce3b9",
+    "title": "Check if a number is power of 2 or not",
+    "currentUrl": "https://leetcode.com/problems/power-of-two?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-172'"
+  },
+  {
+    "taskId": "5ee8a3a2-c036-439c-b8fe-b3056d444984",
+    "title": "Implement Stack using Queue",
+    "currentUrl": "https://leetcode.com/problems/implement-stack-using-queues?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-187'"
+  },
+  {
+    "taskId": "2fd150ae-289a-47b7-a8a4-631631f3d69b",
+    "title": "Kth largest element in a stream of running integers",
+    "currentUrl": "https://leetcode.com/problems/kth-largest-element-in-a-stream?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-239'"
+  },
+  {
+    "taskId": "c082386a-7146-46d2-bb9b-21df185310f7",
+    "title": "Greedy algorithm to find minimum number of coins",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/minimum-coins?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-245'"
+  },
+  {
+    "taskId": "2976829a-c304-409f-b7ba-b787f51c569b",
+    "title": "Find missing number in an array",
+    "currentUrl": "https://leetcode.com/problems/missing-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-038'"
+  },
+  {
+    "taskId": "0285ab07-d8f1-4231-a5b0-8f99101f6b06",
+    "title": "Alien dictionary",
+    "currentUrl": "https://leetcode.com/problems/alien-dictionary?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-337'"
+  },
+  {
+    "taskId": "5bcfd971-31f4-42ff-817a-96182fc70d40",
+    "title": "Maximum Consecutive Ones",
+    "currentUrl": "https://leetcode.com/problems/max-consecutive-ones?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-039'"
+  },
+  {
+    "taskId": "9fad6af2-e508-4d08-a0f1-e526bd32ffea",
+    "title": "Construct the Binary Tree from Postorder and Inorder Traversal",
+    "currentUrl": "https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-293'"
+  },
+  {
+    "taskId": "2f2ec996-c569-4da7-9c99-f0c7a4048b43",
+    "title": "LCA in Binary Search Tree",
+    "currentUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-306'"
+  },
+  {
+    "taskId": "cb98d039-6cb4-4400-81d4-f8a3e48061ae",
+    "title": "Maximum sum of non-adjacent elements (DP 5)",
+    "currentUrl": "https://leetcode.com/problems/house-robber?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-369'"
+  },
+  {
+    "taskId": "a4808d4f-532f-4dbd-b942-57f41bc7129d",
+    "title": "Count occurrences of a number in a sorted array with duplicates",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/count-occurrences-in-a-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-075'"
+  },
+  {
+    "taskId": "cbf0aa70-78ec-4cee-bebb-d2086de8270b",
+    "title": "Roman Number to Integer and vice versa",
+    "currentUrl": "https://leetcode.com/problems/roman-to-integer?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-110'"
+  },
+  {
+    "taskId": "ab2d34b1-4485-4e0b-b9b3-522730ff11c9",
+    "title": "Middle of a LinkedList [TortoiseHare Method]",
+    "currentUrl": "https://leetcode.com/problems/middle-of-the-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-123'"
+  },
+  {
+    "taskId": "81222f1e-4c29-478a-87df-fe7c9a6e61ad",
+    "title": "Number of Distinct Substrings in a String",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/number-of-distinct-substrings-in-a-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-423'"
+  },
+  {
+    "taskId": "2ab6390e-7165-4ee4-9980-166bdd373d8d",
+    "title": "Set/Unset the rightmost unset bit",
+    "currentUrl": "https://www.hackerrank.com/challenges/maximizing-xor?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-174'"
+  },
+  {
+    "taskId": "5c74dedc-cfb2-4c61-9d54-b4256e270429",
+    "title": "Implement Queue using Stack",
+    "currentUrl": "https://leetcode.com/problems/implement-queue-using-stacks?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-188'"
+  },
+  {
+    "taskId": "db4997bd-754f-4f40-b5cb-d63fbf9bd56c",
+    "title": "Lemonade Change",
+    "currentUrl": "https://leetcode.com/problems/lemonade-change?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-246'"
+  },
+  {
+    "taskId": "81898c0b-7ee3-47a7-8da4-789f7f380e06",
+    "title": "Flatten Binary Tree to LinkedList",
+    "currentUrl": "https://leetcode.com/problems/flatten-binary-tree-to-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-297'"
+  },
+  {
+    "taskId": "ced96cf5-d039-4a7f-a5fa-9bb12b7347c8",
+    "title": "Find the number that appears once, and other numbers twice.",
+    "currentUrl": "https://leetcode.com/problems/single-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-424'"
+  },
+  {
+    "taskId": "16003da7-d953-4835-a5d1-43d5679899f6",
+    "title": "Construct a BST from a preorder traversal",
+    "currentUrl": "https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-307'"
+  },
+  {
+    "taskId": "037a3c9b-c42d-4f8d-a670-3829a7c23308",
+    "title": "Cycle Detection in unirected Graph (bfs)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/detect-a-cycle-in-an-undirected-graph?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-322'"
+  },
+  {
+    "taskId": "3715dacb-6a3e-4e5d-afde-2832b8b99e8d",
+    "title": "House Robber (DP 6)",
+    "currentUrl": "https://leetcode.com/problems/house-robber-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-370'"
+  },
+  {
+    "taskId": "e9ae2654-c2fe-4e01-b1a2-ba532aaef87a",
+    "title": "Find out how many times has an array been rotated",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-out-how-many-times-the-array-is-rotated?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-079'"
+  },
+  {
+    "taskId": "dab58d6b-8a26-4cf0-aceb-bde53c4044fd",
+    "title": "Reverse a LinkedList [Iterative]",
+    "currentUrl": "https://leetcode.com/problems/reverse-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-125'"
+  },
+  {
+    "taskId": "2a60f1b0-aff3-49cb-befd-8ef132733c56",
+    "title": "Maximum XOR of two numbers in an array",
+    "currentUrl": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-425'"
+  },
+  {
+    "taskId": "f212860f-bdd6-4bfb-9790-d7a97a66f274",
+    "title": "Minimum number of bracket reversals needed to make an expression balanced",
+    "currentUrl": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-427'"
+  },
+  {
+    "taskId": "c8b6a1c2-10ad-4b7a-986d-78896c7319e7",
+    "title": "Why priority Queue is used in Djisktra's Algorithm",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/dijkstra's-algorithm?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-341'"
+  },
+  {
+    "taskId": "ad54b94f-6cf1-4250-a54f-dd5a9a77de66",
+    "title": "Count number of bits to be flipped to convert A to B",
+    "currentUrl": "https://leetcode.com/problems/minimum-bit-flips-to-convert-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-176'"
+  },
+  {
+    "taskId": "1188616b-b4fe-49f1-916d-986d93d5a5f9",
+    "title": "Implement stack using Linkedlist",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/implement-stack-using-linkedlist?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-189'"
+  },
+  {
+    "taskId": "4412e4d5-12cf-4d70-877d-9fcfa1d41521",
+    "title": "N meetings in one room",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/n-meetings-in-one-room?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-248'"
+  },
+  {
+    "taskId": "85bd9810-d4a1-4858-af49-6cd1922b5da7",
+    "title": "Introduction to Trees",
+    "currentUrl": "https://takeuforward.org/binary-tree/introduction-to-trees/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-259'"
+  },
+  {
+    "taskId": "d6b604d8-0b15-490a-b445-41932c02806d",
+    "title": "Inorder Successor/Predecessor in BST",
+    "currentUrl": "https://leetcode.com/problems/inorder-successor-in-bst?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-308'"
+  },
+  {
+    "taskId": "a149ee26-bac3-46d2-9d03-5716e9d78380",
+    "title": "2Sum Problem",
+    "currentUrl": "https://leetcode.com/problems/two-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-043'"
+  },
+  {
+    "taskId": "fa8d4994-4ab4-4f78-9bb8-cef08c925785",
+    "title": "Number of island II",
+    "currentUrl": "https://leetcode.com/problems/number-of-islands-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-359'"
+  },
+  {
+    "taskId": "d3a39916-ca02-4628-ad59-29290e8531d5",
+    "title": "Majority Element (>n/2 times)",
+    "currentUrl": "https://leetcode.com/problems/majority-element?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-045'"
+  },
+  {
+    "taskId": "cf18c891-6a74-4d6b-b31d-3320879d6209",
+    "title": "Reverse a LL [Recursive]",
+    "currentUrl": "https://leetcode.com/problems/reverse-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-125'"
+  },
+  {
+    "taskId": "714a7d16-7a1a-4c4c-ad39-20368def1b0d",
+    "title": "Maximum XOR With an Element From Array",
+    "currentUrl": "https://leetcode.com/problems/maximum-xor-with-an-element-from-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-426'"
+  },
+  {
+    "taskId": "5f00eb69-6e4e-4b41-a124-b7c7d2b2f266",
+    "title": "Count and say",
+    "currentUrl": "https://leetcode.com/problems/count-and-say?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-428'"
+  },
+  {
+    "taskId": "7d1c404d-c9fa-460e-a3bc-5482adea92e8",
+    "title": "Check for balanced paranthesis",
+    "currentUrl": "https://leetcode.com/problems/valid-parentheses?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-190'"
+  },
+  {
+    "taskId": "552d722c-eaf4-48b7-86f2-5a76e3e809a2",
+    "title": "Program for Least Recently Used (LRU) Page Replacement Algorithm",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/lru-cache?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-255'"
+  },
+  {
+    "taskId": "88ecce46-2540-4b59-b028-eea11314f7ac",
+    "title": "Binary Tree Representation in C++",
+    "currentUrl": "https://takeuforward.org/binary-tree/binary-tree-representation-in-c/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-260'"
+  },
+  {
+    "taskId": "5f403af8-1a89-4307-a48a-d11b198d8f20",
+    "title": "Stock Buy and Sell",
+    "currentUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-398'"
+  },
+  {
+    "taskId": "52b54147-0feb-4467-adf1-7ba373549491",
+    "title": "Kth Missing Positive Number",
+    "currentUrl": "https://leetcode.com/problems/kth-missing-positive-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-088'"
+  },
+  {
+    "taskId": "0e1fb0e8-8469-41ab-ad7a-ff48260b48d4",
+    "title": "Recover BST | Correct BST with two nodes swapped",
+    "currentUrl": "https://leetcode.com/problems/recover-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-311'"
+  },
+  {
+    "taskId": "05ffac94-4bd1-416c-a723-1ec19881554b",
+    "title": "Cycle Detection in undirected Graph (dfs)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/detect-a-cycle-in-an-undirected-graph?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-322'"
+  },
+  {
+    "taskId": "1cd377a5-0575-4fc6-b3d3-606f18ed082a",
+    "title": "Leaders in an Array problem",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/leaders-in-an-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-051'"
+  },
+  {
+    "taskId": "42444b41-4a9f-448f-ba17-4ebb3b6261f9",
+    "title": "Making a Large Island",
+    "currentUrl": "https://leetcode.com/problems/making-a-large-island?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-360'"
+  },
+  {
+    "taskId": "986de7c5-0c29-4caf-b89a-b2a27507e8e5",
+    "title": "Pascal's Triangle",
+    "currentUrl": "https://leetcode.com/problems/pascals-triangle?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-057'"
+  },
+  {
+    "taskId": "67de2db3-b886-4e3b-911b-78daba1f3153",
+    "title": "Largest BST in Binary Tree",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/largest-bst-in-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-312'"
+  },
+  {
+    "taskId": "6bd0856c-39b1-477c-8a65-48d580da236b",
+    "title": "Grid Unique Paths : DP on Grids (DP8)",
+    "currentUrl": "https://leetcode.com/problems/unique-paths?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-372'"
+  },
+  {
+    "taskId": "59fd61d3-c7c9-4165-9aa5-8367b9c365ee",
+    "title": "Detect a loop in LL",
+    "currentUrl": "https://leetcode.com/problems/linked-list-cycle?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-126'"
+  },
+  {
+    "taskId": "59e0df6e-3f0d-46b3-8e47-221747cbe2ba",
+    "title": "Rabin Karp",
+    "currentUrl": "https://leetcode.com/problems/repeated-string-match?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-430'"
+  },
+  {
+    "taskId": "ca62ce46-49dc-4d90-8723-3de18ac52d7c",
+    "title": "Find xor of numbers from L to R",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/xor-of-numbers-in-a-given-range?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-179'"
+  },
+  {
+    "taskId": "b5ec85a9-fb32-4a4e-80dc-108d9e6fef41",
+    "title": "Postfix to Infix",
+    "currentUrl": "https://www.hackerrank.com/contests/ds-day-10/challenges/ques-14-d10/problem?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-196'"
+  },
+  {
+    "taskId": "c6a52432-2c97-4e38-b6fe-cc5fa8b0d415",
+    "title": "Binary Tree Representation in Java",
+    "currentUrl": "https://takeuforward.org/binary-tree/binary-tree-representation-in-java/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-261'"
+  },
+  {
+    "taskId": "824dde30-ef90-46f9-8a9d-e609135aeced",
+    "title": "0/1 Matrix (Bfs Problem)",
+    "currentUrl": "https://leetcode.com/problems/01-matrix?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-323'"
+  },
+  {
+    "taskId": "283c8c23-041f-4828-b6de-a012cf7df319",
+    "title": "Merge two sorted arrays without extra space",
+    "currentUrl": "https://leetcode.com/problems/merge-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-064'"
+  },
+  {
+    "taskId": "e22f0550-2626-4bd0-b61c-e1523867ecb6",
+    "title": "Surrounded Regions (dfs)",
+    "currentUrl": "https://leetcode.com/problems/surrounded-regions?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-324'"
+  },
+  {
+    "taskId": "def235ca-cb81-4ae1-b157-8feb44e67135",
+    "title": "Find the repeating and missing number",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-065'"
+  },
+  {
+    "taskId": "ab0fd66b-8099-4563-8e52-5b74a7c77df8",
+    "title": "Swim in rising water",
+    "currentUrl": "https://leetcode.com/problems/swim-in-rising-water?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-361'"
+  },
+  {
+    "taskId": "6cf955f7-08a0-4ade-a52c-c8a59ece9a6f",
+    "title": "Minimum insertions to make string palindrome | DP-29",
+    "currentUrl": "https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-392'"
+  },
+  {
+    "taskId": "d092bb6a-c1dd-4a32-8b7d-c75341174225",
+    "title": "Check if LL is palindrome or not",
+    "currentUrl": "https://leetcode.com/problems/palindrome-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-129'"
+  },
+  {
+    "taskId": "9e2f5d36-8e51-48fa-8a9f-40a2133a741e",
+    "title": "Shortest Palindrome",
+    "currentUrl": "https://leetcode.com/problems/shortest-palindrome?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-433'"
+  },
+  {
+    "taskId": "e64ca595-f223-45c4-8f99-8002ddf999c9",
+    "title": "Next Greater Element",
+    "currentUrl": "https://leetcode.com/problems/next-greater-element-i?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-198'"
+  },
+  {
+    "taskId": "bd5f9694-b084-4f80-954b-75456413ccd1",
+    "title": "Binary Tree Traversals in Binary Tree",
+    "currentUrl": "https://takeuforward.org/binary-tree/binary-tree-traversal-inorder-preorder-postorder/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-262'"
+  },
+  {
+    "taskId": "27cc64fc-6a46-4392-bde5-868f604a964f",
+    "title": "Introduction to Binary Search Tree",
+    "currentUrl": "https://takeuforward.org/binary-search-tree/introduction-to-binary-search-trees/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-298'"
+  },
+  {
+    "taskId": "3d702547-1d2c-43c8-9f56-f0d47987278b",
+    "title": "Number of Enclaves [flood fill implementation - multisource]",
+    "currentUrl": "https://leetcode.com/problems/number-of-enclaves?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-325'"
+  },
+  {
+    "taskId": "bc2be8d0-0fbe-4958-b83a-4169b147601f",
+    "title": "Grid Unique Paths 2 (DP 9)",
+    "currentUrl": "https://leetcode.com/problems/unique-paths-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-373'"
+  },
+  {
+    "taskId": "7ada9f1d-b5d2-470c-a587-492691c1beb3",
+    "title": "Bipartite Graph (DFS)",
+    "currentUrl": "https://leetcode.com/problems/is-graph-bipartite?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-329'"
+  },
+  {
+    "taskId": "cf228d21-ea4b-4954-a244-ba5a143a7095",
+    "title": "Bit PreRequisites for TRIE Problems",
+    "currentUrl": "https://leetcode.com/problems/single-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-424'"
+  },
+  {
+    "taskId": "133c1062-4c75-4c15-b1ca-5699c2d23ac1",
+    "title": "Bridges in Graph",
+    "currentUrl": "https://leetcode.com/problems/critical-connections-in-a-network?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-362'"
+  },
+  {
+    "taskId": "e25a7422-bf3d-41d3-b48a-e5e6b9350d60",
+    "title": "Shortest Common Supersequence | (DP - 31)",
+    "currentUrl": "https://leetcode.com/problems/shortest-common-supersequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-394'"
+  },
+  {
+    "taskId": "98e10c14-df42-4871-9cca-69d67f928a75",
+    "title": "Longest happy prefix",
+    "currentUrl": "https://leetcode.com/problems/longest-happy-prefix?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-434'"
+  },
+  {
+    "taskId": "b03bedd9-a18e-4ea3-b298-49d525c02700",
+    "title": "Find the intersection point of Y LL",
+    "currentUrl": "https://leetcode.com/problems/intersection-of-two-linked-lists?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-135'"
+  },
+  {
+    "taskId": "9005adde-6085-4d5a-8f48-92bb49febe4c",
+    "title": "Next Smaller Element",
+    "currentUrl": "https://www.interviewbit.com/problems/nearest-smaller-element?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-200'"
+  },
+  {
+    "taskId": "f720ead6-3153-4576-8fe0-b7a0d95e0827",
+    "title": "Preorder Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-preorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-267'"
+  },
+  {
+    "taskId": "7a1f3bcb-6320-456c-8248-c75844a613a8",
+    "title": "Search in a Binary Search Tree",
+    "currentUrl": "https://leetcode.com/problems/search-in-a-binary-search-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-299'"
+  },
+  {
+    "taskId": "bbe45f83-3d17-4e8f-a9d4-21feb141c6fd",
+    "title": "Cycle Detection in Directed Graph (DFS)",
+    "currentUrl": "https://leetcode.com/problems/course-schedule-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-335'"
+  },
+  {
+    "taskId": "762aa838-5695-49ec-901e-98028d74560b",
+    "title": "Minimum path sum in Grid (DP 10)",
+    "currentUrl": "https://leetcode.com/problems/minimum-path-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-374'"
+  },
+  {
+    "taskId": "c183931a-9a70-47dc-a17e-cf2ef1392402",
+    "title": "Topo Sort",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/topological-sort-or-kahns-algorithm?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-332'"
+  },
+  {
+    "taskId": "19be1d60-8d1e-458e-adb5-197dfea65e39",
+    "title": "Find pairs with given sum in DLL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-pairs-with-given-sum-in-doubly-linked-list?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-139'"
+  },
+  {
+    "taskId": "4fddfff9-2490-4286-ad8a-a78142e8037b",
+    "title": "Distinct Subsequences| (DP-32)",
+    "currentUrl": "https://leetcode.com/problems/distinct-subsequences?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-395'"
+  },
+  {
+    "taskId": "e66fbf3f-c9d2-4fc2-84b2-c899be7488db",
+    "title": "Remove duplicates from sorted DLL",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/remove-duplicated-from-sorted-dll?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-140'"
+  },
+  {
+    "taskId": "c84a6041-48bc-43d8-b8a7-fa547980aae2",
+    "title": "Inorder Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-296'"
+  },
+  {
+    "taskId": "3b1a396e-dc1b-42ee-a73f-96e9e447cfbd",
+    "title": "Two Sum In BST | Check if there exists a pair with Sum K",
+    "currentUrl": "https://leetcode.com/problems/two-sum-iv-input-is-a-bst?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-310'"
+  },
+  {
+    "taskId": "0477bde4-7952-41b6-9efd-379d3a0fd090",
+    "title": "Kahn's Algorithm",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/topological-sort-or-kahns-algorithm?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-332'"
+  },
+  {
+    "taskId": "025a9b0d-07ff-4ec5-98fc-df411f0709cb",
+    "title": "Minimum path sum in Triangular Grid (DP 11)",
+    "currentUrl": "https://leetcode.com/problems/triangle?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-375'"
+  },
+  {
+    "taskId": "2baa5f16-6967-47f3-bfb2-7a35699011bb",
+    "title": "Cycle Detection in Directed Graph (BFS)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/detect-a-cycle-in-a-directed-graph?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-333'"
+  },
+  {
+    "taskId": "60396386-deb3-4324-880c-05126ae92062",
+    "title": "Minimum/Maximum Falling Path Sum (DP-12)",
+    "currentUrl": "https://leetcode.com/problems/minimum-falling-path-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-376'"
+  },
+  {
+    "taskId": "274ba6bf-6cb2-49b2-bc09-1339f2b67082",
+    "title": "Post-order Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-postorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-270'"
+  },
+  {
+    "taskId": "74978bd4-c4d7-42dc-bf0e-cd0430c1d3d9",
+    "title": "Wildcard Matching | (DP-34)",
+    "currentUrl": "https://leetcode.com/problems/wildcard-matching?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-397'"
+  },
+  {
+    "taskId": "b6499c69-a966-4879-8d43-0afa79189fbf",
+    "title": "Course Schedule - I",
+    "currentUrl": "https://leetcode.com/problems/course-schedule?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-334'"
+  },
+  {
+    "taskId": "fd7a4e68-1e89-4030-addd-199773393dd7",
+    "title": "Iterative Preorder Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-preorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-267'"
+  },
+  {
+    "taskId": "78e0e66b-f892-4e2b-98c8-f2e4a1b2dc96",
+    "title": "Course Schedule - II",
+    "currentUrl": "https://leetcode.com/problems/course-schedule-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-335'"
+  },
+  {
+    "taskId": "bf169890-5bfd-4443-bdd7-f5d66e3c1ff3",
+    "title": "Find eventual safe states",
+    "currentUrl": "https://leetcode.com/problems/find-eventual-safe-states?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-336'"
+  },
+  {
+    "taskId": "a49a52df-d309-440f-b818-f48d2ab184e4",
+    "title": "Partition Equal Subset Sum (DP- 15)",
+    "currentUrl": "https://leetcode.com/problems/partition-equal-subset-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-379'"
+  },
+  {
+    "taskId": "33e0773d-9cb5-4b88-ac2f-eea4b1da6b71",
+    "title": "Shortest Path in UG with unit weights",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/shortest-path-in-undirected-graph-with-unit-weights?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-338'"
+  },
+  {
+    "taskId": "1154cb7c-f475-4a47-a81d-a85d77093662",
+    "title": "Hashing In Strings | Theory",
+    "currentUrl": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-432'"
+  },
+  {
+    "taskId": "6241b841-3606-4cdc-ab4e-938aa6b2e73a",
+    "title": "Shortest Path in DAG",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/shortest-path-in-dag?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-339'"
+  },
+  {
+    "taskId": "16332dc6-321d-4028-9130-38c1f3b631a8",
+    "title": "Iterative Inorder Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-296'"
+  },
+  {
+    "taskId": "33a7f22d-5dba-4617-9b9f-0df9adb979fd",
+    "title": "Buy and Sell Stocks III|(DP-37)",
+    "currentUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-400'"
+  },
+  {
+    "taskId": "1b2a1968-0fab-4950-aad1-daf6a098bf55",
+    "title": "Djisktra's Algorithm",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/dijkstra's-algorithm?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-341'"
+  },
+  {
+    "taskId": "818f710a-bc36-4684-a950-1cf40045f4a9",
+    "title": "Shortest path in a binary maze",
+    "currentUrl": "https://leetcode.com/problems/shortest-path-in-binary-matrix?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-342'"
+  },
+  {
+    "taskId": "78a032a8-fa9d-4f29-85f7-dc1d20387efb",
+    "title": "Z-Function",
+    "currentUrl": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-432'"
+  },
+  {
+    "taskId": "a722ded2-0394-41d4-b08b-85f400d2ddfc",
+    "title": "Path with minimum effort",
+    "currentUrl": "https://leetcode.com/problems/path-with-minimum-effort?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-343'"
+  },
+  {
+    "taskId": "96a4fa26-44d3-421e-9dce-16ee9925730d",
+    "title": "Count Partitions with Given Difference (DP - 18)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/count-partitions-with-given-difference?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-382'"
+  },
+  {
+    "taskId": "77b48388-0704-48ec-aa9b-6a415540451c",
+    "title": "Cheapest flights within k stops",
+    "currentUrl": "https://leetcode.com/problems/cheapest-flights-within-k-stops?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-344'"
+  },
+  {
+    "taskId": "9eece6be-bd56-406d-8b42-9cc2767fcbe5",
+    "title": "Post-order Traversal of Binary Tree using 1 stack",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-postorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-270'"
+  },
+  {
+    "taskId": "91437035-3ace-41bf-82d5-056475885bdc",
+    "title": "Network Delay time",
+    "currentUrl": "https://leetcode.com/problems/network-delay-time?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-345'"
+  },
+  {
+    "taskId": "bfbb130d-936b-449a-a315-882258fa34e4",
+    "title": "Minimum Coins (DP - 20)",
+    "currentUrl": "https://leetcode.com/problems/coin-change?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-383'"
+  },
+  {
+    "taskId": "4a42197e-4676-40b6-8e2f-a07ff8a8a5d9",
+    "title": "Find the starting point in LL",
+    "currentUrl": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-127'"
+  },
+  {
+    "taskId": "d861d587-c5d8-4651-8cf3-005d5fe708fc",
+    "title": "Find the starting point in LL",
+    "currentUrl": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-127'"
+  },
+  {
+    "taskId": "6e3113f4-9be6-4c97-aeb4-aa5de6b8c1ce",
+    "title": "Find the starting point in LL",
+    "currentUrl": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-127'"
+  },
+  {
+    "taskId": "660cdc81-1634-4459-9112-4423c24f20fa",
+    "title": "Find the starting point in LL",
+    "currentUrl": "https://leetcode.com/problems/linked-list-cycle-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-127'"
+  },
+  {
+    "taskId": "136a1fcd-ee92-441e-8398-86fa1abc43cd",
+    "title": "Matrix Median",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/matrix-median?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-100'"
+  },
+  {
+    "taskId": "75c6a491-575e-497a-8945-b91df4ff0d7a",
+    "title": "Matrix Median",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/matrix-median?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-100'"
+  },
+  {
+    "taskId": "fb8202ff-5bf8-4fd9-90a8-18e7eff88b41",
+    "title": "Matrix Median",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/matrix-median?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-100'"
+  },
+  {
+    "taskId": "73d14c84-36ca-49bd-8ef8-c8e4d7ae1d4a",
+    "title": "Implement Lower Bound",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/lower-bound-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-070'"
+  },
+  {
+    "taskId": "246877b7-5e11-4d2e-be22-d65a0dc6d54f",
+    "title": "Implement Lower Bound",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/lower-bound-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-070'"
+  },
+  {
+    "taskId": "a446fe81-3cd5-428c-8b65-427a517cdc6f",
+    "title": "KMP algo / LPS(pi) array",
+    "currentUrl": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-432'"
+  },
+  {
+    "taskId": "7719b425-1d68-4d90-a128-2aa20cee8ec1",
+    "title": "Implement Lower Bound",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/lower-bound-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-070'"
+  },
+  {
+    "taskId": "50fc88fc-4e94-44bc-85e9-1aa250870952",
+    "title": "Implement Lower Bound",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/lower-bound-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-070'"
+  },
+  {
+    "taskId": "de0b2e54-dd06-4ab8-b6a2-862c0ad82b87",
+    "title": "Implement Lower Bound",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/lower-bound-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-070'"
+  },
+  {
+    "taskId": "3f3d0a89-5cdb-4a97-b75f-a6b24eae22d5",
+    "title": "Kth largest element in an array [use priority queue]",
+    "currentUrl": "https://leetcode.com/problems/kth-largest-element-in-an-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-230'"
+  },
+  {
+    "taskId": "f30209fd-a123-44df-8a45-81d3fb3e1f92",
+    "title": "Boundary Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/boundary-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-278'"
+  },
+  {
+    "taskId": "8112deea-9467-4c0a-8ad3-b282e415e526",
+    "title": "Boundary Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/boundary-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-278'"
+  },
+  {
+    "taskId": "811a53e0-eb7e-4d7a-b4c5-ffbde247a614",
+    "title": "Boundary Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/boundary-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-278'"
+  },
+  {
+    "taskId": "a28f4764-d92b-4c3e-a025-9c6f881ddc2c",
+    "title": "Boundary Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/boundary-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-278'"
+  },
+  {
+    "taskId": "d032311c-dfa4-4d19-a981-abcc02c69690",
+    "title": "Boundary Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/boundary-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-278'"
+  },
+  {
+    "taskId": "ebc7413a-b031-4869-a2e1-ebfd843146c7",
+    "title": "Boundary Traversal of Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/boundary-of-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-278'"
+  },
+  {
+    "taskId": "5882a59b-52c1-4ef0-bfa8-3a2a12884611",
+    "title": "Find the number that appears odd number of times",
+    "currentUrl": "https://leetcode.com/problems/single-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-424'"
+  },
+  {
+    "taskId": "ccf8d9b1-7a14-491c-9f97-0a5f74df5def",
+    "title": "Buy and Stock Sell IV |(DP-38)",
+    "currentUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-401'"
+  },
+  {
+    "taskId": "70d9306f-6c2b-41cc-90df-990df23df84e",
+    "title": "Number of ways to arrive at destination",
+    "currentUrl": "https://leetcode.com/problems/number-of-ways-to-arrive-at-destination?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-346'"
+  },
+  {
+    "taskId": "29c81a04-e975-4ce0-b439-9c5d49b15f53",
+    "title": "Check if the Binary tree is height-balanced or not",
+    "currentUrl": "https://leetcode.com/problems/balanced-binary-tree?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-273'"
+  },
+  {
+    "taskId": "bfd9a725-1b57-4b3a-92f0-eb85b6a5d228",
+    "title": "Target Sum (DP - 21)",
+    "currentUrl": "https://leetcode.com/problems/target-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-384'"
+  },
+  {
+    "taskId": "4fba999d-5700-48e5-b927-87db983e1af6",
+    "title": "Coin Change 2 (DP - 22)",
+    "currentUrl": "https://leetcode.com/problems/coin-change-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-385'"
+  },
+  {
+    "taskId": "9508a4cc-c046-4f9f-99ab-2311662b2dce",
+    "title": "Morris Inorder Traversal of a Binary Tree",
+    "currentUrl": "https://leetcode.com/problems/binary-tree-inorder-traversal?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-296'"
+  },
+  {
+    "taskId": "4478f6d7-344a-4af6-b5fc-58b60b52d9d9",
+    "title": "Minimum Cost to Cut the Stick|(DP-50)",
+    "currentUrl": "https://leetcode.com/problems/minimum-cost-to-cut-a-stick?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-413'"
+  },
+  {
+    "taskId": "947b1635-8809-4348-b140-5083cfcfb0cd",
+    "title": "Graph and Types",
+    "currentUrl": "https://takeuforward.org/graph/introduction-to-graph/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-313'"
+  },
+  {
+    "taskId": "b4678f6f-4e11-4f1a-8a16-c77f11931269",
+    "title": "Buy and Sell Stocks With Cooldown|(DP-39)",
+    "currentUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-402'"
+  },
+  {
+    "taskId": "dd96bc0d-f9cb-4994-8e6a-68ecb4f1ad58",
+    "title": "Longest Increasing Subsequence |(DP-41)",
+    "currentUrl": "https://leetcode.com/problems/longest-increasing-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-404'"
+  },
+  {
+    "taskId": "810f631d-c9f3-4abf-8a31-33d1c176235e",
+    "title": "Printing Longest Increasing Subsequence|(DP-42)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/print-longest-increasing-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-405'"
+  },
+  {
+    "taskId": "fde5577d-67f3-48a9-95f4-8114c57fcdb1",
+    "title": "Longest Increasing Subsequence |(DP-43)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/longest-increasing-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-406'"
+  },
+  {
+    "taskId": "8f92b1d6-d28f-44d0-bb62-113ec1ad5626",
+    "title": "Disjoint Set [Union by Size]",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/disjoint-set-?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-354'"
+  },
+  {
+    "taskId": "3315093c-79e4-45f8-ab30-493c86e724a9",
+    "title": "Climbing Stars",
+    "currentUrl": "https://leetcode.com/problems/climbing-stairs?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-366'"
+  },
+  {
+    "taskId": "1e2779cb-e297-4e61-86e0-fb6b3a8b64bc",
+    "title": "Burst Balloons|(DP-51)",
+    "currentUrl": "https://leetcode.com/problems/burst-balloons?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-414'"
+  },
+  {
+    "taskId": "ab2a229b-d31b-41f8-b19c-22f81fcc73b5",
+    "title": "Evaluate Boolean Expression to True|(DP-52)",
+    "currentUrl": "https://leetcode.com/problems/parsing-a-boolean-expression?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-415'"
+  },
+  {
+    "taskId": "8797bf97-ef54-4844-9d90-4e7e878f83ed",
+    "title": "Palindrome Partitioning - II|(DP-53)",
+    "currentUrl": "https://leetcode.com/problems/palindrome-partitioning-ii?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-416'"
+  },
+  {
+    "taskId": "880f4293-a1cd-40ae-aaf6-c6ea2415e80f",
+    "title": "Maximum Rectangle Area with all 1's|(DP-55)",
+    "currentUrl": "https://leetcode.com/problems/maximal-rectangle?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-418'"
+  },
+  {
+    "taskId": "422a93c5-0072-4fef-af9f-39e2fa5f41cc",
+    "title": "Largest Divisible Subset|(DP-44)",
+    "currentUrl": "https://leetcode.com/problems/largest-divisible-subset?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-407'"
+  },
+  {
+    "taskId": "a8e26ac8-cb09-4e2a-bcb4-a8e238686238",
+    "title": "Longest String Chain|(DP-45)",
+    "currentUrl": "https://leetcode.com/problems/longest-string-chain?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-408'"
+  },
+  {
+    "taskId": "feef3991-d25c-46ee-9631-b90425380a00",
+    "title": "Number of Longest Increasing Subsequences|(DP-47)",
+    "currentUrl": "https://leetcode.com/problems/number-of-longest-increasing-subsequence?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-410'"
+  },
+  {
+    "taskId": "9881fad7-7790-44e1-bea9-a05bb04742c3",
+    "title": "Partition Array for Maximum Sum|(DP-54)",
+    "currentUrl": "https://leetcode.com/problems/partition-array-for-maximum-sum?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-417'"
+  },
+  {
+    "taskId": "6ab01680-3324-4bb4-bc34-5a53e00c37ea",
+    "title": "Count Square Submatrices with All Ones|(DP-56)",
+    "currentUrl": "https://leetcode.com/problems/count-square-submatrices-with-all-ones?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-419'"
+  },
+  {
+    "taskId": "d178c6d8-c1e5-4e4c-9d69-098c53b06652",
+    "title": "Best Time to Buy and Sell Stock |(DP-35)",
+    "currentUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-398'"
+  },
+  {
+    "taskId": "d110ee38-1f6a-4eb6-a3c5-6313199af55e",
+    "title": "Count number of nice subarrays",
+    "currentUrl": "https://leetcode.com/problems/count-number-of-nice-subarrays?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-219'"
+  },
+  {
+    "taskId": "707917bf-0829-47d3-94a6-ca6966a6c32e",
+    "title": "Find the first or last occurrence of a given number in a sorted array",
+    "currentUrl": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-074'"
+  },
+  {
+    "taskId": "3fda9a93-95c0-411d-a82d-b48979fd7ad9",
+    "title": "The Celebrity Problem",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/word-break?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-211'"
+  },
+  {
+    "taskId": "5cf360cd-137c-4417-9015-0b4c4bce5856",
+    "title": "Implement Trie - 2 (Prefix Tree)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/trie-implementation-and-advanced-operations?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-421'"
+  },
+  {
+    "taskId": "c650095b-d68b-4091-be43-a83d5f44a455",
+    "title": "Merge 2 BST's",
+    "currentUrl": "https://leetcode.com/problems/binary-search-tree-iterator?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-309'"
+  },
+  {
+    "taskId": "05089861-65e6-4a09-8aa9-2f244e5720b0",
+    "title": "Find square root of a number in log n",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-square-root-of-a-number?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-082'"
+  },
+  {
+    "taskId": "9da376aa-8cde-4dff-a17c-f9ef742b6703",
+    "title": "Count Subsets with Sum K (DP - 17)",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/count-all-subsequences-with-sum-k?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-381'"
+  },
+  {
+    "taskId": "1188ca9f-9311-462f-846b-70cb6532842b",
+    "title": "Minimum Spanning Tree",
+    "currentUrl": "https://takeuforward.org/plus/dsa/problems/find-the-mst-weight?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-355'"
+  },
+  {
+    "taskId": "ba496263-1478-4f88-9bf6-ec973018d629",
+    "title": "Graph Representation | C++",
+    "currentUrl": "https://takeuforward.org/graph/graph-representation-in-c/?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-314'"
+  },
+  {
+    "taskId": "afc77fa3-968c-429a-a807-ed8688bdad71",
+    "title": "Buy and Sell Stocks With Transaction Fee|(DP-40)",
+    "currentUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-403'"
+  },
+  {
+    "taskId": "1722d985-7283-4b56-b059-24de24cb8f14",
+    "title": "Graph Representation | Java",
+    "currentUrl": "https://www.hackerrank.com/contests/vit-bhopal/challenges/adjacency-list-representation-1/problem?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-315'"
+  },
+  {
+    "taskId": "5a529a1c-e8ce-4186-8756-2794738613ab",
+    "title": "Flood fill",
+    "currentUrl": "https://leetcode.com/problems/flood-fill?utm=codolio",
+    "reason": "No verified GFG mapping for Striver question ID 'striver-320'"
+  }
+]

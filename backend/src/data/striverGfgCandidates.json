@@ -1,0 +1,1696 @@
+{
+  "striver-001": {
+    "sourceTitle": "What are arrays, strings?",
+    "searchQuery": "GeeksforGeeks what are arrays strings problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/what-are-arrays-strings/1",
+        "title": "What are arrays, strings?",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-002": {
+    "sourceTitle": "For loops",
+    "searchQuery": "GeeksforGeeks for loops problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/for-loops/1",
+        "title": "For loops",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-003": {
+    "sourceTitle": "While loops",
+    "searchQuery": "GeeksforGeeks while loops problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/while-loops/1",
+        "title": "While loops",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-005": {
+    "sourceTitle": "Time Complexity [Learn Basics, and then analyse in next Steps]",
+    "searchQuery": "GeeksforGeeks time complexity problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/time-complexity/1",
+        "title": "Time Complexity [Learn Basics, and then analyse in next Steps]",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-006": {
+    "sourceTitle": "Patterns",
+    "searchQuery": "GeeksforGeeks patterns problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/patterns/1",
+        "title": "Patterns",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-007": {
+    "sourceTitle": "C++ STL",
+    "searchQuery": "GeeksforGeeks c stl problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/c-stl/1",
+        "title": "C++ STL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-008": {
+    "sourceTitle": "Java Collections",
+    "searchQuery": "GeeksforGeeks java collections problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/java-collections/1",
+        "title": "Java Collections",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-009": {
+    "sourceTitle": "Count Digits",
+    "searchQuery": "GeeksforGeeks count digits problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-digits/1",
+        "title": "Count Digits",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-013": {
+    "sourceTitle": "Print all Divisors",
+    "searchQuery": "GeeksforGeeks print all divisors problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/print-all-divisors/1",
+        "title": "Print all Divisors",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-014": {
+    "sourceTitle": "Check for Prime",
+    "searchQuery": "GeeksforGeeks check for prime problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/check-for-prime/1",
+        "title": "Check for Prime",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-015": {
+    "sourceTitle": "Print name N times using recursion",
+    "searchQuery": "GeeksforGeeks print name n times using recursion problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/print-name-n-times-using-recursion/1",
+        "title": "Print name N times using recursion",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-016": {
+    "sourceTitle": "Print N to 1 using recursion",
+    "searchQuery": "GeeksforGeeks print n to 1 using recursion problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/print-n-to-1-using-recursion/1",
+        "title": "Print N to 1 using recursion",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-017": {
+    "sourceTitle": "Factorial of N numbers",
+    "searchQuery": "GeeksforGeeks factorial of n numbers problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/factorial-of-n-numbers/1",
+        "title": "Factorial of N numbers",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-021": {
+    "sourceTitle": "Hashing Theory",
+    "searchQuery": "GeeksforGeeks hashing theory problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/hashing-theory/1",
+        "title": "Hashing Theory",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-022": {
+    "sourceTitle": "Counting frequencies of array elements",
+    "searchQuery": "GeeksforGeeks counting frequencies of array elements problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/counting-frequencies-of-array-elements/1",
+        "title": "Counting frequencies of array elements",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-024": {
+    "sourceTitle": "Selection Sort",
+    "searchQuery": "GeeksforGeeks selection sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/selection-sort/1",
+        "title": "Selection Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-025": {
+    "sourceTitle": "Bubble Sort",
+    "searchQuery": "GeeksforGeeks bubble sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/bubble-sort/1",
+        "title": "Bubble Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-026": {
+    "sourceTitle": "Insertion Sort",
+    "searchQuery": "GeeksforGeeks insertion sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/insertion-sort/1",
+        "title": "Insertion Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-027": {
+    "sourceTitle": "Merge Sort",
+    "searchQuery": "GeeksforGeeks merge sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/merge-sort/1",
+        "title": "Merge Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-028": {
+    "sourceTitle": "Recursive Bubble Sort",
+    "searchQuery": "GeeksforGeeks recursive bubble sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/recursive-bubble-sort/1",
+        "title": "Recursive Bubble Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-029": {
+    "sourceTitle": "Recursive Insertion Sort",
+    "searchQuery": "GeeksforGeeks recursive insertion sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/recursive-insertion-sort/1",
+        "title": "Recursive Insertion Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-030": {
+    "sourceTitle": "Quick Sort",
+    "searchQuery": "GeeksforGeeks quick sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/quick-sort/1",
+        "title": "Quick Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-031": {
+    "sourceTitle": "Second Largest Element in an Array without sorting",
+    "searchQuery": "GeeksforGeeks second largest element in an array without sorting problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/second-largest-element-in-an-array-without-sorting/1",
+        "title": "Second Largest Element in an Array without sorting",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-037": {
+    "sourceTitle": "Find the Union",
+    "searchQuery": "GeeksforGeeks find the union problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-the-union/1",
+        "title": "Find the Union",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-041": {
+    "sourceTitle": "Longest subarray with given sum K(positives)",
+    "searchQuery": "GeeksforGeeks longest subarray with given sum k problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/longest-subarray-with-given-sum-k/1",
+        "title": "Longest subarray with given sum K(positives)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-042": {
+    "sourceTitle": "Longest subarray with sum K (Positives + Negatives)",
+    "searchQuery": "GeeksforGeeks longest subarray with sum k problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/longest-subarray-with-sum-k/1",
+        "title": "Longest subarray with sum K (Positives + Negatives)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-047": {
+    "sourceTitle": "Print subarray with maximum subarray sum (extended version of above problem)",
+    "searchQuery": "GeeksforGeeks print subarray with maximum subarray sum problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/print-subarray-with-maximum-subarray-sum/1",
+        "title": "Print subarray with maximum subarray sum (extended version of above problem)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-051": {
+    "sourceTitle": "Leaders in an Array problem",
+    "searchQuery": "GeeksforGeeks leaders in an array problem problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/leaders-in-an-array-problem/1",
+        "title": "Leaders in an Array problem",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-061": {
+    "sourceTitle": "Largest Subarray with 0 Sum",
+    "searchQuery": "GeeksforGeeks largest subarray with 0 sum problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/largest-subarray-with-0-sum/1",
+        "title": "Largest Subarray with 0 Sum",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-065": {
+    "sourceTitle": "Find the repeating and missing number",
+    "searchQuery": "GeeksforGeeks find the repeating and missing number problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-the-repeating-and-missing-number/1",
+        "title": "Find the repeating and missing number",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-066": {
+    "sourceTitle": "Count Inversions",
+    "searchQuery": "GeeksforGeeks count inversions problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-inversions/1",
+        "title": "Count Inversions",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-070": {
+    "sourceTitle": "Implement Lower Bound",
+    "searchQuery": "GeeksforGeeks implement lower bound problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/implement-lower-bound/1",
+        "title": "Implement Lower Bound",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-071": {
+    "sourceTitle": "Implement Upper Bound",
+    "searchQuery": "GeeksforGeeks implement upper bound problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/implement-upper-bound/1",
+        "title": "Implement Upper Bound",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-073": {
+    "sourceTitle": "Floor/Ceil in Sorted Array",
+    "searchQuery": "GeeksforGeeks floor ceil in sorted array problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/floor-ceil-in-sorted-array/1",
+        "title": "Floor/Ceil in Sorted Array",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-075": {
+    "sourceTitle": "Count occurrences of a number in a sorted array with duplicates",
+    "searchQuery": "GeeksforGeeks count occurrences of a number in a sorted array with duplicates problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-occurrences-of-a-number-in-a-sorted-array-with-duplicates/1",
+        "title": "Count occurrences of a number in a sorted array with duplicates",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-079": {
+    "sourceTitle": "Find out how many times has an array been rotated",
+    "searchQuery": "GeeksforGeeks find out how many times has an array been rotated problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-out-how-many-times-has-an-array-been-rotated/1",
+        "title": "Find out how many times has an array been rotated",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-082": {
+    "sourceTitle": "Find square root of a number in log n",
+    "searchQuery": "GeeksforGeeks find square root of a number in log n problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-square-root-of-a-number-in-log-n/1",
+        "title": "Find square root of a number in log n",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-083": {
+    "sourceTitle": "Find the Nth root of a number using binary search",
+    "searchQuery": "GeeksforGeeks find the nth root of a number using binary search problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-the-nth-root-of-a-number-using-binary-search/1",
+        "title": "Find the Nth root of a number using binary search",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-090": {
+    "sourceTitle": "Book Allocation Problem",
+    "searchQuery": "GeeksforGeeks book allocation problem problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/book-allocation-problem/1",
+        "title": "Book Allocation Problem",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-092": {
+    "sourceTitle": "Painter's partition",
+    "searchQuery": "GeeksforGeeks painter s partition problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/painter-s-partition/1",
+        "title": "Painter's partition",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-095": {
+    "sourceTitle": "Kth element of 2 sorted arrays",
+    "searchQuery": "GeeksforGeeks kth element of 2 sorted arrays problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/kth-element-of-2-sorted-arrays/1",
+        "title": "Kth element of 2 sorted arrays",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-096": {
+    "sourceTitle": "Find the row with maximum number of 1's",
+    "searchQuery": "GeeksforGeeks find the row with maximum number of 1 s problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-the-row-with-maximum-number-of-1-s/1",
+        "title": "Find the row with maximum number of 1's",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-100": {
+    "sourceTitle": "Matrix Median",
+    "searchQuery": "GeeksforGeeks matrix median problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/matrix-median/1",
+        "title": "Matrix Median",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-116": {
+    "sourceTitle": "Introduction to LinkedList, learn about struct, and how is node represented",
+    "searchQuery": "GeeksforGeeks introduction to linkedlist learn about struct and how is node represented problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/introduction-to-linkedlist-learn-about-struct-and-how-is-node-represented/1",
+        "title": "Introduction to LinkedList, learn about struct, and how is node represented",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-118": {
+    "sourceTitle": "Search an element in the LL",
+    "searchQuery": "GeeksforGeeks search an element in the ll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/search-an-element-in-the-ll/1",
+        "title": "Search an element in the LL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-119": {
+    "sourceTitle": "Introduction to DLL, learn about struct, and how is node represented",
+    "searchQuery": "GeeksforGeeks introduction to dll learn about struct and how is node represented problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/introduction-to-dll-learn-about-struct-and-how-is-node-represented/1",
+        "title": "Introduction to DLL, learn about struct, and how is node represented",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-120": {
+    "sourceTitle": "Insert a node in DLL",
+    "searchQuery": "GeeksforGeeks insert a node in dll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/insert-a-node-in-dll/1",
+        "title": "Insert a node in DLL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-121": {
+    "sourceTitle": "Delete a node in DLL",
+    "searchQuery": "GeeksforGeeks delete a node in dll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/delete-a-node-in-dll/1",
+        "title": "Delete a node in DLL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-122": {
+    "sourceTitle": "Reverse a DLL",
+    "searchQuery": "GeeksforGeeks reverse a dll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/reverse-a-dll/1",
+        "title": "Reverse a DLL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-128": {
+    "sourceTitle": "Length of Loop in LL",
+    "searchQuery": "GeeksforGeeks length of loop in ll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/length-of-loop-in-ll/1",
+        "title": "Length of Loop in LL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-134": {
+    "sourceTitle": "Sort a LL of 0's 1's and 2's by changing links",
+    "searchQuery": "GeeksforGeeks sort a ll of 0 s 1 s and 2 s by changing links problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/sort-a-ll-of-0-s-1-s-and-2-s-by-changing-links/1",
+        "title": "Sort a LL of 0's 1's and 2's by changing links",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-136": {
+    "sourceTitle": "Add 1 to a number represented by LL",
+    "searchQuery": "GeeksforGeeks add 1 to a number represented by ll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/add-1-to-a-number-represented-by-ll/1",
+        "title": "Add 1 to a number represented by LL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-138": {
+    "sourceTitle": "Delete all occurrences of a key in DLL",
+    "searchQuery": "GeeksforGeeks delete all occurrences of a key in dll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/delete-all-occurrences-of-a-key-in-dll/1",
+        "title": "Delete all occurrences of a key in DLL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-139": {
+    "sourceTitle": "Find pairs with given sum in DLL",
+    "searchQuery": "GeeksforGeeks find pairs with given sum in dll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-pairs-with-given-sum-in-dll/1",
+        "title": "Find pairs with given sum in DLL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-140": {
+    "sourceTitle": "Remove duplicates from sorted DLL",
+    "searchQuery": "GeeksforGeeks remove duplicates from sorted dll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/remove-duplicates-from-sorted-dll/1",
+        "title": "Remove duplicates from sorted DLL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-143": {
+    "sourceTitle": "Flattening of LL",
+    "searchQuery": "GeeksforGeeks flattening of ll problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/flattening-of-ll/1",
+        "title": "Flattening of LL",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-148": {
+    "sourceTitle": "Sort a stack using recursion",
+    "searchQuery": "GeeksforGeeks sort a stack using recursion problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/sort-a-stack-using-recursion/1",
+        "title": "Sort a stack using recursion",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-149": {
+    "sourceTitle": "Reverse a stack using recursion",
+    "searchQuery": "GeeksforGeeks reverse a stack using recursion problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/reverse-a-stack-using-recursion/1",
+        "title": "Reverse a stack using recursion",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-150": {
+    "sourceTitle": "Generate all binary strings",
+    "searchQuery": "GeeksforGeeks generate all binary strings problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/generate-all-binary-strings/1",
+        "title": "Generate all binary strings",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-154": {
+    "sourceTitle": "Count all subsequences with sum K",
+    "searchQuery": "GeeksforGeeks count all subsequences with sum k problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-all-subsequences-with-sum-k/1",
+        "title": "Count all subsequences with sum K",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-155": {
+    "sourceTitle": "Check if there exists a subsequence with sum K",
+    "searchQuery": "GeeksforGeeks check if there exists a subsequence with sum k problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/check-if-there-exists-a-subsequence-with-sum-k/1",
+        "title": "Check if there exists a subsequence with sum K",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-158": {
+    "sourceTitle": "Subset Sum-I",
+    "searchQuery": "GeeksforGeeks subset sum i problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/subset-sum-i/1",
+        "title": "Subset Sum-I",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-165": {
+    "sourceTitle": "Rat in a Maze",
+    "searchQuery": "GeeksforGeeks rat in a maze problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/rat-in-a-maze/1",
+        "title": "Rat in a Maze",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-167": {
+    "sourceTitle": "M Coloring Problem",
+    "searchQuery": "GeeksforGeeks m coloring problem problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/m-coloring-problem/1",
+        "title": "M Coloring Problem",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-170": {
+    "sourceTitle": "Introduction to Bit Manipulation [Theory]",
+    "searchQuery": "GeeksforGeeks introduction to bit manipulation problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/introduction-to-bit-manipulation/1",
+        "title": "Introduction to Bit Manipulation [Theory]",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-171": {
+    "sourceTitle": "Check if the i-th bit is set or not",
+    "searchQuery": "GeeksforGeeks check if the i th bit is set or not problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/check-if-the-i-th-bit-is-set-or-not/1",
+        "title": "Check if the i-th bit is set or not",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-173": {
+    "sourceTitle": "Count the number of set bits",
+    "searchQuery": "GeeksforGeeks count the number of set bits problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-the-number-of-set-bits/1",
+        "title": "Count the number of set bits",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-179": {
+    "sourceTitle": "Find xor of numbers from L to R",
+    "searchQuery": "GeeksforGeeks find xor of numbers from l to r problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-xor-of-numbers-from-l-to-r/1",
+        "title": "Find xor of numbers from L to R",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-180": {
+    "sourceTitle": "Find the two numbers appearing odd number of times",
+    "searchQuery": "GeeksforGeeks find the two numbers appearing odd number of times problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-the-two-numbers-appearing-odd-number-of-times/1",
+        "title": "Find the two numbers appearing odd number of times",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-181": {
+    "sourceTitle": "Print Prime Factors of a Number",
+    "searchQuery": "GeeksforGeeks print prime factors of a number problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/print-prime-factors-of-a-number/1",
+        "title": "Print Prime Factors of a Number",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-182": {
+    "sourceTitle": "All Divisors of a Number",
+    "searchQuery": "GeeksforGeeks all divisors of a number problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/all-divisors-of-a-number/1",
+        "title": "All Divisors of a Number",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-184": {
+    "sourceTitle": "Find Prime Factorisation of a Number using Sieve",
+    "searchQuery": "GeeksforGeeks find prime factorisation of a number using sieve problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/find-prime-factorisation-of-a-number-using-sieve/1",
+        "title": "Find Prime Factorisation of a Number using Sieve",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-186": {
+    "sourceTitle": "Implement Stack using Arrays",
+    "searchQuery": "GeeksforGeeks implement stack using arrays problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/implement-stack-using-arrays/1",
+        "title": "Implement Stack using Arrays",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-189": {
+    "sourceTitle": "Implement stack using Linkedlist",
+    "searchQuery": "GeeksforGeeks implement stack using linkedlist problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/implement-stack-using-linkedlist/1",
+        "title": "Implement stack using Linkedlist",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-192": {
+    "sourceTitle": "Infix to Postfix Conversion using Stack",
+    "searchQuery": "GeeksforGeeks infix to postfix conversion using stack problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/infix-to-postfix-conversion-using-stack/1",
+        "title": "Infix to Postfix Conversion using Stack",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-193": {
+    "sourceTitle": "Prefix to Infix Conversion",
+    "searchQuery": "GeeksforGeeks prefix to infix conversion problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/prefix-to-infix-conversion/1",
+        "title": "Prefix to Infix Conversion",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-194": {
+    "sourceTitle": "Prefix to Postfix Conversion",
+    "searchQuery": "GeeksforGeeks prefix to postfix conversion problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/prefix-to-postfix-conversion/1",
+        "title": "Prefix to Postfix Conversion",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-195": {
+    "sourceTitle": "Postfix to Prefix Conversion",
+    "searchQuery": "GeeksforGeeks postfix to prefix conversion problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/postfix-to-prefix-conversion/1",
+        "title": "Postfix to Prefix Conversion",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-197": {
+    "sourceTitle": "Convert Infix To Prefix Notation",
+    "searchQuery": "GeeksforGeeks convert infix to prefix notation problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/convert-infix-to-prefix-notation/1",
+        "title": "Convert Infix To Prefix Notation",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-201": {
+    "sourceTitle": "Number of NGEs to the right",
+    "searchQuery": "GeeksforGeeks number of nges to the right problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/number-of-nges-to-the-right/1",
+        "title": "Number of NGEs to the right",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-211": {
+    "sourceTitle": "The Celebrity Problem",
+    "searchQuery": "GeeksforGeeks the celebrity problem problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/the-celebrity-problem/1",
+        "title": "The Celebrity Problem",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-216": {
+    "sourceTitle": "Fruit Into Baskets",
+    "searchQuery": "GeeksforGeeks fruit into baskets problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/fruit-into-baskets/1",
+        "title": "Fruit Into Baskets",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-226": {
+    "sourceTitle": "Introduction to Priority Queues using Binary Heaps",
+    "searchQuery": "GeeksforGeeks introduction to priority queues using binary heaps problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/introduction-to-priority-queues-using-binary-heaps/1",
+        "title": "Introduction to Priority Queues using Binary Heaps",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-227": {
+    "sourceTitle": "Min Heap and Max Heap Implementation",
+    "searchQuery": "GeeksforGeeks min heap and max heap implementation problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/min-heap-and-max-heap-implementation/1",
+        "title": "Min Heap and Max Heap Implementation",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-228": {
+    "sourceTitle": "Check if an array represents a min-heap or not",
+    "searchQuery": "GeeksforGeeks check if an array represents a min heap or not problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/check-if-an-array-represents-a-min-heap-or-not/1",
+        "title": "Check if an array represents a min-heap or not",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-229": {
+    "sourceTitle": "Convert min Heap to max Heap",
+    "searchQuery": "GeeksforGeeks convert min heap to max heap problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/convert-min-heap-to-max-heap/1",
+        "title": "Convert min Heap to max Heap",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-231": {
+    "sourceTitle": "Kth smallest element in an array [use priority queue]",
+    "searchQuery": "GeeksforGeeks kth smallest element in an array problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/kth-smallest-element-in-an-array/1",
+        "title": "Kth smallest element in an array [use priority queue]",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-234": {
+    "sourceTitle": "Replace each array element by its corresponding rank",
+    "searchQuery": "GeeksforGeeks replace each array element by its corresponding rank problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/replace-each-array-element-by-its-corresponding-rank/1",
+        "title": "Replace each array element by its corresponding rank",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-238": {
+    "sourceTitle": "Connect `n` ropes with minimal cost",
+    "searchQuery": "GeeksforGeeks connect n ropes with minimal cost problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/connect-n-ropes-with-minimal-cost/1",
+        "title": "Connect `n` ropes with minimal cost",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-244": {
+    "sourceTitle": "Fractional Knapsack Problem",
+    "searchQuery": "GeeksforGeeks fractional knapsack problem problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/fractional-knapsack-problem/1",
+        "title": "Fractional Knapsack Problem",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-245": {
+    "sourceTitle": "Greedy algorithm to find minimum number of coins",
+    "searchQuery": "GeeksforGeeks greedy algorithm to find minimum number of coins problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/greedy-algorithm-to-find-minimum-number-of-coins/1",
+        "title": "Greedy algorithm to find minimum number of coins",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-248": {
+    "sourceTitle": "N meetings in one room",
+    "searchQuery": "GeeksforGeeks n meetings in one room problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/n-meetings-in-one-room/1",
+        "title": "N meetings in one room",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-251": {
+    "sourceTitle": "Minimum number of platforms required for a railway",
+    "searchQuery": "GeeksforGeeks minimum number of platforms required for a railway problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/minimum-number-of-platforms-required-for-a-railway/1",
+        "title": "Minimum number of platforms required for a railway",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-252": {
+    "sourceTitle": "Job sequencing Problem",
+    "searchQuery": "GeeksforGeeks job sequencing problem problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/job-sequencing-problem/1",
+        "title": "Job sequencing Problem",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-254": {
+    "sourceTitle": "Program for Shortest Job First (or SJF) CPU Scheduling",
+    "searchQuery": "GeeksforGeeks program for shortest job first cpu scheduling problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/program-for-shortest-job-first-cpu-scheduling/1",
+        "title": "Program for Shortest Job First (or SJF) CPU Scheduling",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-255": {
+    "sourceTitle": "Program for Least Recently Used (LRU) Page Replacement Algorithm",
+    "searchQuery": "GeeksforGeeks program for least recently used page replacement algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/program-for-least-recently-used-page-replacement-algorithm/1",
+        "title": "Program for Least Recently Used (LRU) Page Replacement Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-259": {
+    "sourceTitle": "Introduction to Trees",
+    "searchQuery": "GeeksforGeeks introduction to trees problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/introduction-to-trees/1",
+        "title": "Introduction to Trees",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-260": {
+    "sourceTitle": "Binary Tree Representation in C++",
+    "searchQuery": "GeeksforGeeks binary tree representation in c problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/binary-tree-representation-in-c/1",
+        "title": "Binary Tree Representation in C++",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-261": {
+    "sourceTitle": "Binary Tree Representation in Java",
+    "searchQuery": "GeeksforGeeks binary tree representation in java problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/binary-tree-representation-in-java/1",
+        "title": "Binary Tree Representation in Java",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-262": {
+    "sourceTitle": "Binary Tree Traversals in Binary Tree",
+    "searchQuery": "GeeksforGeeks binary tree traversals in binary tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/binary-tree-traversals-in-binary-tree/1",
+        "title": "Binary Tree Traversals in Binary Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-271": {
+    "sourceTitle": "Preorder, Inorder, and Postorder Traversal in one Traversal",
+    "searchQuery": "GeeksforGeeks preorder inorder and postorder traversal in one traversal problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/preorder-inorder-and-postorder-traversal-in-one-traversal/1",
+        "title": "Preorder, Inorder, and Postorder Traversal in one Traversal",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-280": {
+    "sourceTitle": "Top View of Binary Tree",
+    "searchQuery": "GeeksforGeeks top view of binary tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1",
+        "title": "Top View of Binary Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-281": {
+    "sourceTitle": "Bottom View of Binary Tree",
+    "searchQuery": "GeeksforGeeks bottom view of binary tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1",
+        "title": "Bottom View of Binary Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-284": {
+    "sourceTitle": "Root to Node Path in Binary Tree",
+    "searchQuery": "GeeksforGeeks root to node path in binary tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/root-to-node-path-in-binary-tree/1",
+        "title": "Root to Node Path in Binary Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-287": {
+    "sourceTitle": "Check for Children Sum Property",
+    "searchQuery": "GeeksforGeeks check for children sum property problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/check-for-children-sum-property/1",
+        "title": "Check for Children Sum Property",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-289": {
+    "sourceTitle": "Minimum time taken to BURN the Binary Tree from a Node",
+    "searchQuery": "GeeksforGeeks minimum time taken to burn the binary tree from a node problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/minimum-time-taken-to-burn-the-binary-tree-from-a-node/1",
+        "title": "Minimum time taken to BURN the Binary Tree from a Node",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-291": {
+    "sourceTitle": "Requirements needed to construct a Unique Binary Tree | Theory",
+    "searchQuery": "GeeksforGeeks requirements needed to construct a unique binary tree theory problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/requirements-needed-to-construct-a-unique-binary-tree-theory/1",
+        "title": "Requirements needed to construct a Unique Binary Tree | Theory",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-298": {
+    "sourceTitle": "Introduction to Binary Search Tree",
+    "searchQuery": "GeeksforGeeks introduction to binary search tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/introduction-to-binary-search-tree/1",
+        "title": "Introduction to Binary Search Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-300": {
+    "sourceTitle": "Ceil in a Binary Search Tree",
+    "searchQuery": "GeeksforGeeks ceil in a binary search tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/ceil-in-a-binary-search-tree/1",
+        "title": "Ceil in a Binary Search Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-301": {
+    "sourceTitle": "Floor in a Binary Search Tree",
+    "searchQuery": "GeeksforGeeks floor in a binary search tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/floor-in-a-binary-search-tree/1",
+        "title": "Floor in a Binary Search Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-312": {
+    "sourceTitle": "Largest BST in Binary Tree",
+    "searchQuery": "GeeksforGeeks largest bst in binary tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/largest-bst-in-binary-tree/1",
+        "title": "Largest BST in Binary Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-313": {
+    "sourceTitle": "Graph and Types",
+    "searchQuery": "GeeksforGeeks graph and types problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/graph-and-types/1",
+        "title": "Graph and Types",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-314": {
+    "sourceTitle": "Graph Representation | C++",
+    "searchQuery": "GeeksforGeeks graph representation c problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/graph-representation-c/1",
+        "title": "Graph Representation | C++",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-318": {
+    "sourceTitle": "Connected Components Problem in Matrix",
+    "searchQuery": "GeeksforGeeks connected components problem in matrix problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/connected-components-problem-in-matrix/1",
+        "title": "Connected Components Problem in Matrix",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-321": {
+    "sourceTitle": "Cycle Detection in unirected Graph (bfs)",
+    "searchQuery": "GeeksforGeeks cycle detection in unirected graph problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/cycle-detection-in-unirected-graph/1",
+        "title": "Cycle Detection in unirected Graph (bfs)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-322": {
+    "sourceTitle": "Cycle Detection in undirected Graph (dfs)",
+    "searchQuery": "GeeksforGeeks cycle detection in undirected graph problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/cycle-detection-in-undirected-graph/1",
+        "title": "Cycle Detection in undirected Graph (dfs)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-331": {
+    "sourceTitle": "Topo Sort",
+    "searchQuery": "GeeksforGeeks topo sort problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/topo-sort/1",
+        "title": "Topo Sort",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-332": {
+    "sourceTitle": "Kahn's Algorithm",
+    "searchQuery": "GeeksforGeeks kahn s algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/kahn-s-algorithm/1",
+        "title": "Kahn's Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-333": {
+    "sourceTitle": "Cycle Detection in Directed Graph (BFS)",
+    "searchQuery": "GeeksforGeeks cycle detection in directed graph problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/cycle-detection-in-directed-graph/1",
+        "title": "Cycle Detection in Directed Graph (BFS)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-338": {
+    "sourceTitle": "Shortest Path in UG with unit weights",
+    "searchQuery": "GeeksforGeeks shortest path in ug with unit weights problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/shortest-path-in-ug-with-unit-weights/1",
+        "title": "Shortest Path in UG with unit weights",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-339": {
+    "sourceTitle": "Shortest Path in DAG",
+    "searchQuery": "GeeksforGeeks shortest path in dag problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/shortest-path-in-dag/1",
+        "title": "Shortest Path in DAG",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-340": {
+    "sourceTitle": "Djisktra's Algorithm",
+    "searchQuery": "GeeksforGeeks djisktra s algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/djisktra-s-algorithm/1",
+        "title": "Djisktra's Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-341": {
+    "sourceTitle": "Why priority Queue is used in Djisktra's Algorithm",
+    "searchQuery": "GeeksforGeeks why priority queue is used in djisktra s algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/why-priority-queue-is-used-in-djisktra-s-algorithm/1",
+        "title": "Why priority Queue is used in Djisktra's Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-347": {
+    "sourceTitle": "Minimum steps to reach end from start by performing multiplication and mod operations with array elements",
+    "searchQuery": "GeeksforGeeks minimum steps to reach end from start by performing multiplication and mod operations with array elements problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/minimum-steps-to-reach-end-from-start-by-performing-multiplication-and-mod-operations-with-array-elements/1",
+        "title": "Minimum steps to reach end from start by performing multiplication and mod operations with array elements",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-348": {
+    "sourceTitle": "Bellman Ford Algorithm",
+    "searchQuery": "GeeksforGeeks bellman ford algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/bellman-ford-algorithm/1",
+        "title": "Bellman Ford Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-349": {
+    "sourceTitle": "Floyd Warshal Algorithm",
+    "searchQuery": "GeeksforGeeks floyd warshal algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/floyd-warshal-algorithm/1",
+        "title": "Floyd Warshal Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-351": {
+    "sourceTitle": "Minimum Spanning Tree",
+    "searchQuery": "GeeksforGeeks minimum spanning tree problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1",
+        "title": "Minimum Spanning Tree",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-352": {
+    "sourceTitle": "Prim's Algorithm",
+    "searchQuery": "GeeksforGeeks prim s algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/prim-s-algorithm/1",
+        "title": "Prim's Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-353": {
+    "sourceTitle": "Disjoint Set [Union by Rank]",
+    "searchQuery": "GeeksforGeeks disjoint set problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/disjoint-set/1",
+        "title": "Disjoint Set [Union by Rank]",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-354": {
+    "sourceTitle": "Disjoint Set [Union by Size]",
+    "searchQuery": "GeeksforGeeks disjoint set problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/disjoint-set/1",
+        "title": "Disjoint Set [Union by Size]",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-355": {
+    "sourceTitle": "Kruskal's Algorithm",
+    "searchQuery": "GeeksforGeeks kruskal s algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/kruskal-s-algorithm/1",
+        "title": "Kruskal's Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-363": {
+    "sourceTitle": "Articulation Point",
+    "searchQuery": "GeeksforGeeks articulation point problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/articulation-point/1",
+        "title": "Articulation Point",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-364": {
+    "sourceTitle": "Kosaraju's Algorithm",
+    "searchQuery": "GeeksforGeeks kosaraju s algorithm problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/kosaraju-s-algorithm/1",
+        "title": "Kosaraju's Algorithm",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-365": {
+    "sourceTitle": "Dynamic Programming Introduction",
+    "searchQuery": "GeeksforGeeks dynamic programming introduction problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/dynamic-programming-introduction/1",
+        "title": "Dynamic Programming Introduction",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-367": {
+    "sourceTitle": "Frog Jump(DP-3)",
+    "searchQuery": "GeeksforGeeks frog jump problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/frog-jump/1",
+        "title": "Frog Jump(DP-3)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-368": {
+    "sourceTitle": "Frog Jump with k distances(DP-4)",
+    "searchQuery": "GeeksforGeeks frog jump with k distances problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/frog-jump-with-k-distances/1",
+        "title": "Frog Jump with k distances(DP-4)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-371": {
+    "sourceTitle": "Ninja's Training (DP 7)",
+    "searchQuery": "GeeksforGeeks ninja s training problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/ninja-s-training/1",
+        "title": "Ninja's Training (DP 7)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-377": {
+    "sourceTitle": "3-d DP : Ninja and his friends (DP-13)",
+    "searchQuery": "GeeksforGeeks 3 d dp ninja and his friends problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/3-d-dp-ninja-and-his-friends/1",
+        "title": "3-d DP : Ninja and his friends (DP-13)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-378": {
+    "sourceTitle": "Subset sum equal to target (DP- 14)",
+    "searchQuery": "GeeksforGeeks subset sum equal to target problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/subset-sum-equal-to-target/1",
+        "title": "Subset sum equal to target (DP- 14)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-381": {
+    "sourceTitle": "Count Subsets with Sum K (DP - 17)",
+    "searchQuery": "GeeksforGeeks count subsets with sum k problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-subsets-with-sum-k/1",
+        "title": "Count Subsets with Sum K (DP - 17)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-382": {
+    "sourceTitle": "Count Partitions with Given Difference (DP - 18)",
+    "searchQuery": "GeeksforGeeks count partitions with given difference problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-partitions-with-given-difference/1",
+        "title": "Count Partitions with Given Difference (DP - 18)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-386": {
+    "sourceTitle": "Unbounded Knapsack (DP - 23)",
+    "searchQuery": "GeeksforGeeks unbounded knapsack problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/unbounded-knapsack/1",
+        "title": "Unbounded Knapsack (DP - 23)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-387": {
+    "sourceTitle": "Rod Cutting Problem | (DP - 24)",
+    "searchQuery": "GeeksforGeeks rod cutting problem problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/rod-cutting-problem/1",
+        "title": "Rod Cutting Problem | (DP - 24)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-389": {
+    "sourceTitle": "Print Longest Common Subsequence | (DP - 26)",
+    "searchQuery": "GeeksforGeeks print longest common subsequence problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/print-longest-common-subsequence/1",
+        "title": "Print Longest Common Subsequence | (DP - 26)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-390": {
+    "sourceTitle": "Longest Common Substring | (DP - 27)",
+    "searchQuery": "GeeksforGeeks longest common substring problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/longest-common-substring/1",
+        "title": "Longest Common Substring | (DP - 27)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-405": {
+    "sourceTitle": "Printing Longest Increasing Subsequence|(DP-42)",
+    "searchQuery": "GeeksforGeeks printing longest increasing subsequence problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/printing-longest-increasing-subsequence/1",
+        "title": "Printing Longest Increasing Subsequence|(DP-42)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-406": {
+    "sourceTitle": "Longest Increasing Subsequence |(DP-43)",
+    "searchQuery": "GeeksforGeeks longest increasing subsequence problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/longest-increasing-subsequence/1",
+        "title": "Longest Increasing Subsequence |(DP-43)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-409": {
+    "sourceTitle": "Longest Bitonic Subsequence |(DP-46)",
+    "searchQuery": "GeeksforGeeks longest bitonic subsequence problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/longest-bitonic-subsequence/1",
+        "title": "Longest Bitonic Subsequence |(DP-46)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-411": {
+    "sourceTitle": "Matrix Chain Multiplication|(DP-48)",
+    "searchQuery": "GeeksforGeeks matrix chain multiplication problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/matrix-chain-multiplication/1",
+        "title": "Matrix Chain Multiplication|(DP-48)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-412": {
+    "sourceTitle": "Matrix Chain Multiplication | Bottom-Up|(DP-49)",
+    "searchQuery": "GeeksforGeeks matrix chain multiplication bottom up problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/matrix-chain-multiplication-bottom-up/1",
+        "title": "Matrix Chain Multiplication | Bottom-Up|(DP-49)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-421": {
+    "sourceTitle": "Implement Trie - 2 (Prefix Tree)",
+    "searchQuery": "GeeksforGeeks implement trie 2 problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/implement-trie-2/1",
+        "title": "Implement Trie - 2 (Prefix Tree)",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-422": {
+    "sourceTitle": "Longest String with All Prefixes",
+    "searchQuery": "GeeksforGeeks longest string with all prefixes problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/longest-string-with-all-prefixes/1",
+        "title": "Longest String with All Prefixes",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-423": {
+    "sourceTitle": "Number of Distinct Substrings in a String",
+    "searchQuery": "GeeksforGeeks number of distinct substrings in a string problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/number-of-distinct-substrings-in-a-string/1",
+        "title": "Number of Distinct Substrings in a String",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "striver-435": {
+    "sourceTitle": "Count palindromic subsequence in given string",
+    "searchQuery": "GeeksforGeeks count palindromic subsequence in given string problem",
+    "candidates": [
+      {
+        "url": "https://www.geeksforgeeks.org/problems/count-palindromic-subsequence-in-given-string/1",
+        "title": "Count palindromic subsequence in given string",
+        "confidence": "medium"
+      }
+    ]
+  }
+}

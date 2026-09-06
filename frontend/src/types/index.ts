@@ -26,6 +26,7 @@ export interface Task {
   isExpired: boolean;
   notes: string | null;
   potdDateKey?: string | null;
+  questionBankId?: string | null;
   createdAt: string;
   updatedAt: string;
   revisions?: Task[];

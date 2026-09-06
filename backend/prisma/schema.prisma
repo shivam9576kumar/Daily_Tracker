@@ -75,6 +75,7 @@ model Task {
   notes             String?
   /// 'YYYY-MM-DD' of the LeetCode POTD this task represents. Null for every non-POTD task.
   potdDateKey       String?   @map("potd_date_key")
+  questionBankId    String?   @map("question_bank_id")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at")
 
@@ -92,6 +93,7 @@ model Task {
   @@index([userId, scheduledDateKey])
   @@index([userId, status])
   @@index([parentTaskId])
+  @@index([questionBankId])
   @@index([userId, isBacklog, isExpired])
   @@index([parentTaskId, taskType])
   @@map("tasks")

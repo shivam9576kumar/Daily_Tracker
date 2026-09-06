@@ -13,6 +13,13 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:backfill-scheduled-keys": "tsx scripts/backfillScheduledDateKeys.ts",
     "backfill:platform": "tsx scripts/backfillPlatform.ts",
+    "data:validate-striver-gfg": "tsx scripts/validateStriverGfgMapping.ts",
+    "data:audit-striver-gfg": "tsx scripts/auditStriverGfgMappings.ts",
+    "data:verify-gfg-urls": "tsx scripts/verifyGfgUrlsHttp.ts",
+    "data:revert-unsafe-striver-gfg": "tsx scripts/revertUnsafeStriverGfgLinks.ts",
+    "data:revert-unsafe-striver-gfg:apply": "tsx scripts/revertUnsafeStriverGfgLinks.ts --apply",
+    "data:backfill-striver-gfg:dry-run": "tsx scripts/backfillStriverGfgLinks.ts --dry-run",
+    "data:backfill-striver-gfg": "tsx scripts/backfillStriverGfgLinks.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

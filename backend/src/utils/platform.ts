@@ -13,6 +13,7 @@ const PLATFORM_HOST_MAP: [string, string][] = [
   ['codechef.com', 'codechef'],
   ['takeuforward.org', 'striver'],
   ['striver', 'striver'],
+  ['spoj.com', 'spoj'],
 ];
 
 export function platformFromUrl(url?: string | null): string | null {

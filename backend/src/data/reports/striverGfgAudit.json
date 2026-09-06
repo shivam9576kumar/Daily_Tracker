@@ -1,0 +1,174 @@
+{
+  "totalMapped": 26,
+  "keepCount": 17,
+  "quarantineCount": 9,
+  "keep": [
+    {
+      "id": "striver-009",
+      "striverTitle": "Count Digits",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/count-digits5716/1",
+      "gfgTitle": "Count Digits"
+    },
+    {
+      "id": "striver-331",
+      "striverTitle": "Topo Sort",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/topological-sort/1",
+      "gfgTitle": "Topological sort"
+    },
+    {
+      "id": "striver-340",
+      "striverTitle": "Djisktra's Algorithm",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1",
+      "gfgTitle": "Implementing Dijkstra Algorithm"
+    },
+    {
+      "id": "striver-347",
+      "striverTitle": "Minimum steps to reach end from start by performing multiplication and mod operations with array elements",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-multiplications-to-reach-end/1",
+      "gfgTitle": "Minimum Multiplications to Reach End"
+    },
+    {
+      "id": "striver-349",
+      "striverTitle": "Floyd Warshal Algorithm",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/floyd-warshall4826/1",
+      "gfgTitle": "Floyd Warshall"
+    },
+    {
+      "id": "striver-351",
+      "striverTitle": "Minimum Spanning Tree",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1",
+      "gfgTitle": "Minimum Spanning Tree"
+    },
+    {
+      "id": "striver-353",
+      "striverTitle": "Disjoint Set [Union by Rank]",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/disjoint-set-union-find/1",
+      "gfgTitle": "Disjoint set (Union-Find)"
+    },
+    {
+      "id": "striver-363",
+      "striverTitle": "Articulation Point",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/articulation-point-1/1",
+      "gfgTitle": "Articulation Point - I"
+    },
+    {
+      "id": "striver-367",
+      "striverTitle": "Frog Jump(DP-3)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/geek-jump/1",
+      "gfgTitle": "Geek Jump"
+    },
+    {
+      "id": "striver-371",
+      "striverTitle": "Ninja's Training (DP 7)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/geeks-training/1",
+      "gfgTitle": "Geek's Training"
+    },
+    {
+      "id": "striver-378",
+      "striverTitle": "Subset sum equal to target (DP- 14)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/subset-sum-problem1611/1",
+      "gfgTitle": "Subset Sum Problem"
+    },
+    {
+      "id": "striver-386",
+      "striverTitle": "Unbounded Knapsack (DP - 23)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1",
+      "gfgTitle": "Knapsack with Duplicate Items"
+    },
+    {
+      "id": "striver-387",
+      "striverTitle": "Rod Cutting Problem | (DP - 24)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/rod-cutting0840/1",
+      "gfgTitle": "Rod Cutting"
+    },
+    {
+      "id": "striver-390",
+      "striverTitle": "Longest Common Substring | (DP - 27)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/longest-common-substring1451/1",
+      "gfgTitle": "Longest Common Substring"
+    },
+    {
+      "id": "striver-409",
+      "striverTitle": "Longest Bitonic Subsequence |(DP-46)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/longest-bitonic-subsequence0824/1",
+      "gfgTitle": "Longest Bitonic Subsequence"
+    },
+    {
+      "id": "striver-411",
+      "striverTitle": "Matrix Chain Multiplication|(DP-48)",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1",
+      "gfgTitle": "Matrix Chain Multiplication"
+    },
+    {
+      "id": "striver-435",
+      "striverTitle": "Count palindromic subsequence in given string",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/count-palindromic-subsequences0841/1",
+      "gfgTitle": "Count Palindromic Subsequences"
+    }
+  ],
+  "quarantine": [
+    {
+      "id": "striver-013",
+      "striverTitle": "Print all Divisors",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/armstrong-numbers2727/1",
+      "gfgTitle": "Armstrong Numbers",
+      "reason": "Hardcoded FORCE_REJECT list match"
+    },
+    {
+      "id": "striver-014",
+      "striverTitle": "Check for Prime",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/sum-of-first-n-terms5818/1",
+      "gfgTitle": "Sum of first n terms",
+      "reason": "Hardcoded FORCE_REJECT list match"
+    },
+    {
+      "id": "striver-015",
+      "striverTitle": "Print name N times using recursion",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/minimum-number-of-jumps-1587115620/1",
+      "gfgTitle": "Minimum Jumps",
+      "reason": "Hardcoded FORCE_REJECT list match"
+    },
+    {
+      "id": "striver-016",
+      "striverTitle": "Print N to 1 using recursion",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/find-all-factorial-numbers-less-than-or-equal-to-n7001/1",
+      "gfgTitle": "Find all factorial numbers less than or equal to n",
+      "reason": "Hardcoded FORCE_REJECT list match"
+    },
+    {
+      "id": "striver-021",
+      "striverTitle": "Hashing Theory",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/selection-sort/1",
+      "gfgTitle": "Selection Sort",
+      "reason": "Hardcoded FORCE_REJECT list match"
+    },
+    {
+      "id": "striver-022",
+      "striverTitle": "Counting frequencies of array elements",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/bubble-sort/1",
+      "gfgTitle": "Bubble Sort",
+      "reason": "Hardcoded FORCE_REJECT list match"
+    },
+    {
+      "id": "striver-024",
+      "striverTitle": "Selection Sort",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/insertion-sort/1",
+      "gfgTitle": "Insertion Sort",
+      "reason": "Hardcoded FORCE_REJECT list match"
+    },
+    {
+      "id": "striver-348",
+      "striverTitle": "Bellman Ford Algorithm",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/distance-from-the-source-bellman-ford-algorithm/1",
+      "gfgTitle": "Distance from the Source (Bellman-Ford Algorithm)",
+      "reason": "Title non-equivalence"
+    },
+    {
+      "id": "striver-364",
+      "striverTitle": "Kosaraju's Algorithm",
+      "gfgUrl": "https://www.geeksforgeeks.org/problems/strongly-connected-components-kosarajus-algo/1",
+      "gfgTitle": "Strongly Connected Components (Kosaraju's Algo)",
+      "reason": "Title non-equivalence"
+    }
+  ]
+}

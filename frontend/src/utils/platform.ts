@@ -11,6 +11,7 @@ const PLATFORM_HOST_MAP: [string, string, string][] = [
   ['codechef.com', 'codechef', 'CodeChef'],
   ['takeuforward.org', 'striver', 'Striver (takeuforward)'],
   ['striver', 'striver', 'Striver (takeuforward)'],
+  ['spoj.com', 'spoj', 'SPOJ'],
 ];
 
 function titleCase(s: string): string {
