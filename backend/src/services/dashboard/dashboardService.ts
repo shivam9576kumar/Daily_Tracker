@@ -5,6 +5,7 @@ import { streakService } from '../progress/streakService';
 import { classesService } from '../classes/classesService';
 import { ensurePotdTaskForUser } from '../potd/potdService';
 import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakService';
+import { todayKey } from '../../utils/dateKeys';
 
 /**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
@@ -55,7 +56,7 @@ export const dashboardService = {
       }),
     ]);
 
-    const [backlogCount, expiredCount, streaks, pendingAssignments, classesForWeek] = await Promise.all([
+    const [backlogCount, expiredCount, streaks, pendingAssignments, classesForWeek, upcomingRevisions] = await Promise.all([
       // Backlog: flagged as backlog, not expired, not completed (live plan or manual)
       prisma.task.count({
         where: {
@@ -80,6 +81,19 @@ export const dashboardService = {
         orderBy: { deadline: 'asc' },
       }),
       classesService.list(userId).catch(() => []),
+      prisma.task.findMany({
+        where: {
+          userId,
+          taskType: 'revision',
+          status: { in: ['pending', 'backlog'] },
+          isExpired: false,
+          scheduledDateKey: { gte: todayKey(tz) },
+          OR: [{ planId: null }, { plan: { status: 'active' } }],
+        },
+        orderBy: { scheduledDateKey: 'asc' },
+        take: 3,
+        select: { id: true, title: true, topic: true, difficulty: true, revisionNumber: true, scheduledDateKey: true },
+      }),
     ]);
 
     const pendingTasks = todaysTasks.filter((t) => t.status !== 'completed');
@@ -108,6 +122,7 @@ export const dashboardService = {
       },
       vibe,
       pendingAssignments: assignments,
+      upcomingRevisions,
       todaysHitlist: {
         pending: pendingTasks,
         completed: completedTasks,

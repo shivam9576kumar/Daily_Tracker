@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { PotdStreak, Rating, Task } from '../../types';
 import TaskRow from './TaskRow';
@@ -31,6 +32,7 @@ export default function TodaysHitlist({
   onUnrate,
 }: Props) {
   const navigate = useNavigate();
+  const [showCompleted, setShowCompleted] = useState(true);
 
   const hasPotd = pending.some((t) => t.taskType === 'potd') || completed.some((t) => t.taskType === 'potd');
 
@@ -67,10 +69,7 @@ export default function TodaysHitlist({
 
       {hasPotd && (
         <p className="hitlist-potd-note t-meta">
-          ⚡ Today's LeetCode POTD is included — it doesn't count toward your plan load.{potdMeta?.stale ? ' (showing the latest available challenge)' : ''}
-          {potdStreak && potdStreak.currentStreak === 0 && potdStreak.totalSolved > 0 && (
-            <span> · Solve today's POTD to start a new streak.</span>
-          )}
+          ⚡ LeetCode POTD included — doesn't count toward plan load.{potdMeta?.stale ? ' (showing latest challenge)' : ''}
         </p>
       )}
 
@@ -86,26 +85,34 @@ export default function TodaysHitlist({
               Generate Plan
             </button>
           </div>
-        ) : completed.length === 0 ? (
+        ) : (
           <div className="empty-state card">
-            <div className="empty-emoji">🎯</div>
-            <div className="empty-text t-body">No pending tasks for today. Add one to get started!</div>
+            <div className="empty-emoji">🎉</div>
+            <div className="empty-text t-body">All done for today! Add one or enjoy your day.</div>
             <button type="button" className="btn-primary" style={{ marginTop: 12 }} onClick={onAddTask}>
-              + Add Your First Task
+              + Add Task
             </button>
           </div>
-        ) : null
+        )
       ) : (
         <div className="task-list">{pending.map(row)}</div>
       )}
 
       {completed.length > 0 && (
         <>
-          <div className="section-divider t-label">
-            ✓ Completed Today ({completed.length}){' '}
-            <span className="section-note t-meta">· tap the checkbox to unsolve · clears at midnight</span>
-          </div>
-          <div className="task-list">{completed.map(row)}</div>
+          <button
+            type="button"
+            className="completed-toggle"
+            onClick={() => setShowCompleted((o) => !o)}
+          >
+            <span>✓ Completed Today ({completed.length})</span>
+            <span className="mono">{showCompleted ? '−' : '+'}</span>
+          </button>
+          {showCompleted && (
+            <div className="task-list completed-list">
+              {completed.map(row)}
+            </div>
+          )}
         </>
       )}
     </section>

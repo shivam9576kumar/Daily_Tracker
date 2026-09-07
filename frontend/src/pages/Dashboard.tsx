@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDashboardStore } from '../store/dashboardStore';
 import { useTaskActions } from '../hooks/useTaskActions';
-import StatusOverview from '../components/dashboard/StatusOverview';
-import VibeBanner from '../components/dashboard/VibeBanner';
 import TodaysHitlist from '../components/dashboard/TodaysHitlist';
-import PendingAssignments from '../components/assignments/PendingAssignments';
-import TodayClassStrip from '../components/classes/TodayClassStrip';
+import CompactStats from '../components/dashboard/CompactStats';
+import PlanProgress from '../components/dashboard/PlanProgress';
+import RevisionsPreview from '../components/dashboard/RevisionsPreview';
+import CollegeStrip from '../components/dashboard/CollegeStrip';
 import TaskDrawer from '../components/task/TaskDrawer';
 import AddTaskModal from '../components/task/AddTaskModal';
 import Spinner from '../components/common/Spinner';
@@ -22,7 +22,6 @@ export default function Dashboard() {
     fetch();
   }, [fetch]);
 
-  // Silent refresh: no spinner, just new data
   const refresh = useCallback(() => fetch(true), [fetch]);
   const actions = useTaskActions(refresh);
 
@@ -48,17 +47,30 @@ export default function Dashboard() {
 
   if (!data) return null;
 
+  const totalTasks = data.todaysHitlist.completed.length + data.todaysHitlist.pending.length;
+  const dayProgress = totalTasks === 0
+    ? 100
+    : (data.todaysHitlist.completed.length / totalTasks) * 100;
+
   return (
     <div className="dashboard">
-      <StatusOverview data={data.statusOverview} />
-      <VibeBanner vibe={data.vibe} />
-      {data.classes && <TodayClassStrip classes={data.classes} />}
-
-      <PendingAssignments
-        pending={data.pendingAssignments || []}
-        onChanged={refresh}
+      {/* 1. Greeting + compact stats */}
+      <CompactStats
+        streak={data.statusOverview.streak}
+        coins={data.statusOverview.coins}
+        remaining={data.todaysHitlist.pending.length}
+        activePlanName={data.activePlan?.name ?? null}
       />
 
+      {/* 2. Plan progress */}
+      {data.hasActivePlan && (
+        <PlanProgress
+          planName={data.activePlan?.name ?? ''}
+          dayProgress={dayProgress}
+        />
+      )}
+
+      {/* 3. Main hero: Today's Hitlist */}
       <TodaysHitlist
         hasActivePlan={data.hasActivePlan}
         pending={data.todaysHitlist.pending}
@@ -72,6 +84,12 @@ export default function Dashboard() {
         onRate={actions.rate}
         onUnrate={actions.unrate}
       />
+
+      {/* 4. Upcoming revisions (collapsed) */}
+      <RevisionsPreview revisions={data.upcomingRevisions ?? []} />
+
+      {/* 5. College strip (classes + assignments collapsed) */}
+      <CollegeStrip classes={data.classes ?? []} assignments={data.pendingAssignments ?? []} />
 
       <TaskDrawer
         taskId={selectedTaskId}
