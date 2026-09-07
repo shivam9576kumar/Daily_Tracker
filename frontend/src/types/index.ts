@@ -105,7 +105,6 @@ export interface DashboardData {
   statusOverview: StatusOverview;
   vibe: Vibe;
   pendingAssignments: Assignment[];
-  upcomingRevisions?: Task[];
   todaysHitlist: {
     pending: Task[];
     completed: Task[];

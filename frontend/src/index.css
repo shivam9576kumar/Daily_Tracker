@@ -32,8 +32,8 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
    THEME-AGNOSTIC TOKENS & TYPE SCALE
    ================================================================ */
 :root {
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: var(--font-sans);   /* mono retired — alias so nothing breaks */
 
   /* type scale */
   --fs-stat: 36px;  --lh-stat: 1.1;  --fw-stat: 800;      /* stat numbers */
@@ -300,7 +300,6 @@ button { font-family: inherit; }
 .t-link.is-danger { color: var(--danger-text); }
 .t-link.is-danger:hover { color: var(--danger-hover); }
 .num { font-family: var(--font-sans); font-variant-numeric: tabular-nums; }
-.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .text-gradient { background: none; -webkit-background-clip: initial; background-clip: initial;
                  -webkit-text-fill-color: currentColor; color: var(--brand-text); }   /* gradients retired */
 
