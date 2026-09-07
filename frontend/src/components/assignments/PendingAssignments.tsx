@@ -78,7 +78,7 @@ export default function PendingAssignments({ pending, onChanged }: Props) {
   return (
     <section className="card assignments-card">
       <div className="assignments-header">
-        <h2 className="t-h2">📌 Pending Assignments</h2>
+        <h2 className="t-h2">Pending Assignments</h2>
         <span className="pill pill-count">{pending.length}</span>
         <div className="assignments-spacer" />
         <button type="button" className="t-link" onClick={openCreate}>

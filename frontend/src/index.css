@@ -33,7 +33,7 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
    ================================================================ */
 :root {
   --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: var(--font-sans);   /* mono retired — alias so nothing breaks */
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* type scale */
   --fs-stat: 36px;  --lh-stat: 1.1;  --fw-stat: 800;      /* stat numbers */
@@ -67,6 +67,16 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
    ================================================================ */
 :root[data-theme="light"] {
   color-scheme: light;
+
+  /* Igloo Dashboard Tokens (Light) */
+  --ig-bg:      #A0A5B1;
+  --ig-surface: #B4B8C2;
+  --ig-ink:     #1A1C1F;
+  --ig-muted:   #4C4F53;
+  --ig-line:    #777C81;
+  --ig-accent:  #1A1C1F;
+  --ig-warn:    #8A5A00;
+  --ig-danger:  #8B1E1E;
 
   /* Backgrounds */
   --bg-page:     #FFFFFF;
@@ -155,6 +165,16 @@ img, svg, video, canvas { max-width: 100%; height: auto; }
    ================================================================ */
 :root[data-theme="dark"] {
   color-scheme: dark;
+
+  /* Igloo Dashboard Tokens (Dark) */
+  --ig-bg:      #1A1C1F;
+  --ig-surface: #24262B;
+  --ig-ink:     #E8E9ED;
+  --ig-muted:   #A0A5B1;
+  --ig-line:    #4C4F53;
+  --ig-accent:  #E8E9ED;
+  --ig-warn:    #FBBF24;
+  --ig-danger:  #F87171;
 
   /* Backgrounds — neutral, flat */
   --bg-page:     #0A0A0A;

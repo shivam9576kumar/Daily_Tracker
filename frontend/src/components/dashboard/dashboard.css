@@ -3,33 +3,26 @@
 .dashboard-page { display: flex; flex-direction: column; gap: 20px; width: 100%; }
 .section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
 .section-head__left { display: flex; align-items: center; gap: 10px; }
-.section-head__icon { font-size: 18px; line-height: 1; }
 
-/* Status overview */
-.stats-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+/* Status overview base */
+.stats-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 640px)  { .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.stat-card { display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; }
-.stat-card__label { display: flex; align-items: center; gap: 8px; }            /* .t-label → 14px/600 muted Title Case */
-.stat-card__icon { font-size: 16px; line-height: 1; transition: filter var(--transition-base); }
-.stat-card__value { color: var(--text-muted); transition: color var(--transition-base); }   /* 0 → gray */
-.stat-card:not(.is-active) .stat-card__icon { filter: grayscale(1); opacity: .55; }     /* emoji, not text — allowed */
-.stat-card.is-active .stat-card__value { color: var(--text-primary); }                    /* > 0 → black */
-.stat-card.is-active[data-kind="backlog"] .stat-card__value { color: var(--stat-backlog); }
-.stat-card.is-active[data-kind="expired"] .stat-card__value { color: var(--stat-expired); }
+@media (max-width: 400px)  { .stats-grid { grid-template-columns: 1fr; } }
+
+.stat-card { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; }
+.stat-card__label { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+.stat-card__value { font-size: 34px; line-height: 1.1; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--text-primary); }
 
 /* Vibe hero */
-.vibe-card { display: flex; align-items: center; gap: 16px; padding: 18px 22px; border-radius: var(--radius-lg);
-             background: var(--brand-tint); border: 1px solid var(--brand-tint-border); border-left: 4px solid var(--brand);
-             color: var(--text-primary); box-shadow: none; }
-.vibe-card__emoji { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
-                    background: var(--brand); font-size: 20px; line-height: 1; flex: 0 0 auto; }
-.vibe-card__msg { font: 600 16px/1.4 var(--font-sans); letter-spacing: -0.01em; color: var(--text-primary); text-shadow: none; }
-.vibe-card__sub { font: 500 13px/1.4 var(--font-sans); color: var(--text-secondary); opacity: 1; margin-top: 2px; }
+.vibe-card { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: var(--radius-lg); color: var(--text-primary); }
+.vibe-card__emoji-text { font-size: 16px; line-height: 1; flex: 0 0 auto; }
+.vibe-card__msg { font-size: 14px; font-weight: 400; line-height: 1.4; color: var(--text-primary); }
 
 /* Empty states */
-.empty-state { color: var(--text-secondary); text-align: center; padding: 40px 20px; }
-.empty-emoji { font-size: 44px; margin-bottom: 12px; }
+.empty-state { text-align: center; padding: 40px 20px; }
+.empty-mono { font-family: var(--font-mono); font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+.empty-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
 .empty-text { font: var(--fw-body) var(--fs-body)/var(--lh-body) var(--font-sans); color: var(--text-secondary); }
 
 /* Task List & Rows */
@@ -44,66 +37,287 @@
   border: 1px solid var(--border);
   background: var(--bg-surface);
   cursor: pointer;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-.task-row:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-sm);
-}
-.task-row.is-backlog {
-  border-left: 3px solid var(--danger);
-}
-
-input.task-row__check {
-  appearance: none; -webkit-appearance: none;
-  width: 18px; height: 18px; min-width: 18px; min-height: 18px; flex: 0 0 18px;
-  margin: 2px 0 0; padding: 0;
-  border: 1.5px solid var(--border-strong); border-radius: 5px;
-  background: var(--bg-surface); cursor: pointer;
-  display: grid; place-items: center;
   transition: border-color var(--transition-fast), background var(--transition-fast);
 }
-input.task-row__check:hover { border-color: var(--brand); }
-input.task-row__check:checked { background: var(--success); border-color: var(--success); }
-input.task-row__check:checked::after {
-  content: ''; width: 5px; height: 9px;
-  border: solid var(--text-on-brand); border-width: 0 2px 2px 0;
-  transform: translateY(-1px) rotate(45deg);
-}
-input.task-row__check:focus-visible { outline: 0; box-shadow: var(--focus-ring); }
 
 .task-row__body { flex: 1; min-width: 0; }
 .task-row__title { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.task-row__meta { display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
-.task-row__platform {
-  font: 500 13px/1 var(--font-sans);
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--text-muted);
-}
-.task-row.is-done .task-row__title {
-  color: var(--text-secondary);
-  text-decoration: line-through;
-  text-decoration-color: var(--text-disabled);
-}
+.task-row__meta { display: flex; align-items: center; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+.task-row__platform { font-size: 12px; color: var(--text-muted); }
 
 .task-rate-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-.task-rate-label { font-size: 11px; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--text-muted); }
+.task-rate-label { font-size: 11px; font-weight: 700; color: var(--text-muted); }
 .task-rate-hint { font-size: 11.5px; color: var(--text-muted); font-style: italic; }
 
+/* ================================================================
+   IGLOO DNA DASHBOARD SKIN (.dash-igloo)
+   ================================================================ */
+.dash-igloo {
+  font-family: var(--font-mono);
+  color: var(--ig-ink);
+  background: var(--ig-bg);
+  margin: -24px;
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .dash-igloo { margin: -16px; padding: 16px; }
+}
 @media (max-width: 400px) {
-  .stats-grid { grid-template-columns: 1fr; gap: 12px; }
-  .stat-card { padding: 16px 18px; }
-  .t-stat { font-size: 30px; }
+  .dash-igloo { margin: -12px; padding: 12px; }
 }
 
-@media (max-width: 768px) {
-  .dashboard, .dashboard-page { gap: 16px; }
-  .vibe-card { padding: 14px 16px; gap: 12px; }
-  .vibe-card__emoji { width: 36px; height: 36px; font-size: 18px; }
-  .vibe-card__msg { font-size: 15px; }
-  .section-head { flex-wrap: wrap; }
-  .section-head .btn-primary { min-height: 40px; }
+/* Kill shadows, force flat surfaces & 1px hairline borders */
+.dash-igloo .card,
+.dash-igloo .stat-card,
+.dash-igloo .vibe-card,
+.dash-igloo .task-row,
+.dash-igloo .assignments-card,
+.dash-igloo .cl-card {
+  background: var(--ig-surface);
+  border: 1px solid var(--ig-line);
+  border-radius: 2px;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
+/* Buttons */
+.dash-igloo .btn-primary {
+  border-radius: 2px;
+  box-shadow: none;
+  font-family: var(--font-mono);
+  background: var(--brand);
+  color: #FFFFFF;
+}
+.dash-igloo .btn-primary:hover {
+  box-shadow: none;
+  background: var(--brand-hover);
+}
+.dash-igloo .btn-secondary {
+  background: transparent;
+  border: 1px solid var(--ig-line);
+  color: var(--ig-ink);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+}
+.dash-igloo .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--ig-ink);
+  color: var(--ig-ink);
+}
 
+/* Status Overview */
+.dash-igloo .stat-card {
+  gap: 6px;
+  padding: 16px;
+}
+.dash-igloo .stat-card__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ig-muted);
+}
+.dash-igloo .stat-card__value {
+  font-family: var(--font-mono);
+  font-size: 34px;
+  line-height: 1.1;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ig-ink);
+}
+.dash-igloo .stat-card.is-active[data-kind="backlog"] .stat-card__value {
+  color: var(--ig-warn);
+}
+.dash-igloo .stat-card.is-active[data-kind="expired"] .stat-card__value {
+  color: var(--ig-danger);
+}
+.dash-igloo .stat-card__sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ig-warn);
+}
+
+/* Vibe Banner */
+.dash-igloo .vibe-card {
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--ig-surface);
+  border: 1px solid var(--ig-line);
+  border-left: 3px solid var(--ig-ink);
+  border-radius: 2px;
+}
+.dash-igloo .vibe-card__msg {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ig-ink);
+}
+
+/* Hitlist Section */
+.dash-igloo .hitlist-title {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ig-ink);
+}
+.dash-igloo .hitlist-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ig-muted);
+  border: 1px solid var(--ig-line);
+  border-radius: 2px;
+  padding: 2px 7px;
+}
+.dash-igloo .hitlist-potd-streak {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ig-muted);
+}
+.dash-igloo .hitlist-potd-note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ig-muted);
+  margin: 6px 0 12px;
+}
+.dash-igloo .section-divider {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ig-muted);
+  margin: 18px 0 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ig-line);
+}
+.dash-igloo .section-note {
+  font-size: 12px;
+  color: var(--ig-muted);
+  font-weight: 400;
+}
+
+/* Task Row */
+.dash-igloo .task-row {
+  padding: 12px 14px;
+  background: var(--ig-surface);
+  border: 1px solid var(--ig-line);
+  border-radius: 2px;
+  transition: background 120ms ease;
+}
+.dash-igloo .task-row:hover {
+  background: color-mix(in srgb, var(--ig-surface) 95%, var(--ig-ink) 5%);
+  border-color: var(--ig-line);
+  box-shadow: none;
+}
+.dash-igloo .task-row.is-backlog {
+  border-left: 3px solid var(--ig-danger);
+}
+.dash-igloo input.task-row__check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  margin: 3px 0 0;
+  border: 1px solid var(--ig-line);
+  border-radius: 0;
+  background: var(--ig-surface);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.dash-igloo input.task-row__check:hover {
+  border-color: var(--ig-ink);
+}
+.dash-igloo input.task-row__check:checked {
+  background: var(--ig-ink);
+  border-color: var(--ig-ink);
+}
+.dash-igloo input.task-row__check:checked::after {
+  content: '';
+  width: 4px;
+  height: 7px;
+  border: solid var(--ig-surface);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+.dash-igloo .task-row__title {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ig-ink);
+}
+.dash-igloo .task-row.is-done .task-row__title {
+  color: var(--ig-muted);
+  text-decoration: line-through;
+}
+.dash-igloo .task-row__meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ig-muted);
+  margin-top: 4px;
+}
+.dash-igloo .task-row__potd {
+  color: var(--ig-muted);
+  font-weight: 500;
+  font-size: 11px;
+}
+.dash-igloo .task-row__topic {
+  color: var(--ig-muted);
+}
+.dash-igloo .task-row__platform {
+  color: var(--ig-muted);
+}
+.dash-igloo .task-row__diff {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ig-muted);
+}
+.dash-igloo .task-row__diff-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 0;
+  display: inline-block;
+}
+.dash-igloo .task-row__diff--easy .task-row__diff-dot { background: #22C55E; }
+.dash-igloo .task-row__diff--medium .task-row__diff-dot { background: #EAB308; }
+.dash-igloo .task-row__diff--hard .task-row__diff-dot { background: #EF4444; }
+
+/* Assignments and Classes strips on Dashboard */
+.dash-igloo .assignments-card,
+.dash-igloo .cl-card {
+  padding: 16px;
+  margin-bottom: 0;
+}
+.dash-igloo .assignments-header .t-h2,
+.dash-igloo .cl-title {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ig-ink);
+}
+.dash-igloo .assignment-item,
+.dash-igloo .cl-row {
+  border-radius: 2px;
+  border: 1px solid var(--ig-line);
+  background: var(--ig-surface);
+  font-family: var(--font-mono);
+  box-shadow: none;
+}
+.dash-igloo .assignment-item:hover,
+.dash-igloo .cl-row:hover {
+  background: color-mix(in srgb, var(--ig-surface) 95%, var(--ig-ink) 5%);
+  border-color: var(--ig-line);
+}
+.dash-igloo .assignment-title,
+.dash-igloo .cl-subject {
+  font-family: var(--font-mono);
+  color: var(--ig-ink);
+}

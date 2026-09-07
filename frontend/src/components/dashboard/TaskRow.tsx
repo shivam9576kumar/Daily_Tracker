@@ -69,13 +69,18 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
 
         <div className="task-row__meta">
           {isPotd && (
-            <span className="pill pill-potd" title="LeetCode Problem of the Day">
+            <span className="task-row__potd" title="LeetCode Problem of the Day">
               POTD · {formatShortDate(task.potdDateKey ?? task.scheduledDate)}
             </span>
           )}
           {task.taskType === 'revision' && <RevisionBadge revisionNumber={task.revisionNumber} />}
-          <span className="pill pill-topic">{task.topic}</span>
-          {task.difficulty && <span className={`pill pill-${task.difficulty}`}>{task.difficulty}</span>}
+          <span className="task-row__topic">{task.topic}</span>
+          {task.difficulty && (
+            <span className={`task-row__diff task-row__diff--${task.difficulty}`}>
+              <span className="task-row__diff-dot" />
+              {task.difficulty.charAt(0).toUpperCase() + task.difficulty.slice(1)}
+            </span>
+          )}
           {plat && plat.value !== 'custom' && (
             <span className="task-row__platform">{plat.label}</span>
           )}
