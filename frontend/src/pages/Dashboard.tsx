@@ -49,7 +49,7 @@ export default function Dashboard() {
   if (!data) return null;
 
   return (
-    <div className="dashboard dash-igloo">
+    <div className="dashboard">
       <StatusOverview data={data.statusOverview} />
       <VibeBanner vibe={data.vibe} />
       {data.classes && <TodayClassStrip classes={data.classes} />}

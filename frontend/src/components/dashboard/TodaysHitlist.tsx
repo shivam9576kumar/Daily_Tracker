@@ -47,17 +47,18 @@ export default function TodaysHitlist({
   );
 
   return (
-    <section className="hitlist-section">
+    <section>
       <div className="section-head">
         <div className="section-head__left">
-          <h2 className="hitlist-title">Today's Hitlist</h2>
-          <span className="hitlist-count">{pending.length}</span>
+          <span className="section-head__icon" aria-hidden="true">⚡</span>
+          <h2 className="t-h2">Today's Hitlist</h2>
+          <span className="pill pill-count is-brand">{pending.length} pending</span>
           {potdStreak && potdStreak.currentStreak > 0 && (
             <span
-              className="hitlist-potd-streak"
+              className="pill pill-potd-streak"
               title="Consecutive days you solved the LeetCode Problem of the Day"
             >
-              POTD ×{potdStreak.currentStreak}
+              ⚡ {potdStreak.currentStreak}-day POTD streak
             </span>
           )}
         </div>
@@ -65,8 +66,8 @@ export default function TodaysHitlist({
       </div>
 
       {hasPotd && (
-        <p className="hitlist-potd-note">
-          Today's LeetCode POTD is included — it doesn't count toward your plan load.{potdMeta?.stale ? ' (showing latest available challenge)' : ''}
+        <p className="hitlist-potd-note t-meta">
+          ⚡ Today's LeetCode POTD is included — it doesn't count toward your plan load.{potdMeta?.stale ? ' (showing the latest available challenge)' : ''}
           {potdStreak && potdStreak.currentStreak === 0 && potdStreak.totalSolved > 0 && (
             <span> · Solve today's POTD to start a new streak.</span>
           )}
@@ -75,20 +76,22 @@ export default function TodaysHitlist({
 
       {pending.length === 0 ? (
         !hasActivePlan ? (
-          <div className="empty-state card">
-            <div className="empty-mono">// no active plan</div>
-            <p className="empty-sub">
+          <div className="empty-state card" style={{ textAlign: 'center', padding: '32px 20px' }}>
+            <div className="empty-emoji">🌱</div>
+            <h3 className="t-h2" style={{ margin: '0 0 6px' }}>No active plan</h3>
+            <p className="t-body" style={{ margin: '0 0 16px', color: 'var(--text-secondary)' }}>
               Generate a plan to get a daily hitlist — your solved history and revision dates stay.
             </p>
-            <button type="button" className="btn-secondary" onClick={() => navigate('/generate-plan')}>
+            <button type="button" className="btn-primary" onClick={() => navigate('/generate-plan')}>
               Generate Plan
             </button>
           </div>
         ) : completed.length === 0 ? (
           <div className="empty-state card">
-            <div className="empty-mono">// no pending tasks</div>
-            <button type="button" className="btn-secondary" style={{ marginTop: 12 }} onClick={onAddTask}>
-              + Add Task
+            <div className="empty-emoji">🎯</div>
+            <div className="empty-text t-body">No pending tasks for today. Add one to get started!</div>
+            <button type="button" className="btn-primary" style={{ marginTop: 12 }} onClick={onAddTask}>
+              + Add Your First Task
             </button>
           </div>
         ) : null
@@ -98,9 +101,9 @@ export default function TodaysHitlist({
 
       {completed.length > 0 && (
         <>
-          <div className="section-divider">
+          <div className="section-divider t-label">
             ✓ Completed Today ({completed.length}){' '}
-            <span className="section-note">· tap checkbox to unsolve · clears at midnight</span>
+            <span className="section-note t-meta">· tap the checkbox to unsolve · clears at midnight</span>
           </div>
           <div className="task-list">{completed.map(row)}</div>
         </>

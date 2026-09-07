@@ -75,7 +75,7 @@ export default function TodayClassStrip({ classes }: Props) {
   return (
     <section className="cl-card">
       <div className="cl-head">
-        <div className="cl-title">Today · {DAY_NAMES[dayOfWeek]}</div>
+        <div className="cl-title">🎓 Today · {DAY_NAMES[dayOfWeek]}</div>
         {todays.length > 0 && (
           <div className="cl-sub">
             {live > 0 ? `${live} live · ` : `${done} done · `}
@@ -85,7 +85,7 @@ export default function TodayClassStrip({ classes }: Props) {
       </div>
 
       {todays.length === 0 ? (
-        <div className="cl-empty">No classes today. Full day is yours.</div>
+        <div className="cl-empty">🎉 No classes today. Full day is yours.</div>
       ) : (
         <div className="cl-list">
           {todays.map((c) => {
