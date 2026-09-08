@@ -6,9 +6,13 @@ interface Props {
   assignment: Assignment;
   busy: boolean;
   onToggle: (assignment: Assignment) => void;
+  onEdit?: (assignment: Assignment) => void;
+  onDelete?: (assignment: Assignment) => void;
 }
 
-export default function TodoAssignmentRow({ assignment, busy, onToggle }: Props) {
+export default function TodoAssignmentRow({
+  assignment, busy, onToggle, onEdit, onDelete,
+}: Props) {
   const completed = assignment.status === 'completed';
   const dueKey = assignment.deadline?.slice(0, 10);
 
@@ -34,6 +38,35 @@ export default function TodoAssignmentRow({ assignment, busy, onToggle }: Props)
           )}
         </div>
       </div>
+
+      {(onEdit || onDelete) && (
+        <div className="todo-row__hover-actions">
+          {onEdit && (
+            <button
+              type="button"
+              className="todo-row__action"
+              aria-label={`Edit ${assignment.title}`}
+              title="Edit"
+              disabled={busy}
+              onClick={() => onEdit(assignment)}
+            >
+              ✎
+            </button>
+          )}
+          {onDelete && (
+            <button
+              type="button"
+              className="todo-row__action todo-row__action--danger"
+              aria-label={`Delete ${assignment.title}`}
+              title="Delete"
+              disabled={busy}
+              onClick={() => onDelete(assignment)}
+            >
+              🗑
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

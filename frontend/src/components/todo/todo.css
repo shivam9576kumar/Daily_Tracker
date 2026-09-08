@@ -912,3 +912,38 @@ input.todo-row__check:disabled { cursor: wait; }
 
 .todo-header__action { flex: 0 0 auto; padding-top: 6px; }
 
+/* ── Part 8: header action pair + assignment hover actions ── */
+.todo-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.todo-row__hover-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.todo-row__hover-actions .todo-row__action { opacity: 0; }
+
+.todo-row:hover .todo-row__hover-actions .todo-row__action,
+.todo-row__hover-actions .todo-row__action:focus-visible {
+  opacity: 1;
+}
+
+.todo-row__action--danger:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+@media (hover: none) {
+  .todo-row__hover-actions .todo-row__action { opacity: 1; }
+}
+
+@media (max-width: 520px) {
+  .todo-header__actions { padding-top: 4px; }
+}
+

@@ -21,7 +21,8 @@
     "data:backfill-striver-gfg:dry-run": "tsx scripts/backfillStriverGfgLinks.ts --dry-run",
     "data:backfill-striver-gfg:apply": "tsx scripts/backfillStriverGfgLinks.ts",
     "data:backfill-striver-gfg-v2": "tsx scripts/backfillStriverGfgUrls.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify:todo": "tsx scripts/verifyTodoFeature.ts"
   },
   "dependencies": {
     "@dsa-planner/shared": "*",

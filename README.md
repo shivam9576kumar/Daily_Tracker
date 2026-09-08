@@ -213,7 +213,9 @@ npm --prefix frontend run dev
 | | `POST` | `/api/v1/potd/solve` | Complete POTD and update POTD streak |
 | **Classes** | `GET` | `/api/v1/classes` | Get semester weekly timetable |
 | | `POST` | `/api/v1/classes` | Update semester class timetable |
-| **Todo** | `GET` | `/api/v1/todo` | Aggregated Todo workspace (today / upcoming / backlog / completed / assignments + counts) |
+| **Todo** | `GET` | `/api/todo?upcomingDays=14\|30` | Aggregated Todo workspace (today groups, upcoming, backlog, completed, inbox, counts) |
+| | `POST` | `/api/todo/tasks` | Create personal task (null date = Inbox) |
+| | `PATCH` | `/api/todo/tasks/:id` | Edit personal task title / schedule / unschedule |
 | **Progress** | `GET` | `/api/v1/progress/heatmap` | Get 365-day solved contribution heatmap data |
 | | `GET` | `/api/v1/progress/topics` | Get topic progress percentages & difficulty stats |
 | | `GET` | `/api/v1/progress/activity` | Get recent activity log |

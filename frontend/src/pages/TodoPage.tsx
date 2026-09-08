@@ -10,6 +10,7 @@ import TodoEmpty from '../components/todo/TodoEmpty';
 import InlineTodoComposer from '../components/todo/InlineTodoComposer';
 import TaskDrawer from '../components/task/TaskDrawer';
 import AddTaskModal from '../components/task/AddTaskModal';
+import AssignmentForm from '../components/assignments/AssignmentForm';
 import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
 import { assignmentApi } from '../services/assignmentApi';
@@ -48,6 +49,8 @@ export default function TodoPage() {
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [assignmentBusyId, setAssignmentBusyId] = useState<string | null>(null);
   const [dsaModalOpen, setDsaModalOpen] = useState(false);
+  const [assignmentFormOpen, setAssignmentFormOpen] = useState(false);
+  const [editingAssignment, setEditingAssignment] = useState<Assignment | null>(null);
 
   // Which composer is open: 'inbox' | 'today' | 'upcoming' | `group:${dateKey}` | null
   const [composerId, setComposerId] = useState<string | null>(null);
@@ -61,6 +64,33 @@ export default function TodoPage() {
 
   const refresh = useCallback(() => fetch(true), [fetch]);
   const actions = useTaskActions(refresh);
+
+  const openAssignmentCreate = useCallback(() => {
+    setEditingAssignment(null);
+    setAssignmentFormOpen(true);
+  }, []);
+
+  const openAssignmentEdit = useCallback((a: Assignment) => {
+    setEditingAssignment(a);
+    setAssignmentFormOpen(true);
+  }, []);
+
+  const handleAssignmentDelete = useCallback(
+    async (a: Assignment) => {
+      if (!window.confirm(`Delete "${a.title}"?`)) return;
+      setAssignmentBusyId(a.id);
+      try {
+        await assignmentApi.remove(a.id);
+        toast('Assignment deleted', 'info');
+        await fetch(true);
+      } catch (err) {
+        toast(getErrorMessage(err), 'error');
+      } finally {
+        setAssignmentBusyId(null);
+      }
+    },
+    [fetch, toast]
+  );
 
   const setActiveView = useCallback(
     (view: TodoView) => setSearchParams({ view }, { replace: true }),
@@ -155,6 +185,8 @@ export default function TodoPage() {
           assignment={a}
           busy={assignmentBusyId === a.id}
           onToggle={handleAssignmentToggle}
+          onEdit={openAssignmentEdit}
+          onDelete={handleAssignmentDelete}
         />
       ))}
     </div>
@@ -201,13 +233,22 @@ export default function TodoPage() {
           title={meta.title}
           description={headerDescription}
           action={
-            <button
-              type="button"
-              className="btn-secondary btn-sm"
-              onClick={() => setDsaModalOpen(true)}
-            >
-              + DSA Problem
-            </button>
+            <div className="todo-header__actions">
+              <button
+                type="button"
+                className="btn-secondary btn-sm"
+                onClick={openAssignmentCreate}
+              >
+                + Assignment
+              </button>
+              <button
+                type="button"
+                className="btn-secondary btn-sm"
+                onClick={() => setDsaModalOpen(true)}
+              >
+                + DSA Problem
+              </button>
+            </div>
           }
         />
 
@@ -374,6 +415,15 @@ export default function TodoPage() {
         open={dsaModalOpen}
         onClose={() => setDsaModalOpen(false)}
         onCreated={() => {
+          void fetch(true);
+        }}
+      />
+
+      <AssignmentForm
+        open={assignmentFormOpen}
+        editing={editingAssignment}
+        onClose={() => setAssignmentFormOpen(false)}
+        onSaved={() => {
           void fetch(true);
         }}
       />
