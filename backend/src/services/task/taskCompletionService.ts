@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { Prisma, type Task } from '@prisma/client';
 import prisma from '../../config/database';
 import { env } from '../../config/env';
-import { dateKeyInTz, todayKey, addDaysToKey, maxKey } from '../../utils/dateKeys';
+import { dateKeyInTz, todayKey, addDaysToKey, maxKey, nextOccurrenceKey, type Recurrence } from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolvePlatformValue } from '../../utils/platform';
@@ -166,6 +166,11 @@ export const taskCompletionService = {
       if (rating) throw new ValidationError('Personal tasks cannot be rated');
     }
 
+    if (task.taskType !== 'personal' && task.recurrence) {
+      // Data hygiene: recurrence must never exist on DSA tasks.
+      throw new ValidationError('Only personal tasks can repeat');
+    }
+
     const now = new Date();
     const isFirstSolve = task.status !== 'completed';
     const nextRating: Rating | null = rating ?? (task.rating as Rating | null) ?? null;
@@ -188,6 +193,32 @@ export const taskCompletionService = {
           isExpired: false,
         },
       });
+
+      // Repeat: personal-only. Spawn next occurrence on FIRST completion.
+      if (
+        task.taskType === 'personal' &&
+        task.recurrence &&
+        task.scheduledDateKey &&
+        isFirstSolve
+      ) {
+        const baseKey = maxKey(task.scheduledDateKey, todayKey(tz)); // never spawn in the past
+        const nextKey = nextOccurrenceKey(baseKey, task.recurrence as Recurrence);
+
+        await tx.task.create({
+          data: {
+            userId,
+            parentTaskId: task.id,          // recurrence chain link
+            title: task.title,
+            topic: 'Personal',
+            taskType: 'personal',
+            status: 'pending',
+            recurrence: task.recurrence,
+            dueTime: task.dueTime,
+            scheduledDate: new Date(`${nextKey}T00:00:00.000Z`),
+            scheduledDateKey: nextKey,
+          },
+        });
+      }
 
       if (task.taskType === 'revision') {
         await tx.revision.updateMany({
@@ -295,6 +326,18 @@ export const taskCompletionService = {
 
     const result = await prisma.$transaction(async (tx) => {
       if (!isRevision) {
+        if (task.taskType === 'personal' && task.recurrence) {
+          // Remove the pending occurrence this completion spawned.
+          await tx.task.deleteMany({
+            where: {
+              userId,
+              parentTaskId: taskId,
+              taskType: 'personal',
+              status: 'pending',
+            },
+          });
+        }
+
         // Parent path: undo cancels EVERYTHING — wipe all revisions, refund their coins.
         const doneRevs = await tx.task.count({
           where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },

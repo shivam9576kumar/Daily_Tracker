@@ -4,6 +4,7 @@ import RatingPills from '../task/RatingPills';
 import RevisionBadge from '../task/RevisionBadge';
 import { resolvePlatform } from '../../utils/platform';
 import { daysBetween, todayKey } from '../../utils/dateKeys';
+import { recurrenceLabel } from '../../utils/todoDates';
 import './todo.css';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
   onToggleSolved: (task: Task) => void;
   onRate: (task: Task, rating: Rating) => void;
   onUnrate: (task: Task) => void;
+  onSetDate?: (task: Task) => void;
 }
 
 function scheduledKeyOf(task: Task): string | null {
@@ -22,7 +24,7 @@ function scheduledKeyOf(task: Task): string | null {
 }
 
 export default function TodoTaskRow({
-  task, busy, onOpen, onToggleSolved, onRate, onUnrate,
+  task, busy, onOpen, onToggleSolved, onRate, onUnrate, onSetDate,
 }: Props) {
   const completed = task.status === 'completed';
   const isPotd = task.taskType === 'potd';
@@ -111,6 +113,10 @@ export default function TodoTaskRow({
               )}
             </>
           )}
+          {task.dueTime && <span className="todo-row__platform">{task.dueTime}</span>}
+          {task.recurrence && (
+            <span className="todo-row__repeat">↻ {recurrenceLabel(task.recurrence)}</span>
+          )}
           {isBacklog && overdueDays > 0 && (
             <span className="todo-row__overdue">
               {overdueDays} day{overdueDays === 1 ? '' : 's'} overdue
@@ -131,6 +137,18 @@ export default function TodoTaskRow({
           </div>
         )}
       </div>
+
+      {task.taskType === 'personal' && onSetDate && (
+        <button
+          type="button"
+          className="todo-row__action"
+          aria-label={`Set date for ${task.title}`}
+          title="Set date"
+          onClick={(e) => { e.stopPropagation(); onSetDate(task); }}
+        >
+          🗓
+        </button>
+      )}
 
       {task.problemUrl && !isPotd && (
         <button

@@ -4,6 +4,10 @@
  */
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly';
+
+export const RECURRENCE_VALUES: Recurrence[] = ['daily', 'weekdays', 'weekly', 'monthly'];
+
 export function isValidTimeZone(tz: string): boolean {
   if (!tz || tz.length > 64 || !/^[A-Za-z0-9_+\-/]+$/.test(tz)) return false;
   try {
@@ -75,6 +79,26 @@ export function pad2(n: number): string {
 
 export function monthLabel(month: number): string {
   return MONTH_LABELS[month - 1];
+}
+
+/** Next occurrence strictly after `fromKey`. */
+export function nextOccurrenceKey(fromKey: string, recurrence: Recurrence): string {
+  if (recurrence === 'daily') return addDaysToKey(fromKey, 1);
+
+  if (recurrence === 'weekly') return addDaysToKey(fromKey, 7);
+
+  if (recurrence === 'weekdays') {
+    let k = addDaysToKey(fromKey, 1);
+    while (weekdayOfKey(k) === 0 || weekdayOfKey(k) === 6) k = addDaysToKey(k, 1);
+    return k;
+  }
+
+  // monthly: same day next month, clamped to that month's length
+  const { year, month, day } = keyToParts(fromKey);
+  const ny = month === 12 ? year + 1 : year;
+  const nm = month === 12 ? 1 : month + 1;
+  const clamped = Math.min(day, daysInMonth(ny, nm));
+  return `${ny}-${pad2(nm)}-${pad2(clamped)}`;
 }
 
 /**

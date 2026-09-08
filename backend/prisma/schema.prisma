@@ -74,6 +74,10 @@ model Task {
   backlogSince      DateTime? @map("backlog_since")
   isExpired         Boolean   @default(false) @map("is_expired")
   notes             String?
+  /// Personal-task recurrence: daily | weekdays | weekly | monthly. Null = none.
+  recurrence        String?   @map("recurrence")
+  /// Display-only due time "HH:MM" (no notifications). Personal tasks only.
+  dueTime           String?   @map("due_time")
   /// 'YYYY-MM-DD' of the LeetCode POTD this task represents. Null for every non-POTD task.
   potdDateKey       String?   @map("potd_date_key")
   questionBankId    String?   @map("question_bank_id")

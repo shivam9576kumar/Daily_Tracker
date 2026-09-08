@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import TodoDatePicker from './TodoDatePicker';
+import TodoDatePicker, { type DateSelection } from './TodoDatePicker';
 import { todoApi } from '../../services/todoApi';
 import { getErrorMessage } from '../../services/api';
 import { useTodoStore } from '../../store/todoStore';
 import { useUIStore } from '../../store/uiStore';
-import { dateChipLabel } from '../../utils/todoDates';
+import { dateChipLabel, recurrenceLabel } from '../../utils/todoDates';
 import './todo.css';
 
 const MAX_TITLE = 200;
@@ -24,7 +24,11 @@ export default function InlineTodoComposer({
   const fetchTodo = useTodoStore((s) => s.fetch);
 
   const [title, setTitle] = useState('');
-  const [dateKey, setDateKey] = useState<string | null>(defaultDateKey);
+  const [sel, setSel] = useState<DateSelection>({
+    dateKey: defaultDateKey,
+    dueTime: null,
+    recurrence: null,
+  });
   const [pickerOpen, setPickerOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorText, setErrorText] = useState('');
@@ -33,7 +37,7 @@ export default function InlineTodoComposer({
   // Re-sync default when the composer opens in a new context
   useEffect(() => {
     if (open) {
-      setDateKey(defaultDateKey);
+      setSel({ dateKey: defaultDateKey, dueTime: null, recurrence: null });
       setErrorText('');
       // focus after paint
       const t = window.setTimeout(() => inputRef.current?.focus(), 0);
@@ -51,9 +55,14 @@ export default function InlineTodoComposer({
     setSubmitting(true);
     setErrorText('');
     try {
-      await todoApi.createPersonal({ title: trimmed, scheduledDateKey: dateKey });
+      await todoApi.createPersonal({
+        title: trimmed,
+        scheduledDateKey: sel.dateKey,
+        dueTime: sel.dueTime,
+        recurrence: sel.recurrence,
+      });
       setTitle('');
-      toast(dateKey === null ? 'Added to Inbox' : `Added for ${dateChipLabel(dateKey)}`, 'success');
+      toast(`Added${sel.dateKey ? ` for ${dateChipLabel(sel.dateKey)}` : ' to Inbox'}${sel.recurrence ? ' · repeats' : ''}`, 'success');
       await fetchTodo(true);
       inputRef.current?.focus(); // stay open for rapid entry
     } catch (err) {
@@ -62,6 +71,12 @@ export default function InlineTodoComposer({
       setSubmitting(false);
     }
   };
+
+  const chipText = [
+    dateChipLabel(sel.dateKey),
+    sel.dueTime,
+    recurrenceLabel(sel.recurrence) ? `↻ ${recurrenceLabel(sel.recurrence)}` : null,
+  ].filter(Boolean).join(' · ');
 
   if (!open) {
     return (
@@ -101,19 +116,19 @@ export default function InlineTodoComposer({
         <div className="todo-composer__chip-wrap">
           <button
             type="button"
-            className={`todo-composer__chip${dateKey !== null ? ' is-set' : ''}`}
+            className={`todo-composer__chip${sel.dateKey !== null ? ' is-set' : ''}`}
             disabled={submitting}
             onClick={() => setPickerOpen((o) => !o)}
             aria-haspopup="dialog"
             aria-expanded={pickerOpen}
           >
-            <span aria-hidden="true">🗓</span> {dateChipLabel(dateKey)}
+            <span aria-hidden="true">🗓</span> {chipText}
           </button>
 
           {pickerOpen && (
             <TodoDatePicker
-              value={dateKey}
-              onSelect={(k) => { setDateKey(k); setPickerOpen(false); }}
+              value={sel}
+              onApply={(next) => setSel(next)}
               onClose={() => setPickerOpen(false)}
             />
           )}

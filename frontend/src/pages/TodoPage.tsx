@@ -8,12 +8,14 @@ import TodoAssignmentRow from '../components/todo/TodoAssignmentRow';
 import TodoCompletedSection from '../components/todo/TodoCompletedSection';
 import TodoEmpty from '../components/todo/TodoEmpty';
 import InlineTodoComposer from '../components/todo/InlineTodoComposer';
+import TodoDatePicker, { type DateSelection } from '../components/todo/TodoDatePicker';
 import TaskDrawer from '../components/task/TaskDrawer';
 import AddTaskModal from '../components/task/AddTaskModal';
 import AssignmentForm from '../components/assignments/AssignmentForm';
 import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
 import { assignmentApi } from '../services/assignmentApi';
+import { todoApi } from '../services/todoApi';
 import { getErrorMessage } from '../services/api';
 import { useTaskActions } from '../hooks/useTaskActions';
 import { useTodoStore } from '../store/todoStore';
@@ -54,6 +56,7 @@ export default function TodoPage() {
 
   // Which composer is open: 'inbox' | 'today' | 'upcoming' | `group:${dateKey}` | null
   const [composerId, setComposerId] = useState<string | null>(null);
+  const [dateTarget, setDateTarget] = useState<Task | null>(null);
 
   const requested = searchParams.get('view');
   const activeView: TodoView = isTodoView(requested) ? requested : 'today';
@@ -134,6 +137,27 @@ export default function TodoPage() {
     [assignmentBusyId, fetch, toast]
   );
 
+  const handleSetDate = useCallback((task: Task) => setDateTarget(task), []);
+
+  const applyDateToTask = useCallback(
+    async (selection: DateSelection) => {
+      if (!dateTarget) return;
+      try {
+        await todoApi.updatePersonal(dateTarget.id, {
+          scheduledDateKey: selection.dateKey,
+          dueTime: selection.dueTime,
+          recurrence: selection.recurrence,
+        });
+        toast(selection.dateKey ? 'Task rescheduled' : 'Moved to Inbox', 'success');
+        setDateTarget(null);
+        await fetch(true);
+      } catch (err) {
+        toast(getErrorMessage(err), 'error');
+      }
+    },
+    [dateTarget, fetch, toast]
+  );
+
   // ── all hooks above ──
 
   if (loading && !data) {
@@ -172,6 +196,7 @@ export default function TodoPage() {
           onToggleSolved={actions.toggleSolved}
           onRate={actions.rate}
           onUnrate={actions.unrate}
+          onSetDate={handleSetDate}
         />
       ))}
     </div>
@@ -427,6 +452,22 @@ export default function TodoPage() {
           void fetch(true);
         }}
       />
+
+      {dateTarget && (
+        <div className="todo-reschedule-overlay" onClick={() => setDateTarget(null)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <TodoDatePicker
+              value={{
+                dateKey: dateTarget.scheduledDateKey ?? null,
+                dueTime: dateTarget.dueTime ?? null,
+                recurrence: dateTarget.recurrence ?? null,
+              }}
+              onApply={(selection) => void applyDateToTask(selection)}
+              onClose={() => setDateTarget(null)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

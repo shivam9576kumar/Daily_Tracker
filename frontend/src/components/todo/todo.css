@@ -947,3 +947,78 @@ input.todo-row__check:disabled { cursor: wait; }
   .todo-header__actions { padding-top: 4px; }
 }
 
+/* ── Date picker v2 ── */
+.todo-datepicker--v2 { width: 280px; max-height: 70vh; overflow-y: auto; }
+
+.todo-datepicker__typed { padding: 2px 2px 8px; border-bottom: 1px solid var(--border); }
+.todo-datepicker__typed-input {
+  width: 100%; border: 0; outline: 0; background: transparent;
+  padding: 6px 8px; color: var(--text-primary);
+  font: 500 14px/1.4 var(--font-sans);
+}
+.todo-datepicker__typed-input::placeholder { color: var(--text-muted); }
+
+.todo-cal { padding: 8px 4px 4px; border-top: 1px solid var(--border); }
+.todo-cal__head { display: flex; align-items: center; justify-content: space-between; padding: 2px 6px 8px; }
+.todo-cal__month { font: 600 13.5px/1 var(--font-sans); color: var(--text-primary); }
+.todo-cal__nav { display: flex; gap: 4px; }
+.todo-cal__nav-btn {
+  width: 26px; height: 26px; display: grid; place-items: center;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-secondary);
+  font-size: 15px; cursor: pointer;
+}
+.todo-cal__nav-btn:hover:not(:disabled) { background: var(--bg-hover); color: var(--text-primary); }
+.todo-cal__nav-btn:disabled { color: var(--text-disabled); cursor: not-allowed; }
+
+.todo-cal__dows, .todo-cal__week {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;
+}
+.todo-cal__dows span {
+  text-align: center; font: 600 11px/1 var(--font-sans);
+  color: var(--text-muted); padding: 4px 0;
+}
+.todo-cal__day {
+  height: 30px; border: 0; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-primary);
+  font: 500 13px/1 var(--font-sans); font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.todo-cal__day:hover:not(:disabled) { background: var(--bg-hover); }
+.todo-cal__day.is-out { visibility: hidden; }
+.todo-cal__day.is-past { color: var(--text-disabled); cursor: not-allowed; }
+.todo-cal__day.is-today { color: var(--brand-text); font-weight: 700; }
+.todo-cal__day.is-selected { background: var(--brand); color: var(--text-on-brand); font-weight: 700; }
+
+.todo-datepicker__section { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 4px; }
+.todo-datepicker__expander {
+  width: 100%; min-height: 36px; display: flex; align-items: center; gap: 8px;
+  border: 0; background: transparent; padding: 0 8px;
+  color: var(--text-primary); font: 600 13.5px/1 var(--font-sans);
+  cursor: pointer; border-radius: var(--radius-sm);
+}
+.todo-datepicker__expander:hover { background: var(--bg-hover); }
+.todo-datepicker__section-body {
+  display: flex; align-items: center; gap: 10px; padding: 4px 8px 8px; flex-wrap: wrap;
+}
+.todo-datepicker__repeat { padding: 2px 0 6px; }
+.todo-datepicker__note {
+  width: 100%; margin: 4px 8px 4px; font: 400 11.5px/1.4 var(--font-sans); color: var(--text-muted);
+}
+
+.todo-row__repeat { color: var(--brand-text); font-weight: 600; }
+
+/* Reschedule overlay */
+.todo-reschedule-overlay {
+  position: fixed; inset: 0; z-index: 70;
+  display: grid; place-items: center;
+  background: var(--bg-overlay);
+}
+.todo-reschedule-overlay .todo-datepicker {
+  position: static; width: min(92vw, 300px);
+}
+
+@media (max-width: 640px) {
+  .todo-datepicker--v2 { position: fixed; left: 12px; right: 12px; bottom: 12px; width: auto; max-height: 78vh; }
+}
+
