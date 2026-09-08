@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   quickDateOptionsV3, parseTypedDate, isPastKey, calendarMatrix,
   repeatOptionsFor, monthSequence, DURATION_OPTIONS,
@@ -18,13 +18,15 @@ interface Props {
   value: DateSelection;
   onApply: (sel: DateSelection) => void;
   onClose: () => void;
+  /** Element the popover is anchored to (the chip). Omit for static/overlay use. */
+  anchorRef?: React.RefObject<HTMLElement | null>;
 }
 
 type Panel = 'main' | 'time' | 'repeat';
 
 const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-export default function TodoDatePicker({ value, onApply, onClose }: Props) {
+export default function TodoDatePicker({ value, onApply, onClose, anchorRef }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const today = todayKey();
@@ -43,6 +45,78 @@ export default function TodoDatePicker({ value, onApply, onClose }: Props) {
   const [draftDuration, setDraftDuration] = useState<number | null>(value.durationMin);
 
   const months = useMemo(() => monthSequence(4), []);
+
+  const TOPBAR_CLEARANCE = 68;   // TopBar height + gap
+  const EDGE_MARGIN = 12;
+  const GAP = 8;
+
+  const [placement, setPlacement] = useState<{
+    top?: number; bottom?: number; left: number; maxHeight: number;
+  } | null>(null);
+
+  const reposition = () => {
+    const anchor = anchorRef?.current;
+    const panelEl = ref.current;
+    if (!anchor || !panelEl) return;
+
+    const a = anchor.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    const panelW = 300;
+
+    const spaceBelow = vh - a.bottom - GAP - EDGE_MARGIN;
+    const spaceAbove = a.top - GAP - TOPBAR_CLEARANCE;
+
+    // Default: open downward. Flip up only if below is too small AND above is larger.
+    const openDown = spaceBelow >= 320 || spaceBelow >= spaceAbove;
+
+    const left = Math.min(Math.max(EDGE_MARGIN, a.left), vw - panelW - EDGE_MARGIN);
+
+    if (openDown) {
+      setPlacement({
+        top: a.bottom + GAP,
+        left,
+        maxHeight: Math.max(240, spaceBelow),
+      });
+    } else {
+      setPlacement({
+        bottom: vh - a.top + GAP,
+        left,
+        maxHeight: Math.max(240, spaceAbove),
+      });
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (anchorRef?.current) reposition();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [panel]); // re-measure when switching main/time/repeat panels too
+
+  useEffect(() => {
+    if (!anchorRef?.current) return;
+    const onWin = () => reposition();
+    window.addEventListener('resize', onWin);
+    window.addEventListener('scroll', onWin, true);
+    return () => {
+      window.removeEventListener('resize', onWin);
+      window.removeEventListener('scroll', onWin, true);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+
+  const popStyle: React.CSSProperties | undefined =
+    anchorRef && placement && !isMobile
+      ? {
+          position: 'fixed',
+          top: placement.top,
+          bottom: placement.bottom,
+          left: placement.left,
+          maxHeight: placement.maxHeight,
+          overflowY: 'auto',
+        }
+      : undefined;
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
@@ -119,7 +193,7 @@ export default function TodoDatePicker({ value, onApply, onClose }: Props) {
   /* ────────────── TIME PANEL ────────────── */
   if (panel === 'time') {
     return (
-      <div className="todo-datepicker todo-datepicker--v3" ref={ref} role="dialog" aria-label="Set time">
+      <div className="todo-datepicker todo-datepicker--v3" ref={ref} style={popStyle} role="dialog" aria-label="Set time">
         <div className="tdp-form">
           <label className="tdp-form__row">
             <span className="tdp-form__label">Time</span>
@@ -162,7 +236,7 @@ export default function TodoDatePicker({ value, onApply, onClose }: Props) {
   /* ────────────── REPEAT MENU ────────────── */
   if (panel === 'repeat') {
     return (
-      <div className="todo-datepicker todo-datepicker--v3" ref={ref} role="dialog" aria-label="Set repeat">
+      <div className="todo-datepicker todo-datepicker--v3" ref={ref} style={popStyle} role="dialog" aria-label="Set repeat">
         <ul className="tdp-repeat">
           {repeatOptionsFor(sel.dateKey).map((opt) => (
             <li key={opt.value}>
@@ -191,7 +265,7 @@ export default function TodoDatePicker({ value, onApply, onClose }: Props) {
 
   /* ────────────── MAIN PANEL ────────────── */
   return (
-    <div className="todo-datepicker todo-datepicker--v3" ref={ref} role="dialog" aria-label="Set date">
+    <div className="todo-datepicker todo-datepicker--v3" ref={ref} style={popStyle} role="dialog" aria-label="Set date">
       <div className="todo-datepicker__typed">
         <input
           className="todo-datepicker__typed-input"

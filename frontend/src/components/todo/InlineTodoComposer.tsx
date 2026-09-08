@@ -34,6 +34,7 @@ export default function InlineTodoComposer({
   const [submitting, setSubmitting] = useState(false);
   const [errorText, setErrorText] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const chipWrapRef = useRef<HTMLDivElement>(null);
 
   // Re-sync default when the composer opens in a new context
   useEffect(() => {
@@ -116,7 +117,7 @@ export default function InlineTodoComposer({
       )}
 
       <div className="todo-composer__bar">
-        <div className="todo-composer__chip-wrap">
+        <div className="todo-composer__chip-wrap" ref={chipWrapRef}>
           <button
             type="button"
             className={`todo-composer__chip${sel.dateKey !== null ? ' is-set' : ''}`}
@@ -131,6 +132,7 @@ export default function InlineTodoComposer({
           {pickerOpen && (
             <TodoDatePicker
               value={sel}
+              anchorRef={chipWrapRef}
               onApply={(next) => setSel(next)}
               onClose={() => setPickerOpen(false)}
             />

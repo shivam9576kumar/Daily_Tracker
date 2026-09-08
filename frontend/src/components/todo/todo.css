@@ -828,9 +828,9 @@ input.todo-row__check:disabled { cursor: wait; }
 
 /* Date picker popover */
 .todo-datepicker {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 0;
+  /* position now set inline (fixed + clamped) on desktop;
+     static fallback for overlay usage */
+  position: static;
   z-index: 60;
   width: 240px;
   padding: 8px;
@@ -839,6 +839,8 @@ input.todo-row__check:disabled { cursor: wait; }
   background: var(--bg-elevated);
   box-shadow: var(--shadow-lg);
 }
+
+.todo-composer__chip-wrap .todo-datepicker { z-index: 80; }
 
 .todo-datepicker__list {
   list-style: none;
@@ -1019,8 +1021,16 @@ input.todo-row__check:disabled { cursor: wait; }
 }
 
 @media (max-width: 640px) {
-  .todo-datepicker--v2 { position: fixed; left: 12px; right: 12px; bottom: 12px; width: auto; max-height: 78vh; }
-  .todo-datepicker--v3 { position: fixed; left: 12px; right: 12px; bottom: 12px; width: auto; max-height: 78vh; }
+  .todo-datepicker,
+  .todo-datepicker--v3 {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px;
+    bottom: 12px !important;
+    top: auto !important;
+    width: auto;
+    max-height: 78vh !important;
+  }
 }
 
 /* ── Date picker v3 ── */

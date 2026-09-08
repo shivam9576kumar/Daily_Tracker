@@ -49,6 +49,15 @@ ck('composer sends durationMin', composer.includes('durationMin'));
 // CSS present
 ck('css v3 blocks', css.includes('.todo-datepicker--v3') && css.includes('.tdp-repeat') && css.includes('.tdp-form'));
 
+// Popover clipping fix
+ck('no hardcoded upward anchor', !css.match(/todo-datepicker\s*{[^}]*bottom:\s*calc\(100%/s));
+ck('anchorRef prop exists', picker.includes('anchorRef'));
+ck('flip + clamp logic', picker.includes('spaceBelow') && picker.includes('spaceAbove') && picker.includes('maxHeight'));
+ck('reposition on resize/scroll', picker.includes("addEventListener('resize'") && picker.includes("addEventListener('scroll'"));
+ck('topbar clearance respected', picker.includes('TOPBAR_CLEARANCE'));
+ck('composer passes anchorRef', composer.includes('anchorRef={chipWrapRef}'));
+ck('chip label from sel not default', !composer.match(/dateChipLabel\(\s*defaultDateKey/));
+
 // Frontend builds (the real "does it open" gate before manual check)
 try {
   execSync('npm run build', { stdio: 'pipe' });
