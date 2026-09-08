@@ -910,3 +910,5 @@ input.todo-row__check:disabled { cursor: wait; }
   .todo-composer__actions { margin-left: auto; }
 }
 
+.todo-header__action { flex: 0 0 auto; padding-top: 6px; }
+

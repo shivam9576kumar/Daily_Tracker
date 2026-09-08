@@ -9,6 +9,7 @@ import TodoCompletedSection from '../components/todo/TodoCompletedSection';
 import TodoEmpty from '../components/todo/TodoEmpty';
 import InlineTodoComposer from '../components/todo/InlineTodoComposer';
 import TaskDrawer from '../components/task/TaskDrawer';
+import AddTaskModal from '../components/task/AddTaskModal';
 import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
 import { assignmentApi } from '../services/assignmentApi';
@@ -46,6 +47,7 @@ export default function TodoPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [assignmentBusyId, setAssignmentBusyId] = useState<string | null>(null);
+  const [dsaModalOpen, setDsaModalOpen] = useState(false);
 
   // Which composer is open: 'inbox' | 'today' | 'upcoming' | `group:${dateKey}` | null
   const [composerId, setComposerId] = useState<string | null>(null);
@@ -195,7 +197,19 @@ export default function TodoPage() {
       />
 
       <main className="todo-main">
-        <TodoHeader title={meta.title} description={headerDescription} />
+        <TodoHeader
+          title={meta.title}
+          description={headerDescription}
+          action={
+            <button
+              type="button"
+              className="btn-secondary btn-sm"
+              onClick={() => setDsaModalOpen(true)}
+            >
+              + DSA Problem
+            </button>
+          }
+        />
 
         {error && (
           <div className="todo-inline-error" role="status">
@@ -354,6 +368,14 @@ export default function TodoPage() {
         taskId={selectedTaskId}
         onClose={() => setSelectedTaskId(null)}
         onChanged={refresh}
+      />
+
+      <AddTaskModal
+        open={dsaModalOpen}
+        onClose={() => setDsaModalOpen(false)}
+        onCreated={() => {
+          void fetch(true);
+        }}
       />
     </div>
   );

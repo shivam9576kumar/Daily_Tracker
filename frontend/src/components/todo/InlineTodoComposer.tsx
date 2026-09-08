@@ -140,7 +140,7 @@ export default function InlineTodoComposer({
       </div>
 
       <p className="todo-composer__note">
-        Personal task — for DSA problems use “Add Task” on the Dashboard.
+        Personal task — for DSA problems use “+ DSA Problem” above.
       </p>
     </div>
   );
