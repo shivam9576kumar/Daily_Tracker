@@ -12,6 +12,7 @@ import TodoDatePicker, { type DateSelection } from '../components/todo/TodoDateP
 import TaskDrawer from '../components/task/TaskDrawer';
 import AddTaskModal from '../components/task/AddTaskModal';
 import AssignmentForm from '../components/assignments/AssignmentForm';
+import DailyChallengesMenu from '../components/todo/DailyChallengesMenu';
 import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
 import { assignmentApi } from '../services/assignmentApi';
@@ -260,6 +261,7 @@ export default function TodoPage() {
           description={headerDescription}
           action={
             <div className="todo-header__actions">
+              <DailyChallengesMenu />
               <button
                 type="button"
                 className="btn-secondary btn-sm"

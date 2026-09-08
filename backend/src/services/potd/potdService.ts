@@ -1,3 +1,4 @@
+import type { Prisma } from '@prisma/client';
 import prisma from '../../config/database';
 import logger from '../../utils/logger';
 import { dateKeyInTz } from '../../utils/dateKeys';
@@ -5,6 +6,36 @@ import { resolvePlatformValue } from '../../utils/platform';
 
 const LEETCODE_GRAPHQL = 'https://leetcode.com/graphql';
 const FETCH_TIMEOUT_MS = 8000;
+
+export interface EnsurePotdResult {
+  /** Mirrors User.potdEnabled at call time. */
+  enabled: boolean;
+  taskId: string | null;
+  potd: PotdInfo | null;
+  stale: boolean;
+}
+
+type DbClient = Prisma.TransactionClient | typeof prisma;
+
+export async function isPotdEnabledForUser(userId: string): Promise<boolean> {
+  const row = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { potdEnabled: true },
+  });
+  return row?.potdEnabled ?? true;
+}
+
+/**
+ * Toggle-OFF transition: delete this user's UNSOLVED POTD rows (pending + backlog).
+ * Solved rows are history and are never touched. No dismissal record is written —
+ * the toggle is "not until I say so", dismissal is "not today"; they stay independent.
+ */
+export async function removeUnsolvedPotdTasks(userId: string, db: DbClient = prisma): Promise<number> {
+  const res = await db.task.deleteMany({
+    where: { userId, taskType: 'potd', status: { in: ['pending', 'backlog'] } },
+  });
+  return res.count;
+}
 
 /** LeetCode flips the POTD at UTC midnight, so the canonical POTD day is a UTC date key. */
 export function currentPotdDateKey(): string {
@@ -155,22 +186,27 @@ function cacheRowToInfo(row: any): PotdInfo {
 export async function ensurePotdTaskForUser(
   userId: string,
   timezone: string,
-): Promise<{ taskId: string | null; potd: PotdInfo | null; stale: boolean }> {
+): Promise<EnsurePotdResult> {
+  // Part B gate: disabled users never fetch or materialize anything.
+  if (!(await isPotdEnabledForUser(userId))) {
+    return { enabled: false, taskId: null, potd: null, stale: false };
+  }
+
   const potd = await getTodayPotd();
-  if (!potd) return { taskId: null, potd: null, stale: false };
+  if (!potd) return { enabled: true, taskId: null, potd: null, stale: false };
 
   const stale = potd.dateKey !== currentPotdDateKey();
 
   const dismissed = await prisma.potdDismissal.findUnique({
     where: { userId_dateKey: { userId, dateKey: potd.dateKey } },
   });
-  if (dismissed) return { taskId: null, potd, stale };
+  if (dismissed) return { enabled: true, taskId: null, potd, stale };
 
   const existing = await prisma.task.findFirst({
     where: { userId, potdDateKey: potd.dateKey },
     select: { id: true },
   });
-  if (existing) return { taskId: existing.id, potd, stale };
+  if (existing) return { enabled: true, taskId: existing.id, potd, stale };
 
   // scheduledDate = UTC midnight of the POTD's OWN date (not the user's local date).
   // dashboardService then places it on the correct local day via dateKeyInTz.
@@ -195,7 +231,7 @@ export async function ensurePotdTaskForUser(
       },
       select: { id: true },
     });
-    return { taskId: created.id, potd, stale };
+    return { enabled: true, taskId: created.id, potd, stale };
   } catch (err: any) {
     // P2002 = another concurrent request created it first. Fetch and return that one.
     if (err?.code === 'P2002') {
@@ -203,14 +239,14 @@ export async function ensurePotdTaskForUser(
         where: { userId, potdDateKey: potd.dateKey },
         select: { id: true },
       });
-      return { taskId: race?.id ?? null, potd, stale };
+      return { enabled: true, taskId: race?.id ?? null, potd, stale };
     }
     logger.error('potdService: failed to create POTD task', {
       userId,
       dateKey: potd.dateKey,
       message: err?.message,
     });
-    return { taskId: null, potd, stale };
+    return { enabled: true, taskId: null, potd, stale };
   }
 }
 

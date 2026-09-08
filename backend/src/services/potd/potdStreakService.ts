@@ -1,8 +1,9 @@
 import prisma from '../../config/database';
 import { addDaysToKey } from '../../utils/dateKeys';
-import { currentPotdDateKey } from './potdService';
+import { currentPotdDateKey, isPotdEnabledForUser } from './potdService';
 
 export interface PotdStreakResult {
+  enabled: boolean;
   currentStreak: number;
   longestStreak: number;
   totalSolved: number;
@@ -10,11 +11,11 @@ export interface PotdStreakResult {
   solvedToday: boolean;
 }
 
-const EMPTY: PotdStreakResult = {
+const EMPTY = {
   currentStreak: 0,
   longestStreak: 0,
   totalSolved: 0,
-  lastSolvedDateKey: null,
+  lastSolvedDateKey: null as string | null,
   solvedToday: false,
 };
 
@@ -28,6 +29,8 @@ export async function computePotdStreak(
   userId: string,
   _timezone?: string,
 ): Promise<PotdStreakResult> {
+  const enabled = await isPotdEnabledForUser(userId);
+
   const rows = await prisma.task.findMany({
     where: {
       userId,
@@ -42,7 +45,7 @@ export async function computePotdStreak(
     rows.map((r) => r.potdDateKey).filter((k): k is string => Boolean(k)),
   );
 
-  if (solved.size === 0) return EMPTY;
+  if (solved.size === 0) return { ...EMPTY, enabled };
 
   const today = currentPotdDateKey();
   const solvedToday = solved.has(today);
@@ -66,6 +69,7 @@ export async function computePotdStreak(
   }
 
   return {
+    enabled,
     currentStreak,
     longestStreak,
     totalSolved: solved.size,

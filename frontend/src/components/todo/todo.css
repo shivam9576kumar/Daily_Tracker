@@ -1098,3 +1098,84 @@ input.todo-row__check:disabled { cursor: wait; }
 .tdp-repeat__sub { color: var(--text-muted); font-weight: 400; }
 .tdp-repeat__option--none .tdp-repeat__sub { color: var(--danger-text); }
 
+/* ── Daily challenges menu (Part B) ── */
+.dc-menu { position: relative; }
+
+.dc-menu__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  width: 320px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-lg);
+}
+
+.dc-menu__title {
+  padding: 2px 4px 10px;
+  border-bottom: 1px solid var(--border);
+  font: 600 14px/1.3 var(--font-sans);
+  color: var(--text-primary);
+}
+
+.dc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 4px;
+}
+
+.dc-row + .dc-row { border-top: 1px solid var(--border); }
+
+.dc-row__text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.dc-row__name { font: 600 14px/1.3 var(--font-sans); color: var(--text-primary); }
+.dc-row__desc { font: 400 12.5px/1.45 var(--font-sans); color: var(--text-muted); }
+
+.dc-switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+.dc-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  transition: transform 160ms ease;
+}
+.dc-switch.is-on { background: var(--brand); border-color: var(--brand); }
+.dc-switch.is-on .dc-switch__thumb { transform: translateX(18px); background: var(--text-on-brand); border-color: transparent; }
+.dc-switch:disabled { opacity: 0.6; cursor: wait; }
+.dc-switch:focus-visible { outline: 0; box-shadow: var(--focus-ring); }
+
+.dc-menu__error { margin: 6px 4px 0; font: 500 12.5px/1.4 var(--font-sans); color: var(--danger-text); }
+.dc-menu__note { margin: 8px 4px 0; font: 400 12px/1.45 var(--font-sans); color: var(--text-muted); }
+
+@media (max-width: 640px) {
+  .dc-menu__panel {
+    position: fixed;
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+}
+
+

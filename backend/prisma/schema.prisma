@@ -16,6 +16,10 @@ model User {
   avatarUrl String?  @map("avatar_url")
   coins     Int      @default(0)
   timezone  String?  @map("timezone")
+  potdEnabled    Boolean @default(true)  @map("potd_enabled")
+  cp31Enabled    Boolean @default(false) @map("cp31_enabled")
+  cp31Band       Int?    @map("cp31_band")
+  cp31DailyCount Int     @default(1)     @map("cp31_daily_count")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
@@ -82,6 +86,9 @@ model Task {
   durationMin       Int?      @map("duration_min")
   /// 'YYYY-MM-DD' of the LeetCode POTD this task represents. Null for every non-POTD task.
   potdDateKey       String?   @map("potd_date_key")
+  /// cp31Sheet id (e.g. "cp31-1300-07") this task materializes. Null for non-CP31 tasks.
+  cp31ProblemId     String?   @map("cp31_problem_id")
+  isSkipped         Boolean   @default(false) @map("is_skipped")
   questionBankId    String?   @map("question_bank_id")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at")
@@ -96,6 +103,8 @@ model Task {
 
   /// Guarantees exactly one POTD task per user per POTD date (no dupes on refresh/retry).
   @@unique([userId, potdDateKey], name: "user_potd_unique")
+  /// Exactly one task per user per CP31 problem (NULLs are distinct in Postgres — non-CP31 rows unaffected).
+  @@unique([userId, cp31ProblemId], name: "user_cp31_unique")
   @@index([userId, scheduledDate])
   @@index([userId, scheduledDateKey])
   @@index([userId, status])

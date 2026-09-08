@@ -4,4 +4,5 @@ export enum TaskType {
   ASSIGNMENT = 'assignment',
   POTD = 'potd',
   PERSONAL = 'personal',
+  CP31 = 'cp31',
 }

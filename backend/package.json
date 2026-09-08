@@ -22,7 +22,11 @@
     "data:backfill-striver-gfg:apply": "tsx scripts/backfillStriverGfgLinks.ts",
     "data:backfill-striver-gfg-v2": "tsx scripts/backfillStriverGfgUrls.ts",
     "typecheck": "tsc --noEmit",
-    "verify:todo": "tsx scripts/verifyTodoFeature.ts"
+    "verify:todo": "tsx scripts/verifyTodoFeature.ts",
+    "cp31:convert": "tsx scripts/convertCp31Input.ts",
+    "cp31:validate": "tsx scripts/validateCp31Sheet.ts",
+    "verify:potd-toggle": "tsx scripts/verifyPotdToggle.ts",
+    "verify:cp31": "tsx scripts/verifyCp31.ts"
   },
   "dependencies": {
     "@dsa-planner/shared": "*",

@@ -66,7 +66,8 @@ export default function Dashboard() {
 
   const firstName = user?.name?.split(' ')[0] || 'there';
   const { streak, coins, backlog } = data.statusOverview;
-  const potdStreak = data.potdStreak?.currentStreak ?? 0;
+  const potdEnabled = data.dailyChallenges?.potd.enabled ?? data.potdStreak?.enabled ?? true;
+  const potdStreak = potdEnabled ? (data.potdStreak?.currentStreak ?? 0) : 0;
   const pending = data.todaysHitlist.pending.length;
   const completed = data.todaysHitlist.completed.length;
   const assignmentsDueToday = (data.pendingAssignments ?? []).filter(

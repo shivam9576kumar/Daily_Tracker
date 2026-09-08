@@ -27,6 +27,7 @@ export async function runBacklogCron() {
         isExpired: false,
         completedAt: null,
         scheduledDateKey: { not: null },
+        taskType: { not: 'cp31' },
         OR: [{ planId: null }, { plan: { status: 'active' } }],
       },
       select: {

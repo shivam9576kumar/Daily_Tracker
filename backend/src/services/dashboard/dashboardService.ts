@@ -13,6 +13,7 @@ import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakServ
 export const dashboardService = {
   async getDashboardData(userId: string, tz: string) {
     let ensuredPotd: Awaited<ReturnType<typeof ensurePotdTaskForUser>> = {
+      enabled: true,
       taskId: null,
       potd: null,
       stale: false,
@@ -115,6 +116,7 @@ export const dashboardService = {
       classes: classesForWeek,
       potd: potdMeta,
       potdStreak,
+      dailyChallenges: { potd: { enabled: ensuredPotd.enabled } },
     };
   },
 };

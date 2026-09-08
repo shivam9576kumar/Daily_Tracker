@@ -1,6 +1,6 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Rating = 'easy' | 'medium' | 'hard';
-export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal';
+export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal' | 'cp31';
 export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired';
 export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly' | 'yearly';
 
@@ -96,11 +96,36 @@ export interface ClassRow {
 }
 
 export interface PotdStreak {
+  enabled?: boolean;
   currentStreak: number;
   longestStreak: number;
   totalSolved: number;
   lastSolvedDateKey: string | null;
   solvedToday: boolean;
+}
+
+export interface DailyChallengeSettings {
+  potdEnabled: boolean;
+  cp31Enabled: boolean;
+  cp31Band: number | null;
+  cp31DailyCount: number;
+  availableBands: { band: number; count: number }[];
+}
+
+export interface DailyChallengeSettingsPatch {
+  potdEnabled?: boolean;
+  cp31Enabled?: boolean;
+  cp31Band?: number | null;
+  cp31DailyCount?: number;
+}
+
+export interface DailyChallengeSettingsResponse {
+  settings: DailyChallengeSettings;
+  changes: { potdUnsolvedRemoved: number };
+}
+
+export interface TodoDailyChallenges {
+  potd: { enabled: boolean };
 }
 
 export interface DashboardData {
@@ -116,6 +141,7 @@ export interface DashboardData {
   classes: ClassRow[];
   potd?: { dateKey: string; stale: boolean } | null;
   potdStreak?: PotdStreak | null;
+  dailyChallenges?: TodoDailyChallenges;
 }
 
 export interface CreateTaskPayload {
@@ -425,4 +451,5 @@ export interface TodoResponse {
   upcoming: TodoDateGroup[];
   backlog: Task[];
   completed: TodoDateGroup[];
+  dailyChallenges?: TodoDailyChallenges;
 }

@@ -25,6 +25,7 @@ export async function runExpiryCron() {
         isBacklog: true,
         isExpired: false,
         status: { not: 'completed' },
+        taskType: { not: 'cp31' },
         OR: [{ planId: null }, { plan: { status: 'active' } }],
       },
       select: {

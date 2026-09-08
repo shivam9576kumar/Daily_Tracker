@@ -80,8 +80,10 @@ export const todoService = {
 
     // ── 1. POTD ensure (never throws, same as dashboardService) ──
     let potdDateKey: string | null = null;
+    let potdEnabled = true;
     try {
       const ensured = await ensurePotdTaskForUser(userId, tz);
+      potdEnabled = ensured.enabled;
       potdDateKey = ensured.potd?.dateKey ?? null;
     } catch (err) {
       logger.warn('todoService: POTD ensure failed, continuing', { message: (err as Error)?.message });
@@ -221,6 +223,7 @@ export const todoService = {
       upcoming,
       backlog: backlogRows,
       completed,
+      dailyChallenges: { potd: { enabled: potdEnabled } },
     };
   },
 };

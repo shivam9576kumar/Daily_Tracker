@@ -1,0 +1,1242 @@
+[
+  {
+    "id": "cp31-1300-01",
+    "title": "Divisible Pairs",
+    "band": 1300,
+    "index": 1,
+    "url": "https://codeforces.com/problemset/problem/1931/D",
+    "order": 1
+  },
+  {
+    "id": "cp31-1300-02",
+    "title": "Find the Different Ones!",
+    "band": 1300,
+    "index": 2,
+    "url": "https://codeforces.com/problemset/problem/1927/D",
+    "order": 2
+  },
+  {
+    "id": "cp31-1300-03",
+    "title": "Romantic Glasses",
+    "band": 1300,
+    "index": 3,
+    "url": "https://codeforces.com/problemset/problem/1915/E",
+    "order": 3
+  },
+  {
+    "id": "cp31-1300-04",
+    "title": "Divide and Equalize",
+    "band": 1300,
+    "index": 4,
+    "url": "https://codeforces.com/problemset/problem/1881/D",
+    "order": 4
+  },
+  {
+    "id": "cp31-1300-05",
+    "title": "Make it Alternating",
+    "band": 1300,
+    "index": 5,
+    "url": "https://codeforces.com/problemset/problem/1879/C",
+    "order": 5
+  },
+  {
+    "id": "cp31-1300-06",
+    "title": "Strong Vertices",
+    "band": 1300,
+    "index": 6,
+    "url": "https://codeforces.com/problemset/problem/1857/D",
+    "order": 6
+  },
+  {
+    "id": "cp31-1300-07",
+    "title": "Rudolf and Snowflakes (simple version)",
+    "band": 1300,
+    "index": 7,
+    "url": "https://codeforces.com/problemset/problem/1846/E1",
+    "order": 7
+  },
+  {
+    "id": "cp31-1300-08",
+    "title": "Scoring Subsequences",
+    "band": 1300,
+    "index": 8,
+    "url": "https://codeforces.com/problemset/problem/1794/C",
+    "order": 8
+  },
+  {
+    "id": "cp31-1300-09",
+    "title": "Gardener and the Array",
+    "band": 1300,
+    "index": 9,
+    "url": "https://codeforces.com/problemset/problem/1775/B",
+    "order": 9
+  },
+  {
+    "id": "cp31-1300-10",
+    "title": "Yet Another Problem About Pairs Satisfying an Inequality",
+    "band": 1300,
+    "index": 10,
+    "url": "https://codeforces.com/problemset/problem/1703/F",
+    "order": 10
+  },
+  {
+    "id": "cp31-1300-11",
+    "title": "White-Black Balanced Subtrees",
+    "band": 1300,
+    "index": 11,
+    "url": "https://codeforces.com/problemset/problem/1676/G",
+    "order": 11
+  },
+  {
+    "id": "cp31-1300-12",
+    "title": "Maximal AND",
+    "band": 1300,
+    "index": 12,
+    "url": "https://codeforces.com/problemset/problem/1669/H",
+    "order": 12
+  },
+  {
+    "id": "cp31-1300-13",
+    "title": "Chat Ban",
+    "band": 1300,
+    "index": 13,
+    "url": "https://codeforces.com/problemset/problem/1612/C",
+    "order": 13
+  },
+  {
+    "id": "cp31-1300-14",
+    "title": "Array Elimination",
+    "band": 1300,
+    "index": 14,
+    "url": "https://codeforces.com/problemset/problem/1601/A",
+    "order": 14
+  },
+  {
+    "id": "cp31-1300-15",
+    "title": "Deep Down Below",
+    "band": 1300,
+    "index": 15,
+    "url": "https://codeforces.com/problemset/problem/1561/C",
+    "order": 15
+  },
+  {
+    "id": "cp31-1300-16",
+    "title": "Box Fitting",
+    "band": 1300,
+    "index": 16,
+    "url": "https://codeforces.com/problemset/problem/1498/B",
+    "order": 16
+  },
+  {
+    "id": "cp31-1300-17",
+    "title": "Strange Birthday Party",
+    "band": 1300,
+    "index": 17,
+    "url": "https://codeforces.com/problemset/problem/1470/A",
+    "order": 17
+  },
+  {
+    "id": "cp31-1300-18",
+    "title": "Move and Turn",
+    "band": 1300,
+    "index": 18,
+    "url": "https://codeforces.com/problemset/problem/1459/B",
+    "order": 18
+  },
+  {
+    "id": "cp31-1300-19",
+    "title": "Omkar and Last Class of Math",
+    "band": 1300,
+    "index": 19,
+    "url": "https://codeforces.com/problemset/problem/1372/B",
+    "order": 19
+  },
+  {
+    "id": "cp31-1300-20",
+    "title": "Shuffle",
+    "band": 1300,
+    "index": 20,
+    "url": "https://codeforces.com/problemset/problem/1984/E",
+    "order": 20
+  },
+  {
+    "id": "cp31-1300-21",
+    "title": "Most socially-distanced subsequence",
+    "band": 1300,
+    "index": 21,
+    "url": "https://codeforces.com/problemset/problem/1364/B",
+    "order": 21
+  },
+  {
+    "id": "cp31-1300-22",
+    "title": "Buying Shovels",
+    "band": 1300,
+    "index": 22,
+    "url": "https://codeforces.com/problemset/problem/1360/D",
+    "order": 22
+  },
+  {
+    "id": "cp31-1300-23",
+    "title": "Product of Three Numbers",
+    "band": 1300,
+    "index": 23,
+    "url": "https://codeforces.com/problemset/problem/1294/C",
+    "order": 23
+  },
+  {
+    "id": "cp31-1300-24",
+    "title": "Just Eat It!",
+    "band": 1300,
+    "index": 24,
+    "url": "https://codeforces.com/problemset/problem/1285/B",
+    "order": 24
+  },
+  {
+    "id": "cp31-1300-25",
+    "title": "Balanced Tunnel",
+    "band": 1300,
+    "index": 25,
+    "url": "https://codeforces.com/problemset/problem/1237/B",
+    "order": 25
+  },
+  {
+    "id": "cp31-1300-26",
+    "title": "WOW Factor",
+    "band": 1300,
+    "index": 26,
+    "url": "https://codeforces.com/problemset/problem/1178/B",
+    "order": 26
+  },
+  {
+    "id": "cp31-1300-27",
+    "title": "Alyona and a Narrow Fridge",
+    "band": 1300,
+    "index": 27,
+    "url": "https://codeforces.com/problemset/problem/1119/B",
+    "order": 27
+  },
+  {
+    "id": "cp31-1300-28",
+    "title": "Good Array",
+    "band": 1300,
+    "index": 28,
+    "url": "https://codeforces.com/problemset/problem/1532/E",
+    "order": 28
+  },
+  {
+    "id": "cp31-1300-29",
+    "title": "Mahmoud and Ehab and the bipartiteness",
+    "band": 1300,
+    "index": 29,
+    "url": "https://codeforces.com/problemset/problem/862/B",
+    "order": 29
+  },
+  {
+    "id": "cp31-1300-30",
+    "title": "Average Sleep Time",
+    "band": 1300,
+    "index": 30,
+    "url": "https://codeforces.com/problemset/problem/808/B",
+    "order": 30
+  },
+  {
+    "id": "cp31-1300-31",
+    "title": "Simple Strings",
+    "band": 1300,
+    "index": 31,
+    "url": "https://codeforces.com/problemset/problem/665/C",
+    "order": 31
+  },
+  {
+    "id": "cp31-1400-01",
+    "title": "Anna and the Valentine's Day Gift",
+    "band": 1400,
+    "index": 1,
+    "url": "https://codeforces.com/problemset/problem/1931/E",
+    "order": 32
+  },
+  {
+    "id": "cp31-1400-02",
+    "title": "Grouping Increases",
+    "band": 1400,
+    "index": 2,
+    "url": "https://codeforces.com/problemset/problem/1919/C",
+    "order": 33
+  },
+  {
+    "id": "cp31-1400-03",
+    "title": "Jumping Through Segments",
+    "band": 1400,
+    "index": 3,
+    "url": "https://codeforces.com/problemset/problem/1907/D",
+    "order": 34
+  },
+  {
+    "id": "cp31-1400-04",
+    "title": "Array Game",
+    "band": 1400,
+    "index": 4,
+    "url": "https://codeforces.com/problemset/problem/1904/C",
+    "order": 35
+  },
+  {
+    "id": "cp31-1400-05",
+    "title": "Dances (Easy version)",
+    "band": 1400,
+    "index": 5,
+    "url": "https://codeforces.com/problemset/problem/1883/G1",
+    "order": 36
+  },
+  {
+    "id": "cp31-1400-06",
+    "title": "Iva & Pav",
+    "band": 1400,
+    "index": 6,
+    "url": "https://codeforces.com/problemset/problem/1878/E",
+    "order": 37
+  },
+  {
+    "id": "cp31-1400-07",
+    "title": "Bracket Coloring",
+    "band": 1400,
+    "index": 7,
+    "url": "https://codeforces.com/problemset/problem/1837/D",
+    "order": 38
+  },
+  {
+    "id": "cp31-1400-08",
+    "title": "Copil Copac Draws Trees",
+    "band": 1400,
+    "index": 8,
+    "url": "https://codeforces.com/problemset/problem/1830/A",
+    "order": 39
+  },
+  {
+    "id": "cp31-1400-09",
+    "title": "Hossam and Friends",
+    "band": 1400,
+    "index": 9,
+    "url": "https://codeforces.com/problemset/problem/1771/B",
+    "order": 40
+  },
+  {
+    "id": "cp31-1400-10",
+    "title": "Make It Round",
+    "band": 1400,
+    "index": 10,
+    "url": "https://codeforces.com/problemset/problem/1759/D",
+    "order": 41
+  },
+  {
+    "id": "cp31-1400-11",
+    "title": "Add Modulo 10",
+    "band": 1400,
+    "index": 11,
+    "url": "https://codeforces.com/problemset/problem/1714/E",
+    "order": 42
+  },
+  {
+    "id": "cp31-1400-12",
+    "title": "Schedule Management",
+    "band": 1400,
+    "index": 12,
+    "url": "https://codeforces.com/problemset/problem/1701/C",
+    "order": 43
+  },
+  {
+    "id": "cp31-1400-13",
+    "title": "2^Sort",
+    "band": 1400,
+    "index": 13,
+    "url": "https://codeforces.com/problemset/problem/1692/G",
+    "order": 44
+  },
+  {
+    "id": "cp31-1400-14",
+    "title": "Weird Sum",
+    "band": 1400,
+    "index": 14,
+    "url": "https://codeforces.com/problemset/problem/1648/A",
+    "order": 45
+  },
+  {
+    "id": "cp31-1400-15",
+    "title": "Fortune Telling",
+    "band": 1400,
+    "index": 15,
+    "url": "https://codeforces.com/problemset/problem/1634/B",
+    "order": 46
+  },
+  {
+    "id": "cp31-1400-16",
+    "title": "Arranging The Sheep",
+    "band": 1400,
+    "index": 16,
+    "url": "https://codeforces.com/problemset/problem/1520/E",
+    "order": 47
+  },
+  {
+    "id": "cp31-1400-17",
+    "title": "Berland Regional",
+    "band": 1400,
+    "index": 17,
+    "url": "https://codeforces.com/problemset/problem/1519/C",
+    "order": 48
+  },
+  {
+    "id": "cp31-1400-18",
+    "title": "AND Sequences",
+    "band": 1400,
+    "index": 18,
+    "url": "https://codeforces.com/problemset/problem/1513/B",
+    "order": 49
+  },
+  {
+    "id": "cp31-1400-19",
+    "title": "Ball in Berland",
+    "band": 1400,
+    "index": 19,
+    "url": "https://codeforces.com/problemset/problem/1475/C",
+    "order": 50
+  },
+  {
+    "id": "cp31-1400-20",
+    "title": "Zero Remainder Array",
+    "band": 1400,
+    "index": 20,
+    "url": "https://codeforces.com/problemset/problem/1374/D",
+    "order": 51
+  },
+  {
+    "id": "cp31-1400-21",
+    "title": "Johnny and Another Rating Drop",
+    "band": 1400,
+    "index": 21,
+    "url": "https://codeforces.com/problemset/problem/1362/C",
+    "order": 52
+  },
+  {
+    "id": "cp31-1400-22",
+    "title": "Orac and Models",
+    "band": 1400,
+    "index": 22,
+    "url": "https://codeforces.com/problemset/problem/1350/B",
+    "order": 53
+  },
+  {
+    "id": "cp31-1400-23",
+    "title": "Journey Planning",
+    "band": 1400,
+    "index": 23,
+    "url": "https://codeforces.com/problemset/problem/1320/A",
+    "order": 54
+  },
+  {
+    "id": "cp31-1400-24",
+    "title": "The Number of Products",
+    "band": 1400,
+    "index": 24,
+    "url": "https://codeforces.com/problemset/problem/1215/B",
+    "order": 55
+  },
+  {
+    "id": "cp31-1400-25",
+    "title": "Basketball Exercise",
+    "band": 1400,
+    "index": 25,
+    "url": "https://codeforces.com/problemset/problem/1195/C",
+    "order": 56
+  },
+  {
+    "id": "cp31-1400-26",
+    "title": "Candy Box (easy version)",
+    "band": 1400,
+    "index": 26,
+    "url": "https://codeforces.com/problemset/problem/1183/D",
+    "order": 57
+  },
+  {
+    "id": "cp31-1400-27",
+    "title": "News Distribution",
+    "band": 1400,
+    "index": 27,
+    "url": "https://codeforces.com/problemset/problem/1167/C",
+    "order": 58
+  },
+  {
+    "id": "cp31-1400-28",
+    "title": "Lost Numbers",
+    "band": 1400,
+    "index": 28,
+    "url": "https://codeforces.com/problemset/problem/1167/B",
+    "order": 59
+  },
+  {
+    "id": "cp31-1400-29",
+    "title": "Queen",
+    "band": 1400,
+    "index": 29,
+    "url": "https://codeforces.com/problemset/problem/1143/C",
+    "order": 60
+  },
+  {
+    "id": "cp31-1400-30",
+    "title": "Tape",
+    "band": 1400,
+    "index": 30,
+    "url": "https://codeforces.com/problemset/problem/1110/B",
+    "order": 61
+  },
+  {
+    "id": "cp31-1400-31",
+    "title": "Mashmokh and ACM",
+    "band": 1400,
+    "index": 31,
+    "url": "https://codeforces.com/problemset/problem/414/B",
+    "order": 62
+  },
+  {
+    "id": "cp31-1500-01",
+    "title": "Greetings",
+    "band": 1500,
+    "index": 1,
+    "url": "https://codeforces.com/problemset/problem/1915/F",
+    "order": 63
+  },
+  {
+    "id": "cp31-1500-02",
+    "title": "Smilo and Monsters",
+    "band": 1500,
+    "index": 2,
+    "url": "https://codeforces.com/problemset/problem/1891/C",
+    "order": 64
+  },
+  {
+    "id": "cp31-1500-03",
+    "title": "Block Sequence",
+    "band": 1500,
+    "index": 3,
+    "url": "https://codeforces.com/problemset/problem/1881/E",
+    "order": 65
+  },
+  {
+    "id": "cp31-1500-04",
+    "title": "Data Structures Fan",
+    "band": 1500,
+    "index": 4,
+    "url": "https://codeforces.com/problemset/problem/1872/E",
+    "order": 66
+  },
+  {
+    "id": "cp31-1500-05",
+    "title": "Tea Tasting",
+    "band": 1500,
+    "index": 5,
+    "url": "https://codeforces.com/problemset/problem/1795/C",
+    "order": 67
+  },
+  {
+    "id": "cp31-1500-06",
+    "title": "Controllers",
+    "band": 1500,
+    "index": 6,
+    "url": "https://codeforces.com/problemset/problem/1776/L",
+    "order": 68
+  },
+  {
+    "id": "cp31-1500-07",
+    "title": "Palindrome Basis",
+    "band": 1500,
+    "index": 7,
+    "url": "https://codeforces.com/problemset/problem/1673/C",
+    "order": 69
+  },
+  {
+    "id": "cp31-1500-08",
+    "title": "Line Empire",
+    "band": 1500,
+    "index": 8,
+    "url": "https://codeforces.com/problemset/problem/1659/C",
+    "order": 70
+  },
+  {
+    "id": "cp31-1500-09",
+    "title": "Factorials and Powers of Two",
+    "band": 1500,
+    "index": 9,
+    "url": "https://codeforces.com/problemset/problem/1646/C",
+    "order": 71
+  },
+  {
+    "id": "cp31-1500-10",
+    "title": "AGAGA XOOORRR",
+    "band": 1500,
+    "index": 10,
+    "url": "https://codeforces.com/problemset/problem/1516/B",
+    "order": 72
+  },
+  {
+    "id": "cp31-1500-11",
+    "title": "Eastern Exhibition",
+    "band": 1500,
+    "index": 11,
+    "url": "https://codeforces.com/problemset/problem/1486/B",
+    "order": 73
+  },
+  {
+    "id": "cp31-1500-12",
+    "title": "13th Labour of Heracles",
+    "band": 1500,
+    "index": 12,
+    "url": "https://codeforces.com/problemset/problem/1466/D",
+    "order": 74
+  },
+  {
+    "id": "cp31-1500-13",
+    "title": "Mortal Kombat Tower",
+    "band": 1500,
+    "index": 13,
+    "url": "https://codeforces.com/problemset/problem/1418/C",
+    "order": 75
+  },
+  {
+    "id": "cp31-1500-14",
+    "title": "k-Amazing Numbers",
+    "band": 1500,
+    "index": 14,
+    "url": "https://codeforces.com/problemset/problem/1416/A",
+    "order": 76
+  },
+  {
+    "id": "cp31-1500-15",
+    "title": "Balanced Bitstring",
+    "band": 1500,
+    "index": 15,
+    "url": "https://codeforces.com/problemset/problem/1404/A",
+    "order": 77
+  },
+  {
+    "id": "cp31-1500-16",
+    "title": "Powered Addition",
+    "band": 1500,
+    "index": 16,
+    "url": "https://codeforces.com/problemset/problem/1338/A",
+    "order": 78
+  },
+  {
+    "id": "cp31-1500-17",
+    "title": "K-Complete Word",
+    "band": 1500,
+    "index": 17,
+    "url": "https://codeforces.com/problemset/problem/1332/C",
+    "order": 79
+  },
+  {
+    "id": "cp31-1500-18",
+    "title": "Ehab and Path-etic MEXs",
+    "band": 1500,
+    "index": 18,
+    "url": "https://codeforces.com/problemset/problem/1325/C",
+    "order": 80
+  },
+  {
+    "id": "cp31-1500-19",
+    "title": "Count Subrectangles",
+    "band": 1500,
+    "index": 19,
+    "url": "https://codeforces.com/problemset/problem/1323/B",
+    "order": 81
+  },
+  {
+    "id": "cp31-1500-20",
+    "title": "Zero Array",
+    "band": 1500,
+    "index": 20,
+    "url": "https://codeforces.com/problemset/problem/1201/B",
+    "order": 82
+  },
+  {
+    "id": "cp31-1500-21",
+    "title": "Edgy Trees",
+    "band": 1500,
+    "index": 21,
+    "url": "https://codeforces.com/problemset/problem/1139/C",
+    "order": 83
+  },
+  {
+    "id": "cp31-1500-22",
+    "title": "Zero Quantity Maximization",
+    "band": 1500,
+    "index": 22,
+    "url": "https://codeforces.com/problemset/problem/1133/D",
+    "order": 84
+  },
+  {
+    "id": "cp31-1500-23",
+    "title": "Lunar New Year and a Wander",
+    "band": 1500,
+    "index": 23,
+    "url": "https://codeforces.com/problemset/problem/1106/D",
+    "order": 85
+  },
+  {
+    "id": "cp31-1500-24",
+    "title": "Division and Union",
+    "band": 1500,
+    "index": 24,
+    "url": "https://codeforces.com/problemset/problem/1101/C",
+    "order": 86
+  },
+  {
+    "id": "cp31-1500-25",
+    "title": "The Fair Nut and String",
+    "band": 1500,
+    "index": 25,
+    "url": "https://codeforces.com/problemset/problem/1084/C",
+    "order": 87
+  },
+  {
+    "id": "cp31-1500-26",
+    "title": "Cut 'em all!",
+    "band": 1500,
+    "index": 26,
+    "url": "https://codeforces.com/problemset/problem/982/C",
+    "order": 88
+  },
+  {
+    "id": "cp31-1500-27",
+    "title": "Nested Segments",
+    "band": 1500,
+    "index": 27,
+    "url": "https://codeforces.com/problemset/problem/976/C",
+    "order": 89
+  },
+  {
+    "id": "cp31-1500-28",
+    "title": "Minimize the error",
+    "band": 1500,
+    "index": 28,
+    "url": "https://codeforces.com/problemset/problem/960/B",
+    "order": 90
+  },
+  {
+    "id": "cp31-1500-29",
+    "title": "Pride",
+    "band": 1500,
+    "index": 29,
+    "url": "https://codeforces.com/problemset/problem/891/A",
+    "order": 91
+  },
+  {
+    "id": "cp31-1500-30",
+    "title": "Two TVs",
+    "band": 1500,
+    "index": 30,
+    "url": "https://codeforces.com/problemset/problem/845/C",
+    "order": 92
+  },
+  {
+    "id": "cp31-1500-31",
+    "title": "Little Girl and Maximum Sum",
+    "band": 1500,
+    "index": 31,
+    "url": "https://codeforces.com/problemset/problem/276/C",
+    "order": 93
+  },
+  {
+    "id": "cp31-1600-01",
+    "title": "Partitioning the Array",
+    "band": 1600,
+    "index": 1,
+    "url": "https://codeforces.com/problemset/problem/1920/C",
+    "order": 94
+  },
+  {
+    "id": "cp31-1600-02",
+    "title": "Good Triples",
+    "band": 1600,
+    "index": 2,
+    "url": "https://codeforces.com/problemset/problem/1907/E",
+    "order": 95
+  },
+  {
+    "id": "cp31-1600-03",
+    "title": "Decreasing String",
+    "band": 1600,
+    "index": 3,
+    "url": "https://codeforces.com/problemset/problem/1886/C",
+    "order": 96
+  },
+  {
+    "id": "cp31-1600-04",
+    "title": "To Become Max",
+    "band": 1600,
+    "index": 4,
+    "url": "https://codeforces.com/problemset/problem/1856/C",
+    "order": 97
+  },
+  {
+    "id": "cp31-1600-05",
+    "title": "Tracking Segments",
+    "band": 1600,
+    "index": 5,
+    "url": "https://codeforces.com/problemset/problem/1843/E",
+    "order": 98
+  },
+  {
+    "id": "cp31-1600-06",
+    "title": "Round Dance",
+    "band": 1600,
+    "index": 6,
+    "url": "https://codeforces.com/problemset/problem/1833/E",
+    "order": 99
+  },
+  {
+    "id": "cp31-1600-07",
+    "title": "Hits Different",
+    "band": 1600,
+    "index": 7,
+    "url": "https://codeforces.com/problemset/problem/1829/G",
+    "order": 100
+  },
+  {
+    "id": "cp31-1600-08",
+    "title": "Shocking Arrangement",
+    "band": 1600,
+    "index": 8,
+    "url": "https://codeforces.com/problemset/problem/1798/D",
+    "order": 101
+  },
+  {
+    "id": "cp31-1600-09",
+    "title": "Triangle Coloring",
+    "band": 1600,
+    "index": 9,
+    "url": "https://codeforces.com/problemset/problem/1795/D",
+    "order": 102
+  },
+  {
+    "id": "cp31-1600-10",
+    "title": "Equal Frequencies",
+    "band": 1600,
+    "index": 10,
+    "url": "https://codeforces.com/problemset/problem/1781/C",
+    "order": 103
+  },
+  {
+    "id": "cp31-1600-11",
+    "title": "Flexible String",
+    "band": 1600,
+    "index": 11,
+    "url": "https://codeforces.com/problemset/problem/1778/C",
+    "order": 104
+  },
+  {
+    "id": "cp31-1600-12",
+    "title": "Interesting Sequence",
+    "band": 1600,
+    "index": 12,
+    "url": "https://codeforces.com/problemset/problem/1775/C",
+    "order": 105
+  },
+  {
+    "id": "cp31-1600-13",
+    "title": "Sending a Sequence Over the Network",
+    "band": 1600,
+    "index": 13,
+    "url": "https://codeforces.com/problemset/problem/1741/E",
+    "order": 106
+  },
+  {
+    "id": "cp31-1600-14",
+    "title": "Meeting on the Line",
+    "band": 1600,
+    "index": 14,
+    "url": "https://codeforces.com/problemset/problem/1730/B",
+    "order": 107
+  },
+  {
+    "id": "cp31-1600-15",
+    "title": "Split Into Two Sets",
+    "band": 1600,
+    "index": 15,
+    "url": "https://codeforces.com/problemset/problem/1702/E",
+    "order": 108
+  },
+  {
+    "id": "cp31-1600-16",
+    "title": "Fixed Point Guessing",
+    "band": 1600,
+    "index": 16,
+    "url": "https://codeforces.com/problemset/problem/1698/D",
+    "order": 109
+  },
+  {
+    "id": "cp31-1600-17",
+    "title": "Maximum Product Strikes Back",
+    "band": 1600,
+    "index": 17,
+    "url": "https://codeforces.com/problemset/problem/1660/D",
+    "order": 110
+  },
+  {
+    "id": "cp31-1600-18",
+    "title": "Make Them Equal",
+    "band": 1600,
+    "index": 18,
+    "url": "https://codeforces.com/problemset/problem/1633/D",
+    "order": 111
+  },
+  {
+    "id": "cp31-1600-19",
+    "title": "Keshi Is Throwing a Party",
+    "band": 1600,
+    "index": 19,
+    "url": "https://codeforces.com/problemset/problem/1610/C",
+    "order": 112
+  },
+  {
+    "id": "cp31-1600-20",
+    "title": "Say No to Palindromes",
+    "band": 1600,
+    "index": 20,
+    "url": "https://codeforces.com/problemset/problem/1555/D",
+    "order": 113
+  },
+  {
+    "id": "cp31-1600-21",
+    "title": "Erase and Extend (Easy Version)",
+    "band": 1600,
+    "index": 21,
+    "url": "https://codeforces.com/problemset/problem/1537/E1",
+    "order": 114
+  },
+  {
+    "id": "cp31-1600-22",
+    "title": "Parsa's Humongous Tree",
+    "band": 1600,
+    "index": 22,
+    "url": "https://codeforces.com/problemset/problem/1528/A",
+    "order": 115
+  },
+  {
+    "id": "cp31-1600-23",
+    "title": "Planar Reflections",
+    "band": 1600,
+    "index": 23,
+    "url": "https://codeforces.com/problemset/problem/1498/C",
+    "order": 116
+  },
+  {
+    "id": "cp31-1600-24",
+    "title": "Advertising Agency",
+    "band": 1600,
+    "index": 24,
+    "url": "https://codeforces.com/problemset/problem/1475/E",
+    "order": 117
+  },
+  {
+    "id": "cp31-1600-25",
+    "title": "Row GCD",
+    "band": 1600,
+    "index": 25,
+    "url": "https://codeforces.com/problemset/problem/1458/A",
+    "order": 118
+  },
+  {
+    "id": "cp31-1600-26",
+    "title": "Chocolate Bunny",
+    "band": 1600,
+    "index": 26,
+    "url": "https://codeforces.com/problemset/problem/1407/C",
+    "order": 119
+  },
+  {
+    "id": "cp31-1600-27",
+    "title": "Good Subarrays",
+    "band": 1600,
+    "index": 27,
+    "url": "https://codeforces.com/problemset/problem/1398/C",
+    "order": 120
+  },
+  {
+    "id": "cp31-1600-28",
+    "title": "Array Walk",
+    "band": 1600,
+    "index": 28,
+    "url": "https://codeforces.com/problemset/problem/1389/B",
+    "order": 121
+  },
+  {
+    "id": "cp31-1600-29",
+    "title": "Orac and LCM",
+    "band": 1600,
+    "index": 29,
+    "url": "https://codeforces.com/problemset/problem/1349/A",
+    "order": 122
+  },
+  {
+    "id": "cp31-1600-30",
+    "title": "Linova and Kingdom",
+    "band": 1600,
+    "index": 30,
+    "url": "https://codeforces.com/problemset/problem/1336/A",
+    "order": 123
+  },
+  {
+    "id": "cp31-1600-31",
+    "title": "Kuroni and Impossible Calculation",
+    "band": 1600,
+    "index": 31,
+    "url": "https://codeforces.com/problemset/problem/1305/C",
+    "order": 124
+  },
+  {
+    "id": "cp31-1700-01",
+    "title": "Maximum modulo equality",
+    "band": 1700,
+    "index": 1,
+    "url": "https://codeforces.com/problemset/problem/2050/F",
+    "order": 125
+  },
+  {
+    "id": "cp31-1700-02",
+    "title": "Drunken Maze",
+    "band": 1700,
+    "index": 2,
+    "url": "https://codeforces.com/problemset/problem/2041/D",
+    "order": 126
+  },
+  {
+    "id": "cp31-1700-03",
+    "title": "Tree Pruning",
+    "band": 1700,
+    "index": 3,
+    "url": "https://codeforces.com/problemset/problem/2018/C",
+    "order": 127
+  },
+  {
+    "id": "cp31-1700-04",
+    "title": "Iris and Game on the Tree",
+    "band": 1700,
+    "index": 4,
+    "url": "https://codeforces.com/problemset/problem/2006/A",
+    "order": 128
+  },
+  {
+    "id": "cp31-1700-05",
+    "title": "Ruler (hard version)",
+    "band": 1700,
+    "index": 5,
+    "url": "https://codeforces.com/problemset/problem/1999/G2",
+    "order": 129
+  },
+  {
+    "id": "cp31-1700-06",
+    "title": "Swap Dilemma",
+    "band": 1700,
+    "index": 6,
+    "url": "https://codeforces.com/problemset/problem/1983/D",
+    "order": 130
+  },
+  {
+    "id": "cp31-1700-07",
+    "title": "Beauty of the mountains",
+    "band": 1700,
+    "index": 7,
+    "url": "https://codeforces.com/problemset/problem/1982/D",
+    "order": 131
+  },
+  {
+    "id": "cp31-1700-08",
+    "title": "Tandem Repeats?",
+    "band": 1700,
+    "index": 8,
+    "url": "https://codeforces.com/problemset/problem/1948/D",
+    "order": 132
+  },
+  {
+    "id": "cp31-1700-09",
+    "title": "Chat Screenshots",
+    "band": 1700,
+    "index": 9,
+    "url": "https://codeforces.com/problemset/problem/1931/F",
+    "order": 133
+  },
+  {
+    "id": "cp31-1700-10",
+    "title": "Neutral Tonality",
+    "band": 1700,
+    "index": 10,
+    "url": "https://codeforces.com/problemset/problem/1893/B",
+    "order": 134
+  },
+  {
+    "id": "cp31-1700-11",
+    "title": "Sum of XOR Functions",
+    "band": 1700,
+    "index": 11,
+    "url": "https://codeforces.com/problemset/problem/1879/D",
+    "order": 135
+  },
+  {
+    "id": "cp31-1700-12",
+    "title": "Ira and Flamenco",
+    "band": 1700,
+    "index": 12,
+    "url": "https://codeforces.com/problemset/problem/1833/F",
+    "order": 136
+  },
+  {
+    "id": "cp31-1700-13",
+    "title": "Don't Blame Me",
+    "band": 1700,
+    "index": 13,
+    "url": "https://codeforces.com/problemset/problem/1829/H",
+    "order": 137
+  },
+  {
+    "id": "cp31-1700-14",
+    "title": "Running Miles",
+    "band": 1700,
+    "index": 14,
+    "url": "https://codeforces.com/problemset/problem/1826/D",
+    "order": 138
+  },
+  {
+    "id": "cp31-1700-15",
+    "title": "Magic Triples (Hard Version)",
+    "band": 1700,
+    "index": 15,
+    "url": "https://codeforces.com/problemset/problem/1822/G2",
+    "order": 139
+  },
+  {
+    "id": "cp31-1700-16",
+    "title": "Fixed Prefix Permutations",
+    "band": 1700,
+    "index": 16,
+    "url": "https://codeforces.com/problemset/problem/1792/D",
+    "order": 140
+  },
+  {
+    "id": "cp31-1700-17",
+    "title": "Quiz Master",
+    "band": 1700,
+    "index": 17,
+    "url": "https://codeforces.com/problemset/problem/1777/C",
+    "order": 141
+  },
+  {
+    "id": "cp31-1700-18",
+    "title": "SlavicG's Favorite Problem",
+    "band": 1700,
+    "index": 18,
+    "url": "https://codeforces.com/problemset/problem/1760/G",
+    "order": 142
+  },
+  {
+    "id": "cp31-1700-19",
+    "title": "Meta-set",
+    "band": 1700,
+    "index": 19,
+    "url": "https://codeforces.com/problemset/problem/1735/D",
+    "order": 143
+  },
+  {
+    "id": "cp31-1700-20",
+    "title": "Even Subarrays",
+    "band": 1700,
+    "index": 20,
+    "url": "https://codeforces.com/problemset/problem/1731/C",
+    "order": 144
+  },
+  {
+    "id": "cp31-1700-21",
+    "title": "Monoblock",
+    "band": 1700,
+    "index": 21,
+    "url": "https://codeforces.com/problemset/problem/1715/C",
+    "order": 145
+  },
+  {
+    "id": "cp31-1700-22",
+    "title": "Rorororobot",
+    "band": 1700,
+    "index": 22,
+    "url": "https://codeforces.com/problemset/problem/1709/D",
+    "order": 146
+  },
+  {
+    "id": "cp31-1700-23",
+    "title": "Zero Path",
+    "band": 1700,
+    "index": 23,
+    "url": "https://codeforces.com/problemset/problem/1695/C",
+    "order": 147
+  },
+  {
+    "id": "cp31-1700-24",
+    "title": "Gambling",
+    "band": 1700,
+    "index": 24,
+    "url": "https://codeforces.com/problemset/problem/1692/H",
+    "order": 148
+  },
+  {
+    "id": "cp31-1700-25",
+    "title": "Shifting String",
+    "band": 1700,
+    "index": 25,
+    "url": "https://codeforces.com/problemset/problem/1690/F",
+    "order": 149
+  },
+  {
+    "id": "cp31-1700-26",
+    "title": "Road Optimization",
+    "band": 1700,
+    "index": 26,
+    "url": "https://codeforces.com/problemset/problem/1625/C",
+    "order": 150
+  },
+  {
+    "id": "cp31-1700-27",
+    "title": "Training Session",
+    "band": 1700,
+    "index": 27,
+    "url": "https://codeforces.com/problemset/problem/1598/D",
+    "order": 151
+  },
+  {
+    "id": "cp31-1700-28",
+    "title": "The Number of Imposters",
+    "band": 1700,
+    "index": 28,
+    "url": "https://codeforces.com/problemset/problem/1594/D",
+    "order": 152
+  },
+  {
+    "id": "cp31-1700-29",
+    "title": "Moamen and XOR",
+    "band": 1700,
+    "index": 29,
+    "url": "https://codeforces.com/problemset/problem/1557/C",
+    "order": 153
+  },
+  {
+    "id": "cp31-1700-30",
+    "title": "Kavi on Pairing Duty",
+    "band": 1700,
+    "index": 30,
+    "url": "https://codeforces.com/problemset/problem/1528/B",
+    "order": 154
+  },
+  {
+    "id": "cp31-1700-31",
+    "title": "Baby Ehab Partitions Again",
+    "band": 1700,
+    "index": 31,
+    "url": "https://codeforces.com/problemset/problem/1516/C",
+    "order": 155
+  }
+]

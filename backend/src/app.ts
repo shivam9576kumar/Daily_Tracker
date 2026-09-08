@@ -22,6 +22,7 @@ import progressRoutes from './routes/progressRoutes';
 import classesRoutes from './routes/classesRoutes';
 import potdRoutes from './routes/potdRoutes';
 import todoRoutes from './routes/todoRoutes';
+import dailyChallengesRoutes from './routes/dailyChallengesRoutes';
 
 const app = express();
 
@@ -76,6 +77,7 @@ app.use('/api/progress', progressRoutes);
 app.use('/api/classes', classesRoutes);
 app.use('/api/potd', potdRoutes);
 app.use('/api/todo', todoRoutes);
+app.use('/api/daily-challenges', dailyChallengesRoutes);
 
 // ─── Production Static Hosting & SPA Fallback ───
 const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');

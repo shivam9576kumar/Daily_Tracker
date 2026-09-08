@@ -26,6 +26,11 @@ export interface TodoTodayGroups {
   assignments: Assignment[];
 }
 
+export interface TodoDailyChallenges {
+  potd: { enabled: boolean };
+  // Part D adds cp31 here.
+}
+
 export interface TodoResponse {
   timezone: string;
   todayKey: string;
@@ -37,4 +42,5 @@ export interface TodoResponse {
   upcoming: TodoDateGroup[];
   backlog: Task[];
   completed: TodoDateGroup[];
+  dailyChallenges: TodoDailyChallenges;
 }
