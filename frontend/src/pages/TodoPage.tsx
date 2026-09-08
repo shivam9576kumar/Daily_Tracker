@@ -24,7 +24,7 @@ const VALID_VIEWS: TodoView[] = ['inbox', 'today', 'upcoming', 'backlog', 'compl
 const VIEW_META: Record<TodoView, { title: string; description: string }> = {
   inbox: { title: 'Inbox', description: 'Unscheduled personal tasks will live here.' },
   today: { title: 'Today', description: 'Everything that needs your attention today.' },
-  upcoming: { title: 'Upcoming', description: 'Your scheduled work for the next 14 days.' },
+  upcoming: { title: 'Upcoming', description: 'Your scheduled work for the coming days.' },
   backlog: { title: 'Backlog', description: 'Overdue work that still needs to be completed.' },
   completed: { title: 'Completed', description: 'Your recently completed work.' },
 };
@@ -33,15 +33,15 @@ function isTodoView(v: string | null): v is TodoView {
   return v !== null && VALID_VIEWS.includes(v as TodoView);
 }
 
-function groupTitle(g: TodoDateGroup): string {
+function groupHeading(g: TodoDateGroup): string {
   return g.label === 'Today' || g.label === 'Tomorrow' || g.label === 'Yesterday'
-    ? g.label
+    ? `${g.label} · ${formatKey(g.dateKey)}`
     : formatKey(g.dateKey);
 }
 
 export default function TodoPage() {
   const toast = useUIStore((s) => s.toast);
-  const { data, loading, error, fetch } = useTodoStore();
+  const { data, loading, error, fetch, upcomingDays, setUpcomingDays } = useTodoStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [assignmentBusyId, setAssignmentBusyId] = useState<string | null>(null);
@@ -143,7 +143,7 @@ export default function TodoPage() {
     groups.map((g) => (
       <section key={g.dateKey} className="todo-date-group">
         <div className="todo-date-group__header">
-          <h2>{groupTitle(g)}</h2>
+          <h2>{groupHeading(g)}</h2>
           <span>{g.tasks.length + g.assignments.length} {noun}</span>
         </div>
         {renderTasks(g.tasks)}
@@ -212,8 +212,31 @@ export default function TodoPage() {
 
         {activeView === 'upcoming' && (
           <div className="todo-view">
+            <div className="todo-range" role="group" aria-label="Upcoming range">
+              <button
+                type="button"
+                className={`todo-range__btn${upcomingDays === 14 ? ' is-active' : ''}`}
+                aria-pressed={upcomingDays === 14}
+                onClick={() => void setUpcomingDays(14)}
+              >
+                14 days
+              </button>
+              <button
+                type="button"
+                className={`todo-range__btn${upcomingDays === 30 ? ' is-active' : ''}`}
+                aria-pressed={upcomingDays === 30}
+                onClick={() => void setUpcomingDays(30)}
+              >
+                30 days
+              </button>
+            </div>
+
             {data.upcoming.length === 0 ? (
-              <TodoEmpty icon="📆" title="No upcoming work" description="Nothing is currently scheduled in the next 14 days." />
+              <TodoEmpty
+                icon="📆"
+                title="No upcoming work"
+                description={`Nothing is currently scheduled in the next ${data.upcomingDays} days.`}
+              />
             ) : (
               renderDateGroups(data.upcoming, 'items')
             )}
@@ -235,9 +258,31 @@ export default function TodoPage() {
         {activeView === 'completed' && (
           <div className="todo-view">
             {data.completed.length === 0 ? (
-              <TodoEmpty icon="🕊️" title="No recent completions" description="Completed work from the last seven days will appear here." />
+              <TodoEmpty
+                icon="🕊️"
+                title="No recent completions"
+                description="Completed work from the last seven days will appear here."
+              />
             ) : (
-              renderDateGroups(data.completed, 'completed')
+              (() => {
+                const todayGroup = data.completed.filter((g) => g.label === 'Today');
+                const yesterdayGroup = data.completed.filter((g) => g.label === 'Yesterday');
+                const earlier = data.completed.filter(
+                  (g) => g.label !== 'Today' && g.label !== 'Yesterday'
+                );
+                return (
+                  <>
+                    {renderDateGroups(todayGroup, 'completed')}
+                    {renderDateGroups(yesterdayGroup, 'completed')}
+                    {earlier.length > 0 && (
+                      <div className="todo-bucket">
+                        <h2 className="todo-bucket__title">Earlier this week</h2>
+                        {renderDateGroups(earlier, 'completed')}
+                      </div>
+                    )}
+                  </>
+                );
+              })()
             )}
           </div>
         )}

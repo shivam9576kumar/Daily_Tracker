@@ -17,7 +17,16 @@ import type {
   TodoTodayGroups,
 } from './todoTypes';
 
-const UPCOMING_DAYS = 14;
+const UPCOMING_DAYS_DEFAULT = 14;
+const UPCOMING_DAYS_ALLOWED = [14, 30] as const;
+
+export function normalizeUpcomingDays(raw: unknown): number {
+  const n = parseInt(String(raw ?? ''), 10);
+  return (UPCOMING_DAYS_ALLOWED as readonly number[]).includes(n)
+    ? n
+    : UPCOMING_DAYS_DEFAULT;
+}
+
 const COMPLETED_DAYS = 7;
 
 const WEEKDAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -58,9 +67,13 @@ function byTitle(a: { title: string }, b: { title: string }) {
 }
 
 export const todoService = {
-  async getTodo(userId: string, tz: string): Promise<TodoResponse> {
+  async getTodo(
+    userId: string,
+    tz: string,
+    upcomingDays: number = UPCOMING_DAYS_DEFAULT,
+  ): Promise<TodoResponse> {
     const today = todayKey(tz);
-    const upcomingEnd = addDaysToKey(today, UPCOMING_DAYS);
+    const upcomingEnd = addDaysToKey(today, upcomingDays);
     const completedStartKey = addDaysToKey(today, -(COMPLETED_DAYS - 1));
     const completedStart = zonedDayStartUtc(completedStartKey, tz);
     const { end: completedEnd } = zonedDayRangeUtc(today, tz);
@@ -189,6 +202,7 @@ export const todoService = {
       timezone: tz,
       todayKey: today,
       generatedAt: new Date().toISOString(),
+      upcomingDays,
       summary: {
         inbox: 0,
         today: pending.length + dueAssignments.length,

@@ -621,3 +621,69 @@ input.todo-row__check:disabled { cursor: wait; }
   .todo-row__title { white-space: normal; }
 }
 
+/* ================================================================
+   TODO — PART 4: RANGE TOGGLE, STICKY HEADERS, COMPLETED BUCKETS
+   ================================================================ */
+
+/* Segmented range control (Upcoming) */
+.todo-range {
+  display: inline-flex;
+  gap: 4px;
+  margin-top: 16px;
+  padding: 4px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+}
+
+.todo-range__btn {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font: 600 13px/1 var(--font-sans);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.todo-range__btn:hover { color: var(--text-primary); }
+
+.todo-range__btn.is-active {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.todo-range__btn:focus-visible { outline: 0; box-shadow: var(--focus-ring); }
+
+/* Sticky date-group headers */
+.todo-date-group__header {
+  position: sticky;
+  top: 64px;                       /* below the 64px TopBar */
+  z-index: 5;
+  background: var(--bg-page);
+}
+
+/* Completed "Earlier this week" bucket */
+.todo-bucket { padding-top: 24px; }
+
+.todo-bucket__title {
+  margin: 0 0 2px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-strong);
+  font: 700 13px/1.4 var(--font-sans);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.todo-bucket .todo-date-group { padding-top: 16px; }
+.todo-bucket .todo-date-group + .todo-date-group { border-top: 1px solid var(--border); }
+
+@media (max-width: 768px) {
+  .todo-date-group__header { top: 60px; }  /* mobile TopBar height */
+}
+

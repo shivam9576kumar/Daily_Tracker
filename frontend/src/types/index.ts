@@ -413,6 +413,7 @@ export interface TodoResponse {
   timezone: string;
   todayKey: string;
   generatedAt: string;
+  upcomingDays: number;
   summary: TodoSummary;
   inbox: Task[];
   today: TodoTodayGroups;
