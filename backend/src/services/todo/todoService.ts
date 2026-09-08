@@ -92,18 +92,13 @@ export const todoService = {
     }
 
     const cp31State = await cp31Service.ensureCp31TasksForUser(userId, tz);
+    const skippedTasks = await cp31Service.listSkippedCp31(userId, cp31State.band ?? undefined);
 
     const cp31Meta: DailyChallengeMeta['cp31'] = {
-      enabled: cp31State.enabled,
-      band: cp31State.band,
-      dailyCount: cp31State.dailyCount,
-      solvedInBand: cp31State.solvedInBand,
-      bandSize: cp31State.bandSize,
-      quotaDoneToday: cp31State.quotaDoneToday,
-      extrasUsedToday: cp31State.extrasUsedToday,
-      extrasCap: cp31State.extrasCap,
-      bandStatus: cp31State.bandStatus,
-      skippedCount: cp31State.skippedInBand,
+      ...cp31State,
+      bandStatus: cp31State.bandStatus === 'complete-awaiting-confirm' ? 'complete' : cp31State.bandStatus,
+      nextIndex: (cp31State.pendingCount > 0 && !cp31State.quotaDoneToday) ? null : cp31State.nextIndex,
+      skippedCount: skippedTasks.length,
     };
 
     // ── 2. Queries ──

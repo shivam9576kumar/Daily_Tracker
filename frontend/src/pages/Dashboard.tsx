@@ -68,6 +68,9 @@ export default function Dashboard() {
   const { streak, coins, backlog } = data.statusOverview;
   const potdEnabled = data.dailyChallenges?.potd.enabled ?? data.potdStreak?.enabled ?? true;
   const potdStreak = potdEnabled ? (data.potdStreak?.currentStreak ?? 0) : 0;
+  const cp31Streak = (data?.cp31Streak?.enabled || data?.dailyChallenges?.cp31?.enabled)
+    ? (data?.cp31Streak?.currentStreak ?? 0)
+    : 0;
   const pending = data.todaysHitlist.pending.length;
   const completed = data.todaysHitlist.completed.length;
   const assignmentsDueToday = (data.pendingAssignments ?? []).filter(
@@ -136,6 +139,11 @@ export default function Dashboard() {
         {potdStreak > 0 && (
           <span className="ov-stat" role="listitem" title="POTD streak">
             ⚡ POTD ×<strong className="num">{potdStreak}</strong>
+          </span>
+        )}
+        {cp31Streak > 0 && (
+          <span className="ov-stat" role="listitem" title="CP31 streak">
+            ⚔️ CP31 ×<strong className="num">{cp31Streak}</strong>
           </span>
         )}
       </div>

@@ -38,8 +38,13 @@ export interface DailyChallengeMeta {
     quotaDoneToday: boolean;
     extrasUsedToday: number;
     extrasCap: number;
-    bandStatus: 'none' | 'active' | 'complete-awaiting-confirm';
+    canOneMore: boolean;
+    bandStatus: 'none' | 'active' | 'complete' | 'complete-awaiting-confirm';
+    nextIndex: number | null;
+    nextBand: number | null;
     skippedCount: number;
+    solvedToday?: number;
+    pendingCount?: number;
   };
 }
 

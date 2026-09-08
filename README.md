@@ -73,12 +73,13 @@ Mastering Data Structures & Algorithms for technical interviews requires consist
 
 ### ⚔️ 8. Daily Challenges & Codeforces CP31 Ladders
 > **Daily Challenges:** Opt-in LeetCode POTD and Codeforces CP31 ladders with spaced repetition, streaks, and "One More" logic.
-- **Codeforces CP31 Rating Ladders (1300–1700 Bands)**: Structured 31-problem ladders per rating band.
+- **Codeforces CP31 Rating Ladders (1300–1700 Bands)**: Structured 31-problem ladders per rating band (1300–1700 × 31, one rung a day, +3 extras, pauses on miss, confirm-to-advance).
+- **Daily Challenge Opt-ins**: Dedicated toggle popover for POTD and CP31 opt-ins. Disabling POTD removes today's unsolved rows; disabling CP31 parks pending rungs (null keys, notes kept).
 - **Option B Pausing**: Ladder pauses on unsolved problems and carries over to today without cluttering backlog or expiring.
-- **Daily Quota & "One More" Logic**: Daily quota (1–3 problems/day) with up to 3 extra rungs per day via "+ One More".
-- **Ladder Skips & Resumes**: Skip stuck rungs to continue progress; retry skipped problems anytime.
-- **Per-Band Memory & Confirm-to-Advance**: Switch between bands with progress saved; celebrate band completion with confetti and confirm-to-advance to next rating.
-- **POTD State Machine**: Toggle POTD on/off anytime; disabling cleanly removes pending rungs while preserving solved history and streak.
+- **Daily Quota & "One More" Logic**: Daily quota (1–3 problems/day) with up to 3 extra rungs per day via "+ One More" (at cap: disabled + "Great session. Come back tomorrow.").
+- **Ladder Skips & Resumes**: Skip stuck rungs to advance the ladder (0 coins, revisitable); retry skipped problems from collapsible "Skipped (n)".
+- **Per-Band Memory & Confirm-to-Advance**: Switch between bands with progress saved; celebrate band completion with trophy ceremony and confirm-to-advance to next rating ("Start next band" / "Not now").
+- **Task Types & Statuses**: Task types: `new | revision | potd | personal | cp31`. Statuses: `pending | completed | backlog | skipped` (`skipped` for CP31 only).
 
 ---
 
@@ -225,11 +226,14 @@ npm --prefix frontend run dev
 | **Todo** | `GET` | `/api/todo?upcomingDays=14\|30` | Aggregated Todo workspace (today groups, upcoming, backlog, completed, inbox, counts) |
 | | `POST` | `/api/todo/tasks` | Create personal task (null date = Inbox) |
 | | `PATCH` | `/api/todo/tasks/:id` | Edit personal task title / schedule / unschedule |
-| **Daily Challenges** | `GET` | `/api/daily-challenges/settings` | Get user's POTD/CP31 settings |
-| | `PATCH` | `/api/daily-challenges/settings` | Update toggles, CP31 band, daily count |
-| | `POST` | `/api/daily-challenges/cp31/one-more` | Serve an extra CP31 problem (cap 3/day) |
-| | `POST` | `/api/daily-challenges/cp31/skip/:taskId` | Skip a CP31 problem (advances ladder) |
-| | `POST` | `/api/daily-challenges/cp31/advance-band` | Move to the next rating band |
+| **Daily Challenges** | `GET` | `/api/daily-challenges/settings` | POTD/CP31 opt-ins, band, daily count, available bands |
+| | `PATCH` | `/api/daily-challenges/settings` | Update opt-ins. POTD off → today's unsolved removed; CP31 off / band change → pending parked (notes kept) |
+| | `POST` | `/api/daily-challenges/cp31/one-more` | Serve one extra rung after today's quota (max 3/day) |
+| | `POST` | `/api/daily-challenges/cp31/skip/:taskId` | Skip a pending rung — ladder advances, no coins, revisitable |
+| | `POST` | `/api/daily-challenges/cp31/retry/:taskId` | Bring a skipped rung back to Today (current band) |
+| | `GET` | `/api/daily-challenges/cp31/skipped` | Skipped rungs in the current band |
+| | `POST` | `/api/daily-challenges/cp31/advance-band` | Confirm the next band (only when the current band is complete) |
+| | `GET` | `/api/daily-challenges/cp31/streak` | CP31 streak (derive-on-read; ≥1 solve/day) |
 | **Progress** | `GET` | `/api/v1/progress/heatmap` | Get 365-day solved contribution heatmap data |
 | | `GET` | `/api/v1/progress/topics` | Get topic progress percentages & difficulty stats |
 | | `GET` | `/api/v1/progress/activity` | Get recent activity log |

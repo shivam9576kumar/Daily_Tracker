@@ -5,6 +5,8 @@ import { streakService } from '../progress/streakService';
 import { classesService } from '../classes/classesService';
 import { ensurePotdTaskForUser } from '../potd/potdService';
 import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakService';
+import { ensureCp31TasksForUser, emptyCp31State, listSkippedCp31, type Cp31State } from '../cp31/cp31Service';
+import { computeCp31Streak, type Cp31StreakResult } from '../cp31/cp31StreakService';
 
 /**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
@@ -39,12 +41,26 @@ export const dashboardService = {
       });
     }
 
+    let cp31State: Cp31State = emptyCp31State();
+    let cp31Streak: Cp31StreakResult | null = null;
+    let cp31SkippedCount = 0;
+    try {
+      cp31State = await ensureCp31TasksForUser(userId, tz);
+      cp31Streak = await computeCp31Streak(userId, tz);
+      const skipped = await listSkippedCp31(userId, cp31State.band ?? undefined);
+      cp31SkippedCount = skipped.length;
+    } catch (err) {
+      logger.warn('dashboardService: CP31 ensure/streak failed, continuing', {
+        message: (err as Error)?.message,
+      });
+    }
+
     // Run queries in small batches to stay well under the pool size limit (15)
     const [todaysTasks, totalQuestions, user, activePlan] = await Promise.all([
       taskRepository.getTodaysTasks(userId, tz, ensuredPotd.potd?.dateKey ?? null),
-      // Total unique problems actually solved (new tasks + potd, not revisions)
+      // Total unique problems actually solved (new tasks + potd + cp31, not revisions)
       prisma.task.count({
-        where: { userId, taskType: { in: ['new', 'potd'] }, status: 'completed' },
+        where: { userId, taskType: { in: ['new', 'potd', 'cp31'] }, status: 'completed' },
       }),
       prisma.user.findUnique({
         where: { id: userId },
@@ -116,7 +132,11 @@ export const dashboardService = {
       classes: classesForWeek,
       potd: potdMeta,
       potdStreak,
-      dailyChallenges: { potd: { enabled: ensuredPotd.enabled } },
+      dailyChallenges: {
+        potd: { enabled: ensuredPotd.enabled },
+        cp31: { ...cp31State, skippedCount: cp31SkippedCount },
+      },
+      cp31Streak,
     };
   },
 };

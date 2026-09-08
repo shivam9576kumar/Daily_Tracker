@@ -34,10 +34,11 @@ export const topicProgressService = {
 
     const topicMap = new Map<string, TopicProgressItem>();
     for (const row of byTopic) {
-      const item = topicMap.get(row.topic) ?? { topic: row.topic, total: 0, solved: 0, percent: 0 };
+      const topicName = row.topic.startsWith('CF ') || row.topic === 'CF' ? 'Codeforces' : row.topic;
+      const item = topicMap.get(topicName) ?? { topic: topicName, total: 0, solved: 0, percent: 0 };
       item.total += row._count._all;
       if (row.status === 'completed') item.solved += row._count._all;
-      topicMap.set(row.topic, item);
+      topicMap.set(topicName, item);
     }
     const topics = Array.from(topicMap.values())
       .map((t) => ({ ...t, percent: t.total ? Math.round((t.solved / t.total) * 100) : 0 }))

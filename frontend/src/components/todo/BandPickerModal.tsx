@@ -58,7 +58,7 @@ export default function BandPickerModal({ open, onClose, resumeBand }: Props) {
                 disabled={saving}
                 onClick={() => void handleResume()}
               >
-                Resume Band {resumeBand}
+                Resume from Band {resumeBand}
               </button>
               <button
                 type="button"
@@ -66,7 +66,7 @@ export default function BandPickerModal({ open, onClose, resumeBand }: Props) {
                 disabled={saving}
                 onClick={() => setPicking(true)}
               >
-                Change Band
+                Start a different band…
               </button>
             </div>
           </>

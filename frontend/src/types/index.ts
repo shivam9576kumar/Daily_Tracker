@@ -123,11 +123,24 @@ export interface DailyChallengeSettingsPatch {
 
 export interface DailyChallengeSettingsResponse {
   settings: DailyChallengeSettings;
-  changes: { potdUnsolvedRemoved: number };
+  changes: {
+    potdUnsolvedRemoved: number;
+    cp31PendingParked: number;
+    cp31PendingRemoved?: number;
+  };
 }
 
 export interface TodoDailyChallenges {
   potd: { enabled: boolean };
+}
+
+export interface Cp31StreakResult {
+  enabled: boolean;
+  currentStreak: number;
+  longestStreak: number;
+  lastSolvedDateKey: string | null;
+  solvedToday: boolean;
+  totalSolved: number;
 }
 
 export interface DashboardData {
@@ -143,7 +156,8 @@ export interface DashboardData {
   classes: ClassRow[];
   potd?: { dateKey: string; stale: boolean } | null;
   potdStreak?: PotdStreak | null;
-  dailyChallenges?: TodoDailyChallenges;
+  cp31Streak?: Cp31StreakResult | null;
+  dailyChallenges?: DailyChallengeMeta;
 }
 
 export interface CreateTaskPayload {
@@ -454,7 +468,10 @@ export interface DailyChallengeMeta {
     quotaDoneToday: boolean;
     extrasUsedToday: number;
     extrasCap: number;
-    bandStatus: 'none' | 'active' | 'complete-awaiting-confirm';
+    canOneMore?: boolean;
+    bandStatus: 'none' | 'active' | 'complete' | 'complete-awaiting-confirm';
+    nextIndex?: number | null;
+    nextBand?: number | null;
     skippedCount: number;
   };
 }

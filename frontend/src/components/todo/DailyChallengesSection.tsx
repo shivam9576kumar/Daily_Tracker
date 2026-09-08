@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import type { DailyChallengeMeta, Rating, Task } from '../../types';
 import { useTodoStore } from '../../store/todoStore';
 import { useUIStore } from '../../store/uiStore';
+import { dailyChallengesApi } from '../../services/dailyChallengesApi';
 import { getErrorMessage } from '../../services/api';
 import TodoTaskRow from './TodoTaskRow';
 import './todo.css';
@@ -19,7 +21,11 @@ export default function DailyChallengesSection({
 }: Props) {
   const { data } = useTodoStore();
   const toast = useUIStore((s) => s.toast);
-  const { cp31OneMore, cp31Skip, cp31AdvanceBand } = useTodoStore();
+  const { cp31OneMore, cp31Skip, cp31Retry, cp31AdvanceBand } = useTodoStore();
+  const [celebrationDismissed, setCelebrationDismissed] = useState(false);
+  const [skippedOpen, setSkippedOpen] = useState(false);
+  const [skippedTasks, setSkippedTasks] = useState<Task[]>([]);
+  const [loadingSkipped, setLoadingSkipped] = useState(false);
 
   if (!data) return null;
 
@@ -29,7 +35,7 @@ export default function DailyChallengesSection({
   // Don't render anything if CP31 is not enabled
   if (!cp31.enabled || !cp31.band) return null;
 
-  const isBandComplete = cp31.bandStatus === 'complete-awaiting-confirm';
+  const isBandComplete = cp31.bandStatus === 'complete' || cp31.bandStatus === 'complete-awaiting-confirm';
   const progressPct = cp31.bandSize > 0
     ? Math.round((cp31.solvedInBand / cp31.bandSize) * 100)
     : 0;
@@ -52,12 +58,35 @@ export default function DailyChallengesSection({
     }
   };
 
+  const handleRetry = async (taskId: string) => {
+    try {
+      await cp31Retry(taskId);
+      setSkippedTasks((prev) => prev.filter((t) => t.id !== taskId));
+      toast('Problem restored to Today', 'success');
+    } catch (err) {
+      toast(getErrorMessage(err), 'error');
+    }
+  };
+
   const handleAdvance = async () => {
     try {
       await cp31AdvanceBand();
-      toast(`Advanced to Band ${(cp31.band ?? 0) + 100}!`, 'success');
+      toast(`Advanced to Band ${(cp31.nextBand ?? ((cp31.band ?? 0) + 100))}!`, 'success');
     } catch (err) {
       toast(getErrorMessage(err), 'error');
+    }
+  };
+
+  const toggleSkipped = () => {
+    const next = !skippedOpen;
+    setSkippedOpen(next);
+    if (next && skippedTasks.length === 0) {
+      setLoadingSkipped(true);
+      dailyChallengesApi
+        .getSkipped()
+        .then((tasks) => setSkippedTasks(tasks))
+        .catch((err) => toast(getErrorMessage(err), 'error'))
+        .finally(() => setLoadingSkipped(false));
     }
   };
 
@@ -81,7 +110,7 @@ export default function DailyChallengesSection({
       </div>
 
       {/* Band Complete Celebration */}
-      {isBandComplete ? (
+      {isBandComplete && !celebrationDismissed ? (
         <div className="cp31-band-complete">
           <div className="cp31-band-complete__trophy" aria-hidden="true">🏆</div>
           <h3 className="cp31-band-complete__title">
@@ -96,7 +125,14 @@ export default function DailyChallengesSection({
               className="btn-primary"
               onClick={() => void handleAdvance()}
             >
-              Start Band {(cp31.band ?? 0) + 100}
+              Start {cp31.nextBand ? `Band ${cp31.nextBand}` : 'next band'}
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => setCelebrationDismissed(true)}
+            >
+              Not now
             </button>
           </div>
         </div>
@@ -124,14 +160,14 @@ export default function DailyChallengesSection({
             </div>
           )}
 
-          {cp31Tasks.length === 0 && !cp31.quotaDoneToday && (
+          {cp31Tasks.length === 0 && !cp31.quotaDoneToday && !isBandComplete && (
             <p className="cp31-section__empty">
               No CP31 tasks for today. All caught up!
             </p>
           )}
 
           {/* One More Button */}
-          {cp31.quotaDoneToday && (
+          {cp31.quotaDoneToday && !isBandComplete && (
             <div className="cp31-one-more">
               <button
                 type="button"
@@ -140,9 +176,44 @@ export default function DailyChallengesSection({
                 onClick={() => void handleOneMore()}
               >
                 {cp31.extrasUsedToday >= cp31.extrasCap
-                  ? '✓ Great session — come back tomorrow'
-                  : `+ One More (${cp31.extrasUsedToday}/${cp31.extrasCap})`}
+                  ? 'Great session. Come back tomorrow.'
+                  : `+ One more (${cp31.extrasUsedToday}/${cp31.extrasCap})`}
               </button>
+            </div>
+          )}
+
+          {/* Skipped Collapsible */}
+          {(cp31.skippedCount ?? 0) > 0 && (
+            <div className="cp31-skipped">
+              <button
+                type="button"
+                className="cp31-skipped__toggle"
+                onClick={toggleSkipped}
+              >
+                <span className="cp31-skipped__toggle-text">
+                  {skippedOpen ? '▼' : '▶'} Skipped ({cp31.skippedCount})
+                </span>
+              </button>
+              {skippedOpen && (
+                <div className="cp31-skipped__list">
+                  {loadingSkipped ? (
+                    <div className="cp31-skipped__loading">Loading…</div>
+                  ) : (
+                    skippedTasks.map((st) => (
+                      <div key={st.id} className="cp31-skipped__row">
+                        <span className="cp31-skipped__title">{st.title}</span>
+                        <button
+                          type="button"
+                          className="btn-secondary btn-sm"
+                          onClick={() => void handleRetry(st.id)}
+                        >
+                          Retry
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
             </div>
           )}
         </>

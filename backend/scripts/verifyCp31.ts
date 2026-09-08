@@ -139,11 +139,11 @@ async function main() {
     const t1400 = await prisma.task.findFirst({ where: { userId: uid, cp31ProblemId: 'cp31-1400-01' } });
     check('advance → 1400, serves cp31-1400-01', nb === 1400 && s8.band === 1400 && t1400?.status === 'pending');
 
-    // 10. Disable → pending removed, history intact, coins unchanged
+    // 10. Disable → pending removed/parked, history intact, coins unchanged
     const off = await dailyChallengeSettingsService.update(uid, { cp31Enabled: false });
     const s9 = await ensureCp31TasksForUser(uid, TZ);
     check('disable removes 1 pending, ensure off, coins same',
-      off.changes.cp31PendingRemoved === 1 && !s9.enabled && (await cp31({ status: 'pending' })).length === 0 && (await coinsOf(uid)) === expectedCoins);
+      off.changes.cp31PendingRemoved === 1 && !s9.enabled && (await cp31({ status: 'pending', scheduledDateKey: { not: null } })).length === 0 && (await coinsOf(uid)) === expectedCoins);
     check('completed + skipped rows survive disable', (await cp31({ status: 'completed' })).length === 6 && (await cp31({ status: 'skipped' })).length === rest.length);
 
     // 11. Re-enable same band → resume re-serves cp31-1400-01

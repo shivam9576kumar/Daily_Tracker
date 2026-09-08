@@ -58,6 +58,9 @@ export default function TodoTaskRow({
     if (task.problemUrl) window.open(task.problemUrl, '_blank', 'noopener,noreferrer');
   };
 
+  const cp31Match = task.cp31ProblemId ? task.cp31ProblemId.match(/^cp31-(\d+)-(\d+)$/) : null;
+  const cp31Label = cp31Match ? `CP31 · ${cp31Match[1]} #${parseInt(cp31Match[2], 10)}` : 'CP31';
+
   return (
     <div
       className={cls}
@@ -101,7 +104,7 @@ export default function TodoTaskRow({
         <div className="todo-row__meta">
           {isRevision && <RevisionBadge revisionNumber={task.revisionNumber} />}
           {isPotd && <span className="todo-row__potd">POTD</span>}
-          {isCp31 && <span className="todo-row__cp31-badge">CP31</span>}
+          {isCp31 && <span className="todo-row__cp31-badge">{cp31Label}</span>}
           {skipped && <span className="todo-row__skipped-badge">Skipped</span>}
           {isPersonal ? (
             <span className="todo-row__topic">Personal</span>

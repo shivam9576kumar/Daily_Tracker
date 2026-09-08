@@ -23,7 +23,8 @@ export interface DailyChallengeSettingsPatch {
 export interface SettingsChangeReport {
   /** Unsolved POTD rows deleted because POTD was turned off in this call. */
   potdUnsolvedRemoved: number;
-  cp31PendingRemoved: number;
+  cp31PendingParked: number;
+  cp31PendingRemoved?: number;
 }
 
 const FIELDS = {
@@ -103,8 +104,8 @@ export const dailyChallengeSettingsService = {
     const changes = await prisma.$transaction(async (tx) => {
       await tx.user.update({ where: { id: userId }, data: next });
       const potdUnsolvedRemoved = potdTurningOff ? await removeUnsolvedPotdTasks(userId, tx) : 0;
-      const cp31PendingRemoved = (cp31TurningOff || cp31BandChanged) ? await removeUnsolvedCp31Tasks(userId, tx) : 0;
-      return { potdUnsolvedRemoved, cp31PendingRemoved };
+      const cp31PendingParked = (cp31TurningOff || cp31BandChanged) ? await removeUnsolvedCp31Tasks(userId, tx) : 0;
+      return { potdUnsolvedRemoved, cp31PendingParked, cp31PendingRemoved: cp31PendingParked };
     });
 
     return { settings: await this.get(userId), changes };

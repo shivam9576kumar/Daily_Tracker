@@ -10,7 +10,7 @@ export default function DailyChallengesMenu() {
   const ref = useRef<HTMLDivElement>(null);
   const {
     settings, loading, saving, error,
-    fetch, setPotdEnabled, disableCp31,
+    fetch, setPotdEnabled, disableCp31, setCp31DailyCount,
   } = useDailyChallengesStore();
 
   useEffect(() => {
@@ -36,6 +36,7 @@ export default function DailyChallengesMenu() {
   const potdOn = settings?.potdEnabled ?? true;
   const cp31On = settings?.cp31Enabled ?? false;
   const cp31Band = settings?.cp31Band ?? null;
+  const cp31DailyCount = settings?.cp31DailyCount ?? 1;
 
   const handleCp31Toggle = () => {
     if (cp31On) {
@@ -101,12 +102,19 @@ export default function DailyChallengesMenu() {
                 <span className="dc-row__name">
                   Codeforces CP31
                   {cp31On && cp31Band && (
-                    <span className="dc-row__band-chip">Band {cp31Band}</span>
+                    <button
+                      type="button"
+                      className="dc-row__band-chip"
+                      onClick={() => { setResumeBand(null); setBandPickerOpen(true); setOpen(false); }}
+                      title="Click to change band"
+                    >
+                      Band {cp31Band} · Change
+                    </button>
                   )}
                 </span>
                 <span className="dc-row__desc">
                   {cp31On
-                    ? `Solving Band ${cp31Band} — ${settings?.cp31DailyCount ?? 1}/day`
+                    ? `Solving Band ${cp31Band} — ${cp31DailyCount}/day`
                     : 'Off — 31-problem rating ladders from Codeforces.'}
                 </span>
               </div>
@@ -122,6 +130,34 @@ export default function DailyChallengesMenu() {
                 <span className="dc-switch__thumb" aria-hidden="true" />
               </button>
             </div>
+
+            {/* Daily Count Stepper (when CP31 enabled) */}
+            {cp31On && (
+              <div className="dc-stepper">
+                <span className="dc-stepper__label">Daily problems:</span>
+                <div className="dc-stepper__controls">
+                  <button
+                    type="button"
+                    className="dc-stepper__btn"
+                    disabled={loading || saving || cp31DailyCount <= 1}
+                    onClick={() => void setCp31DailyCount(Math.max(1, cp31DailyCount - 1))}
+                    aria-label="Decrease daily count"
+                  >
+                    −
+                  </button>
+                  <span className="dc-stepper__value">{cp31DailyCount}</span>
+                  <button
+                    type="button"
+                    className="dc-stepper__btn"
+                    disabled={loading || saving || cp31DailyCount >= 3}
+                    onClick={() => void setCp31DailyCount(Math.min(3, cp31DailyCount + 1))}
+                    aria-label="Increase daily count"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
 
             {error && <p className="dc-menu__error">{error}</p>}
             <p className="dc-menu__note">

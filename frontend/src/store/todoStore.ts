@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { todoApi, type UpcomingRange } from '../services/todoApi';
+import { dailyChallengesApi } from '../services/dailyChallengesApi';
 import { getErrorMessage } from '../services/api';
 import type { TodoResponse } from '../types';
 
@@ -12,6 +13,7 @@ interface TodoState {
   setUpcomingDays: (days: UpcomingRange) => Promise<void>;
   cp31OneMore: () => Promise<void>;
   cp31Skip: (taskId: string) => Promise<void>;
+  cp31Retry: (taskId: string) => Promise<void>;
   cp31AdvanceBand: () => Promise<void>;
 }
 
@@ -39,7 +41,7 @@ export const useTodoStore = create<TodoState>((set, get) => ({
 
   cp31OneMore: async () => {
     try {
-      await todoApi.cp31OneMore();
+      await dailyChallengesApi.oneMore();
       await get().fetch(true);
     } catch (err) {
       throw err;
@@ -48,7 +50,16 @@ export const useTodoStore = create<TodoState>((set, get) => ({
 
   cp31Skip: async (taskId: string) => {
     try {
-      await todoApi.cp31Skip(taskId);
+      await dailyChallengesApi.skip(taskId);
+      await get().fetch(true);
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  cp31Retry: async (taskId: string) => {
+    try {
+      await dailyChallengesApi.retry(taskId);
       await get().fetch(true);
     } catch (err) {
       throw err;
@@ -57,7 +68,7 @@ export const useTodoStore = create<TodoState>((set, get) => ({
 
   cp31AdvanceBand: async () => {
     try {
-      await todoApi.cp31AdvanceBand();
+      await dailyChallengesApi.advanceBand();
       await get().fetch(true);
     } catch (err) {
       throw err;

@@ -27,7 +27,10 @@
     "cp31:validate": "tsx scripts/validateCp31Sheet.ts",
     "verify:potd-toggle": "tsx scripts/verifyPotdToggle.ts",
     "verify:cp31": "tsx scripts/verifyCp31.ts",
-    "verify:part-d": "tsx scripts/verifyPartD.ts"
+    "verify:part-d": "tsx scripts/verifyPartD.ts",
+    "verify:daily-challenges": "tsx scripts/verifyDailyChallengesE2E.ts",
+    "fuzz:coins": "tsx scripts/fuzzCoinInvariant.ts",
+    "verify:all": "npm run cp31:validate && npm run verify:todo && npm run verify:potd-toggle && npm run verify:cp31 && npm run verify:daily-challenges && npm run fuzz:coins -- --steps=300"
   },
   "dependencies": {
     "@dsa-planner/shared": "*",
