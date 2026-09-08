@@ -4,6 +4,7 @@ import LoginPage from '../components/auth/LoginPage';
 import AuthCallback from '../components/auth/AuthCallback';
 import AppLayout from '../components/layout/AppLayout';
 import Dashboard from '../pages/Dashboard';
+import TodoPage from '../pages/TodoPage';
 import RoadmapPage from '../pages/RoadmapPage';
 import ProgressPage from '../pages/ProgressPage';
 import StudySlotsPage from '../pages/StudySlotsPage';
@@ -30,6 +31,7 @@ export default function AppRoutes() {
           }
         >
           <Route path="/" element={<Dashboard />} />
+          <Route path="/todo" element={<TodoPage />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/study-slots" element={<StudySlotsPage />} />

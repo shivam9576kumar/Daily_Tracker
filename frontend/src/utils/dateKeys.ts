@@ -42,3 +42,10 @@ export function formatShortDate(dateOrKey: string | Date): string {
   const date = typeof dateOrKey === 'string' ? new Date(dateOrKey) : dateOrKey;
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
+
+/** Add calendar days to a logical YYYY-MM-DD key without DST drift. */
+export function addDaysToKey(key: string, days: number): string {
+  const date = new Date(`${key}T00:00:00.000Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
