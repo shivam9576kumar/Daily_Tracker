@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import TodoSidebar, { type TodoCounts, type TodoView } from '../components/todo/TodoSidebar';
-import TaskRow from '../components/dashboard/TaskRow';
+import TodoHeader from '../components/todo/TodoHeader';
+import TodoSection from '../components/todo/TodoSection';
+import TodoTaskRow from '../components/todo/TodoTaskRow';
+import TodoAssignmentRow from '../components/todo/TodoAssignmentRow';
+import TodoCompletedSection from '../components/todo/TodoCompletedSection';
+import TodoEmpty from '../components/todo/TodoEmpty';
 import TaskDrawer from '../components/task/TaskDrawer';
 import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
@@ -32,57 +37,6 @@ function groupTitle(g: TodoDateGroup): string {
   return g.label === 'Today' || g.label === 'Tomorrow' || g.label === 'Yesterday'
     ? g.label
     : formatKey(g.dateKey);
-}
-
-function TodoSection({
-  title, count, tone, children,
-}: { title: string; count: number; tone?: 'default' | 'warning' | 'brand'; children: ReactNode }) {
-  if (count === 0) return null;
-  return (
-    <section className={`todo-section todo-section--${tone ?? 'default'}`}>
-      <div className="todo-section__header">
-        <h2 className="todo-section__title">{title}</h2>
-        <span className="todo-section__count">{count}</span>
-      </div>
-      {children}
-    </section>
-  );
-}
-
-function AssignmentRow({
-  assignment, busy, onToggle,
-}: { assignment: Assignment; busy: boolean; onToggle: (a: Assignment) => void }) {
-  const completed = assignment.status === 'completed';
-  const dueKey = assignment.deadline?.slice(0, 10);
-  return (
-    <div className={`todo-assignment${completed ? ' is-completed' : ''}`}>
-      <input
-        type="checkbox"
-        className="todo-assignment__check"
-        checked={completed}
-        disabled={busy}
-        aria-label={completed ? `Reopen ${assignment.title}` : `Complete ${assignment.title}`}
-        onChange={() => onToggle(assignment)}
-      />
-      <div className="todo-assignment__body">
-        <span className="todo-assignment__title">{assignment.title}</span>
-        <div className="todo-assignment__meta">
-          <span>Assignment</span>
-          {dueKey && <span>Due {formatKey(dueKey)}</span>}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function EmptyView({ icon, title, description }: { icon: string; title: string; description: string }) {
-  return (
-    <div className="todo-empty">
-      <span className="todo-empty__icon" aria-hidden="true">{icon}</span>
-      <h2 className="todo-empty__title">{title}</h2>
-      <p className="todo-empty__description">{description}</p>
-    </div>
-  );
 }
 
 export default function TodoPage() {
@@ -129,7 +83,7 @@ export default function TodoPage() {
     [assignmentBusyId, fetch, toast]
   );
 
-  // ── all hooks above this line ──
+  // ── all hooks above ──
 
   if (loading && !data) {
     return <div className="todo-loading"><Spinner large /></div>;
@@ -159,7 +113,7 @@ export default function TodoPage() {
   const renderTasks = (tasks: Task[]) => (
     <div className="todo-task-list">
       {tasks.map((t) => (
-        <TaskRow
+        <TodoTaskRow
           key={t.id}
           task={t}
           busy={actions.busyId === t.id}
@@ -173,9 +127,9 @@ export default function TodoPage() {
   );
 
   const renderAssignments = (items: Assignment[]) => (
-    <div className="todo-assignment-list">
+    <div className="todo-task-list">
       {items.map((a) => (
-        <AssignmentRow
+        <TodoAssignmentRow
           key={a.id}
           assignment={a}
           busy={assignmentBusyId === a.id}
@@ -201,20 +155,15 @@ export default function TodoPage() {
   const todayPendingTotal =
     t.backlog.length + t.plan.length + t.potd.length + t.revisions.length + t.manual.length;
   const meta = VIEW_META[activeView];
+  const headerDescription =
+    activeView === 'today' ? `${formatKey(data.todayKey)} · ${meta.description}` : meta.description;
 
   return (
     <div className="todo-page">
       <TodoSidebar activeView={activeView} counts={counts} onChange={setActiveView} />
 
       <main className="todo-main">
-        <header className="todo-header">
-          <div>
-            <h1 className="todo-header__title">{meta.title}</h1>
-            <p className="todo-header__description">
-              {activeView === 'today' ? `${formatKey(data.todayKey)} · ${meta.description}` : meta.description}
-            </p>
-          </div>
-        </header>
+        <TodoHeader title={meta.title} description={headerDescription} />
 
         {error && (
           <div className="todo-inline-error" role="status">
@@ -223,7 +172,7 @@ export default function TodoPage() {
         )}
 
         {activeView === 'inbox' && (
-          <EmptyView
+          <TodoEmpty
             icon="📥"
             title="No inbox tasks yet"
             description="Personal task capture will be added in Part 5."
@@ -252,25 +201,19 @@ export default function TodoPage() {
             </TodoSection>
 
             {todayPendingTotal === 0 && t.assignments.length === 0 && t.completed.length === 0 && (
-              <EmptyView icon="🌤️" title="Nothing due today" description="Your study list is clear for today." />
+              <TodoEmpty icon="🌤️" title="Nothing due today" description="Your study list is clear for today." />
             )}
 
-            {t.completed.length > 0 && (
-              <details className="todo-completed-details">
-                <summary>
-                  <span>Completed Today</span>
-                  <span className="todo-section__count">{t.completed.length}</span>
-                </summary>
-                <div className="todo-completed-details__body">{renderTasks(t.completed)}</div>
-              </details>
-            )}
+            <TodoCompletedSection count={t.completed.length}>
+              {renderTasks(t.completed)}
+            </TodoCompletedSection>
           </div>
         )}
 
         {activeView === 'upcoming' && (
           <div className="todo-view">
             {data.upcoming.length === 0 ? (
-              <EmptyView icon="📆" title="No upcoming work" description="Nothing is currently scheduled in the next 14 days." />
+              <TodoEmpty icon="📆" title="No upcoming work" description="Nothing is currently scheduled in the next 14 days." />
             ) : (
               renderDateGroups(data.upcoming, 'items')
             )}
@@ -280,7 +223,7 @@ export default function TodoPage() {
         {activeView === 'backlog' && (
           <div className="todo-view">
             {data.backlog.length === 0 ? (
-              <EmptyView icon="✅" title="Backlog is clear" description="You have no overdue study tasks." />
+              <TodoEmpty icon="✅" title="Backlog is clear" description="You have no overdue study tasks." />
             ) : (
               <TodoSection title="Needs Attention" count={data.backlog.length} tone="warning">
                 {renderTasks(data.backlog)}
@@ -292,7 +235,7 @@ export default function TodoPage() {
         {activeView === 'completed' && (
           <div className="todo-view">
             {data.completed.length === 0 ? (
-              <EmptyView icon="🕊️" title="No recent completions" description="Completed work from the last seven days will appear here." />
+              <TodoEmpty icon="🕊️" title="No recent completions" description="Completed work from the last seven days will appear here." />
             ) : (
               renderDateGroups(data.completed, 'completed')
             )}

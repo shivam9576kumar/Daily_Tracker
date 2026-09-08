@@ -189,87 +189,6 @@
   flex-direction: column;
 }
 
-.todo-main .task-row {
-  border: 0;
-  border-bottom: 1px solid var(--border);
-  border-radius: 0;
-  box-shadow: none;
-  padding: 14px 5px;
-  background: transparent;
-}
-
-.todo-main .task-row:hover {
-  border-color: var(--border);
-  background: var(--bg-hover);
-  box-shadow: none;
-}
-
-.todo-main .task-row.is-backlog {
-  border-left: 3px solid var(--warning);
-  padding-left: 12px;
-}
-
-.todo-assignment-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.todo-assignment {
-  min-height: 62px;
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-  padding: 14px 5px;
-  border-bottom: 1px solid var(--border);
-}
-
-.todo-assignment.is-completed {
-  color: var(--text-muted);
-}
-
-.todo-assignment__check {
-  width: 18px;
-  height: 18px;
-  margin: 3px 0 0;
-  accent-color: var(--brand);
-  cursor: pointer;
-}
-
-.todo-assignment__check:disabled {
-  cursor: wait;
-}
-
-.todo-assignment__body {
-  flex: 1;
-  min-width: 0;
-}
-
-.todo-assignment__title {
-  display: block;
-  font: 600 15px/1.4 var(--font-sans);
-  color: var(--text-primary);
-}
-
-.todo-assignment.is-completed .todo-assignment__title {
-  color: var(--text-muted);
-  text-decoration: line-through;
-}
-
-.todo-assignment__meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 4px;
-  font: 500 12px/1.4 var(--font-sans);
-  color: var(--text-muted);
-}
-
-.todo-assignment__meta span + span::before {
-  content: '·';
-  margin-right: 8px;
-}
-
 .todo-date-group {
   padding: 24px 0 12px;
 }
@@ -476,12 +395,229 @@
     font-size: 13px;
   }
 
-  .todo-main .task-row {
-    padding-left: 2px;
-    padding-right: 2px;
-  }
-
   .todo-empty {
     min-height: 300px;
   }
 }
+
+/* ================================================================
+   TODO — PART 3: TODOIST-STYLE ROWS
+   ================================================================ */
+
+.todo-row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 13px 6px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.todo-row:hover { background: var(--bg-hover); }
+.todo-row:focus-visible { outline: 0; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
+.todo-row.is-busy { opacity: 0.6; pointer-events: none; }
+
+.todo-row.is-backlog {
+  border-left: 3px solid var(--warning);
+  padding-left: 11px;
+}
+
+.todo-row--assignment { cursor: default; }
+
+/* Round Todoist-style checkbox */
+input.todo-row__check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  flex: 0 0 20px;
+  margin: 1px 0 0;
+  padding: 0;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--bg-surface);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+input.todo-row__check:hover:not(:disabled) { border-color: var(--success); }
+
+input.todo-row__check:hover:not(:disabled):not(:checked)::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: solid var(--text-disabled);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+input.todo-row__check:checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+input.todo-row__check:checked::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: solid var(--text-on-brand);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+input.todo-row__check:focus-visible { outline: 0; box-shadow: var(--focus-ring); }
+input.todo-row__check:disabled { cursor: wait; }
+
+.todo-row__body { flex: 1; min-width: 0; }
+
+.todo-row__title-line {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  min-width: 0;
+}
+
+.todo-row__title {
+  font: 500 15px/1.45 var(--font-sans);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.todo-row.is-done .todo-row__title {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-disabled);
+}
+
+.todo-row__potd-link {
+  flex: 0 0 auto;
+  color: var(--brand-text);
+  font: 600 14px/1 var(--font-sans);
+  text-decoration: none;
+}
+.todo-row__potd-link:hover { color: var(--brand-text-hover); }
+
+/* Metadata line — plain text, not pills */
+.todo-row__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+  font: 500 12.5px/1.4 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.todo-row__meta > * + *::before {
+  content: '·';
+  margin-right: 6px;
+  color: var(--text-disabled);
+}
+
+/* RevisionBadge and the dot pseudo-element don't mix — exempt the badge */
+.todo-row__meta > .tag-revision::before { content: none; margin: 0; }
+
+.todo-row__potd {
+  color: var(--brand-text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.todo-row__topic { text-transform: capitalize; }
+
+.todo-row__difficulty {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: capitalize;
+}
+
+.todo-row__difficulty-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.todo-row__difficulty.is-easy .todo-row__difficulty-dot { background: var(--easy-dot); }
+.todo-row__difficulty.is-easy { color: var(--easy-text); }
+.todo-row__difficulty.is-medium .todo-row__difficulty-dot { background: var(--medium-dot); }
+.todo-row__difficulty.is-medium { color: var(--medium-text); }
+.todo-row__difficulty.is-hard .todo-row__difficulty-dot { background: var(--hard-dot); }
+.todo-row__difficulty.is-hard { color: var(--hard-text); }
+
+.todo-row__platform { color: var(--text-muted); }
+
+.todo-row__overdue {
+  color: var(--warning-text);
+  font-weight: 600;
+}
+
+/* Rating pills row on solved tasks */
+.todo-row__rate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  cursor: default;
+}
+
+.todo-row__rate-label {
+  font: 700 11px/1 var(--font-sans);
+  color: var(--text-muted);
+}
+
+/* Hover-reveal external-link action */
+.todo-row__action {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  margin-top: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font: 600 14px/1 var(--font-sans);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.todo-row:hover .todo-row__action,
+.todo-row__action:focus-visible {
+  opacity: 1;
+}
+
+.todo-row__action:hover {
+  color: var(--brand-text);
+  border-color: var(--brand);
+}
+
+.todo-row__action:focus-visible { outline: 0; box-shadow: var(--focus-ring); }
+
+/* Touch devices: action always visible */
+@media (hover: none) {
+  .todo-row__action { opacity: 1; }
+}
+
+@media (max-width: 520px) {
+  .todo-row { padding-left: 2px; padding-right: 2px; gap: 11px; }
+  .todo-row.is-backlog { padding-left: 8px; }
+  .todo-row__title { white-space: normal; }
+}
+
