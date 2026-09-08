@@ -308,3 +308,14 @@ export async function getCp31Overview(userId: string): Promise<Cp31Overview> {
   });
   return { enabled: s.enabled, band: s.band, dailyCount: s.dailyCount, extrasCap: CP31_EXTRAS_CAP, bands };
 }
+
+export const cp31Service = {
+  ensureCp31TasksForUser,
+  serveOneMore,
+  skipCp31Problem,
+  retrySkippedCp31,
+  listSkippedCp31,
+  advanceCp31Band,
+  removeUnsolvedCp31Tasks,
+  getCp31Overview,
+};

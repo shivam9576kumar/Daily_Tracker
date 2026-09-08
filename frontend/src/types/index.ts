@@ -440,7 +440,26 @@ export interface TodoTodayGroups {
   personal: Task[];
   completed: Task[];
   assignments: Assignment[];
+  cp31: Task[];
 }
+
+export interface DailyChallengeMeta {
+  potd: { enabled: boolean };
+  cp31: {
+    enabled: boolean;
+    band: number | null;
+    dailyCount: number;
+    solvedInBand: number;
+    bandSize: number;
+    quotaDoneToday: boolean;
+    extrasUsedToday: number;
+    extrasCap: number;
+    bandStatus: 'none' | 'active' | 'complete-awaiting-confirm';
+    skippedCount: number;
+  };
+}
+
+export type TodoData = TodoResponse;
 
 export interface TodoResponse {
   timezone: string;
@@ -453,5 +472,5 @@ export interface TodoResponse {
   upcoming: TodoDateGroup[];
   backlog: Task[];
   completed: TodoDateGroup[];
-  dailyChallenges?: TodoDailyChallenges;
+  dailyChallenges: DailyChallengeMeta;
 }

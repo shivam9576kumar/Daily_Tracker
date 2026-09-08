@@ -26,7 +26,8 @@
     "cp31:convert": "tsx scripts/convertCp31Input.ts",
     "cp31:validate": "tsx scripts/validateCp31Sheet.ts",
     "verify:potd-toggle": "tsx scripts/verifyPotdToggle.ts",
-    "verify:cp31": "tsx scripts/verifyCp31.ts"
+    "verify:cp31": "tsx scripts/verifyCp31.ts",
+    "verify:part-d": "tsx scripts/verifyPartD.ts"
   },
   "dependencies": {
     "@dsa-planner/shared": "*",

@@ -3,6 +3,7 @@ import prisma from '../../config/database';
 import logger from '../../utils/logger';
 import { taskRepository } from '../../repositories/taskRepository';
 import { ensurePotdTaskForUser } from '../potd/potdService';
+import { cp31Service } from '../cp31/cp31Service';
 import {
   addDaysToKey,
   dateKeyInTz,
@@ -12,6 +13,7 @@ import {
   zonedDayStartUtc,
 } from '../../utils/dateKeys';
 import type {
+  DailyChallengeMeta,
   TodoDateGroup,
   TodoResponse,
   TodoTodayGroups,
@@ -78,7 +80,7 @@ export const todoService = {
     const completedStart = zonedDayStartUtc(completedStartKey, tz);
     const { end: completedEnd } = zonedDayRangeUtc(today, tz);
 
-    // ── 1. POTD ensure (never throws, same as dashboardService) ──
+    // ── 1. POTD & CP31 ensure ──
     let potdDateKey: string | null = null;
     let potdEnabled = true;
     try {
@@ -88,6 +90,21 @@ export const todoService = {
     } catch (err) {
       logger.warn('todoService: POTD ensure failed, continuing', { message: (err as Error)?.message });
     }
+
+    const cp31State = await cp31Service.ensureCp31TasksForUser(userId, tz);
+
+    const cp31Meta: DailyChallengeMeta['cp31'] = {
+      enabled: cp31State.enabled,
+      band: cp31State.band,
+      dailyCount: cp31State.dailyCount,
+      solvedInBand: cp31State.solvedInBand,
+      bandSize: cp31State.bandSize,
+      quotaDoneToday: cp31State.quotaDoneToday,
+      extrasUsedToday: cp31State.extrasUsedToday,
+      extrasCap: cp31State.extrasCap,
+      bandStatus: cp31State.bandStatus,
+      skippedCount: cp31State.skippedInBand,
+    };
 
     // ── 2. Queries ──
     const [inboxRows, todayRows, upcomingRows, backlogRows, completedRows, assignments] = await Promise.all([
@@ -174,6 +191,7 @@ export const todoService = {
       personal: regular.filter((t) => t.taskType === 'personal'),
       completed: completedToday,
       assignments: dueAssignments,
+      cp31: regular.filter((t) => t.taskType === 'cp31'),
     };
 
     // ── 5. Upcoming groups ──
@@ -223,7 +241,10 @@ export const todoService = {
       upcoming,
       backlog: backlogRows,
       completed,
-      dailyChallenges: { potd: { enabled: potdEnabled } },
+      dailyChallenges: {
+        potd: { enabled: potdEnabled },
+        cp31: cp31Meta,
+      },
     };
   },
 };

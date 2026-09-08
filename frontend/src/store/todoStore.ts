@@ -10,6 +10,9 @@ interface TodoState {
   upcomingDays: UpcomingRange;
   fetch: (silent?: boolean) => Promise<void>;
   setUpcomingDays: (days: UpcomingRange) => Promise<void>;
+  cp31OneMore: () => Promise<void>;
+  cp31Skip: (taskId: string) => Promise<void>;
+  cp31AdvanceBand: () => Promise<void>;
 }
 
 export const useTodoStore = create<TodoState>((set, get) => ({
@@ -32,5 +35,32 @@ export const useTodoStore = create<TodoState>((set, get) => ({
     if (get().upcomingDays === days) return;
     set({ upcomingDays: days });
     await get().fetch(true); // silent refetch — no full-page spinner
+  },
+
+  cp31OneMore: async () => {
+    try {
+      await todoApi.cp31OneMore();
+      await get().fetch(true);
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  cp31Skip: async (taskId: string) => {
+    try {
+      await todoApi.cp31Skip(taskId);
+      await get().fetch(true);
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  cp31AdvanceBand: async () => {
+    try {
+      await todoApi.cp31AdvanceBand();
+      await get().fetch(true);
+    } catch (err) {
+      throw err;
+    }
   },
 }));
