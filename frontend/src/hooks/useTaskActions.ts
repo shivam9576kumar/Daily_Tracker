@@ -43,9 +43,12 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
   const solve = useCallback((task: Task) => run(
     task.id,
     () => taskApi.complete(task.id),
-    () => task.taskType === 'revision'
-      ? `Revision done · +${coinsFor(task)} coins`
-      : `Solved · +${coinsFor(task)} coins · pick Easy / Medium / Hard to schedule revisions`,
+    () =>
+      task.taskType === 'personal'
+        ? 'Done ✓'
+        : task.taskType === 'revision'
+          ? `Revision done · +${coinsFor(task)} coins`
+          : `Solved · +${coinsFor(task)} coins · pick Easy / Medium / Hard to schedule revisions`,
     'success'
   ), [run]);
 
@@ -56,7 +59,7 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
       'Marked as unsolved',
       u.status === 'backlog' ? 'back in your backlog' : null,
       task.rating ? 'revision plan cleared' : null,
-      `−${coinsFor(task)} coins`,
+      task.taskType === 'personal' ? null : `−${coinsFor(task)} coins`,
     ].filter(Boolean).join(' · '),
     'info'
   ), [run]);

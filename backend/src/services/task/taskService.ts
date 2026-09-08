@@ -67,7 +67,7 @@ export const taskService = {
       );
     }
 
-    const RESERVED_TASK_TYPES = ['potd', 'revision'];
+    const RESERVED_TASK_TYPES = ['potd', 'revision', 'personal'];
     if (data.taskType && RESERVED_TASK_TYPES.includes(data.taskType)) {
       throw new ValidationError('This task type is created automatically and cannot be added manually.');
     }
@@ -166,7 +166,7 @@ export const taskService = {
 
     await prisma.$transaction(async (tx) => {
       let refund =
-        task.status === 'completed'
+        task.status === 'completed' && task.taskType !== 'personal'
           ? calculateCompletedTaskCoins(task.taskType, task.rating)
           : 0;
 

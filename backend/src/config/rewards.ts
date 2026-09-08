@@ -56,6 +56,7 @@ export function calculateCompletedTaskCoins(
   taskType: string,
   rating?: string | null,
 ): number {
+  if (taskType === 'personal') return 0;
   if (taskType === 'revision') {
     return COIN_REWARDS.revision;
   }

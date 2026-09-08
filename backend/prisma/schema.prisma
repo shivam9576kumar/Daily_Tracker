@@ -64,8 +64,8 @@ model Task {
   sourceUrl         String?   @map("source_url")
   taskType          String    @default("new") @map("task_type") // new | revision | assignment
   status            String    @default("pending") // pending | completed | backlog | expired
-  scheduledDate     DateTime  @default(now()) @map("scheduled_date")
-  scheduledDateKey  String    @map("scheduled_date_key")
+  scheduledDate     DateTime? @default(now()) @map("scheduled_date")
+  scheduledDateKey  String?   @map("scheduled_date_key")
   originalSolveDate DateTime? @map("original_solve_date")
   completedAt       DateTime? @map("completed_at")
   rating            String? // easy | medium | hard

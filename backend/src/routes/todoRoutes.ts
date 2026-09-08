@@ -6,5 +6,7 @@ const router = Router();
 router.use(authMiddleware);
 
 router.get('/', todoController.get);
+router.post('/tasks', todoController.createPersonal);
+router.patch('/tasks/:id', todoController.updatePersonal);
 
 export default router;

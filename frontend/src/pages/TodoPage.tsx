@@ -153,7 +153,7 @@ export default function TodoPage() {
 
   const t = data.today;
   const todayPendingTotal =
-    t.backlog.length + t.plan.length + t.potd.length + t.revisions.length + t.manual.length;
+    t.backlog.length + t.plan.length + t.potd.length + t.revisions.length + t.manual.length + t.personal.length;
   const meta = VIEW_META[activeView];
   const headerDescription =
     activeView === 'today' ? `${formatKey(data.todayKey)} · ${meta.description}` : meta.description;
@@ -172,11 +172,19 @@ export default function TodoPage() {
         )}
 
         {activeView === 'inbox' && (
-          <TodoEmpty
-            icon="📥"
-            title="No inbox tasks yet"
-            description="Personal task capture will be added in Part 5."
-          />
+          <div className="todo-view">
+            {data.inbox.length === 0 ? (
+              <TodoEmpty
+                icon="📥"
+                title="Inbox is empty"
+                description="Quick capture arrives in Part 6 — tasks created via the API appear here."
+              />
+            ) : (
+              <TodoSection title="Unscheduled" count={data.inbox.length}>
+                {renderTasks(data.inbox)}
+              </TodoSection>
+            )}
+          </div>
         )}
 
         {activeView === 'today' && (
@@ -195,6 +203,9 @@ export default function TodoPage() {
             </TodoSection>
             <TodoSection title="Manual DSA Tasks" count={t.manual.length}>
               {renderTasks(t.manual)}
+            </TodoSection>
+            <TodoSection title="Personal" count={t.personal.length}>
+              {renderTasks(t.personal)}
             </TodoSection>
             <TodoSection title="Assignments Due" count={t.assignments.length} tone="warning">
               {renderAssignments(t.assignments)}

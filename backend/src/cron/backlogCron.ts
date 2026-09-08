@@ -26,6 +26,7 @@ export async function runBacklogCron() {
         isBacklog: false,
         isExpired: false,
         completedAt: null,
+        scheduledDateKey: { not: null },
         OR: [{ planId: null }, { plan: { status: 'active' } }],
       },
       select: {
@@ -39,12 +40,9 @@ export async function runBacklogCron() {
 
     // BUG 8: per-user tz. 'YYYY-MM-DD' compares lexicographically = chronologically.
     const overdue = candidates.filter((t) => {
+      if (!t.scheduledDateKey) return false;
       const tz = t.user.timezone || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
-      const logicalKey = t.scheduledDateKey && /^\d{4}-\d{2}-\d{2}$/.test(t.scheduledDateKey)
-        ? t.scheduledDateKey
-        : dateKeyInTz(t.scheduledDate, tz);
-
-      return logicalKey < todayKey(tz);
+      return t.scheduledDateKey < todayKey(tz);
     });
 
     const overdueIds = overdue.map((t) => t.id);

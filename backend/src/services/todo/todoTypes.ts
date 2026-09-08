@@ -21,6 +21,7 @@ export interface TodoTodayGroups {
   potd: Task[];
   revisions: Task[];
   manual: Task[];
+  personal: Task[];
   completed: Task[];
   assignments: Assignment[];
 }

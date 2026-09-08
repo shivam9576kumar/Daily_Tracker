@@ -18,7 +18,7 @@ interface Props {
 export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, onUnrate }: Props) {
   const completed = task.status === 'completed';
   const isPotd = task.taskType === 'potd';
-  const canRate = task.taskType !== 'revision';
+  const canRate = task.taskType === 'new' || task.taskType === 'potd';
   const plat = resolvePlatform(task.problemUrl, task.platform);
 
   const cls = [
@@ -70,7 +70,7 @@ export default function TaskRow({ task, busy, onOpen, onToggleSolved, onRate, on
         <div className="task-row__meta">
           {isPotd && (
             <span className="pill pill-potd" title="LeetCode Problem of the Day">
-              POTD · {formatShortDate(task.potdDateKey ?? task.scheduledDate)}
+              POTD · {formatShortDate(task.potdDateKey ?? task.scheduledDate ?? '')}
             </span>
           )}
           {task.taskType === 'revision' && <RevisionBadge revisionNumber={task.revisionNumber} />}

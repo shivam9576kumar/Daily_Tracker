@@ -27,7 +27,8 @@ export default function TodoTaskRow({
   const completed = task.status === 'completed';
   const isPotd = task.taskType === 'potd';
   const isRevision = task.taskType === 'revision';
-  const canRate = completed && !isRevision;
+  const isPersonal = task.taskType === 'personal';
+  const canRate = completed && !isRevision && !isPersonal;
   const isBacklog = task.isBacklog && !completed;
   const plat = resolvePlatform(task.problemUrl, task.platform);
 
@@ -94,15 +95,21 @@ export default function TodoTaskRow({
         <div className="todo-row__meta">
           {isRevision && <RevisionBadge revisionNumber={task.revisionNumber} />}
           {isPotd && <span className="todo-row__potd">POTD</span>}
-          <span className="todo-row__topic">{task.topic}</span>
-          {task.difficulty && (
-            <span className={`todo-row__difficulty is-${task.difficulty}`}>
-              <span className="todo-row__difficulty-dot" aria-hidden="true" />
-              {task.difficulty}
-            </span>
-          )}
-          {plat && plat.value !== 'custom' && (
-            <span className="todo-row__platform">{plat.label}</span>
+          {isPersonal ? (
+            <span className="todo-row__topic">Personal</span>
+          ) : (
+            <>
+              <span className="todo-row__topic">{task.topic}</span>
+              {task.difficulty && (
+                <span className={`todo-row__difficulty is-${task.difficulty}`}>
+                  <span className="todo-row__difficulty-dot" aria-hidden="true" />
+                  {task.difficulty}
+                </span>
+              )}
+              {plat && plat.value !== 'custom' && (
+                <span className="todo-row__platform">{plat.label}</span>
+              )}
+            </>
           )}
           {isBacklog && overdueDays > 0 && (
             <span className="todo-row__overdue">

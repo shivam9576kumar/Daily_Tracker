@@ -88,7 +88,12 @@ export const todoService = {
     }
 
     // ── 2. Queries ──
-    const [todayRows, upcomingRows, backlogRows, completedRows, assignments] = await Promise.all([
+    const [inboxRows, todayRows, upcomingRows, backlogRows, completedRows, assignments] = await Promise.all([
+      prisma.task.findMany({
+        where: { userId, taskType: 'personal', scheduledDateKey: null, status: 'pending' },
+        orderBy: { createdAt: 'desc' },
+      }),
+
       // Single source of truth for "today" — shared with Dashboard.
       taskRepository.getTodaysTasks(userId, tz),
 
@@ -164,13 +169,14 @@ export const todoService = {
       potd: regular.filter((t) => t.taskType === 'potd'),
       revisions: regular.filter((t) => t.taskType === 'revision'),
       manual: regular.filter((t) => t.taskType === 'new' && t.planId === null),
+      personal: regular.filter((t) => t.taskType === 'personal'),
       completed: completedToday,
       assignments: dueAssignments,
     };
 
     // ── 5. Upcoming groups ──
     const upcomingMap = new Map<string, TodoDateGroup>();
-    for (const t of upcomingRows) upsertGroup(upcomingMap, t.scheduledDateKey, today).tasks.push(t);
+    for (const t of upcomingRows) upsertGroup(upcomingMap, t.scheduledDateKey!, today).tasks.push(t);
     for (const a of pendingAssignments) {
       const k = assignmentDateKey(a);
       if (k > today && k <= upcomingEnd) upsertGroup(upcomingMap, k, today).assignments.push(a);
@@ -204,13 +210,13 @@ export const todoService = {
       generatedAt: new Date().toISOString(),
       upcomingDays,
       summary: {
-        inbox: 0,
+        inbox: inboxRows.length,
         today: pending.length + dueAssignments.length,
         upcoming: upcomingCount,
         backlog: backlogRows.length,
         completedToday: completedToday.length,
       },
-      inbox: [],
+      inbox: inboxRows,
       today: todayGroups,
       upcoming,
       backlog: backlogRows,

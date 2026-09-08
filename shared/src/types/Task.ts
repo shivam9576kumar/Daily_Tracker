@@ -16,8 +16,8 @@ export interface Task {
   problemUrl: string | null;
   taskType: TaskType;
   status: TaskStatus;
-  scheduledDate: Date;
-  scheduledDateKey?: string;
+  scheduledDate: Date | null;
+  scheduledDateKey?: string | null;
   originalSolveDate: Date | null;
   completedAt: Date | null;
   rating: Rating | null;

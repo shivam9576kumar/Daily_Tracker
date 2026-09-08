@@ -14,7 +14,7 @@ const dayKeyOf = (t: Task): string => {
   if (t.scheduledDateKey && /^\d{4}-\d{2}-\d{2}$/.test(t.scheduledDateKey)) {
     return t.scheduledDateKey;
   }
-  return localKey(new Date(t.scheduledDate));
+  return t.scheduledDate ? localKey(new Date(t.scheduledDate)) : '';
 };
 
 export function groupIntoWeeks(items: Task[], originKey: string): WeekGroup[] {
@@ -22,6 +22,7 @@ export function groupIntoWeeks(items: Task[], originKey: string): WeekGroup[] {
   const byDate = new Map<string, Task[]>();
   for (const t of items) {
     const key = dayKeyOf(t);
+    if (!key) continue;
     if (!byDate.has(key)) byDate.set(key, []);
     byDate.get(key)!.push(t);
   }

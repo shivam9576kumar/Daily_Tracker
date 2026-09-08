@@ -162,10 +162,18 @@ export const taskCompletionService = {
     // DECISION: revision tasks are marked done, never rated (rating one would spawn revisions of revisions).
     if (rating && task.taskType === 'revision') throw new ValidationError('Revision tasks are marked done, not rated');
 
+    if (task.taskType === 'personal') {
+      if (rating) throw new ValidationError('Personal tasks cannot be rated');
+    }
+
     const now = new Date();
     const isFirstSolve = task.status !== 'completed';
     const nextRating: Rating | null = rating ?? (task.rating as Rating | null) ?? null;
-    const coinDelta = (isFirstSolve ? COIN_REWARDS.solve : 0) + (rating ? bonusFor(rating) - bonusFor(task.rating) : 0);
+    const coinDelta =
+      task.taskType === 'personal'
+        ? 0
+        : (isFirstSolve ? COIN_REWARDS.solve : 0) +
+          (rating ? bonusFor(rating) - bonusFor(task.rating) : 0);
 
     const result = await prisma.$transaction(async (tx) => {
       const updated = await tx.task.update({
@@ -280,7 +288,10 @@ export const taskCompletionService = {
 
     const isRevision = task.taskType === 'revision';
     const wasCompleted = task.status === 'completed';
-    const refund = wasCompleted ? COIN_REWARDS.solve + bonusFor(task.rating) : 0;
+    const refund =
+      wasCompleted && task.taskType !== 'personal'
+        ? COIN_REWARDS.solve + bonusFor(task.rating)
+        : 0;
 
     const result = await prisma.$transaction(async (tx) => {
       if (!isRevision) {

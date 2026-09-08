@@ -1,6 +1,6 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Rating = 'easy' | 'medium' | 'hard';
-export type TaskType = 'new' | 'revision' | 'potd';
+export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal';
 export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired';
 
 export interface Task {
@@ -16,8 +16,8 @@ export interface Task {
   sourceUrl?: string | null;
   taskType: TaskType;
   status: TaskStatus;
-  scheduledDate: string;
-  scheduledDateKey?: string;
+  scheduledDate: string | null;
+  scheduledDateKey?: string | null;
   originalSolveDate: string | null;
   completedAt: string | null;
   rating: Rating | null;
@@ -405,6 +405,7 @@ export interface TodoTodayGroups {
   potd: Task[];
   revisions: Task[];
   manual: Task[];
+  personal: Task[];
   completed: Task[];
   assignments: Assignment[];
 }

@@ -9,5 +9,6 @@ import type { Task } from '../types';
 export function coinsFor(
   task: Pick<Task, 'taskType' | 'difficulty'>,
 ): number {
-  return task.taskType === 'revision' ? 10 : 10;
+  if (task.taskType === 'personal') return 0;
+  return 10;
 }

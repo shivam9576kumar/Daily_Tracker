@@ -216,9 +216,11 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
         <>
           {completed && (
             <div className="banner banner--success" style={{ margin: '0 0 16px' }}>
-              {task.rating
-                ? `Solved · ${titleCase(task.rating)} · ${revPending + revDone} revisions scheduled`
-                : 'Solved — rate it to schedule revisions.'}
+              {task.taskType === 'personal'
+                ? 'Done ✓'
+                : task.rating
+                  ? `Solved · ${titleCase(task.rating)} · ${revPending + revDone} revisions scheduled`
+                  : 'Solved — rate it to schedule revisions.'}
             </div>
           )}
 
@@ -240,7 +242,7 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
               <dd className="kv__v">
                 {task.scheduledDateKey
                   ? formatKey(task.scheduledDateKey, { day: 'numeric', month: 'short', year: 'numeric' })
-                  : fmt(task.scheduledDate)}
+                  : task.scheduledDate ? fmt(task.scheduledDate) : '—'}
               </dd>
             </div>
             {task.completedAt && (
@@ -281,7 +283,7 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
             </div>
           )}
 
-          {task.status === 'completed' && task.taskType !== 'revision' && (
+          {task.status === 'completed' && (task.taskType === 'new' || task.taskType === 'potd') && (
             <div className="revise-box">
               <div className="revise-box__title">How hard was it?</div>
               <RatingPills
