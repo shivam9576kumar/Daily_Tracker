@@ -3,6 +3,7 @@ import { taskApi } from '../services/taskApi';
 import { getErrorMessage } from '../services/api';
 import { useUIStore } from '../store/uiStore';
 import { usePlanStore } from '../store/planStore';
+import { useTodoStore } from '../store/todoStore';
 import { coinsFor } from '../utils/coins';
 import type { Rating, Task } from '../types';
 
@@ -27,6 +28,7 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
         await onChanged();
         // Keep active plan & roadmap revisions synchronized
         usePlanStore.getState().fetchActive().catch(() => {});
+        useTodoStore.getState().fetch(true).catch(() => {});
         return updated;
       } catch (err) {
         toast(getErrorMessage(err), 'error');
