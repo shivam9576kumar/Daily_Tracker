@@ -15,6 +15,7 @@ interface Props {
   onRate: (task: Task, rating: Rating) => void;
   onUnrate: (task: Task) => void;
   onSetDate?: (task: Task) => void;
+  onSkip?: (task: Task) => void;
 }
 
 function scheduledKeyOf(task: Task): string | null {
@@ -24,10 +25,12 @@ function scheduledKeyOf(task: Task): string | null {
 }
 
 export default function TodoTaskRow({
-  task, busy, onOpen, onToggleSolved, onRate, onUnrate, onSetDate,
+  task, busy, onOpen, onToggleSolved, onRate, onUnrate, onSetDate, onSkip,
 }: Props) {
   const completed = task.status === 'completed';
+  const skipped = task.status === 'skipped';
   const isPotd = task.taskType === 'potd';
+  const isCp31 = task.taskType === 'cp31';
   const isRevision = task.taskType === 'revision';
   const isPersonal = task.taskType === 'personal';
   const canRate = completed && !isRevision && !isPersonal;
@@ -43,6 +46,7 @@ export default function TodoTaskRow({
   const cls = [
     'todo-row',
     completed ? 'is-done' : '',
+    skipped ? 'is-skipped' : '',
     isBacklog ? 'is-backlog' : '',
     busy ? 'is-busy' : '',
   ].filter(Boolean).join(' ');
@@ -71,7 +75,7 @@ export default function TodoTaskRow({
         type="checkbox"
         className="todo-row__check"
         checked={completed}
-        disabled={busy}
+        disabled={busy || skipped}
         aria-label={completed ? `Mark ${task.title} unsolved` : `Mark ${task.title} solved`}
         onChange={() => onToggleSolved(task)}
         onClick={stop}
@@ -97,6 +101,8 @@ export default function TodoTaskRow({
         <div className="todo-row__meta">
           {isRevision && <RevisionBadge revisionNumber={task.revisionNumber} />}
           {isPotd && <span className="todo-row__potd">POTD</span>}
+          {isCp31 && <span className="todo-row__cp31-badge">CP31</span>}
+          {skipped && <span className="todo-row__skipped-badge">Skipped</span>}
           {isPersonal ? (
             <span className="todo-row__topic">Personal</span>
           ) : (
@@ -138,6 +144,19 @@ export default function TodoTaskRow({
           </div>
         )}
       </div>
+
+      {/* Skip action — CP31 only, pending only */}
+      {onSkip && isCp31 && task.status === 'pending' && (
+        <button
+          type="button"
+          className="todo-row__action todo-row__skip-btn"
+          aria-label={`Skip ${task.title}`}
+          title="Skip problem"
+          onClick={(e) => { e.stopPropagation(); onSkip(task); }}
+        >
+          ⏭
+        </button>
+      )}
 
       {task.taskType === 'personal' && onSetDate && (
         <button

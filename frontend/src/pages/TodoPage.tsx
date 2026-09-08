@@ -9,6 +9,7 @@ import TodoCompletedSection from '../components/todo/TodoCompletedSection';
 import TodoEmpty from '../components/todo/TodoEmpty';
 import InlineTodoComposer from '../components/todo/InlineTodoComposer';
 import TodoDatePicker, { type DateSelection } from '../components/todo/TodoDatePicker';
+import DailyChallengesSection from '../components/todo/DailyChallengesSection';
 import TaskDrawer from '../components/task/TaskDrawer';
 import AddTaskModal from '../components/task/AddTaskModal';
 import AssignmentForm from '../components/assignments/AssignmentForm';
@@ -241,7 +242,7 @@ export default function TodoPage() {
 
   const t = data.today;
   const todayPendingTotal =
-    t.backlog.length + t.plan.length + t.potd.length + t.revisions.length + t.manual.length + t.personal.length;
+    t.backlog.length + t.plan.length + t.potd.length + t.cp31.length + t.revisions.length + t.manual.length + t.personal.length;
   const meta = VIEW_META[activeView];
   const headerDescription =
     activeView === 'today' ? `${formatKey(data.todayKey)} · ${meta.description}` : meta.description;
@@ -325,6 +326,14 @@ export default function TodoPage() {
             <TodoSection title="Daily Challenge" count={t.potd.length} tone="brand">
               {renderTasks(t.potd)}
             </TodoSection>
+            <DailyChallengesSection
+              meta={data.dailyChallenges}
+              onOpenTask={(sel) => setSelectedTaskId(sel.id)}
+              onToggleSolved={actions.toggleSolved}
+              onRate={actions.rate}
+              onUnrate={actions.unrate}
+              busy={actions.busyId}
+            />
             <TodoSection title="Revisions Due" count={t.revisions.length}>
               {renderTasks(t.revisions)}
             </TodoSection>

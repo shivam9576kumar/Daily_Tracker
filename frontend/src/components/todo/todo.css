@@ -1178,4 +1178,355 @@ input.todo-row__check:disabled { cursor: wait; }
   }
 }
 
+/* ── CP31 band chip inside DC menu ── */
+.dc-row__band-chip {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
+  color: var(--brand-soft-text);
+  font: 600 11px/1 var(--font-sans);
+  vertical-align: middle;
+}
 
+/* ================================================================
+   CP31 — SECTION
+   ================================================================ */
+
+.cp31-section {
+  padding: 18px 0 10px;
+  border-top: 1px solid var(--border);
+}
+
+.cp31-section__header {
+  margin-bottom: 12px;
+}
+
+.cp31-section__title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cp31-section__icon {
+  font-size: 17px;
+}
+
+.cp31-section__title {
+  margin: 0;
+  font: 600 15px/1.3 var(--font-sans);
+  color: var(--text-primary);
+}
+
+.cp31-section__progress-text {
+  margin-left: auto;
+  font: 600 13px/1 var(--font-sans);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cp31-section__progress-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+
+.cp31-section__progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--brand);
+  transition: width 400ms ease;
+  min-width: 2px;
+}
+
+.cp31-section__empty {
+  padding: 16px 6px;
+  font: 400 14px/1.5 var(--font-sans);
+  color: var(--text-muted);
+}
+
+/* ── CP31 badge on TodoTaskRow ── */
+.todo-row__cp31-badge {
+  color: var(--brand-text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ── Skipped badge on TodoTaskRow ── */
+.todo-row__skipped-badge {
+  color: var(--text-disabled);
+  font-weight: 600;
+  font-style: italic;
+}
+
+.todo-row.is-skipped .todo-row__title {
+  color: var(--text-disabled);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-disabled);
+}
+
+.todo-row.is-skipped {
+  opacity: 0.65;
+}
+
+/* ── Skip button ── */
+.todo-row__skip-btn {
+  font-size: 13px;
+}
+
+.todo-row__skip-btn:hover {
+  color: var(--warning-text) !important;
+  border-color: var(--warning) !important;
+}
+
+/* ── One More button ── */
+.cp31-one-more {
+  padding: 12px 6px 4px;
+}
+
+.cp31-one-more__btn {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px dashed var(--brand-soft-border);
+  border-radius: var(--radius-md);
+  background: var(--brand-tint);
+  color: var(--brand-text);
+  font: 600 14px/1 var(--font-sans);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.cp31-one-more__btn:hover:not(:disabled) {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+}
+
+.cp31-one-more__btn:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+.cp31-one-more__btn:disabled {
+  cursor: default;
+}
+
+.cp31-one-more__btn.is-capped {
+  border-style: solid;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ── Band Complete Card ── */
+.cp31-band-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 24px;
+  margin: 8px 0;
+  border-radius: var(--radius-lg);
+  background: var(--brand-tint);
+  border: 1px solid var(--brand-tint-border);
+  text-align: center;
+}
+
+.cp31-band-complete__trophy {
+  font-size: 40px;
+  animation: cp31-trophy-bounce 600ms ease;
+}
+
+@keyframes cp31-trophy-bounce {
+  0%   { transform: scale(0.6) translateY(8px); opacity: 0; }
+  50%  { transform: scale(1.15) translateY(-4px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.cp31-band-complete__title {
+  margin: 0;
+  font: 700 20px/1.3 var(--font-sans);
+  color: var(--text-primary);
+}
+
+.cp31-band-complete__sub {
+  margin: 0;
+  font: 400 14px/1.5 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.cp31-band-complete__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ================================================================
+   BAND PICKER MODAL
+   ================================================================ */
+
+.band-picker-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  background: var(--bg-overlay);
+  animation: bp-fade-in 200ms ease;
+}
+
+@keyframes bp-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.band-picker-modal {
+  width: min(92vw, 420px);
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  animation: bp-slide-up 250ms ease;
+}
+
+@keyframes bp-slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.band-picker-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.band-picker-modal__header h2 {
+  margin: 0;
+  font: 700 18px/1.3 var(--font-sans);
+  color: var(--text-primary);
+}
+
+.band-picker-modal__close {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+}
+.band-picker-modal__close:hover { color: var(--text-primary); background: var(--bg-hover); }
+
+.band-picker-modal__sub {
+  margin: 0 0 16px;
+  font: 400 14px/1.5 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.band-picker-modal__loading {
+  padding: 32px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font: 500 14px/1.4 var(--font-sans);
+}
+
+.band-picker-modal__resume-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.band-picker-modal__resume-actions .btn-primary,
+.band-picker-modal__resume-actions .btn-secondary {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Band grid */
+.band-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.band-picker-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 18px 12px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.band-picker-card:hover {
+  border-color: var(--brand);
+  background: var(--brand-tint);
+  box-shadow: var(--shadow-sm);
+}
+
+.band-picker-card:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+.band-picker-card:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.band-picker-card__rating {
+  font: 800 24px/1.2 var(--font-sans);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.band-picker-card__count {
+  font: 500 13px/1 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.band-picker-card__arrow {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: var(--text-disabled);
+  font-size: 14px;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.band-picker-card:hover .band-picker-card__arrow {
+  color: var(--brand-text);
+  transform: translateX(3px);
+}
+
+@media (max-width: 420px) {
+  .band-picker-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
