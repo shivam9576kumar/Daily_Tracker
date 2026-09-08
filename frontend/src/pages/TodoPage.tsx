@@ -7,6 +7,7 @@ import TodoTaskRow from '../components/todo/TodoTaskRow';
 import TodoAssignmentRow from '../components/todo/TodoAssignmentRow';
 import TodoCompletedSection from '../components/todo/TodoCompletedSection';
 import TodoEmpty from '../components/todo/TodoEmpty';
+import InlineTodoComposer from '../components/todo/InlineTodoComposer';
 import TaskDrawer from '../components/task/TaskDrawer';
 import Spinner from '../components/common/Spinner';
 import Button from '../components/common/Button';
@@ -15,14 +16,14 @@ import { getErrorMessage } from '../services/api';
 import { useTaskActions } from '../hooks/useTaskActions';
 import { useTodoStore } from '../store/todoStore';
 import { useUIStore } from '../store/uiStore';
-import { formatKey } from '../utils/dateKeys';
+import { addDaysToKey, formatKey } from '../utils/dateKeys';
 import type { Assignment, Task, TodoDateGroup } from '../types';
 import '../components/todo/todo.css';
 
 const VALID_VIEWS: TodoView[] = ['inbox', 'today', 'upcoming', 'backlog', 'completed'];
 
 const VIEW_META: Record<TodoView, { title: string; description: string }> = {
-  inbox: { title: 'Inbox', description: 'Unscheduled personal tasks will live here.' },
+  inbox: { title: 'Inbox', description: 'Unscheduled personal tasks live here.' },
   today: { title: 'Today', description: 'Everything that needs your attention today.' },
   upcoming: { title: 'Upcoming', description: 'Your scheduled work for the coming days.' },
   backlog: { title: 'Backlog', description: 'Overdue work that still needs to be completed.' },
@@ -46,6 +47,9 @@ export default function TodoPage() {
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [assignmentBusyId, setAssignmentBusyId] = useState<string | null>(null);
 
+  // Which composer is open: 'inbox' | 'today' | 'upcoming' | `group:${dateKey}` | null
+  const [composerId, setComposerId] = useState<string | null>(null);
+
   const requested = searchParams.get('view');
   const activeView: TodoView = isTodoView(requested) ? requested : 'today';
 
@@ -60,6 +64,21 @@ export default function TodoPage() {
     (view: TodoView) => setSearchParams({ view }, { replace: true }),
     [setSearchParams]
   );
+
+  const openComposer = useCallback((id: string) => setComposerId(id), []);
+  const closeComposer = useCallback(() => setComposerId(null), []);
+
+  // Sidebar "+ Add Task": open active view's composer (fallback → inbox view default)
+  const handleSidebarAdd = useCallback(() => {
+    if (activeView === 'today') setComposerId('today');
+    else if (activeView === 'upcoming') setComposerId('upcoming');
+    else setComposerId('inbox');
+  }, [activeView]);
+
+  // Close any open composer when switching views
+  useEffect(() => {
+    setComposerId(null);
+  }, [activeView]);
 
   const handleAssignmentToggle = useCallback(
     async (a: Assignment) => {
@@ -139,7 +158,7 @@ export default function TodoPage() {
     </div>
   );
 
-  const renderDateGroups = (groups: TodoDateGroup[], noun: string) =>
+  const renderDateGroups = (groups: TodoDateGroup[], noun: string, withAdd = false) =>
     groups.map((g) => (
       <section key={g.dateKey} className="todo-date-group">
         <div className="todo-date-group__header">
@@ -148,6 +167,14 @@ export default function TodoPage() {
         </div>
         {renderTasks(g.tasks)}
         {renderAssignments(g.assignments)}
+        {withAdd && (
+          <InlineTodoComposer
+            defaultDateKey={g.dateKey}
+            open={composerId === `group:${g.dateKey}`}
+            onOpen={() => openComposer(`group:${g.dateKey}`)}
+            onClose={closeComposer}
+          />
+        )}
       </section>
     ));
 
@@ -160,7 +187,12 @@ export default function TodoPage() {
 
   return (
     <div className="todo-page">
-      <TodoSidebar activeView={activeView} counts={counts} onChange={setActiveView} />
+      <TodoSidebar
+        activeView={activeView}
+        counts={counts}
+        onChange={setActiveView}
+        onAddTask={handleSidebarAdd}
+      />
 
       <main className="todo-main">
         <TodoHeader title={meta.title} description={headerDescription} />
@@ -173,11 +205,17 @@ export default function TodoPage() {
 
         {activeView === 'inbox' && (
           <div className="todo-view">
+            <InlineTodoComposer
+              defaultDateKey={null}
+              open={composerId === 'inbox'}
+              onOpen={() => openComposer('inbox')}
+              onClose={closeComposer}
+            />
             {data.inbox.length === 0 ? (
               <TodoEmpty
                 icon="📥"
                 title="Inbox is empty"
-                description="Quick capture arrives in Part 6 — tasks created via the API appear here."
+                description="Capture a task above — it stays here until you schedule it."
               />
             ) : (
               <TodoSection title="Unscheduled" count={data.inbox.length}>
@@ -189,6 +227,12 @@ export default function TodoPage() {
 
         {activeView === 'today' && (
           <div className="todo-view">
+            <InlineTodoComposer
+              defaultDateKey={data.todayKey}
+              open={composerId === 'today'}
+              onOpen={() => openComposer('today')}
+              onClose={closeComposer}
+            />
             <TodoSection title="Overdue / Backlog" count={t.backlog.length} tone="warning">
               {renderTasks(t.backlog)}
             </TodoSection>
@@ -242,6 +286,13 @@ export default function TodoPage() {
               </button>
             </div>
 
+            <InlineTodoComposer
+              defaultDateKey={addDaysToKey(data.todayKey, 1)}
+              open={composerId === 'upcoming'}
+              onOpen={() => openComposer('upcoming')}
+              onClose={closeComposer}
+            />
+
             {data.upcoming.length === 0 ? (
               <TodoEmpty
                 icon="📆"
@@ -249,7 +300,7 @@ export default function TodoPage() {
                 description={`Nothing is currently scheduled in the next ${data.upcomingDays} days.`}
               />
             ) : (
-              renderDateGroups(data.upcoming, 'items')
+              renderDateGroups(data.upcoming, 'items', true)
             )}
           </div>
         )}

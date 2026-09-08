@@ -19,6 +19,7 @@ interface Props {
   activeView: TodoView;
   counts: TodoCounts;
   onChange: (view: TodoView) => void;
+  onAddTask: () => void;
 }
 
 const ITEMS: Array<{
@@ -37,6 +38,7 @@ export default function TodoSidebar({
   activeView,
   counts,
   onChange,
+  onAddTask,
 }: Props) {
   return (
     <aside className="todo-sidebar" aria-label="Todo views">
@@ -46,6 +48,11 @@ export default function TodoSidebar({
         </span>
         <span>Todo</span>
       </div>
+
+      <button type="button" className="todo-sidebar__add" onClick={onAddTask}>
+        <span className="todo-sidebar__add-plus" aria-hidden="true">+</span>
+        Add Task
+      </button>
 
       <nav className="todo-sidebar__nav">
         {ITEMS.map((item) => {
@@ -75,10 +82,6 @@ export default function TodoSidebar({
           );
         })}
       </nav>
-
-      <p className="todo-sidebar__note">
-        Personal Inbox tasks will be added later.
-      </p>
     </aside>
   );
 }
