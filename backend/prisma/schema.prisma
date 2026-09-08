@@ -89,6 +89,8 @@ model Task {
   /// cp31Sheet id (e.g. "cp31-1300-07") this task materializes. Null for non-CP31 tasks.
   cp31ProblemId     String?   @map("cp31_problem_id")
   isSkipped         Boolean   @default(false) @map("is_skipped")
+  /// Set when a CP31 problem is skipped (status='skipped'); cleared on retry/solve.
+  skippedAt         DateTime? @map("skipped_at")
   questionBankId    String?   @map("question_bank_id")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at")
@@ -112,6 +114,7 @@ model Task {
   @@index([questionBankId])
   @@index([userId, isBacklog, isExpired])
   @@index([parentTaskId, taskType])
+  @@index([userId, taskType, status])
   @@map("tasks")
 }
 

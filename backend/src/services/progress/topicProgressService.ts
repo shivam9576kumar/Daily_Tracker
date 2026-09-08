@@ -22,7 +22,8 @@ export const topicProgressService = {
     const usePlan = requested !== 'all' && !!plan;
     const where: Prisma.TaskWhereInput = {
       userId,
-      taskType: usePlan ? 'new' : { in: ['new', 'potd'] },
+      taskType: usePlan ? 'new' : { in: ['new', 'potd', 'cp31'] },
+      status: { not: 'skipped' },
       ...(usePlan ? { planId: plan!.id } : {}),
     };
 

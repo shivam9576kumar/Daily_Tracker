@@ -2,6 +2,7 @@ import prisma from '../../config/database';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { getCp31Bands } from '../plan/cp31SheetLoader';
 import { removeUnsolvedPotdTasks } from '../potd/potdService';
+import { removeUnsolvedCp31Tasks } from '../cp31/cp31Service';
 
 export interface DailyChallengeSettings {
   potdEnabled: boolean;
@@ -22,6 +23,7 @@ export interface DailyChallengeSettingsPatch {
 export interface SettingsChangeReport {
   /** Unsolved POTD rows deleted because POTD was turned off in this call. */
   potdUnsolvedRemoved: number;
+  cp31PendingRemoved: number;
 }
 
 const FIELDS = {
@@ -95,11 +97,14 @@ export const dailyChallengeSettingsService = {
     }
 
     const potdTurningOff = current.potdEnabled && !next.potdEnabled;
+    const cp31TurningOff = current.cp31Enabled && !next.cp31Enabled;
+    const cp31BandChanged = next.cp31Band !== current.cp31Band;
 
     const changes = await prisma.$transaction(async (tx) => {
       await tx.user.update({ where: { id: userId }, data: next });
       const potdUnsolvedRemoved = potdTurningOff ? await removeUnsolvedPotdTasks(userId, tx) : 0;
-      return { potdUnsolvedRemoved };
+      const cp31PendingRemoved = (cp31TurningOff || cp31BandChanged) ? await removeUnsolvedCp31Tasks(userId, tx) : 0;
+      return { potdUnsolvedRemoved, cp31PendingRemoved };
     });
 
     return { settings: await this.get(userId), changes };

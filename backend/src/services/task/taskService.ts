@@ -67,7 +67,7 @@ export const taskService = {
       );
     }
 
-    const RESERVED_TASK_TYPES = ['potd', 'revision', 'personal'];
+    const RESERVED_TASK_TYPES = ['potd', 'revision', 'personal', 'cp31'];
     if (data.taskType && RESERVED_TASK_TYPES.includes(data.taskType)) {
       throw new ValidationError('This task type is created automatically and cannot be added manually.');
     }
@@ -122,7 +122,10 @@ export const taskService = {
     },
     tz?: string
   ) {
-    await this.getTaskById(taskId, userId);
+    const existing = await this.getTaskById(taskId, userId);
+    if (existing.taskType === 'cp31') {
+      throw new ValidationError('CP31 problems are managed by the ladder and can’t be edited');
+    }
 
     if (data.difficulty && !DIFFICULTIES.includes(data.difficulty)) {
       throw new ValidationError(
@@ -163,6 +166,9 @@ export const taskService = {
    */
   async deleteTask(taskId: string, userId: string) {
     const task = await this.getTaskById(taskId, userId);
+    if (task.taskType === 'cp31') {
+      throw new ValidationError('CP31 problems are managed by the ladder — use Skip instead of Delete');
+    }
 
     await prisma.$transaction(async (tx) => {
       let refund =

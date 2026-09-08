@@ -3,4 +3,5 @@ export enum TaskStatus {
   COMPLETED = 'completed',
   BACKLOG = 'backlog',
   EXPIRED = 'expired',
+  SKIPPED = 'skipped',
 }

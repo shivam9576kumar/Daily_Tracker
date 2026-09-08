@@ -191,6 +191,7 @@ export const taskCompletionService = {
           isBacklog: false,
           backlogSince: null,
           isExpired: false,
+          skippedAt: null,
         },
       });
 

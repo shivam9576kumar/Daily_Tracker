@@ -1,7 +1,7 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Rating = 'easy' | 'medium' | 'hard';
 export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal' | 'cp31';
-export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired';
+export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired' | 'skipped';
 export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly' | 'yearly';
 
 export interface Task {
@@ -28,6 +28,8 @@ export interface Task {
   isExpired: boolean;
   notes: string | null;
   potdDateKey?: string | null;
+  cp31ProblemId?: string | null;
+  skippedAt?: string | null;
   questionBankId?: string | null;
   recurrence?: Recurrence | null;
   dueTime?: string | null;

@@ -26,6 +26,8 @@ export interface Task {
   backlogSince: Date | null;
   isExpired: boolean;
   notes: string | null;
+  cp31ProblemId: string | null;
+  skippedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
