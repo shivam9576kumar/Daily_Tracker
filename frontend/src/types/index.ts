@@ -2,7 +2,7 @@ export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Rating = 'easy' | 'medium' | 'hard';
 export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal';
 export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired';
-export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly';
+export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly' | 'yearly';
 
 export interface Task {
   id: string;
@@ -31,6 +31,7 @@ export interface Task {
   questionBankId?: string | null;
   recurrence?: Recurrence | null;
   dueTime?: string | null;
+  durationMin?: number | null;
   createdAt: string;
   updatedAt: string;
   revisions?: Task[];

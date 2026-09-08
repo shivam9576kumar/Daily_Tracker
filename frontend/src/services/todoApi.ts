@@ -16,6 +16,7 @@ export const todoApi = {
     scheduledDateKey?: string | null;
     recurrence?: Recurrence | null;
     dueTime?: string | null;
+    durationMin?: number | null;
   }): Promise<Task> {
     const res = await api.post<ApiResponse<Task>>('/todo/tasks', payload);
     return res.data.data;
@@ -28,6 +29,7 @@ export const todoApi = {
       scheduledDateKey?: string | null;
       recurrence?: Recurrence | null;
       dueTime?: string | null;
+      durationMin?: number | null;
     },
   ): Promise<Task> {
     const res = await api.patch<ApiResponse<Task>>(`/todo/tasks/${id}`, payload);

@@ -4,7 +4,7 @@ import RatingPills from '../task/RatingPills';
 import RevisionBadge from '../task/RevisionBadge';
 import { resolvePlatform } from '../../utils/platform';
 import { daysBetween, todayKey } from '../../utils/dateKeys';
-import { recurrenceLabel } from '../../utils/todoDates';
+import { durationLabel, recurrenceLabel } from '../../utils/todoDates';
 import './todo.css';
 
 interface Props {
@@ -114,6 +114,7 @@ export default function TodoTaskRow({
             </>
           )}
           {task.dueTime && <span className="todo-row__platform">{task.dueTime}</span>}
+          {task.durationMin && <span className="todo-row__platform">{durationLabel(task.durationMin)}</span>}
           {task.recurrence && (
             <span className="todo-row__repeat">↻ {recurrenceLabel(task.recurrence)}</span>
           )}

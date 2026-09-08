@@ -3,43 +3,37 @@ import { addDaysToKey, formatKey, todayKey } from './dateKeys';
 
 export interface QuickDateOption {
   id: string;
+  icon: string;
   label: string;
-  hint: string;          // e.g. "Tue", "Sat 13"
-  dateKey: string | null;
+  hint: string;
+  dateKey: string;
 }
 
 /** Next Saturday; if today is Sat/Sun, the weekend is "now" → today. */
-function weekendKey(today: string): string {
+export function weekendKeyOf(today: string): string {
   const dow = new Date(`${today}T00:00:00.000Z`).getUTCDay(); // 0=Sun..6=Sat
   if (dow === 6 || dow === 0) return today;
   return addDaysToKey(today, 6 - dow);
 }
 
 /** Next Monday strictly after today. */
-function nextMondayKey(today: string): string {
+export function nextMondayKeyOf(today: string): string {
   const dow = new Date(`${today}T00:00:00.000Z`).getUTCDay();
   const delta = dow === 0 ? 1 : 8 - dow; // Sun→+1, Mon→+7, Tue→+6, ...
   return addDaysToKey(today, delta);
 }
 
-function shortHint(key: string): string {
-  return formatKey(key, { weekday: 'short', day: 'numeric' });
-}
-
-export function quickDateOptions(): QuickDateOption[] {
+export function quickDateOptionsV3(): QuickDateOption[] {
   const today = todayKey();
   const tomorrow = addDaysToKey(today, 1);
-  const plus3 = addDaysToKey(today, 3);
-  const weekend = weekendKey(today);
-  const monday = nextMondayKey(today);
-
+  const weekend = weekendKeyOf(today);
+  const nextWeek = nextMondayKeyOf(today);
+  const dow = (k: string) => formatKey(k, { weekday: 'short' });
   return [
-    { id: 'today', label: 'Today', hint: shortHint(today), dateKey: today },
-    { id: 'tomorrow', label: 'Tomorrow', hint: shortHint(tomorrow), dateKey: tomorrow },
-    { id: 'plus3', label: '+3 days', hint: shortHint(plus3), dateKey: plus3 },
-    { id: 'weekend', label: 'This weekend', hint: shortHint(weekend), dateKey: weekend },
-    { id: 'monday', label: 'Next Monday', hint: shortHint(monday), dateKey: monday },
-    { id: 'none', label: 'No date', hint: 'Inbox', dateKey: null },
+    { id: 'today', icon: '📅', label: 'Today', hint: dow(today), dateKey: today },
+    { id: 'tomorrow', icon: '☀️', label: 'Tomorrow', hint: dow(tomorrow), dateKey: tomorrow },
+    { id: 'weekend', icon: '🛋', label: 'This weekend', hint: dow(weekend), dateKey: weekend },
+    { id: 'nextweek', icon: '➡️', label: 'Next week', hint: formatKey(nextWeek, { weekday: 'short', day: 'numeric', month: 'short' }), dateKey: nextWeek },
   ];
 }
 
@@ -56,17 +50,59 @@ export function isPastKey(dateKey: string): boolean {
   return dateKey < todayKey();
 }
 
-export const RECURRENCE_OPTIONS: { value: Recurrence | null; label: string }[] = [
-  { value: null, label: 'None' },
-  { value: 'daily', label: 'Daily' },
-  { value: 'weekdays', label: 'Weekdays (Mon–Fri)' },
-  { value: 'weekly', label: 'Weekly' },
-  { value: 'monthly', label: 'Monthly' },
+const ORDINALS = ['th','st','nd','rd'];
+export function ordinal(n: number): string {
+  const v = n % 100;
+  return n + (ORDINALS[(v - 20) % 10] ?? ORDINALS[v] ?? ORDINALS[0]);
+}
+
+export interface RepeatOption { value: Recurrence; label: string; sub?: string }
+
+/** Contextual repeat labels derived from anchor date. */
+export function repeatOptionsFor(dateKey: string | null): RepeatOption[] {
+  const anchor = dateKey ?? todayKey();
+  const weekday = formatKey(anchor, { weekday: 'long' });
+  const day = Number(anchor.slice(8, 10));
+  const monthName = formatKey(anchor, { month: 'long' });
+  return [
+    { value: 'daily', label: 'Every day' },
+    { value: 'weekly', label: 'Every week', sub: `on ${weekday}` },
+    { value: 'weekdays', label: 'Every weekday', sub: '(Mon - Fri)' },
+    { value: 'monthly', label: 'Every month', sub: `on the ${ordinal(day)}` },
+    { value: 'yearly', label: 'Every year', sub: `on ${monthName} ${ordinal(day)}` },
+  ];
+}
+
+export function recurrenceChipLabel(r: Recurrence | null | undefined): string | null {
+  if (!r) return null;
+  return { daily: 'Daily', weekdays: 'Weekdays', weekly: 'Weekly', monthly: 'Monthly', yearly: 'Yearly' }[r];
+}
+
+export const recurrenceLabel = recurrenceChipLabel;
+
+export const DURATION_OPTIONS: { value: number | null; label: string }[] = [
+  { value: null, label: 'No duration' },
+  { value: 15, label: '15 min' }, { value: 30, label: '30 min' },
+  { value: 45, label: '45 min' }, { value: 60, label: '1 h' },
+  { value: 90, label: '1 h 30 min' }, { value: 120, label: '2 h' },
 ];
 
-export function recurrenceLabel(r: Recurrence | null | undefined): string | null {
-  if (!r) return null;
-  return RECURRENCE_OPTIONS.find((o) => o.value === r)?.label?.replace(' (Mon–Fri)', '') ?? null;
+export function durationLabel(min: number | null | undefined): string | null {
+  if (!min) return null;
+  return DURATION_OPTIONS.find((o) => o.value === min)?.label ?? `${min} min`;
+}
+
+/** Months for continuous calendar: current + next `count`. */
+export function monthSequence(count = 4): { year: number; month: number }[] {
+  const t = todayKey();
+  let y = Number(t.slice(0, 4));
+  let m = Number(t.slice(5, 7));
+  const out: { year: number; month: number }[] = [];
+  for (let i = 0; i < count; i++) {
+    out.push({ year: y, month: m });
+    m++; if (m > 12) { m = 1; y++; }
+  }
+  return out;
 }
 
 const MONTHS: Record<string, number> = {

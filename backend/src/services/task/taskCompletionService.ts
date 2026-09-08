@@ -214,6 +214,7 @@ export const taskCompletionService = {
             status: 'pending',
             recurrence: task.recurrence,
             dueTime: task.dueTime,
+            durationMin: task.durationMin,
             scheduledDate: new Date(`${nextKey}T00:00:00.000Z`),
             scheduledDateKey: nextKey,
           },

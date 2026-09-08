@@ -129,6 +129,29 @@ async function main() {
     const t2 = await prisma.task.findUnique({ where: { id: inboxTask2.id } });
     check('overdue personal eligible for backlog (key < today, not null)',
       t2 !== null && t2.scheduledDateKey !== null && t2.scheduledDateKey < today);
+
+    // 14. Yearly recurrence + time + duration
+    const y = await personalTaskService.create(uid, {
+      title: 'Birthday reminder', scheduledDateKey: today, recurrence: 'yearly', dueTime: '11:45', durationMin: 30,
+    });
+    check('yearly+time+duration stored', y.recurrence === 'yearly' && y.dueTime === '11:45' && y.durationMin === 30);
+    await taskCompletionService.completeTask(uid, y.id, undefined, TZ);
+    const spawnY = await prisma.task.findFirst({ where: { parentTaskId: y.id, status: 'pending' } });
+    const expectYear = String(Number(today.slice(0, 4)) + 1);
+    check('yearly spawn next year, fields copied',
+      spawnY !== null && (spawnY.scheduledDateKey ?? '').startsWith(expectYear) &&
+      spawnY.dueTime === '11:45' && spawnY.durationMin === 30);
+
+    // 15. Bad duration rejected
+    let badDur = false;
+    try { await personalTaskService.create(uid, { title: 'x', scheduledDateKey: today, durationMin: 17 }); }
+    catch { badDur = true; }
+    check('invalid durationMin rejected', badDur);
+
+    // 16. Clear date clears time+duration+repeat (trio clear)
+    await personalTaskService.update(uid, y.id, { scheduledDateKey: null });
+    const cleared = await prisma.task.findUnique({ where: { id: y.id } });
+    check('no-date clears trio', cleared?.recurrence === null && cleared?.dueTime === null && cleared?.durationMin === null);
   } finally {
     await prisma.user.deleteMany({ where: { email } });
     await prisma.$disconnect();

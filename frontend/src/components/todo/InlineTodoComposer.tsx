@@ -4,7 +4,7 @@ import { todoApi } from '../../services/todoApi';
 import { getErrorMessage } from '../../services/api';
 import { useTodoStore } from '../../store/todoStore';
 import { useUIStore } from '../../store/uiStore';
-import { dateChipLabel, recurrenceLabel } from '../../utils/todoDates';
+import { dateChipLabel, durationLabel, recurrenceChipLabel } from '../../utils/todoDates';
 import './todo.css';
 
 const MAX_TITLE = 200;
@@ -27,6 +27,7 @@ export default function InlineTodoComposer({
   const [sel, setSel] = useState<DateSelection>({
     dateKey: defaultDateKey,
     dueTime: null,
+    durationMin: null,
     recurrence: null,
   });
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -37,7 +38,7 @@ export default function InlineTodoComposer({
   // Re-sync default when the composer opens in a new context
   useEffect(() => {
     if (open) {
-      setSel({ dateKey: defaultDateKey, dueTime: null, recurrence: null });
+      setSel({ dateKey: defaultDateKey, dueTime: null, durationMin: null, recurrence: null });
       setErrorText('');
       // focus after paint
       const t = window.setTimeout(() => inputRef.current?.focus(), 0);
@@ -59,6 +60,7 @@ export default function InlineTodoComposer({
         title: trimmed,
         scheduledDateKey: sel.dateKey,
         dueTime: sel.dueTime,
+        durationMin: sel.durationMin,
         recurrence: sel.recurrence,
       });
       setTitle('');
@@ -75,7 +77,8 @@ export default function InlineTodoComposer({
   const chipText = [
     dateChipLabel(sel.dateKey),
     sel.dueTime,
-    recurrenceLabel(sel.recurrence) ? `↻ ${recurrenceLabel(sel.recurrence)}` : null,
+    durationLabel(sel.durationMin),
+    recurrenceChipLabel(sel.recurrence) ? `↻ ${recurrenceChipLabel(sel.recurrence)}` : null,
   ].filter(Boolean).join(' · ');
 
   if (!open) {

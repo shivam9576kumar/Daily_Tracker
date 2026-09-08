@@ -36,6 +36,16 @@ function parseDueTime(raw: unknown): string | null | undefined {
   throw new ValidationError('dueTime must be HH:MM (00:00–23:59) or null');
 }
 
+const DURATION_ALLOWED = [15, 30, 45, 60, 90, 120];
+
+function parseDurationMin(raw: unknown): number | null | undefined {
+  if (raw === undefined) return undefined;
+  if (raw === null || raw === '') return null;
+  const n = Number(raw);
+  if (Number.isInteger(n) && DURATION_ALLOWED.includes(n)) return n;
+  throw new ValidationError(`durationMin must be one of: ${DURATION_ALLOWED.join(', ')}, or null`);
+}
+
 function scheduleFields(dateKey: string | null) {
   return dateKey === null
     ? { scheduledDate: null, scheduledDateKey: null }
@@ -44,12 +54,13 @@ function scheduleFields(dateKey: string | null) {
 
 export const personalTaskService = {
   async create(userId: string, body: {
-    title?: unknown; scheduledDateKey?: unknown; recurrence?: unknown; dueTime?: unknown;
+    title?: unknown; scheduledDateKey?: unknown; recurrence?: unknown; dueTime?: unknown; durationMin?: unknown;
   }) {
     const title = assertTitle(body.title);
     let dateKey = parseDateKey(body.scheduledDateKey) ?? null;
     const recurrence = parseRecurrence(body.recurrence) ?? null;
     const dueTime = parseDueTime(body.dueTime) ?? null;
+    const durationMin = parseDurationMin(body.durationMin) ?? null;
 
     if (recurrence && dateKey === null) {
       throw new ValidationError('A repeating task needs a date');
@@ -67,6 +78,7 @@ export const personalTaskService = {
         status: 'pending',
         recurrence,
         dueTime,
+        durationMin,
         ...scheduleFields(dateKey),
       },
     });
@@ -75,7 +87,7 @@ export const personalTaskService = {
   async update(
     userId: string,
     taskId: string,
-    body: { title?: unknown; scheduledDateKey?: unknown; recurrence?: unknown; dueTime?: unknown },
+    body: { title?: unknown; scheduledDateKey?: unknown; recurrence?: unknown; dueTime?: unknown; durationMin?: unknown },
   ) {
     const task = await prisma.task.findFirst({
       where: { id: taskId, userId, taskType: 'personal' },
@@ -85,6 +97,7 @@ export const personalTaskService = {
     const dateKey = parseDateKey(body.scheduledDateKey);
     const recurrence = parseRecurrence(body.recurrence);
     const dueTime = parseDueTime(body.dueTime);
+    const durationMin = parseDurationMin(body.durationMin);
 
     if (recurrence && dateKey === null && task.scheduledDateKey === null && dateKey !== undefined) {
       throw new ValidationError('A repeating task needs a date');
@@ -96,10 +109,11 @@ export const personalTaskService = {
         ...(body.title !== undefined ? { title: assertTitle(body.title) } : {}),
         ...(recurrence !== undefined ? { recurrence } : {}),
         ...(dueTime !== undefined ? { dueTime } : {}),
+        ...(durationMin !== undefined ? { durationMin } : {}),
         ...(dateKey !== undefined
           ? {
               ...scheduleFields(dateKey),
-              ...(dateKey === null ? { recurrence: null } : {}),   // no-date ⇒ no repeat
+              ...(dateKey === null ? { recurrence: null, dueTime: null, durationMin: null } : {}),   // no-date ⇒ clear trio
               isBacklog: false,
               backlogSince: null,
               ...(task.status === 'backlog' ? { status: 'pending' } : {}),

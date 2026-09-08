@@ -146,6 +146,7 @@ export default function TodoPage() {
         await todoApi.updatePersonal(dateTarget.id, {
           scheduledDateKey: selection.dateKey,
           dueTime: selection.dueTime,
+          durationMin: selection.durationMin,
           recurrence: selection.recurrence,
         });
         toast(selection.dateKey ? 'Task rescheduled' : 'Moved to Inbox', 'success');
@@ -460,6 +461,7 @@ export default function TodoPage() {
               value={{
                 dateKey: dateTarget.scheduledDateKey ?? null,
                 dueTime: dateTarget.dueTime ?? null,
+                durationMin: dateTarget.durationMin ?? null,
                 recurrence: dateTarget.recurrence ?? null,
               }}
               onApply={(selection) => void applyDateToTask(selection)}
