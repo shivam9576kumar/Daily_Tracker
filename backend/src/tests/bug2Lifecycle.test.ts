@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
-import test, { TestContext } from 'node:test';
+import test from 'node:test';
 import {
   isOpenBacklogTask,
   isOverdueLifecycleTask,
   getUndoLifecyclePatch,
   BACKLOG_TASK_TYPES,
 } from '../services/task/taskLifecycle';
-import { taskScheduleForKey, todayKey, dateKeyInTz } from '../utils/dateKeys';
+import { taskScheduleForKey, todayKey, dateKeyInTz, addDaysToKey } from '../utils/dateKeys';
+import { BACKLOG_EXPIRY_DAYS } from '@dsa-planner/shared';
+import { runRepairTaskLifecycle } from '../../scripts/repairTaskLifecycle';
 
 test('A. Backlog eligibility predicates', () => {
   const today = '2026-04-01';
@@ -113,6 +115,24 @@ test('A. Backlog eligibility predicates', () => {
     false,
     'isExpired true contradicts open backlog',
   );
+});
+
+test('B. Expiry calculation and thresholds', () => {
+  const tz = 'Asia/Kolkata';
+  const userToday = '2026-04-08';
+  assert.equal(BACKLOG_EXPIRY_DAYS, 7, 'BACKLOG_EXPIRY_DAYS is 7');
+
+  // Task entered backlog on 2026-04-01 -> expires on 2026-04-08 -> on userToday 2026-04-08 it IS expired!
+  const backlogDate1 = new Date('2026-04-01T10:00:00.000Z');
+  const backlogDay1 = dateKeyInTz(backlogDate1, tz);
+  const expiresOn1 = addDaysToKey(backlogDay1, BACKLOG_EXPIRY_DAYS);
+  assert.equal(expiresOn1 <= userToday, true, 'Task entered backlog on 2026-04-01 expires on 2026-04-08');
+
+  // Task entered backlog on 2026-04-02 -> expires on 2026-04-09 -> on userToday 2026-04-08 it is NOT expired yet!
+  const backlogDate2 = new Date('2026-04-02T10:00:00.000Z');
+  const backlogDay2 = dateKeyInTz(backlogDate2, tz);
+  const expiresOn2 = addDaysToKey(backlogDay2, BACKLOG_EXPIRY_DAYS);
+  assert.equal(expiresOn2 <= userToday, false, 'Task entered backlog on 2026-04-02 does not expire on 2026-04-08');
 });
 
 test('C & D. Undo lifecycle patch for ordinary tasks', () => {
@@ -229,6 +249,24 @@ test('G. POTD undo preserves challenge identity', () => {
   assert.equal(potdPatch.status, 'pending');
   assert.equal(potdPatch.isBacklog, false);
   assert.equal(potdPatch.isExpired, false);
-  // scheduledDate and scheduledDateKey are untouched on reset
   assert.equal('scheduledDateKey' in potdPatch, false);
+});
+
+test('J. Original solve date clearing on undo', () => {
+  const tz = 'Asia/Kolkata';
+  const now = new Date('2026-04-01T10:00:00.000Z');
+
+  const patch = getUndoLifecyclePatch(
+    { taskType: 'new', scheduledDateKey: '2026-04-01', cp31ProblemId: null },
+    tz,
+    now,
+  );
+
+  assert.equal(patch.originalSolveDate, null, 'Undo explicitly clears originalSolveDate to null');
+});
+
+test('M. Repair script dry-run safety verification', async () => {
+  const result = await runRepairTaskLifecycle({ apply: false });
+  assert.equal(typeof result.actionsCount, 'number');
+  assert.equal(typeof result.ambiguousCount, 'number');
 });

@@ -306,7 +306,8 @@ export const taskCompletionService = {
 
   /**
    * Undo solve: full revert according to lifecycle policy.
-   *  - Reads state inside transaction for strict concurrency safety.
+   *  - Isolated in a Serializable Prisma transaction with P2034 retry loop for concurrency safety.
+   *  - Reads state inside transaction; if already undone, returns task with no duplicate refund.
    *  - Clears rating, completedAt, originalSolveDate.
    *  - Restores overdue ordinary tasks immediately to backlog (backlogSince = now).
    *  - CP31: active band → pending Today; inactive/disabled band → parked (null keys).
@@ -316,89 +317,106 @@ export const taskCompletionService = {
    *  - Refunds base + bonus + completed child revision coins on first undo only.
    */
   async undoTask(userId: string, taskId: string, tz: string = env.DEFAULT_TIMEZONE) {
-    const result = await prisma.$transaction(async (tx) => {
-      const task = await tx.task.findFirst({ where: { id: taskId, userId } });
-      if (!task) throw new NotFoundError('Task');
+    const maxRetries = 5;
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const result = await prisma.$transaction(
+          async (tx) => {
+            const task = await tx.task.findFirst({ where: { id: taskId, userId } });
+            if (!task) throw new NotFoundError('Task');
 
-      if (task.status === 'pending' || task.status === 'backlog') {
-        return task;
-      }
+            if (task.status === 'pending' || task.status === 'backlog') {
+              return task;
+            }
 
-      if (task.status === 'skipped') {
-        throw new ValidationError('Skipped tasks cannot be undone. Use the Retry endpoint instead.');
-      }
+            if (task.status === 'skipped') {
+              throw new ValidationError('Skipped tasks cannot be undone. Use the Retry endpoint instead.');
+            }
 
-      if (task.status === 'expired') {
-        throw new ValidationError('Expired tasks cannot be undone.');
-      }
+            if (task.status === 'expired') {
+              throw new ValidationError('Expired tasks cannot be undone.');
+            }
 
-      if (task.status !== 'completed') {
-        throw new ValidationError('Task is not completed');
-      }
+            if (task.status !== 'completed') {
+              throw new ValidationError('Task is not completed');
+            }
 
-      const now = new Date();
-      const user = await tx.user.findUnique({
-        where: { id: userId },
-        select: { cp31Enabled: true, cp31Band: true, coins: true },
-      });
-
-      const patch = getUndoLifecyclePatch(task, tz, now, {
-        cp31Enabled: user?.cp31Enabled ?? false,
-        cp31Band: user?.cp31Band ?? null,
-      });
-
-      const isRevision = task.taskType === 'revision';
-      let totalRefund = 0;
-
-      if (!isRevision) {
-        if (task.taskType === 'personal') {
-          if (task.recurrence) {
-            await tx.task.deleteMany({
-              where: {
-                userId,
-                parentTaskId: taskId,
-                taskType: 'personal',
-                status: 'pending',
-              },
+            const now = new Date();
+            const user = await tx.user.findUnique({
+              where: { id: userId },
+              select: { cp31Enabled: true, cp31Band: true, coins: true },
             });
-          }
-        } else {
-          totalRefund += COIN_REWARDS.solve + bonusFor(task.rating);
 
-          const doneRevs = await tx.task.count({
-            where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
-          });
-          totalRefund += doneRevs * COIN_REWARDS.revision;
+            const patch = getUndoLifecyclePatch(task, tz, now, {
+              cp31Enabled: user?.cp31Enabled ?? false,
+              cp31Band: user?.cp31Band ?? null,
+            });
 
-          await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
-          await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
+            const isRevision = task.taskType === 'revision';
+            let totalRefund = 0;
+
+            if (!isRevision) {
+              if (task.taskType === 'personal') {
+                if (task.recurrence) {
+                  await tx.task.deleteMany({
+                    where: {
+                      userId,
+                      parentTaskId: taskId,
+                      taskType: 'personal',
+                      status: 'pending',
+                    },
+                  });
+                }
+              } else {
+                totalRefund += COIN_REWARDS.solve + bonusFor(task.rating);
+
+                const doneRevs = await tx.task.count({
+                  where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
+                });
+                totalRefund += doneRevs * COIN_REWARDS.revision;
+
+                await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+                await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
+              }
+            } else {
+              totalRefund += COIN_REWARDS.revision;
+
+              await tx.revision.updateMany({
+                where: { revisionTaskId: taskId },
+                data: { status: 'pending', completedAt: null },
+              });
+            }
+
+            const updated = await tx.task.update({
+              where: { id: taskId },
+              data: patch,
+            });
+
+            if (totalRefund > 0 && user) {
+              await tx.user.update({
+                where: { id: userId },
+                data: { coins: Math.max(0, user.coins - totalRefund) },
+              });
+            }
+
+            return updated;
+          },
+          {
+            isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+            maxWait: 15_000,
+            timeout: 60_000,
+          },
+        );
+
+        invalidateUserCache(userId);
+        return result;
+      } catch (err: any) {
+        if (err?.code === 'P2034' && attempt < maxRetries - 1) {
+          continue;
         }
-      } else {
-        totalRefund += COIN_REWARDS.revision;
-
-        await tx.revision.updateMany({
-          where: { revisionTaskId: taskId },
-          data: { status: 'pending', completedAt: null },
-        });
+        throw err;
       }
-
-      const updated = await tx.task.update({
-        where: { id: taskId },
-        data: patch,
-      });
-
-      if (totalRefund > 0 && user) {
-        await tx.user.update({
-          where: { id: userId },
-          data: { coins: Math.max(0, user.coins - totalRefund) },
-        });
-      }
-
-      return updated;
-    }, TX_OPTIONS);
-
-    invalidateUserCache(userId);
-    return result;
+    }
   },
 
   /** Backward-compatible helper aliases */
