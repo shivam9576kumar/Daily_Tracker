@@ -19,7 +19,24 @@ import { getUndoLifecyclePatch } from './taskLifecycle';
 import {
   COIN_REWARDS,
   calculateRatingBonus,
+  applyCoinRefund,
 } from '../../config/rewards';
+
+export interface TaskMutationResult {
+  task: Task;
+  coinsDelta: number;
+}
+
+export function makeMutationResult<T extends object>(task: T, coinsDelta: number): TaskMutationResult & T {
+  return new Proxy({ task, coinsDelta } as any, {
+    get(target, prop, receiver) {
+      if (prop in target) {
+        return Reflect.get(target, prop, receiver);
+      }
+      return Reflect.get(task, prop);
+    },
+  });
+}
 
 export type Rating = 'easy' | 'medium' | 'hard';
 
@@ -204,7 +221,7 @@ export const taskCompletionService = {
         await tx.task.create({
           data: {
             userId,
-            parentTaskId: task.id,          // recurrence chain link
+            recurrenceParentId: task.id,          // recurrence chain link
             title: task.title,
             topic: 'Personal',
             taskType: 'personal',
@@ -235,7 +252,13 @@ export const taskCompletionService = {
           const user = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
           await tx.user.update({
             where: { id: userId },
-            data: { coins: Math.max(0, (user?.coins ?? 0) + coinDelta) },
+            data: {
+              coins: applyCoinRefund(user?.coins ?? 0, -coinDelta, {
+                userId,
+                taskId,
+                reason: 'completeTask',
+              }),
+            },
           });
         }
       }
@@ -250,7 +273,7 @@ export const taskCompletionService = {
       return updated;
     }, TX_OPTIONS);
     invalidateUserCache(userId);
-    return result;
+    return makeMutationResult(result, coinDelta);
   },
 
   /**
@@ -294,14 +317,20 @@ export const taskCompletionService = {
         if (user) {
           await tx.user.update({
             where: { id: userId },
-            data: { coins: Math.max(0, user.coins - totalRefund) },
+            data: {
+              coins: applyCoinRefund(user.coins, totalRefund, {
+                userId,
+                taskId,
+                reason: 'unrateTask',
+              }),
+            },
           });
         }
       }
-      return updated;
+      return { updated, totalRefund };
     }, TX_OPTIONS);
     invalidateUserCache(userId);
-    return result;
+    return makeMutationResult(result.updated, result.totalRefund === 0 ? 0 : -result.totalRefund);
   },
 
   /**
@@ -326,7 +355,7 @@ export const taskCompletionService = {
             if (!task) throw new NotFoundError('Task');
 
             if (task.status === 'pending' || task.status === 'backlog') {
-              return task;
+              return { updated: task, totalRefund: 0 };
             }
 
             if (task.status === 'skipped') {
@@ -361,7 +390,7 @@ export const taskCompletionService = {
                   await tx.task.deleteMany({
                     where: {
                       userId,
-                      parentTaskId: taskId,
+                      recurrenceParentId: taskId,
                       taskType: 'personal',
                       status: 'pending',
                     },
@@ -395,11 +424,17 @@ export const taskCompletionService = {
             if (totalRefund > 0 && user) {
               await tx.user.update({
                 where: { id: userId },
-                data: { coins: Math.max(0, user.coins - totalRefund) },
+                data: {
+                  coins: applyCoinRefund(user.coins, totalRefund, {
+                    userId,
+                    taskId,
+                    reason: 'undoTask',
+                  }),
+                },
               });
             }
 
-            return updated;
+            return { updated, totalRefund };
           },
           {
             isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
@@ -409,7 +444,7 @@ export const taskCompletionService = {
         );
 
         invalidateUserCache(userId);
-        return result;
+        return makeMutationResult(result.updated, result.totalRefund === 0 ? 0 : -result.totalRefund);
       } catch (err: any) {
         if (err?.code === 'P2034' && attempt < maxRetries - 1) {
           continue;
@@ -417,6 +452,7 @@ export const taskCompletionService = {
         throw err;
       }
     }
+    throw new Error('undoTask failed after max retries');
   },
 
   /** Backward-compatible helper aliases */

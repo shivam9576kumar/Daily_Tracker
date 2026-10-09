@@ -38,7 +38,13 @@ export interface Task {
   updatedAt: string;
   revisions?: Task[];
   parentTask?: Task | null;
+  recurrenceParentId?: string | null;
   isPlanArchived?: boolean;
+}
+
+export interface TaskMutationResult {
+  task: Task;
+  coinsDelta: number;
 }
 
 export interface StatusOverview {

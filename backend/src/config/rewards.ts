@@ -73,3 +73,35 @@ export function calculateCoins(
 ): number {
   return calculateSolveCoins(taskType);
 }
+
+import logger from '../utils/logger';
+
+/**
+ * Applies a coin refund with a zero floor.
+ *
+ * A refund that would drive the balance below zero indicates an
+ * accounting defect upstream (double refund, incorrect completed-child
+ * count, or an unclosed concurrency race). This is intentionally never
+ * silent: it is logged as an error for monitoring/alerting even though
+ * the balance is still clamped to zero to avoid a broken UI state.
+ */
+export function applyCoinRefund(
+  currentCoins: number,
+  refund: number,
+  context: { userId: string; taskId: string; reason: string },
+): number {
+  const next = currentCoins - refund;
+
+  if (next < 0) {
+    logger.error('Coin invariant violation: refund exceeds balance', {
+      userId: context.userId,
+      taskId: context.taskId,
+      reason: context.reason,
+      currentCoins,
+      refund,
+      wouldBe: next,
+    });
+  }
+
+  return Math.max(0, next);
+}

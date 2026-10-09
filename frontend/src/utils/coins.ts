@@ -1,10 +1,11 @@
 import type { Task } from '../types';
 
 /**
- * Mirrors backend/src/config/rewards.ts.
+ * Pre-action display estimate only.
  *
- * Used only for optimistic toast text.
- * The backend remains the authoritative source of the actual balance.
+ * MUST NEVER be used to describe the result of a completed mutation.
+ * Completed mutation toasts must always use the actual `coinsDelta`
+ * returned by the backend (TaskMutationResult).
  */
 export function coinsFor(
   task: Pick<Task, 'taskType' | 'difficulty'>,

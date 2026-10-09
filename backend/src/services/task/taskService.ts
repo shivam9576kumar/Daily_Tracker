@@ -1,7 +1,7 @@
 import prisma from '../../config/database';
 import { taskRepository } from '../../repositories/taskRepository';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import { calculateCompletedTaskCoins } from '../../config/rewards';
+import { calculateCompletedTaskCoins, applyCoinRefund } from '../../config/rewards';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolveTimeZone, taskScheduleFromInput, todayKey } from '../../utils/dateKeys';
 import { isOverdueLifecycleTask } from './taskLifecycle';
@@ -257,6 +257,13 @@ export const taskService = {
         });
       }
 
+      // Explicit policy for ALL task types that may have recurrence
+      // children (currently only 'personal'): unlink, never cascade-delete.
+      await tx.task.updateMany({
+        where: { recurrenceParentId: taskId },
+        data: { recurrenceParentId: null },
+      });
+
       await tx.task.delete({
         where: { id: taskId },
       });
@@ -270,7 +277,11 @@ export const taskService = {
         await tx.user.update({
           where: { id: userId },
           data: {
-            coins: Math.max(0, (user?.coins ?? 0) - refund),
+            coins: applyCoinRefund(user?.coins ?? 0, refund, {
+              userId,
+              taskId,
+              reason: 'deleteTask',
+            }),
           },
         });
       }

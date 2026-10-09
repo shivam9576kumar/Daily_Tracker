@@ -4,8 +4,7 @@ import { getErrorMessage } from '../services/api';
 import { useUIStore } from '../store/uiStore';
 import { usePlanStore } from '../store/planStore';
 import { useTodoStore } from '../store/todoStore';
-import { coinsFor } from '../utils/coins';
-import type { Rating, Task } from '../types';
+import type { Rating, Task, TaskMutationResult } from '../types';
 
 type Kind = 'success' | 'info' | 'error';
 
@@ -19,17 +18,22 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
   const [busyId, setBusyId] = useState<string | null>(null);
 
   const run = useCallback(
-    async (id: string, call: () => Promise<Task>, message: (updated: Task) => string, kind: Kind): Promise<Task | null> => {
+    async <T>(
+      id: string,
+      call: () => Promise<T>,
+      message: (result: T) => string,
+      kind: Kind,
+    ): Promise<T | null> => {
       if (busyId) return null;
       setBusyId(id);
       try {
-        const updated = await call();
-        toast(message(updated), kind);
+        const result = await call();
+        toast(message(result), kind);
         await onChanged();
         // Keep active plan & roadmap revisions synchronized
         usePlanStore.getState().fetchActive().catch(() => {});
         useTodoStore.getState().fetch(true).catch(() => {});
-        return updated;
+        return result;
       } catch (err) {
         toast(getErrorMessage(err), 'error');
         return null;
@@ -37,29 +41,29 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
         setBusyId(null);
       }
     },
-    [toast, onChanged]
+    [toast, onChanged, busyId]
   );
 
-  const solve = useCallback((task: Task) => run(
+  const solve = useCallback((task: Task) => run<TaskMutationResult>(
     task.id,
     () => taskApi.complete(task.id),
-    () =>
+    (result) =>
       task.taskType === 'personal'
         ? 'Done ✓'
         : task.taskType === 'revision'
-          ? `Revision done · +${coinsFor(task)} coins`
-          : `Solved · +${coinsFor(task)} coins · pick Easy / Medium / Hard to schedule revisions`,
+          ? `Revision done · +${result.coinsDelta} coins`
+          : `Solved · +${result.coinsDelta} coins · pick Easy / Medium / Hard to schedule revisions`,
     'success'
   ), [run]);
 
-  const unsolve = useCallback((task: Task) => run(
+  const unsolve = useCallback((task: Task) => run<TaskMutationResult>(
     task.id,
     () => taskApi.undo(task.id),
-    (u) => [
+    (result) => [
       'Marked as unsolved',
-      u.status === 'backlog' ? 'back in your backlog' : null,
+      result.task.status === 'backlog' ? 'back in your backlog' : null,
       task.rating ? 'revision plan cleared' : null,
-      task.taskType === 'personal' ? null : `−${coinsFor(task)} coins`,
+      task.taskType === 'personal' || result.coinsDelta === 0 ? null : `${result.coinsDelta} coins`,
     ].filter(Boolean).join(' · '),
     'info'
   ), [run]);
@@ -69,17 +73,23 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
     [solve, unsolve]
   );
 
-  const rate = useCallback((task: Task, rating: Rating) => run(
+  const rate = useCallback((task: Task, rating: Rating) => run<TaskMutationResult>(
     task.id,
     () => taskApi.rate(task.id, rating),
-    () => `Rated ${rating} · revisions scheduled — see them on your Roadmap`,
+    (result) =>
+      result.coinsDelta > 0
+        ? `Rated ${rating} · +${result.coinsDelta} coins · revisions scheduled — see them on your Roadmap`
+        : `Rated ${rating} · revisions scheduled — see them on your Roadmap`,
     'success'
   ), [run]);
 
-  const unrate = useCallback((task: Task) => run(
+  const unrate = useCallback((task: Task) => run<TaskMutationResult>(
     task.id,
     () => taskApi.unrate(task.id),
-    () => 'Rating removed · upcoming revisions cleared · still counts as solved',
+    (result) =>
+      result.coinsDelta < 0
+        ? `Rating removed · ${result.coinsDelta} coins · upcoming revisions cleared · still counts as solved`
+        : 'Rating removed · upcoming revisions cleared · still counts as solved',
     'info'
   ), [run]);
 

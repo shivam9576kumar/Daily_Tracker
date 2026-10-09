@@ -1,5 +1,5 @@
 import api from './api';
-import type { ApiResponse, CreateTaskPayload, Rating, Task } from '../types';
+import type { ApiResponse, CreateTaskPayload, Rating, Task, TaskMutationResult } from '../types';
 
 export const taskApi = {
   async getAll(params?: Record<string, string>): Promise<Task[]> {
@@ -23,23 +23,23 @@ export const taskApi = {
   },
 
   /** Solve. Rating is optional (new problems only). */
-  async complete(id: string, rating?: Rating): Promise<Task> {
-    const res = await api.post<ApiResponse<Task>>(`/tasks/${id}/complete`, rating ? { rating } : {});
+  async complete(id: string, rating?: Rating): Promise<TaskMutationResult> {
+    const res = await api.post<ApiResponse<TaskMutationResult>>(`/tasks/${id}/complete`, rating ? { rating } : {});
     return res.data.data;
   },
-  /** Rate or re-rate a solved problem → (re)schedules revisions. Coins unaffected. */
-  async rate(id: string, rating: Rating): Promise<Task> {
-    const res = await api.post<ApiResponse<Task>>(`/tasks/${id}/rate`, { rating });
+  /** Rate or re-rate a solved problem → (re)schedules revisions. */
+  async rate(id: string, rating: Rating): Promise<TaskMutationResult> {
+    const res = await api.post<ApiResponse<TaskMutationResult>>(`/tasks/${id}/rate`, { rating });
     return res.data.data;
   },
   /** Remove the revision plan, keep the solve. */
-  async unrate(id: string): Promise<Task> {
-    const res = await api.post<ApiResponse<Task>>(`/tasks/${id}/unrate`);
+  async unrate(id: string): Promise<TaskMutationResult> {
+    const res = await api.post<ApiResponse<TaskMutationResult>>(`/tasks/${id}/unrate`);
     return res.data.data;
   },
   /** Unsolve (one step, even when rated). */
-  async undo(id: string): Promise<Task> {
-    const res = await api.post<ApiResponse<Task>>(`/tasks/${id}/undo`);
+  async undo(id: string): Promise<TaskMutationResult> {
+    const res = await api.post<ApiResponse<TaskMutationResult>>(`/tasks/${id}/undo`);
     return res.data.data;
   },
   async clearPendingRevisions(): Promise<{ cleared: number }> {

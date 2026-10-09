@@ -155,6 +155,7 @@ export const taskRepository = {
       where: { id: taskId, userId },
       include: {
         revisions: {
+          where: { taskType: 'revision' },
           orderBy: { revisionNumber: 'asc' },
         },
         parentTask: true,

@@ -120,9 +120,20 @@ export const personalTaskService = {
     const dueTime = parseDueTime(body.dueTime);
     const durationMin = parseDurationMin(body.durationMin);
 
-    if (recurrence && dateKey === null && task.scheduledDateKey === null && dateKey !== undefined) {
+    // Compute the EFFECTIVE post-update values, not just the patch fields,
+    // so an omitted scheduledDateKey on an already-Inbox task is still
+    // caught when recurrence is being set in the same request.
+    // Moving a task to Inbox (dateKey === null) clears recurrence unless
+    // a new recurrence was explicitly provided.
+    const effectiveDateKey = dateKey !== undefined ? dateKey : task.scheduledDateKey;
+    const effectiveRecurrence =
+      recurrence !== undefined ? recurrence : (dateKey === null ? null : task.recurrence);
+
+    if (effectiveRecurrence && effectiveDateKey === null) {
       throw new ValidationError('A repeating task needs a date');
     }
+
+    const isExplicitReschedule = dateKey !== undefined;
 
     let lifecyclePatch: {
       status?: string;
@@ -131,7 +142,7 @@ export const personalTaskService = {
       isExpired?: boolean;
     } = {};
 
-    if (dateKey !== undefined && task.status !== 'completed') {
+    if (isExplicitReschedule && task.status !== 'completed') {
       const today = todayKey(effectiveTz);
       const isOverdue = dateKey !== null && isOverdueLifecycleTask({ taskType: 'personal', scheduledDateKey: dateKey }, today);
 
@@ -161,10 +172,10 @@ export const personalTaskService = {
         ...(recurrence !== undefined ? { recurrence } : {}),
         ...(dueTime !== undefined ? { dueTime } : {}),
         ...(durationMin !== undefined ? { durationMin } : {}),
-        ...(dateKey !== undefined
+        ...(isExplicitReschedule
           ? {
               ...scheduleFields(dateKey, effectiveTz),
-              ...(dateKey === null ? { recurrence: null, dueTime: null, durationMin: null } : {}),   // no-date ⇒ clear trio
+              ...(dateKey === null ? { recurrence: null, dueTime: null, durationMin: null } : {}),
               ...lifecyclePatch,
             }
           : {}),

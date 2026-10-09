@@ -60,7 +60,8 @@ model Task {
   id                String    @id @default(uuid())
   userId            String    @map("user_id")
   planId            String?   @map("plan_id")
-  parentTaskId      String?   @map("parent_task_id")
+  parentTaskId       String?   @map("parent_task_id")
+  recurrenceParentId String?   @map("recurrence_parent_id")
   title             String    @default("Untitled")
   topic             String    @default("General")
   difficulty        String?   @default("medium") // easy | medium | hard
@@ -96,13 +97,15 @@ model Task {
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at")
 
-  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  plan            Plan?      @relation(fields: [planId], references: [id], onDelete: SetNull)
-  parentTask      Task?      @relation("TaskRevisions", fields: [parentTaskId], references: [id], onDelete: SetNull)
-  revisions       Task[]     @relation("TaskRevisions")
-  taskNotes       Note[]
-  revisionRecords Revision[] @relation("RevisionParent")
-  revisionTasks   Revision[] @relation("RevisionTask")
+  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan               Plan?      @relation(fields: [planId], references: [id], onDelete: SetNull)
+  parentTask         Task?      @relation("TaskRevisions", fields: [parentTaskId], references: [id], onDelete: SetNull)
+  revisions          Task[]     @relation("TaskRevisions")
+  recurrenceParent   Task?      @relation("TaskRecurrence", fields: [recurrenceParentId], references: [id], onDelete: SetNull)
+  recurrenceChildren Task[]     @relation("TaskRecurrence")
+  taskNotes          Note[]
+  revisionRecords    Revision[] @relation("RevisionParent")
+  revisionTasks      Revision[] @relation("RevisionTask")
 
   /// Guarantees exactly one POTD task per user per POTD date (no dupes on refresh/retry).
   @@unique([userId, potdDateKey], name: "user_potd_unique")
@@ -112,6 +115,7 @@ model Task {
   @@index([userId, scheduledDateKey])
   @@index([userId, status])
   @@index([parentTaskId])
+  @@index([recurrenceParentId])
   @@index([questionBankId])
   @@index([userId, isBacklog, isExpired])
   @@index([parentTaskId, taskType])
