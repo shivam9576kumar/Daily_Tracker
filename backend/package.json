@@ -35,6 +35,7 @@
   "dependencies": {
     "@dsa-planner/shared": "*",
     "@google/generative-ai": "^0.24.1",
+    "@js-temporal/polyfill": "^0.5.1",
     "@prisma/client": "^6.4.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",

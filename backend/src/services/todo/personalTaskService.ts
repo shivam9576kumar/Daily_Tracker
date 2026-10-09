@@ -1,6 +1,11 @@
 import prisma from '../../config/database';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import { RECURRENCE_VALUES, type Recurrence } from '../../utils/dateKeys';
+import {
+  RECURRENCE_VALUES,
+  resolveTimeZone,
+  taskScheduleForKey,
+  type Recurrence,
+} from '../../utils/dateKeys';
 
 const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -46,16 +51,22 @@ function parseDurationMin(raw: unknown): number | null | undefined {
   throw new ValidationError(`durationMin must be one of: ${DURATION_ALLOWED.join(', ')}, or null`);
 }
 
-function scheduleFields(dateKey: string | null) {
-  return dateKey === null
-    ? { scheduledDate: null, scheduledDateKey: null }
-    : { scheduledDate: new Date(`${dateKey}T00:00:00.000Z`), scheduledDateKey: dateKey };
+function scheduleFields(dateKey: string | null, tz: string) {
+  if (dateKey === null) {
+    return { scheduledDate: null, scheduledDateKey: null };
+  }
+  const schedule = taskScheduleForKey(dateKey, resolveTimeZone(tz));
+  return {
+    scheduledDate: schedule.scheduledDate,
+    scheduledDateKey: schedule.scheduledDateKey,
+  };
 }
 
 export const personalTaskService = {
   async create(userId: string, body: {
     title?: unknown; scheduledDateKey?: unknown; recurrence?: unknown; dueTime?: unknown; durationMin?: unknown;
-  }) {
+  }, tz?: string) {
+    const effectiveTz = resolveTimeZone(tz);
     const title = assertTitle(body.title);
     let dateKey = parseDateKey(body.scheduledDateKey) ?? null;
     const recurrence = parseRecurrence(body.recurrence) ?? null;
@@ -79,7 +90,7 @@ export const personalTaskService = {
         recurrence,
         dueTime,
         durationMin,
-        ...scheduleFields(dateKey),
+        ...scheduleFields(dateKey, effectiveTz),
       },
     });
   },
@@ -88,7 +99,9 @@ export const personalTaskService = {
     userId: string,
     taskId: string,
     body: { title?: unknown; scheduledDateKey?: unknown; recurrence?: unknown; dueTime?: unknown; durationMin?: unknown },
+    tz?: string
   ) {
+    const effectiveTz = resolveTimeZone(tz);
     const task = await prisma.task.findFirst({
       where: { id: taskId, userId, taskType: 'personal' },
     });
@@ -112,7 +125,7 @@ export const personalTaskService = {
         ...(durationMin !== undefined ? { durationMin } : {}),
         ...(dateKey !== undefined
           ? {
-              ...scheduleFields(dateKey),
+              ...scheduleFields(dateKey, effectiveTz),
               ...(dateKey === null ? { recurrence: null, dueTime: null, durationMin: null } : {}),   // no-date ⇒ clear trio
               isBacklog: false,
               backlogSince: null,

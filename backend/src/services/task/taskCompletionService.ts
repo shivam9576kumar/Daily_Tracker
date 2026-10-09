@@ -2,7 +2,15 @@ import { randomUUID } from 'node:crypto';
 import { Prisma, type Task } from '@prisma/client';
 import prisma from '../../config/database';
 import { env } from '../../config/env';
-import { dateKeyInTz, todayKey, addDaysToKey, maxKey, nextOccurrenceKey, type Recurrence } from '../../utils/dateKeys';
+import {
+  dateKeyInTz,
+  todayKey,
+  addDaysToKey,
+  maxKey,
+  nextOccurrenceKey,
+  taskScheduleForKey,
+  type Recurrence,
+} from '../../utils/dateKeys';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolvePlatformValue } from '../../utils/platform';
@@ -32,22 +40,6 @@ function parseRating(value: unknown): Rating {
 
 function bonusFor(rating: string | null | undefined): number {
   return calculateRatingBonus(rating);
-}
-
-/**
- * Given a timestamp instant `anchor` and user timezone `tz`,
- * resolve the calendar date key 'YYYY-MM-DD' on the user's wall clock,
- * and return UTC midnight of that calendar day.
- */
-function solvedDateMidnightUtc(anchor: Date, tz: string = env.DEFAULT_TIMEZONE): Date {
-  const dateKey = dateKeyInTz(anchor, tz);
-  return new Date(`${dateKey}T00:00:00.000Z`);
-}
-
-function addUtcDays(d: Date, days: number): Date {
-  const x = new Date(d);
-  x.setUTCDate(x.getUTCDate() + days);
-  return x;
 }
 
 type ParentTask = Pick<Task, 'id' | 'planId' | 'title' | 'topic' | 'difficulty' | 'platform' | 'problemUrl'>;
@@ -104,46 +96,47 @@ async function regenerateRevisions(
   // 3. BUG 12 clamp: never schedule in the past
   const solvedKey = dateKeyInTz(anchor, tz);
   const baseKey = maxKey(solvedKey, todayKey(tz));
-  const baseMidnight = new Date(`${baseKey}T00:00:00.000Z`);
 
   // 4. Create the shortfall with CONTINUED numbering
   const ids = Array.from({ length: createCount }, () => randomUUID());
 
+  const schedules = Array.from({ length: createCount }, (_, i) => {
+    const position = nextPosition + 1 + i;
+    const days = intervals[position - 1];
+    const revisionKey = addDaysToKey(baseKey, days);
+    return {
+      position,
+      schedule: taskScheduleForKey(revisionKey, tz),
+    };
+  });
+
   await tx.task.createMany({
-    data: Array.from({ length: createCount }, (_, i) => {
-      const position = nextPosition + 1 + i;          // 1-based plan position
-      const days = intervals[position - 1];
-      return {
-        id: ids[i],
-        userId,
-        planId: parent.planId,
-        parentTaskId: parent.id,
-        title: parent.title,
-        topic: parent.topic,
-        difficulty: parent.difficulty,
-        platform: resolvePlatformValue(parent.problemUrl, parent.platform),
-        problemUrl: parent.problemUrl,
-        taskType: 'revision',
-        status: 'pending',
-        scheduledDate: addUtcDays(baseMidnight, days),   // ordering only
-        scheduledDateKey: addDaysToKey(baseKey, days),   // ← logical day (BUG 9)
-        revisionNumber: position,
-      };
-    }),
+    data: schedules.map(({ position, schedule }, i) => ({
+      id: ids[i],
+      userId,
+      planId: parent.planId,
+      parentTaskId: parent.id,
+      title: parent.title,
+      topic: parent.topic,
+      difficulty: parent.difficulty,
+      platform: resolvePlatformValue(parent.problemUrl, parent.platform),
+      problemUrl: parent.problemUrl,
+      taskType: 'revision',
+      status: 'pending',
+      scheduledDate: schedule.scheduledDate,
+      scheduledDateKey: schedule.scheduledDateKey,
+      revisionNumber: position,
+    })),
   });
 
   await tx.revision.createMany({
-    data: Array.from({ length: createCount }, (_, i) => {
-      const position = nextPosition + 1 + i;
-      const days = intervals[position - 1];
-      return {
-        parentTaskId: parent.id,
-        revisionTaskId: ids[i],
-        revisionNumber: position,
-        scheduledDate: addUtcDays(baseMidnight, days),
-        status: 'pending',
-      };
-    }),
+    data: schedules.map(({ position, schedule }, i) => ({
+      parentTaskId: parent.id,
+      revisionTaskId: ids[i],
+      revisionNumber: position,
+      scheduledDate: schedule.scheduledDate,
+      status: 'pending',
+    })),
   });
 }
 
@@ -205,6 +198,8 @@ export const taskCompletionService = {
         const baseKey = maxKey(task.scheduledDateKey, todayKey(tz)); // never spawn in the past
         const nextKey = nextOccurrenceKey(baseKey, task.recurrence as Recurrence);
 
+        const schedule = taskScheduleForKey(nextKey, tz);
+
         await tx.task.create({
           data: {
             userId,
@@ -216,8 +211,8 @@ export const taskCompletionService = {
             recurrence: task.recurrence,
             dueTime: task.dueTime,
             durationMin: task.durationMin,
-            scheduledDate: new Date(`${nextKey}T00:00:00.000Z`),
-            scheduledDateKey: nextKey,
+            scheduledDate: schedule.scheduledDate,
+            scheduledDateKey: schedule.scheduledDateKey,
           },
         });
       }

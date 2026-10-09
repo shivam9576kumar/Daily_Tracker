@@ -3,8 +3,7 @@ import { taskRepository } from '../../repositories/taskRepository';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { calculateCompletedTaskCoins } from '../../config/rewards';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
-import { dateKeyInTz } from '../../utils/dateKeys';
-import { env } from '../../config/env';
+import { resolveTimeZone, taskScheduleFromInput } from '../../utils/dateKeys';
 import { resolvePlatformValue } from '../../utils/platform';
 
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
@@ -78,18 +77,8 @@ export const taskService = {
       );
     }
 
-    const scheduled = data.scheduledDate
-      ? (data.scheduledDate.includes('T')
-          ? new Date(data.scheduledDate)
-          : new Date(`${data.scheduledDate}T00:00:00.000Z`))
-      : new Date();
-    if (isNaN(scheduled.getTime())) {
-      throw new ValidationError('scheduledDate is not a valid date');
-    }
-
-    const scheduledDateKey = /^\d{4}-\d{2}-\d{2}$/.test(data.scheduledDate || '')
-      ? data.scheduledDate
-      : dateKeyInTz(scheduled, tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
+    const effectiveTz = resolveTimeZone(tz);
+    const schedule = taskScheduleFromInput(data.scheduledDate, effectiveTz);
 
     if (data.problemUrl && !/^https?:\/\//i.test(data.problemUrl)) {
       throw new ValidationError('problemUrl must start with http:// or https://');
@@ -103,8 +92,8 @@ export const taskService = {
       platform: resolvePlatformValue(data.problemUrl, data.platform || 'custom'),
       problemUrl: data.problemUrl?.trim() || null,
       taskType: data.taskType || 'new',
-      scheduledDate: scheduled,
-      scheduledDateKey,
+      scheduledDate: schedule.scheduledDate,
+      scheduledDateKey: schedule.scheduledDateKey,
       ...(data.planId ? { plan: { connect: { id: data.planId } } } : {}),
     });
   },
@@ -133,19 +122,10 @@ export const taskService = {
       );
     }
 
-    let scheduledDate: Date | undefined;
-    let scheduledDateKey: string | undefined;
-    if (data.scheduledDate) {
-      scheduledDate = data.scheduledDate.includes('T')
-        ? new Date(data.scheduledDate)
-        : new Date(`${data.scheduledDate}T00:00:00.000Z`);
-      if (isNaN(scheduledDate.getTime())) {
-        throw new ValidationError('scheduledDate is not a valid date');
-      }
-      scheduledDateKey = /^\d{4}-\d{2}-\d{2}$/.test(data.scheduledDate)
-        ? data.scheduledDate
-        : dateKeyInTz(scheduledDate, tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
-    }
+    const schedule =
+      data.scheduledDate !== undefined
+        ? taskScheduleFromInput(data.scheduledDate, resolveTimeZone(tz))
+        : undefined;
 
     return taskRepository.updateTask(taskId, {
       ...(data.title && { title: data.title.trim() }),
@@ -155,8 +135,10 @@ export const taskService = {
       ...(data.problemUrl !== undefined && {
         problemUrl: data.problemUrl || null,
       }),
-      ...(scheduledDate && { scheduledDate }),
-      ...(scheduledDateKey && { scheduledDateKey }),
+      ...(schedule && {
+        scheduledDate: schedule.scheduledDate,
+        scheduledDateKey: schedule.scheduledDateKey,
+      }),
     });
   },
 

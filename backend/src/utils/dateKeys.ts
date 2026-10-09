@@ -1,12 +1,41 @@
-/**
- * All progress math works on "date keys" = 'YYYY-MM-DD' strings in the USER's timezone.
- * Never use new Date().setHours(0,0,0,0) or SQL DATE() for user-facing day math.
- */
+import { Temporal } from '@js-temporal/polyfill';
+import { env } from '../config/env';
+import { ValidationError } from './error';
+
+const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly' | 'yearly';
-
 export const RECURRENCE_VALUES: Recurrence[] = ['daily', 'weekdays', 'weekly', 'monthly', 'yearly'];
+
+export function isValidDateKey(value: unknown): value is string {
+  if (typeof value !== 'string' || !DATE_KEY_RE.test(value)) {
+    return false;
+  }
+
+  try {
+    const date = Temporal.PlainDate.from(value, {
+      overflow: 'reject',
+    });
+
+    return date.toString() === value;
+  } catch {
+    return false;
+  }
+}
+
+export function assertDateKey(
+  value: unknown,
+  field = 'dateKey',
+): string {
+  if (!isValidDateKey(value)) {
+    throw new ValidationError(
+      `${field} must be a real calendar date in YYYY-MM-DD format`,
+    );
+  }
+
+  return value;
+}
 
 export function isValidTimeZone(tz: string): boolean {
   if (!tz || tz.length > 64 || !/^[A-Za-z0-9_+\-/]+$/.test(tz)) return false;
@@ -16,6 +45,24 @@ export function isValidTimeZone(tz: string): boolean {
   } catch {
     return false;
   }
+}
+
+export function resolveTimeZone(
+  candidate?: string | null,
+): string {
+  if (candidate && isValidTimeZone(candidate)) {
+    return candidate;
+  }
+
+  const fallback = env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
+
+  if (!isValidTimeZone(fallback)) {
+    throw new Error(
+      'DEFAULT_TIMEZONE must be a valid IANA timezone',
+    );
+  }
+
+  return fallback;
 }
 
 const fmtCache = new Map<string, Intl.DateTimeFormat>();
@@ -40,22 +87,153 @@ export function dateKeyInTz(date: Date, tz: string): string {
   return `${get('year')}-${get('month')}-${get('day')}`;
 }
 
-import { env } from '../config/env';
+export function todayKey(
+  tz?: string,
+  now: Date = new Date(),
+): string {
+  return dateKeyInTz(now, resolveTimeZone(tz));
+}
 
-export function todayKey(tz?: string): string {
-  return dateKeyInTz(new Date(), tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
+export function addDaysToKey(
+  key: string,
+  days: number,
+): string {
+  if (!Number.isInteger(days)) {
+    throw new ValidationError('days must be an integer');
+  }
+
+  const date = Temporal.PlainDate.from(assertDateKey(key));
+  const result = date.add({ days });
+
+  return assertDateKey(result.toString());
+}
+
+function calendarDayStart(
+  key: string,
+  tz: string,
+): Temporal.ZonedDateTime {
+  const validKey = assertDateKey(key);
+
+  if (!isValidTimeZone(tz)) {
+    throw new ValidationError('Invalid timezone');
+  }
+
+  const date = Temporal.PlainDate.from(validKey);
+  const start = date.toZonedDateTime(tz).startOfDay();
+
+  // Some historical timezone changes skipped a whole calendar day.
+  // Never silently schedule such an input onto a different date.
+  if (start.toPlainDate().toString() !== validKey) {
+    throw new ValidationError(
+      `${validKey} does not exist in timezone ${tz}`,
+    );
+  }
+
+  return start;
+}
+
+/**
+ * The first valid instant of the requested local calendar day.
+ *
+ * Usually this is 00:00 local time. A midnight DST transition can
+ * make the first valid time later than 00:00.
+ */
+export function zonedDayStartUtc(
+  key: string,
+  tz: string,
+): Date {
+  const start = calendarDayStart(key, tz);
+
+  return new Date(Number(start.epochMilliseconds));
+}
+
+/**
+ * Half-open interval [start, end) covering the local calendar day.
+ *
+ * Never calculate end as start + 24 hours.
+ */
+export function zonedDayRangeUtc(
+  key: string,
+  tz: string,
+): { start: Date; end: Date } {
+  const start = calendarDayStart(key, tz);
+  const end = start.add({ days: 1 }).startOfDay();
+
+  return {
+    start: new Date(Number(start.epochMilliseconds)),
+    end: new Date(Number(end.epochMilliseconds)),
+  };
+}
+
+export function taskScheduleForKey(
+  key: string,
+  tz: string,
+): {
+  scheduledDate: Date;
+  scheduledDateKey: string;
+} {
+  const validKey = assertDateKey(key, 'scheduledDateKey');
+
+  return {
+    scheduledDateKey: validKey,
+    scheduledDate: zonedDayStartUtc(validKey, tz),
+  };
+}
+
+/**
+ * Manual DSA-task scheduling input:
+ *
+ * - undefined: use local Today on CREATE only
+ * - YYYY-MM-DD: logical calendar date
+ * - ISO timestamp with an explicit offset: derive its local day
+ *
+ * Callers must not invoke this on an omitted UPDATE field.
+ */
+export function taskScheduleFromInput(
+  raw: unknown,
+  tz: string,
+  now: Date = new Date(),
+): {
+  scheduledDate: Date;
+  scheduledDateKey: string;
+} {
+  if (raw === undefined) {
+    return taskScheduleForKey(todayKey(tz, now), tz);
+  }
+
+  if (typeof raw !== 'string' || raw.length === 0) {
+    throw new ValidationError(
+      'scheduledDate must be YYYY-MM-DD or an ISO timestamp with an explicit timezone',
+    );
+  }
+
+  if (DATE_KEY_RE.test(raw)) {
+    return taskScheduleForKey(
+      assertDateKey(raw, 'scheduledDate'),
+      tz,
+    );
+  }
+
+  let instant: Temporal.Instant;
+
+  try {
+    // Rejects ambiguous datetimes without an explicit offset.
+    instant = Temporal.Instant.from(raw);
+  } catch {
+    throw new ValidationError(
+      'scheduledDate must be YYYY-MM-DD or an ISO timestamp with an explicit timezone',
+    );
+  }
+
+  const date = new Date(Number(instant.epochMilliseconds));
+  const key = dateKeyInTz(date, tz);
+
+  return taskScheduleForKey(key, tz);
 }
 
 /** Later of two 'YYYY-MM-DD' keys (lexicographic = chronological). */
 export function maxKey(a: string, b: string): string {
   return a >= b ? a : b;
-}
-
-/** Add days to a key without any timezone/DST drift. */
-export function addDaysToKey(key: string, days: number): string {
-  const d = new Date(`${key}T00:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + days);
-  return d.toISOString().slice(0, 10);
 }
 
 export function keyToParts(key: string) {
@@ -116,50 +294,4 @@ export function lowerBoundForKey(key: string): Date {
   const d = new Date(`${key}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() - 1);
   return d;
-}
-
-/** Offset (ms) such that: utcInstant + offset = wall-clock time in tz. */
-function tzOffsetMs(date: Date, tz: string): number {
-  const dtf = new Intl.DateTimeFormat('en-US', {
-    timeZone: tz,
-    hour12: false,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  });
-  const parts = dtf.formatToParts(date);
-  const get = (t: string) => Number(parts.find((p) => p.type === t)?.value ?? 0);
-  const asUTC = Date.UTC(
-    get('year'),
-    get('month') - 1,
-    get('day'),
-    get('hour') % 24,
-    get('minute'),
-    get('second')
-  );
-  return asUTC - date.getTime();
-}
-
-/** Exact UTC instant of 00:00 local time on `dateKey` in `tz`. DST-safe. */
-export function zonedDayStartUtc(dateKey: string, tz: string): Date {
-  const naive = Date.parse(`${dateKey}T00:00:00Z`);
-  const o1 = tzOffsetMs(new Date(naive), tz);
-  let ts = naive - o1;
-  const o2 = tzOffsetMs(new Date(ts), tz);
-  if (o2 !== o1) ts = naive - o2; // refine across DST boundaries
-  return new Date(ts);
-}
-
-/**
- * Half-open UTC range [start, end) covering the local calendar day.
- * TODO (BUG 8 / BUG 9): Use zonedDayRangeUtc for crons and revision scheduledDate calculations.
- */
-export function zonedDayRangeUtc(dateKey: string, tz: string): { start: Date; end: Date } {
-  return {
-    start: zonedDayStartUtc(dateKey, tz),
-    end: zonedDayStartUtc(addDaysToKey(dateKey, 1), tz),
-  };
 }

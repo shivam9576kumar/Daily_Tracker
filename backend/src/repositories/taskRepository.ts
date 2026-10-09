@@ -1,7 +1,13 @@
 import prisma from '../config/database';
 import { Prisma } from '@prisma/client';
-import { todayKey, zonedDayRangeUtc } from '../utils/dateKeys';
-import { env } from '../config/env';
+import {
+  assertDateKey,
+  dateKeyInTz,
+  resolveTimeZone,
+  todayKey,
+  zonedDayRangeUtc,
+  addDaysToKey,
+} from '../utils/dateKeys';
 
 /**
  * Task Repository — data access layer for the tasks table.
@@ -9,21 +15,31 @@ import { env } from '../config/env';
  */
 export const taskRepository = {
   /**
-   * Get all tasks for a user scheduled for a specific date.
+   * Get all tasks for a user scheduled for a specific date key in the user's timezone.
    */
-  async getTasksByDate(userId: string, date: Date) {
-    const startOfDay = new Date(date);
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(date);
-    endOfDay.setHours(23, 59, 59, 999);
+  async getTasksByDateKey(userId: string, dateKey: string, tz: string) {
+    const userTz = resolveTimeZone(tz);
+    const validKey = assertDateKey(dateKey);
+    const { start, end } = zonedDayRangeUtc(validKey, userTz);
 
     return prisma.task.findMany({
       where: {
         userId,
-        scheduledDate: {
-          gte: startOfDay,
-          lte: endOfDay,
-        },
+        OR: [
+          { scheduledDateKey: validKey },
+          {
+            AND: [
+              {
+                OR: [
+                  { scheduledDateKey: '' },
+                  { scheduledDateKey: null },
+                ],
+              },
+              { taskType: { notIn: ['personal', 'cp31'] } },
+              { scheduledDate: { gte: start, lt: end } },
+            ],
+          },
+        ],
       },
       orderBy: [
         { status: 'asc' },      // pending first
@@ -34,9 +50,17 @@ export const taskRepository = {
   },
 
   /**
-   * Get today's tasks plus any backlog tasks in the user's timezone.
+   * Backward-compatible helper that delegates to getTasksByDateKey.
    */
+  async getTasksByDate(userId: string, date: Date, tz?: string) {
+    const userTz = resolveTimeZone(tz);
+    const key = dateKeyInTz(date, userTz);
+    return this.getTasksByDateKey(userId, key, userTz);
+  },
+
   /**
+   * Get today's tasks plus any backlog tasks in the user's timezone.
+   *
    * Today's hitlist = three things:
    *   1. anything scheduled today (any status)
    *   2. open backlog (overdue, not expired, not solved)
@@ -45,24 +69,26 @@ export const taskRepository = {
    *      "Completed Today" clear itself at midnight: the window simply moves.
    *
    * Uses half-open [start, end) range produced by zonedDayRangeUtc for exact wall-clock day coverage.
-   * TODO (BUG 8 / BUG 9): Use zonedDayRangeUtc for crons and revision scheduledDate calculations.
    */
   async getTodaysTasks(userId: string, tz?: string, potdDateKey?: string | null) {
-    const userTz = tz || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
+    const userTz = resolveTimeZone(tz);
     const currentKey = todayKey(userTz);
     const { start, end } = zonedDayRangeUtc(currentKey, userTz);
 
     const todayOr: Prisma.TaskWhereInput[] = [
       { scheduledDateKey: currentKey },
 
-      // Legacy rows: empty/null key, but the instant falls on the user's local day
+      // Legacy rows: empty/null key, but genuine dated DSA task whose instant falls on user's local day.
+      // Excludes intentional undated tasks: personal inbox and parked/skipped cp31.
       {
         AND: [
           {
             OR: [
               { scheduledDateKey: '' },
+              { scheduledDateKey: null },
             ],
           },
+          { taskType: { notIn: ['personal', 'cp31'] } },
           { scheduledDate: { gte: start, lt: end } },
         ],
       },
@@ -207,48 +233,110 @@ export const taskRepository = {
   },
 
   /**
-   * Find pending tasks that are overdue (scheduled before today).
+   * Find pending tasks that are overdue (scheduled before today in the user's timezone).
    * Used by the backlog cron job.
    */
-  async findOverduePendingTasks() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+  async findOverduePendingTasks(userId?: string, tz?: string) {
+    if (userId && tz) {
+      const userTz = resolveTimeZone(tz);
+      const today = todayKey(userTz);
 
-    return prisma.task.findMany({
+      return prisma.task.findMany({
+        where: {
+          userId,
+          status: 'pending',
+          isBacklog: false,
+          isExpired: false,
+          completedAt: null,
+          scheduledDateKey: {
+            not: null,
+            lt: today,
+          },
+          taskType: { not: 'cp31' },
+          OR: [{ planId: null }, { plan: { status: 'active' } }],
+        },
+      });
+    }
+
+    const candidates = await prisma.task.findMany({
       where: {
         status: 'pending',
         isBacklog: false,
         isExpired: false,
         completedAt: null,
-        scheduledDate: {
-          lt: today,
-        },
+        scheduledDateKey: { not: null },
+        taskType: { not: 'cp31' },
         OR: [{ planId: null }, { plan: { status: 'active' } }],
       },
+      include: {
+        user: { select: { timezone: true } },
+      },
+    });
+
+    return candidates.filter((t) => {
+      if (!t.scheduledDateKey) return false;
+      const userTz = resolveTimeZone(t.user.timezone);
+      return t.scheduledDateKey < todayKey(userTz);
     });
   },
 
   /**
-   * Find backlog tasks that have been in backlog for over N days.
+   * Find backlog tasks that have been in backlog for over N calendar days in user timezone.
    * Used by the expiry cron job.
    */
-  async findExpiredBacklogTasks(expiryDays: number) {
-    const cutoff = new Date();
-    cutoff.setHours(0, 0, 0, 0);
-    cutoff.setDate(cutoff.getDate() - expiryDays);
+  async findExpiredBacklogTasks(
+    userIdOrDays: string | number,
+    tzOrDays?: string | number,
+    maybeExpiryDays?: number
+  ) {
+    if (typeof userIdOrDays === 'string') {
+      const userId = userIdOrDays;
+      const tz = typeof tzOrDays === 'string' ? tzOrDays : resolveTimeZone();
+      const expiryDays = maybeExpiryDays ?? 7;
+      const userTz = resolveTimeZone(tz);
+      const today = todayKey(userTz);
 
-    return prisma.task.findMany({
+      const candidates = await prisma.task.findMany({
+        where: {
+          userId,
+          isBacklog: true,
+          isExpired: false,
+          status: { not: 'completed' },
+          taskType: { not: 'cp31' },
+          backlogSince: { not: null },
+          OR: [{ planId: null }, { plan: { status: 'active' } }],
+        },
+      });
+
+      return candidates.filter((t) => {
+        if (!t.backlogSince) return false;
+        const backlogDay = dateKeyInTz(t.backlogSince, userTz);
+        const expiresOn = addDaysToKey(backlogDay, expiryDays);
+        return expiresOn <= today;
+      });
+    }
+
+    const expiryDays = Number(userIdOrDays);
+    const candidates = await prisma.task.findMany({
       where: {
         isBacklog: true,
         isExpired: false,
-        status: {
-          not: 'completed',
-        },
-        backlogSince: {
-          lte: cutoff,
-        },
+        status: { not: 'completed' },
+        taskType: { not: 'cp31' },
+        backlogSince: { not: null },
         OR: [{ planId: null }, { plan: { status: 'active' } }],
       },
+      include: {
+        user: { select: { timezone: true } },
+      },
+    });
+
+    return candidates.filter((t) => {
+      if (!t.backlogSince) return false;
+      const userTz = resolveTimeZone(t.user.timezone);
+      const backlogDay = dateKeyInTz(t.backlogSince, userTz);
+      const expiresOn = addDaysToKey(backlogDay, expiryDays);
+      return expiresOn <= todayKey(userTz);
     });
   },
 

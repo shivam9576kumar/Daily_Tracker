@@ -6,6 +6,20 @@ dotenv.config();
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
+function validateTimezone(tz: string): string {
+  if (!tz || tz.length > 64 || !/^[A-Za-z0-9_+\-/]+$/.test(tz)) {
+    throw new Error('DEFAULT_TIMEZONE must be a valid IANA timezone');
+  }
+  try {
+    new Intl.DateTimeFormat('en-US', { timeZone: tz });
+    return tz;
+  } catch {
+    throw new Error('DEFAULT_TIMEZONE must be a valid IANA timezone');
+  }
+}
+
+const defaultTimezone = validateTimezone(process.env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
+
 export const env = {
   // Server
   PORT: parseInt(process.env.PORT || '3001', 10),
@@ -39,7 +53,7 @@ export const env = {
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',
 
   // Timezone used when the client does not send X-Timezone
-  DEFAULT_TIMEZONE: process.env.DEFAULT_TIMEZONE || 'Asia/Kolkata',
+  DEFAULT_TIMEZONE: defaultTimezone,
 
   // Helpers
   isDev: (process.env.NODE_ENV || 'development') === 'development',

@@ -20,7 +20,7 @@ export const todoController = {
   async createPersonal(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await personalTaskService.create(user.id, req.body ?? {}), 201);
+      sendSuccess(res, await personalTaskService.create(user.id, req.body ?? {}, getTz(req)), 201);
     } catch (err) {
       next(err);
     }
@@ -29,7 +29,7 @@ export const todoController = {
   async updatePersonal(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await personalTaskService.update(user.id, req.params.id as string, req.body ?? {}));
+      sendSuccess(res, await personalTaskService.update(user.id, req.params.id as string, req.body ?? {}, getTz(req)));
     } catch (err) {
       next(err);
     }

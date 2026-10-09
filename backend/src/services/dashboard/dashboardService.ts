@@ -7,6 +7,7 @@ import { ensurePotdTaskForUser } from '../potd/potdService';
 import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakService';
 import { ensureCp31TasksForUser, emptyCp31State, listSkippedCp31, type Cp31State } from '../cp31/cp31Service';
 import { computeCp31Streak, type Cp31StreakResult } from '../cp31/cp31StreakService';
+import { todayKey, addDaysToKey } from '../../utils/dateKeys';
 
 /**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
@@ -106,10 +107,10 @@ export const dashboardService = {
 
     const vibe = getVibe(pendingTasks.length, completedTasks.length, !!activePlan);
 
-    // Color-code assignments by urgency
+    // Color-code assignments by urgency (user-tz aware)
     const assignments = pendingAssignments.map((a) => ({
       ...a,
-      urgency: getUrgency(a.deadline),
+      urgency: getUrgency(a.deadline, tz),
     }));
 
     return {
@@ -170,20 +171,20 @@ function getVibe(
 }
 
 /**
- * Determine assignment urgency based on deadline.
+ * Determine assignment urgency based on deadline in the user's timezone.
+ *
+ * Deadlines are date-only values stored at UTC midnight, so
+ * toISOString().slice(0,10) faithfully extracts the calendar date.
+ * We compare that against todayKey(tz) so the result is correct
+ * regardless of where the server runs.
  */
-function getUrgency(deadline: Date): 'today' | 'tomorrow' | 'future' {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
+function getUrgency(deadline: Date, tz: string): 'today' | 'tomorrow' | 'future' {
+  // Deadline is a date-only value encoded at UTC midnight.
+  const deadlineKey = deadline.toISOString().slice(0, 10);
+  const today = todayKey(tz);
+  const tomorrow = addDaysToKey(today, 1);
 
-  const deadlineDate = new Date(deadline);
-  deadlineDate.setHours(0, 0, 0, 0);
-
-  const diffDays = Math.floor(
-    (deadlineDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
-  );
-
-  if (diffDays <= 0) return 'today';
-  if (diffDays === 1) return 'tomorrow';
+  if (deadlineKey <= today) return 'today';
+  if (deadlineKey === tomorrow) return 'tomorrow';
   return 'future';
 }

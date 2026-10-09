@@ -2,7 +2,7 @@ import type { Prisma, Task } from '@prisma/client';
 import prisma from '../../config/database';
 import logger from '../../utils/logger';
 import { NotFoundError, ValidationError } from '../../utils/error';
-import { dateKeyInTz, todayKey } from '../../utils/dateKeys';
+import { dateKeyInTz, todayKey, resolveTimeZone, taskScheduleForKey } from '../../utils/dateKeys';
 import { resolvePlatformValue } from '../../utils/platform';
 import { getCp31Bands, getCp31Problems, type Cp31Problem } from '../plan/cp31SheetLoader';
 
@@ -62,7 +62,6 @@ export interface Cp31Overview {
 }
 
 const bandPrefix = (band: number) => `cp31-${band}-`;
-const utcMidnight = (dateKey: string) => new Date(`${dateKey}T00:00:00.000Z`);
 const difficultyFor = (band: number): 'medium' | 'hard' => (band >= 1500 ? 'hard' : 'medium');
 
 function nextBandAfter(band: number): number | null {
@@ -131,7 +130,8 @@ function countSolvedToday(rows: Task[], tz: string, today: string): number {
 }
 
 /** Create the task row for a sheet problem. Race-safe via user_cp31_unique. */
-async function materialize(userId: string, p: Cp31Problem, today: string): Promise<Task | null> {
+async function materialize(userId: string, p: Cp31Problem, today: string, tz: string): Promise<Task | null> {
+  const schedule = taskScheduleForKey(today, resolveTimeZone(tz));
   try {
     const created = await prisma.task.create({
       data: {
@@ -145,8 +145,8 @@ async function materialize(userId: string, p: Cp31Problem, today: string): Promi
         difficulty: difficultyFor(p.band),
         platform: resolvePlatformValue(p.url, 'codeforces'),
         problemUrl: p.url,
-        scheduledDate: utcMidnight(today),
-        scheduledDateKey: today,
+        scheduledDate: schedule.scheduledDate,
+        scheduledDateKey: schedule.scheduledDateKey,
         cp31ProblemId: p.id,
       },
     });
@@ -196,7 +196,9 @@ export async function ensureCp31TasksForUser(userId: string, tz: string): Promis
     return emptyCp31State({ enabled: true, band, dailyCount: s.dailyCount });
   }
 
-  const today = todayKey(tz);
+  const effectiveTz = resolveTimeZone(tz);
+  const today = todayKey(effectiveTz);
+  const schedule = taskScheduleForKey(today, effectiveTz);
 
   // Check for parked pending tasks of this band (scheduledDateKey == null) or overdue (scheduledDateKey < today)
   const pendingToUpdate = await prisma.task.findMany({
@@ -213,23 +215,23 @@ export async function ensureCp31TasksForUser(userId: string, tz: string): Promis
   if (pendingToUpdate.length > 0) {
     await prisma.task.updateMany({
       where: { id: { in: pendingToUpdate.map((t) => t.id) } },
-      data: { scheduledDate: utcMidnight(today), scheduledDateKey: today, isBacklog: false, backlogSince: null, isExpired: false },
+      data: { scheduledDate: schedule.scheduledDate, scheduledDateKey: today, isBacklog: false, backlogSince: null, isExpired: false },
     });
     for (const t of pendingToUpdate) {
       if (t.scheduledDateKey === null) {
-        unparkedTasks.push({ ...t, scheduledDateKey: today, scheduledDate: utcMidnight(today) });
+        unparkedTasks.push({ ...t, scheduledDateKey: today, scheduledDate: schedule.scheduledDate });
       }
     }
   }
 
   let rows = await bandRows(userId, band);
   const first = summarize(band, rows);
-  const solvedToday = countSolvedToday(rows, tz, today);
+  const solvedToday = countSolvedToday(rows, effectiveTz, today);
   const deficit = Math.max(0, s.dailyCount - (first.progress.pending + solvedToday));
 
   const newlyMaterialized: Task[] = [];
   for (const p of first.unserved.slice(0, deficit)) {
-    const task = await materialize(userId, p, today);
+    const task = await materialize(userId, p, today, effectiveTz);
     if (task) newlyMaterialized.push(task);
   }
 
@@ -252,7 +254,8 @@ export async function getCp31State(userId: string, tz: string): Promise<Cp31Stat
 
 /** One More: exactly one extra rung after today's quota is done. Cap = CP31_EXTRAS_CAP per day. */
 export async function serveOneMore(userId: string, tz: string): Promise<{ task: Task; taskId: string; state: Cp31State }> {
-  const before = await ensureCp31TasksForUser(userId, tz);
+  const effectiveTz = resolveTimeZone(tz);
+  const before = await ensureCp31TasksForUser(userId, effectiveTz);
   if (!before.enabled || before.band === null) throw new ValidationError('CP31 is turned off');
   if (before.bandStatus === 'complete-awaiting-confirm') throw new ValidationError('This band is complete — confirm your next band first');
   if (before.bandStatus !== 'active') throw new ValidationError('CP31 band unavailable');
@@ -263,10 +266,10 @@ export async function serveOneMore(userId: string, tz: string): Promise<{ task: 
   const problem = getCp31Problems(before.band).find((p) => p.index === before.nextIndex);
   if (!problem) throw new ValidationError('Next problem not found in sheet');
 
-  const created = await materialize(userId, problem, todayKey(tz));
+  const created = await materialize(userId, problem, todayKey(effectiveTz), effectiveTz);
   if (!created) throw new ValidationError('Could not serve the next problem — try again');
 
-  const afterState = await ensureCp31TasksForUser(userId, tz);
+  const afterState = await ensureCp31TasksForUser(userId, effectiveTz);
   return { task: created, taskId: created.id, state: afterState };
 }
 
@@ -294,7 +297,7 @@ export async function skipCp31Problem(
     },
   });
 
-  const tzKey = tz || 'Asia/Kolkata';
+  const tzKey = resolveTimeZone(tz);
   const today = todayKey(tzKey);
   let state = await ensureCp31TasksForUser(userId, tzKey);
 
@@ -306,7 +309,7 @@ export async function skipCp31Problem(
     const summary = summarize(state.band, rows);
     const nextUnserved = summary.unserved[0];
     if (nextUnserved) {
-      const nextTask = await materialize(userId, nextUnserved, today);
+      const nextTask = await materialize(userId, nextUnserved, today, tzKey);
       if (nextTask) {
         state = await ensureCp31TasksForUser(userId, tzKey);
         served = [nextTask];
@@ -326,18 +329,20 @@ export async function retrySkippedCp31(
   const task = await prisma.task.findFirst({ where: { id: taskId, userId, taskType: 'cp31' } });
   if (!task) throw new NotFoundError('CP31 task not found');
   if (task.status !== 'skipped') throw new ValidationError('Only skipped problems can be retried');
-  const today = todayKey(tz);
+  const effectiveTz = resolveTimeZone(tz);
+  const today = todayKey(effectiveTz);
+  const schedule = taskScheduleForKey(today, effectiveTz);
   const retried = await prisma.task.update({
     where: { id: taskId },
     data: {
       status: 'pending',
       isSkipped: false,
       skippedAt: null,
-      scheduledDate: utcMidnight(today),
+      scheduledDate: schedule.scheduledDate,
       scheduledDateKey: today,
     },
   });
-  const state = await ensureCp31TasksForUser(userId, tz);
+  const state = await ensureCp31TasksForUser(userId, effectiveTz);
   return { ...retried, task: retried, taskId: retried.id, state };
 }
 export const retrySkippedCp31Problem = retrySkippedCp31;
@@ -370,7 +375,7 @@ export async function advanceCp31Band(
   }
 
   const explicitTarget = typeof targetBandOrTz === 'number' ? targetBandOrTz : undefined;
-  const tz = typeof targetBandOrTz === 'string' ? targetBandOrTz : maybeTz || 'Asia/Kolkata';
+  const tz = typeof targetBandOrTz === 'string' ? resolveTimeZone(targetBandOrTz) : resolveTimeZone(maybeTz);
 
   const bands = getCp31Bands().map((b) => b.band);
   const next = explicitTarget ?? nextBandAfter(s.band);
