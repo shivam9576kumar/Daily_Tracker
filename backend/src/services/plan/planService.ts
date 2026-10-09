@@ -2,6 +2,7 @@ import prisma from '../../config/database';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { dateKeyInTz } from '../../utils/dateKeys';
 import { env } from '../../config/env';
+import { LIVE_TASK_WHERE } from '../task/taskLifecycle';
 
 function startOfToday(): Date {
   const d = new Date(); d.setHours(0,0,0,0); return d;
@@ -29,11 +30,15 @@ export const planService = {
       }) : Promise.resolve([]),
       prisma.task.findMany({
         where: {
-          userId,
-          taskType: 'revision',
-          isExpired: false,
-          scheduledDate: { gte: minusDays(origin, 1) },
-          OR: [{ planId: null }, { plan: { status: 'active' } }],
+          AND: [
+            {
+              userId,
+              taskType: 'revision',
+              isExpired: false,
+              scheduledDate: { gte: minusDays(origin, 1) },
+            },
+            LIVE_TASK_WHERE,
+          ],
         },
         orderBy: [{ scheduledDate: 'asc' }, { revisionNumber: 'asc' }],
       }),

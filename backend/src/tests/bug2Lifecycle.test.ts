@@ -12,7 +12,7 @@ import { taskScheduleForKey, todayKey, dateKeyInTz, addDaysToKey } from '../util
 import { BACKLOG_EXPIRY_DAYS } from '@dsa-planner/shared';
 import { taskCompletionService } from '../services/task/taskCompletionService';
 import { taskService } from '../services/task/taskService';
-import { runRepairTaskLifecycle } from '../../scripts/repairTaskLifecycle';
+import { runRepairTaskLifecycle } from '../scripts/repairTaskLifecycle';
 
 test('A. Backlog eligibility predicates', () => {
   const today = '2026-04-01';
@@ -354,7 +354,7 @@ test('I. Parent undo - refunds base + bonus + completed revisions, second undo i
 
     // SECOND undo of already undone parent task
     const secondUndoResult = await taskCompletionService.undoTask(userId, parent.id, tz);
-    assert.equal(secondUndoResult.status === 'pending' || secondUndoResult.status === 'backlog', true);
+    assert.equal(secondUndoResult?.status === 'pending' || secondUndoResult?.status === 'backlog', true);
 
     const user3 = await prisma.user.findUnique({ where: { id: userId } });
     assert.equal(user3?.coins, 100, 'Second undo did NOT refund coins again');
@@ -404,8 +404,8 @@ test('K. Concurrent duplicate undo refunds exactly once under high concurrency',
       taskCompletionService.undoTask(userId, task.id, tz),
     ]);
 
-    assert.equal(res1.id, task.id);
-    assert.equal(res2.id, task.id);
+    assert.equal(res1?.id, task.id);
+    assert.equal(res2?.id, task.id);
 
     const userAfter = await prisma.user.findUnique({ where: { id: userId } });
     assert.equal(userAfter?.coins, 100, 'Coins refunded EXACTLY ONCE under concurrent duplicate undo');

@@ -39,9 +39,6 @@ import {
   OPEN_BACKLOG_WHERE,
 } from '../task/taskLifecycle';
 
-/** Visible = manual (planId null) OR belongs to the ACTIVE plan. Archived plans never leak. */
-const LIVE_PLAN_FILTER: Prisma.TaskWhereInput = LIVE_TASK_WHERE;
-
 /** 'Today' | 'Tomorrow' | 'Yesterday' | weekday name — relative to the user's today key. */
 function labelFor(dateKey: string, today: string): string {
   if (dateKey === today) return 'Today';
@@ -113,12 +110,16 @@ export const todoService = {
 
       prisma.task.findMany({
         where: {
-          userId,
-          status: 'pending',
-          isBacklog: false,
-          isExpired: false,
-          scheduledDateKey: { gt: today, lte: upcomingEnd },
-          ...LIVE_PLAN_FILTER,
+          AND: [
+            {
+              userId,
+              status: 'pending',
+              isBacklog: false,
+              isExpired: false,
+              scheduledDateKey: { gt: today, lte: upcomingEnd },
+            },
+            LIVE_TASK_WHERE,
+          ],
         },
         orderBy: [{ scheduledDateKey: 'asc' }, { taskType: 'asc' }, { title: 'asc' }],
       }),
@@ -136,10 +137,14 @@ export const todoService = {
 
       prisma.task.findMany({
         where: {
-          userId,
-          status: 'completed',
-          completedAt: { gte: completedStart, lt: completedEnd },
-          ...LIVE_PLAN_FILTER,
+          AND: [
+            {
+              userId,
+              status: 'completed',
+              completedAt: { gte: completedStart, lt: completedEnd },
+            },
+            LIVE_TASK_WHERE,
+          ],
         },
         orderBy: { completedAt: 'desc' },
       }),

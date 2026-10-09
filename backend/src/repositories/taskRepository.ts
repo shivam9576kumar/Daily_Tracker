@@ -14,55 +14,80 @@ import {
   OPEN_BACKLOG_WHERE,
 } from '../services/task/taskLifecycle';
 
+const STATUS_PRIORITY: Record<string, number> = {
+  backlog: 0,
+  pending: 1,
+  completed: 2,
+  skipped: 3,
+  expired: 4,
+};
+
+const DIFFICULTY_PRIORITY: Record<string, number> = {
+  hard: 0,
+  medium: 1,
+  easy: 2,
+};
+
+const TASK_TYPE_PRIORITY: Record<string, number> = {
+  cp31: 0,
+  new: 1,
+  potd: 2,
+  revision: 3,
+  personal: 4,
+};
+
+function statusRank(status: string): number {
+  return STATUS_PRIORITY[status] ?? 99;
+}
+
+function difficultyRank(difficulty: string | null): number {
+  return difficulty !== null
+    ? (DIFFICULTY_PRIORITY[difficulty] ?? 99)
+    : 99;
+}
+
+function taskTypeRank(taskType: string): number {
+  return TASK_TYPE_PRIORITY[taskType] ?? 99;
+}
+
+/**
+ * Deterministic display order for a user's "today" task list.
+ * Backlog items surface first (need attention), then pending,
+ * then completed/skipped/expired at the bottom.
+ * Within equal status, task type and difficulty (hard first) break ties.
+ *
+ * This replaces the previous `orderBy: [{ status: 'asc' }, ...]`
+ * which sorted alphabetically and did not match its own comment.
+ */
+export function sortTodaysTasks<
+  T extends {
+    status: string;
+    taskType: string;
+    difficulty: string | null;
+    scheduledDate: Date | null;
+  },
+>(tasks: T[]): T[] {
+  return [...tasks].sort((a, b) => {
+    const statusDiff = statusRank(a.status) - statusRank(b.status);
+    if (statusDiff !== 0) return statusDiff;
+
+    const typeDiff = taskTypeRank(a.taskType) - taskTypeRank(b.taskType);
+    if (typeDiff !== 0) return typeDiff;
+
+    const diffDiff = difficultyRank(a.difficulty) - difficultyRank(b.difficulty);
+    if (diffDiff !== 0) return diffDiff;
+
+    const aTime = a.scheduledDate?.getTime() ?? 0;
+    const bTime = b.scheduledDate?.getTime() ?? 0;
+    return aTime - bTime;
+  });
+}
+
 /**
  * Task Repository — data access layer for the tasks table.
  * All database queries for tasks go through here.
  */
 export const taskRepository = {
-  /**
-   * Get all tasks for a user scheduled for a specific date key in the user's timezone.
-   */
-  async getTasksByDateKey(userId: string, dateKey: string, tz: string) {
-    const userTz = resolveTimeZone(tz);
-    const validKey = assertDateKey(dateKey);
-    const { start, end } = zonedDayRangeUtc(validKey, userTz);
-
-    return prisma.task.findMany({
-      where: {
-        userId,
-        OR: [
-          { scheduledDateKey: validKey },
-          {
-            AND: [
-              {
-                OR: [
-                  { scheduledDateKey: '' },
-                  { scheduledDateKey: null },
-                ],
-              },
-              { taskType: { notIn: ['personal', 'cp31'] } },
-              { scheduledDate: { gte: start, lt: end } },
-            ],
-          },
-        ],
-      },
-      orderBy: [
-        { status: 'asc' },      // pending first
-        { taskType: 'asc' },     // new before revision
-        { difficulty: 'desc' },  // hard first
-      ],
-    });
-  },
-
-  /**
-   * Backward-compatible helper that delegates to getTasksByDateKey.
-   */
-  async getTasksByDate(userId: string, date: Date, tz?: string) {
-    const userTz = resolveTimeZone(tz);
-    const key = dateKeyInTz(date, userTz);
-    return this.getTasksByDateKey(userId, key, userTz);
-  },
-
   /**
    * Get today's tasks plus any backlog tasks in the user's timezone.
    *
@@ -107,7 +132,7 @@ export const taskRepository = {
       todayOr.push({ taskType: 'potd', potdDateKey });
     }
 
-    return prisma.task.findMany({
+    const rows = await prisma.task.findMany({
       where: {
         userId,
         isExpired: false,
@@ -116,13 +141,10 @@ export const taskRepository = {
           LIVE_TASK_WHERE,
         ],
       },
-      orderBy: [
-        { status: 'asc' },
-        { isBacklog: 'desc' },
-        { taskType: 'asc' },
-        { scheduledDate: 'asc' },
-      ],
+      orderBy: { scheduledDate: 'asc' },
     });
+
+    return sortTodaysTasks(rows);
   },
 
   /**
@@ -140,6 +162,7 @@ export const taskRepository = {
           orderBy: { updatedAt: 'desc' },
           take: 1,
         },
+        plan: { select: { id: true, name: true, status: true } },
       },
     });
   },

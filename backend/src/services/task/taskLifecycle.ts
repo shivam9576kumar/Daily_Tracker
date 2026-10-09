@@ -14,12 +14,27 @@ export const BACKLOG_TASK_TYPES = [
 
 const BACKLOG_TYPE_SET = new Set<string>(BACKLOG_TASK_TYPES);
 
+/**
+ * Live-plan visibility policy (Bug 3):
+ *
+ * Only 'new' curriculum tasks are hidden when their originating plan
+ * is archived. Every other task type remains visible regardless of
+ * plan status — in particular, pending revisions remain a personal
+ * SRS commitment independent of plan archival, consistent with
+ * planService's revision listing (which never filters by plan status).
+ *
+ * This predicate is also used by backlogCron/expiryCron (Bug 2).
+ * Changing it here intentionally allows archived-plan-origin
+ * revisions to enter backlog/expiry like any other revision.
+ */
 export const LIVE_TASK_WHERE: Prisma.TaskWhereInput = {
   OR: [
+    { NOT: { taskType: 'new' } },
     { planId: null },
     { plan: { status: 'active' } },
   ],
 };
+
 
 /**
  * Scheduling keys are validated by scheduling write paths.

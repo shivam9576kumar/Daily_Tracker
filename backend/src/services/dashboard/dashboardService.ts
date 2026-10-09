@@ -88,9 +88,10 @@ export const dashboardService = {
       // Expired: flagged expired (live plan or manual)
       prisma.task.count({
         where: {
-          userId,
-          isExpired: true,
-          OR: [{ planId: null }, { plan: { status: 'active' } }],
+          AND: [
+            { userId, isExpired: true },
+            LIVE_TASK_WHERE,
+          ],
         },
       }),
       streakService.getStreaks(userId, tz),

@@ -32,7 +32,10 @@ export const taskService = {
   async getTaskById(taskId: string, userId: string) {
     const task = await taskRepository.getTaskById(taskId, userId);
     if (!task) throw new NotFoundError('Task');
-    return task;
+    return {
+      ...task,
+      isPlanArchived: task.plan?.status === 'archived',
+    };
   },
 
   async getAllTasks(

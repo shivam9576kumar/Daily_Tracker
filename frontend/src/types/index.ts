@@ -38,6 +38,7 @@ export interface Task {
   updatedAt: string;
   revisions?: Task[];
   parentTask?: Task | null;
+  isPlanArchived?: boolean;
 }
 
 export interface StatusOverview {

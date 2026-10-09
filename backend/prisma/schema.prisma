@@ -51,6 +51,7 @@ model Plan {
   user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   tasks Task[]
 
+  @@index([userId, status])
   @@map("plans")
 }
 
@@ -152,6 +153,7 @@ model Assignment {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, deadline])
+  @@index([userId, status])
   @@map("assignments")
 }
 

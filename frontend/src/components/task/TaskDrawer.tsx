@@ -109,6 +109,9 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
         <h2 className="task-panel__title">{task?.title || 'Loading…'}</h2>
         {task && (
           <div className="task-panel__pills">
+            {task.isPlanArchived && (
+              <span className="pill pill-warning">Archived Plan</span>
+            )}
             {task.taskType === 'revision' && (
               <span className="pill pill-revision">Rev #{task.revisionNumber}</span>
             )}
