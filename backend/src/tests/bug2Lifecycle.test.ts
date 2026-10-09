@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { randomUUID } from 'node:crypto';
+import prisma from '../config/database';
 import {
   isOpenBacklogTask,
   isOverdueLifecycleTask,
@@ -8,6 +10,8 @@ import {
 } from '../services/task/taskLifecycle';
 import { taskScheduleForKey, todayKey, dateKeyInTz, addDaysToKey } from '../utils/dateKeys';
 import { BACKLOG_EXPIRY_DAYS } from '@dsa-planner/shared';
+import { taskCompletionService } from '../services/task/taskCompletionService';
+import { taskService } from '../services/task/taskService';
 import { runRepairTaskLifecycle } from '../../scripts/repairTaskLifecycle';
 
 test('A. Backlog eligibility predicates', () => {
@@ -252,6 +256,113 @@ test('G. POTD undo preserves challenge identity', () => {
   assert.equal('scheduledDateKey' in potdPatch, false);
 });
 
+test('H. Revision undo - refunds only its own reward, siblings/parent untouched', async () => {
+  const tz = 'Asia/Kolkata';
+  const userId = `test-user-h-${randomUUID()}`;
+
+  const cleanup = async () => {
+    await prisma.revision.deleteMany({ where: { parentTask: { userId } } });
+    await prisma.task.deleteMany({ where: { userId } });
+    await prisma.user.deleteMany({ where: { id: userId } });
+  };
+
+  try {
+    await prisma.user.create({
+      data: { id: userId, email: `${userId}@example.com`, googleId: userId, name: 'User H', coins: 100 },
+    });
+
+    const parent = await prisma.task.create({
+      data: {
+        userId,
+        title: 'Parent Problem',
+        topic: 'Arrays',
+        taskType: 'new',
+        status: 'completed',
+        completedAt: new Date(),
+        scheduledDate: new Date('2026-04-01T00:00:00Z'),
+        scheduledDateKey: '2026-04-01',
+      },
+    });
+
+    const rev1 = await prisma.task.create({
+      data: {
+        userId,
+        parentTaskId: parent.id,
+        title: 'Parent Problem',
+        topic: 'Arrays',
+        taskType: 'revision',
+        status: 'completed',
+        completedAt: new Date(),
+        scheduledDate: new Date('2026-04-02T00:00:00Z'),
+        scheduledDateKey: '2026-04-02',
+        revisionNumber: 1,
+      },
+    });
+
+    await prisma.revision.create({
+      data: { parentTaskId: parent.id, revisionTaskId: rev1.id, revisionNumber: 1, status: 'completed', completedAt: new Date(), scheduledDate: new Date('2026-04-02T00:00:00Z') },
+    });
+
+    // Undo rev1 solve
+    await taskCompletionService.undoTask(userId, rev1.id, tz);
+
+    const userAfter = await prisma.user.findUnique({ where: { id: userId } });
+    assert.equal(userAfter?.coins, 90, 'User coins refunded 10 for revision');
+
+    const rev1After = await prisma.task.findUnique({ where: { id: rev1.id } });
+    assert.equal(rev1After?.status === 'pending' || rev1After?.status === 'backlog', true);
+
+    const revRecord = await prisma.revision.findFirst({ where: { revisionTaskId: rev1.id } });
+    assert.equal(revRecord?.status, 'pending');
+    assert.equal(revRecord?.completedAt, null);
+
+    const parentAfter = await prisma.task.findUnique({ where: { id: parent.id } });
+    assert.equal(parentAfter?.status, 'completed', 'Parent task remains completed');
+  } finally {
+    await cleanup();
+  }
+});
+
+test('I. Parent undo - refunds base + bonus + completed revisions, second undo is no-op', async () => {
+  const tz = 'Asia/Kolkata';
+  const userId = `test-user-i-${randomUUID()}`;
+
+  const cleanup = async () => {
+    await prisma.revision.deleteMany({ where: { parentTask: { userId } } });
+    await prisma.task.deleteMany({ where: { userId } });
+    await prisma.user.deleteMany({ where: { id: userId } });
+  };
+
+  try {
+    await prisma.user.create({
+      data: { id: userId, email: `${userId}@example.com`, googleId: userId, name: 'User I', coins: 100 },
+    });
+
+    // Complete parent with rating 'medium' (10 solve + 5 bonus = 15 coins -> 115)
+    const parent = await taskCompletionService.completeTask(userId, (await prisma.task.create({
+      data: { userId, title: 'DP Problem', topic: 'DP', taskType: 'new', status: 'pending', scheduledDate: new Date('2026-04-01T00:00:00Z'), scheduledDateKey: '2026-04-01' },
+    })).id, 'medium', tz);
+
+    const user1 = await prisma.user.findUnique({ where: { id: userId } });
+    assert.equal(user1?.coins, 115, 'Earned 15 coins for parent solve');
+
+    // First undo of parent task
+    await taskCompletionService.undoTask(userId, parent.id, tz);
+
+    const user2 = await prisma.user.findUnique({ where: { id: userId } });
+    assert.equal(user2?.coins, 100, 'Refunded 15 coins on parent undo');
+
+    // SECOND undo of already undone parent task
+    const secondUndoResult = await taskCompletionService.undoTask(userId, parent.id, tz);
+    assert.equal(secondUndoResult.status === 'pending' || secondUndoResult.status === 'backlog', true);
+
+    const user3 = await prisma.user.findUnique({ where: { id: userId } });
+    assert.equal(user3?.coins, 100, 'Second undo did NOT refund coins again');
+  } finally {
+    await cleanup();
+  }
+});
+
 test('J. Original solve date clearing on undo', () => {
   const tz = 'Asia/Kolkata';
   const now = new Date('2026-04-01T10:00:00.000Z');
@@ -263,6 +374,122 @@ test('J. Original solve date clearing on undo', () => {
   );
 
   assert.equal(patch.originalSolveDate, null, 'Undo explicitly clears originalSolveDate to null');
+});
+
+test('K. Concurrent duplicate undo refunds exactly once under high concurrency', async () => {
+  const tz = 'Asia/Kolkata';
+  const userId = `test-user-k-${randomUUID()}`;
+
+  const cleanup = async () => {
+    await prisma.revision.deleteMany({ where: { parentTask: { userId } } });
+    await prisma.task.deleteMany({ where: { userId } });
+    await prisma.user.deleteMany({ where: { id: userId } });
+  };
+
+  try {
+    await prisma.user.create({
+      data: { id: userId, email: `${userId}@example.com`, googleId: userId, name: 'User K', coins: 100 },
+    });
+
+    const task = await taskCompletionService.completeTask(userId, (await prisma.task.create({
+      data: { userId, title: 'Graphs Problem', topic: 'Graphs', taskType: 'new', status: 'pending', scheduledDate: new Date('2026-04-01T00:00:00Z'), scheduledDateKey: '2026-04-01' },
+    })).id, 'medium', tz);
+
+    const userSolved = await prisma.user.findUnique({ where: { id: userId } });
+    assert.equal(userSolved?.coins, 115, 'Earned 15 coins for parent solve');
+
+    // Fire TWO parallel concurrent undo requests via Promise.all
+    const [res1, res2] = await Promise.all([
+      taskCompletionService.undoTask(userId, task.id, tz),
+      taskCompletionService.undoTask(userId, task.id, tz),
+    ]);
+
+    assert.equal(res1.id, task.id);
+    assert.equal(res2.id, task.id);
+
+    const userAfter = await prisma.user.findUnique({ where: { id: userId } });
+    assert.equal(userAfter?.coins, 100, 'Coins refunded EXACTLY ONCE under concurrent duplicate undo');
+  } finally {
+    await cleanup();
+  }
+});
+
+test('L. Rescheduling lifecycle consistency', async () => {
+  const tz = 'Asia/Kolkata';
+  const userId = `test-user-l-${randomUUID()}`;
+
+  const cleanup = async () => {
+    await prisma.task.deleteMany({ where: { userId } });
+    await prisma.user.deleteMany({ where: { id: userId } });
+  };
+
+  try {
+    await prisma.user.create({
+      data: { id: userId, email: `${userId}@example.com`, googleId: userId, name: 'User L', coins: 0 },
+    });
+
+    // 1. Backlog task -> rescheduled to future date relative to today -> clears backlog flags
+    const currentToday = todayKey(tz);
+    const futureKey = addDaysToKey(currentToday, 10);
+    const pastKey = addDaysToKey(currentToday, -5);
+
+    const backlogTask = await prisma.task.create({
+      data: {
+        userId,
+        title: 'Backlog Task',
+        topic: 'Trees',
+        taskType: 'new',
+        status: 'backlog',
+        isBacklog: true,
+        backlogSince: new Date('2026-03-25T10:00:00Z'),
+        isExpired: false,
+        scheduledDate: new Date('2026-03-20T00:00:00Z'),
+        scheduledDateKey: pastKey,
+      },
+    });
+
+    const rescheduledFuture = await taskService.updateTask(
+      backlogTask.id,
+      userId,
+      { scheduledDate: futureKey },
+      tz,
+    );
+
+    assert.equal(rescheduledFuture.status, 'pending');
+    assert.equal(rescheduledFuture.isBacklog, false);
+    assert.equal(rescheduledFuture.backlogSince, null);
+    assert.equal(rescheduledFuture.scheduledDateKey, futureKey);
+
+    // 2. Title-only edit on a backlog task -> preserves backlogSince and status
+    const backlogTask2 = await prisma.task.create({
+      data: {
+        userId,
+        title: 'Original Title',
+        topic: 'Trees',
+        taskType: 'new',
+        status: 'backlog',
+        isBacklog: true,
+        backlogSince: new Date('2026-03-25T10:00:00Z'),
+        isExpired: false,
+        scheduledDate: new Date('2026-03-20T00:00:00Z'),
+        scheduledDateKey: pastKey,
+      },
+    });
+
+    const updatedTitle = await taskService.updateTask(
+      backlogTask2.id,
+      userId,
+      { title: 'New Title' },
+      tz,
+    );
+
+    assert.equal(updatedTitle.title, 'New Title');
+    assert.equal(updatedTitle.status, 'backlog');
+    assert.equal(updatedTitle.isBacklog, true);
+    assert.equal(updatedTitle.backlogSince?.toISOString(), new Date('2026-03-25T10:00:00Z').toISOString());
+  } finally {
+    await cleanup();
+  }
 });
 
 test('M. Repair script dry-run safety verification', async () => {
