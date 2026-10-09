@@ -86,7 +86,8 @@ export const taskController = {
   async undo(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await taskCompletionService.undoTask(user.id, req.params.id as string));
+      const tz = getTz(req);
+      sendSuccess(res, await taskCompletionService.undoTask(user.id, req.params.id as string, tz));
     } catch (err) { next(err); }
   },
 

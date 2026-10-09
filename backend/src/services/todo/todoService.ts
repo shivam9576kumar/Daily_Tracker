@@ -33,14 +33,14 @@ const COMPLETED_DAYS = 7;
 
 const WEEKDAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-/** Visible = manual (planId null) OR belongs to the ACTIVE plan. Archived plans never leak. */
-const LIVE_PLAN_FILTER: Prisma.TaskWhereInput = {
-  OR: [{ planId: null }, { plan: { status: 'active' } }],
-};
+import {
+  isOpenBacklogTask,
+  LIVE_TASK_WHERE,
+  OPEN_BACKLOG_WHERE,
+} from '../task/taskLifecycle';
 
-function isOpenBacklog(t: Task): boolean {
-  return t.status !== 'completed' && t.status !== 'expired' && (t.status === 'backlog' || t.isBacklog);
-}
+/** Visible = manual (planId null) OR belongs to the ACTIVE plan. Archived plans never leak. */
+const LIVE_PLAN_FILTER: Prisma.TaskWhereInput = LIVE_TASK_WHERE;
 
 /** 'Today' | 'Tomorrow' | 'Yesterday' | weekday name — relative to the user's today key. */
 function labelFor(dateKey: string, today: string): string {
@@ -125,11 +125,11 @@ export const todoService = {
 
       prisma.task.findMany({
         where: {
-          userId,
-          isBacklog: true,
-          status: 'backlog',
-          isExpired: false,
-          ...LIVE_PLAN_FILTER,
+          AND: [
+            { userId },
+            LIVE_TASK_WHERE,
+            OPEN_BACKLOG_WHERE,
+          ],
         },
         orderBy: [{ scheduledDateKey: 'asc' }, { title: 'asc' }],
       }),
@@ -171,8 +171,8 @@ export const todoService = {
       .filter((t) => t.status === 'completed')
       .sort((a, b) => (b.completedAt?.getTime() ?? 0) - (a.completedAt?.getTime() ?? 0));
 
-    const backlogToday = pending.filter(isOpenBacklog);
-    const regular = pending.filter((t) => !isOpenBacklog(t));
+    const backlogToday = pending.filter(isOpenBacklogTask);
+    const regular = pending.filter((t) => !isOpenBacklogTask(t));
 
     const pendingAssignments = assignments.filter((a) => a.status === 'pending');
     const dueAssignments = pendingAssignments.filter((a) => assignmentDateKey(a) <= today);

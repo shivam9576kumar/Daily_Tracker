@@ -1,20 +1,24 @@
 import prisma from '../config/database';
 import { env } from '../config/env';
-import { todayKey, dateKeyInTz } from '../utils/dateKeys';
+import { todayKey, resolveTimeZone, isValidDateKey } from '../utils/dateKeys';
 import { notificationService } from '../services/notification/notificationService';
 import logger from '../utils/logger';
+import {
+  LIVE_TASK_WHERE,
+  DATED_BACKLOG_TYPE_WHERE,
+} from '../services/task/taskLifecycle';
 
 /**
  * Backlog Cron
  *
  * Rule:
- * pending task with scheduledDateKey < todayKey(userTz)
+ * pending lifecycle-eligible task with scheduledDateKey < todayKey(userTz)
  * → status = backlog
  * → isBacklog = true
  * → backlogSince = now
  *
- * This cron is idempotent:
- * running it multiple times will not move the same task twice.
+ * Excludes CP31, POTD, Inbox, undated, completed and archived tasks.
+ * Race protection: guarded updateMany rechecks state before updating.
  */
 export async function runBacklogCron() {
   logger.info('📦 Backlog cron started');
@@ -22,56 +26,64 @@ export async function runBacklogCron() {
   try {
     const candidates = await prisma.task.findMany({
       where: {
-        status: 'pending',
-        isBacklog: false,
-        isExpired: false,
-        completedAt: null,
-        scheduledDateKey: { not: null },
-        taskType: { not: 'cp31' },
-        OR: [{ planId: null }, { plan: { status: 'active' } }],
+        AND: [
+          LIVE_TASK_WHERE,
+          DATED_BACKLOG_TYPE_WHERE,
+          {
+            status: 'pending',
+            isBacklog: false,
+            isExpired: false,
+            completedAt: null,
+          },
+        ],
       },
       select: {
         id: true,
         userId: true,
-        scheduledDate: true,
         scheduledDateKey: true,
         user: { select: { timezone: true } },
       },
     });
 
-    // BUG 8: per-user tz. 'YYYY-MM-DD' compares lexicographically = chronologically.
-    const overdue = candidates.filter((t) => {
-      if (!t.scheduledDateKey) return false;
-      const tz = t.user.timezone || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
-      return t.scheduledDateKey < todayKey(tz);
-    });
-
-    const overdueIds = overdue.map((t) => t.id);
-    if (overdueIds.length === 0) {
-      logger.info('📦 Backlog cron finished: 0 tasks moved');
-      return { moved: 0 };
-    }
-
+    const now = new Date();
     const movedByUser = new Map<string, number>();
-    const result = await prisma.task.updateMany({
-      where: {
-        id: { in: overdueIds },
-        status: 'pending',
-        isBacklog: false,
-        isExpired: false,
-        completedAt: null,
-      },
-      data: {
-        status: 'backlog',
-        isBacklog: true,
-        backlogSince: new Date(),
-      },
-    });
+    let totalMoved = 0;
 
-    for (const task of overdue) {
-      movedByUser.set(task.userId, (movedByUser.get(task.userId) || 0) + 1);
+    for (const task of candidates) {
+      if (!task.scheduledDateKey || !isValidDateKey(task.scheduledDateKey)) continue;
+      const tz = resolveTimeZone(task.user.timezone || env.DEFAULT_TIMEZONE);
+      const today = todayKey(tz, now);
+
+      if (task.scheduledDateKey < today) {
+        const changed = await prisma.task.updateMany({
+          where: {
+            AND: [
+              { id: task.id, userId: task.userId },
+              LIVE_TASK_WHERE,
+              DATED_BACKLOG_TYPE_WHERE,
+              {
+                status: 'pending',
+                isBacklog: false,
+                isExpired: false,
+                completedAt: null,
+                scheduledDateKey: { lt: today },
+              },
+            ],
+          },
+          data: {
+            status: 'backlog',
+            isBacklog: true,
+            backlogSince: now,
+            isExpired: false,
+          },
+        });
+
+        if (changed.count > 0) {
+          totalMoved += changed.count;
+          movedByUser.set(task.userId, (movedByUser.get(task.userId) || 0) + changed.count);
+        }
+      }
     }
-    const movedCount = result.count;
 
     for (const [userId, count] of movedByUser.entries()) {
       await notificationService.create({
@@ -88,9 +100,9 @@ export async function runBacklogCron() {
       });
     }
 
-    logger.info(`📦 Backlog cron finished: ${movedCount} tasks moved`);
+    logger.info(`📦 Backlog cron finished: ${totalMoved} tasks moved`);
 
-    return { moved: movedCount };
+    return { moved: totalMoved };
   } catch (error) {
     logger.error('❌ Backlog cron failed:', error);
     throw error;

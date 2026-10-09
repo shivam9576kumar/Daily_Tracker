@@ -8,6 +8,11 @@ import {
   zonedDayRangeUtc,
   addDaysToKey,
 } from '../utils/dateKeys';
+import {
+  LIVE_TASK_WHERE,
+  DATED_BACKLOG_TYPE_WHERE,
+  OPEN_BACKLOG_WHERE,
+} from '../services/task/taskLifecycle';
 
 /**
  * Task Repository — data access layer for the tasks table.
@@ -93,7 +98,7 @@ export const taskRepository = {
         ],
       },
 
-      { isBacklog: true, status: 'backlog' },
+      OPEN_BACKLOG_WHERE,
 
       { status: 'completed', completedAt: { gte: start, lt: end } },
     ];
@@ -108,12 +113,7 @@ export const taskRepository = {
         isExpired: false,
         AND: [
           { OR: todayOr },
-          {
-            OR: [
-              { planId: null },
-              { plan: { status: 'active' } },
-            ],
-          },
+          LIVE_TASK_WHERE,
         ],
       },
       orderBy: [
@@ -243,30 +243,34 @@ export const taskRepository = {
 
       return prisma.task.findMany({
         where: {
-          userId,
-          status: 'pending',
-          isBacklog: false,
-          isExpired: false,
-          completedAt: null,
-          scheduledDateKey: {
-            not: null,
-            lt: today,
-          },
-          taskType: { not: 'cp31' },
-          OR: [{ planId: null }, { plan: { status: 'active' } }],
+          AND: [
+            { userId },
+            LIVE_TASK_WHERE,
+            DATED_BACKLOG_TYPE_WHERE,
+            {
+              status: 'pending',
+              isBacklog: false,
+              isExpired: false,
+              completedAt: null,
+              scheduledDateKey: { lt: today },
+            },
+          ],
         },
       });
     }
 
     const candidates = await prisma.task.findMany({
       where: {
-        status: 'pending',
-        isBacklog: false,
-        isExpired: false,
-        completedAt: null,
-        scheduledDateKey: { not: null },
-        taskType: { not: 'cp31' },
-        OR: [{ planId: null }, { plan: { status: 'active' } }],
+        AND: [
+          LIVE_TASK_WHERE,
+          DATED_BACKLOG_TYPE_WHERE,
+          {
+            status: 'pending',
+            isBacklog: false,
+            isExpired: false,
+            completedAt: null,
+          },
+        ],
       },
       include: {
         user: { select: { timezone: true } },
@@ -298,13 +302,11 @@ export const taskRepository = {
 
       const candidates = await prisma.task.findMany({
         where: {
-          userId,
-          isBacklog: true,
-          isExpired: false,
-          status: { not: 'completed' },
-          taskType: { not: 'cp31' },
-          backlogSince: { not: null },
-          OR: [{ planId: null }, { plan: { status: 'active' } }],
+          AND: [
+            { userId },
+            LIVE_TASK_WHERE,
+            OPEN_BACKLOG_WHERE,
+          ],
         },
       });
 
@@ -319,12 +321,10 @@ export const taskRepository = {
     const expiryDays = Number(userIdOrDays);
     const candidates = await prisma.task.findMany({
       where: {
-        isBacklog: true,
-        isExpired: false,
-        status: { not: 'completed' },
-        taskType: { not: 'cp31' },
-        backlogSince: { not: null },
-        OR: [{ planId: null }, { plan: { status: 'active' } }],
+        AND: [
+          LIVE_TASK_WHERE,
+          OPEN_BACKLOG_WHERE,
+        ],
       },
       include: {
         user: { select: { timezone: true } },

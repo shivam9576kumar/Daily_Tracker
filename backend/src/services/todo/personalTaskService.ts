@@ -4,8 +4,10 @@ import {
   RECURRENCE_VALUES,
   resolveTimeZone,
   taskScheduleForKey,
+  todayKey,
   type Recurrence,
 } from '../../utils/dateKeys';
+import { isOverdueLifecycleTask } from '../task/taskLifecycle';
 
 const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -77,6 +79,9 @@ export const personalTaskService = {
       throw new ValidationError('A repeating task needs a date');
     }
 
+    const today = todayKey(effectiveTz);
+    const isOverdue = dateKey !== null && isOverdueLifecycleTask({ taskType: 'personal', scheduledDateKey: dateKey }, today);
+
     return prisma.task.create({
       data: {
         userId,
@@ -86,7 +91,10 @@ export const personalTaskService = {
         platform: null,
         problemUrl: null,
         taskType: 'personal',
-        status: 'pending',
+        status: isOverdue ? 'backlog' : 'pending',
+        isBacklog: isOverdue,
+        backlogSince: isOverdue ? new Date() : null,
+        isExpired: false,
         recurrence,
         dueTime,
         durationMin,
@@ -116,6 +124,36 @@ export const personalTaskService = {
       throw new ValidationError('A repeating task needs a date');
     }
 
+    let lifecyclePatch: {
+      status?: string;
+      isBacklog?: boolean;
+      backlogSince?: Date | null;
+      isExpired?: boolean;
+    } = {};
+
+    if (dateKey !== undefined && task.status !== 'completed') {
+      const today = todayKey(effectiveTz);
+      const isOverdue = dateKey !== null && isOverdueLifecycleTask({ taskType: 'personal', scheduledDateKey: dateKey }, today);
+
+      if (isOverdue) {
+        lifecyclePatch = {
+          status: 'backlog',
+          isBacklog: true,
+          backlogSince: task.status === 'backlog' && task.scheduledDateKey === dateKey
+            ? task.backlogSince ?? new Date()
+            : new Date(),
+          isExpired: false,
+        };
+      } else {
+        lifecyclePatch = {
+          status: 'pending',
+          isBacklog: false,
+          backlogSince: null,
+          isExpired: false,
+        };
+      }
+    }
+
     return prisma.task.update({
       where: { id: taskId },
       data: {
@@ -127,9 +165,7 @@ export const personalTaskService = {
           ? {
               ...scheduleFields(dateKey, effectiveTz),
               ...(dateKey === null ? { recurrence: null, dueTime: null, durationMin: null } : {}),   // no-date ⇒ clear trio
-              isBacklog: false,
-              backlogSince: null,
-              ...(task.status === 'backlog' ? { status: 'pending' } : {}),
+              ...lifecyclePatch,
             }
           : {}),
       },

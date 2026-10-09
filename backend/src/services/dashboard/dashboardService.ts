@@ -8,6 +8,7 @@ import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakServ
 import { ensureCp31TasksForUser, emptyCp31State, listSkippedCp31, type Cp31State } from '../cp31/cp31Service';
 import { computeCp31Streak, type Cp31StreakResult } from '../cp31/cp31StreakService';
 import { todayKey, addDaysToKey } from '../../utils/dateKeys';
+import { LIVE_TASK_WHERE, OPEN_BACKLOG_WHERE } from '../task/taskLifecycle';
 
 /**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
@@ -74,14 +75,14 @@ export const dashboardService = {
     ]);
 
     const [backlogCount, expiredCount, streaks, pendingAssignments, classesForWeek] = await Promise.all([
-      // Backlog: flagged as backlog, not expired, not completed (live plan or manual)
+      // Backlog: canonical open backlog count
       prisma.task.count({
         where: {
-          userId,
-          isBacklog: true,
-          isExpired: false,
-          status: { not: 'completed' },
-          OR: [{ planId: null }, { plan: { status: 'active' } }],
+          AND: [
+            { userId },
+            LIVE_TASK_WHERE,
+            OPEN_BACKLOG_WHERE,
+          ],
         },
       }),
       // Expired: flagged expired (live plan or manual)

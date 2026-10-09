@@ -3,7 +3,8 @@ import { taskRepository } from '../../repositories/taskRepository';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { calculateCompletedTaskCoins } from '../../config/rewards';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
-import { resolveTimeZone, taskScheduleFromInput } from '../../utils/dateKeys';
+import { resolveTimeZone, taskScheduleFromInput, todayKey } from '../../utils/dateKeys';
+import { isOverdueLifecycleTask } from './taskLifecycle';
 import { resolvePlatformValue } from '../../utils/platform';
 
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
@@ -79,6 +80,9 @@ export const taskService = {
 
     const effectiveTz = resolveTimeZone(tz);
     const schedule = taskScheduleFromInput(data.scheduledDate, effectiveTz);
+    const today = todayKey(effectiveTz);
+    const taskType = data.taskType || 'new';
+    const isOverdue = isOverdueLifecycleTask({ taskType, scheduledDateKey: schedule.scheduledDateKey }, today);
 
     if (data.problemUrl && !/^https?:\/\//i.test(data.problemUrl)) {
       throw new ValidationError('problemUrl must start with http:// or https://');
@@ -91,7 +95,11 @@ export const taskService = {
       difficulty: data.difficulty || 'medium',
       platform: resolvePlatformValue(data.problemUrl, data.platform || 'custom'),
       problemUrl: data.problemUrl?.trim() || null,
-      taskType: data.taskType || 'new',
+      taskType,
+      status: isOverdue ? 'backlog' : 'pending',
+      isBacklog: isOverdue,
+      backlogSince: isOverdue ? new Date() : null,
+      isExpired: false,
       scheduledDate: schedule.scheduledDate,
       scheduledDateKey: schedule.scheduledDateKey,
       ...(data.planId ? { plan: { connect: { id: data.planId } } } : {}),
@@ -122,10 +130,52 @@ export const taskService = {
       );
     }
 
+    const effectiveTz = resolveTimeZone(tz);
     const schedule =
       data.scheduledDate !== undefined
-        ? taskScheduleFromInput(data.scheduledDate, resolveTimeZone(tz))
+        ? taskScheduleFromInput(data.scheduledDate, effectiveTz)
         : undefined;
+
+    let lifecyclePatch: {
+      status?: string;
+      isBacklog?: boolean;
+      backlogSince?: Date | null;
+      isExpired?: boolean;
+    } = {};
+
+    if (schedule && existing.status !== 'completed') {
+      const today = todayKey(effectiveTz);
+      const isOverdue = isOverdueLifecycleTask(
+        { taskType: existing.taskType, scheduledDateKey: schedule.scheduledDateKey },
+        today
+      );
+
+      if (isOverdue) {
+        lifecyclePatch = {
+          status: 'backlog',
+          isBacklog: true,
+          backlogSince:
+            existing.status === 'backlog' && existing.scheduledDateKey === schedule.scheduledDateKey
+              ? existing.backlogSince ?? new Date()
+              : new Date(),
+          isExpired: false,
+        };
+      } else {
+        lifecyclePatch = {
+          status: 'pending',
+          isBacklog: false,
+          backlogSince: null,
+          isExpired: false,
+        };
+      }
+    }
+
+    if (schedule && existing.taskType === 'revision') {
+      await prisma.revision.updateMany({
+        where: { revisionTaskId: taskId },
+        data: { scheduledDate: schedule.scheduledDate },
+      });
+    }
 
     return taskRepository.updateTask(taskId, {
       ...(data.title && { title: data.title.trim() }),
@@ -139,6 +189,7 @@ export const taskService = {
         scheduledDate: schedule.scheduledDate,
         scheduledDateKey: schedule.scheduledDateKey,
       }),
+      ...lifecyclePatch,
     });
   },
 

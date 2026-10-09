@@ -14,6 +14,7 @@ import {
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { invalidateUserCache } from '../../middleware/authMiddleware';
 import { resolvePlatformValue } from '../../utils/platform';
+import { getUndoLifecyclePatch } from './taskLifecycle';
 
 import {
   COIN_REWARDS,
@@ -304,52 +305,77 @@ export const taskCompletionService = {
   },
 
   /**
-   * Undo solve: full revert to pending.
-   *  - status reverted to 'pending'
-   *  - rating and completedAt cleared
-   *  - all child revisions deleted
-   *  - base + bonus + completed revision coins refunded
+   * Undo solve: full revert according to lifecycle policy.
+   *  - Reads state inside transaction for strict concurrency safety.
+   *  - Clears rating, completedAt, originalSolveDate.
+   *  - Restores overdue ordinary tasks immediately to backlog (backlogSince = now).
+   *  - CP31: active band → pending Today; inactive/disabled band → parked (null keys).
+   *  - POTD: preserves challenge identity and potdDateKey.
+   *  - Already pending/backlog → no-op (return unchanged, no refunds).
+   *  - Skipped/expired → reject.
+   *  - Refunds base + bonus + completed child revision coins on first undo only.
    */
-  async undoTask(userId: string, taskId: string) {
-    const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
-    if (!task) throw new NotFoundError('Task');
-
-    const isRevision = task.taskType === 'revision';
-    const wasCompleted = task.status === 'completed';
-    const refund =
-      wasCompleted && task.taskType !== 'personal'
-        ? COIN_REWARDS.solve + bonusFor(task.rating)
-        : 0;
-
+  async undoTask(userId: string, taskId: string, tz: string = env.DEFAULT_TIMEZONE) {
     const result = await prisma.$transaction(async (tx) => {
-      if (!isRevision) {
-        if (task.taskType === 'personal' && task.recurrence) {
-          // Remove the pending occurrence this completion spawned.
-          await tx.task.deleteMany({
-            where: {
-              userId,
-              parentTaskId: taskId,
-              taskType: 'personal',
-              status: 'pending',
-            },
-          });
-        }
+      const task = await tx.task.findFirst({ where: { id: taskId, userId } });
+      if (!task) throw new NotFoundError('Task');
 
-        // Parent path: undo cancels EVERYTHING — wipe all revisions, refund their coins.
-        const doneRevs = await tx.task.count({
-          where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
-        });
-        await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
-        await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
-        if (doneRevs > 0) {
-          const u = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
-          await tx.user.update({
-            where: { id: userId },
-            data: { coins: Math.max(0, (u?.coins ?? 0) - doneRevs * COIN_REWARDS.revision) },
+      if (task.status === 'pending' || task.status === 'backlog') {
+        return task;
+      }
+
+      if (task.status === 'skipped') {
+        throw new ValidationError('Skipped tasks cannot be undone. Use the Retry endpoint instead.');
+      }
+
+      if (task.status === 'expired') {
+        throw new ValidationError('Expired tasks cannot be undone.');
+      }
+
+      if (task.status !== 'completed') {
+        throw new ValidationError('Task is not completed');
+      }
+
+      const now = new Date();
+      const user = await tx.user.findUnique({
+        where: { id: userId },
+        select: { cp31Enabled: true, cp31Band: true, coins: true },
+      });
+
+      const patch = getUndoLifecyclePatch(task, tz, now, {
+        cp31Enabled: user?.cp31Enabled ?? false,
+        cp31Band: user?.cp31Band ?? null,
+      });
+
+      const isRevision = task.taskType === 'revision';
+      let totalRefund = 0;
+
+      if (!isRevision) {
+        if (task.taskType === 'personal') {
+          if (task.recurrence) {
+            await tx.task.deleteMany({
+              where: {
+                userId,
+                parentTaskId: taskId,
+                taskType: 'personal',
+                status: 'pending',
+              },
+            });
+          }
+        } else {
+          totalRefund += COIN_REWARDS.solve + bonusFor(task.rating);
+
+          const doneRevs = await tx.task.count({
+            where: { parentTaskId: taskId, taskType: 'revision', status: 'completed' },
           });
+          totalRefund += doneRevs * COIN_REWARDS.revision;
+
+          await tx.revision.deleteMany({ where: { parentTaskId: taskId } });
+          await tx.task.deleteMany({ where: { parentTaskId: taskId, taskType: 'revision' } });
         }
       } else {
-        // Revision path: ONLY reset the Revision row — no child deletes (BUG 11)
+        totalRefund += COIN_REWARDS.revision;
+
         await tx.revision.updateMany({
           where: { revisionTaskId: taskId },
           data: { status: 'pending', completedAt: null },
@@ -358,16 +384,16 @@ export const taskCompletionService = {
 
       const updated = await tx.task.update({
         where: { id: taskId },
-        data: { status: 'pending', rating: null, completedAt: null, isBacklog: false },
+        data: patch,
       });
 
-      if (wasCompleted && refund > 0) {
-        const u = await tx.user.findUnique({ where: { id: userId }, select: { coins: true } });
+      if (totalRefund > 0 && user) {
         await tx.user.update({
           where: { id: userId },
-          data: { coins: Math.max(0, (u?.coins ?? 0) - refund) },
+          data: { coins: Math.max(0, user.coins - totalRefund) },
         });
       }
+
       return updated;
     }, TX_OPTIONS);
 

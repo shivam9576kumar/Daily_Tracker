@@ -1,20 +1,25 @@
 import prisma from '../config/database';
 import { env } from '../config/env';
-import { todayKey, addDaysToKey, zonedDayStartUtc } from '../utils/dateKeys';
+import { todayKey, addDaysToKey, dateKeyInTz, resolveTimeZone } from '../utils/dateKeys';
 import { BACKLOG_EXPIRY_DAYS } from '@dsa-planner/shared';
 import { notificationService } from '../services/notification/notificationService';
 import logger from '../utils/logger';
+import {
+  LIVE_TASK_WHERE,
+  OPEN_BACKLOG_WHERE,
+} from '../services/task/taskLifecycle';
 
 /**
  * Expiry Cron
  *
  * Rule:
- * backlog task older than BACKLOG_EXPIRY_DAYS in user timezone
+ * canonical open-backlog task older than BACKLOG_EXPIRY_DAYS calendar days in user timezone
  * → status = expired
+ * → isBacklog = false
  * → isExpired = true
  *
- * This cron is idempotent:
- * running it multiple times will not expire the same task twice.
+ * Synchronizes Revision table records.
+ * Idempotent and protected against race conditions via guarded updates.
  */
 export async function runExpiryCron() {
   logger.info('💀 Expiry cron started');
@@ -22,58 +27,68 @@ export async function runExpiryCron() {
   try {
     const candidates = await prisma.task.findMany({
       where: {
-        isBacklog: true,
-        isExpired: false,
-        status: { not: 'completed' },
-        taskType: { not: 'cp31' },
-        OR: [{ planId: null }, { plan: { status: 'active' } }],
+        AND: [
+          LIVE_TASK_WHERE,
+          OPEN_BACKLOG_WHERE,
+        ],
       },
       select: {
         id: true,
         userId: true,
+        taskType: true,
         backlogSince: true,
         user: { select: { timezone: true } },
       },
     });
 
-    // backlogSince is an instant → compare against the exact user-local
-    // midnight of (userToday − N days).
-    const expired = candidates.filter((t) => {
-      if (!t.backlogSince) return false;
-      const tz = t.user.timezone || env.DEFAULT_TIMEZONE || 'Asia/Kolkata';
-      const cutoffKey = addDaysToKey(todayKey(tz), -BACKLOG_EXPIRY_DAYS);
-      return t.backlogSince.getTime() <= zonedDayStartUtc(cutoffKey, tz).getTime();
-    });
-
-    const expiredIds = expired.map((t) => t.id);
-    if (expiredIds.length === 0) {
-      logger.info('💀 Expiry cron finished: 0 tasks expired');
-      return { expired: 0 };
-    }
-
+    const now = new Date();
     const expiredByUser = new Map<string, number>();
-    const result = await prisma.task.updateMany({
-      where: {
-        id: { in: expiredIds },
-        isBacklog: true,
-        isExpired: false,
-        status: {
-          not: 'completed',
-        },
-      },
-      data: {
-        status: 'expired',
-        isExpired: true,
-      },
-    });
+    let totalExpired = 0;
 
-    for (const task of expired) {
-      expiredByUser.set(
-        task.userId,
-        (expiredByUser.get(task.userId) || 0) + 1
-      );
+    for (const task of candidates) {
+      if (!task.backlogSince) {
+        logger.warn('Expiry cron: backlog task missing backlogSince', { taskId: task.id, userId: task.userId });
+        continue;
+      }
+
+      const tz = resolveTimeZone(task.user.timezone || env.DEFAULT_TIMEZONE);
+      const backlogDay = dateKeyInTz(task.backlogSince, tz);
+      const expiresOn = addDaysToKey(backlogDay, BACKLOG_EXPIRY_DAYS);
+      const today = todayKey(tz, now);
+
+      if (expiresOn <= today) {
+        const count = await prisma.$transaction(async (tx) => {
+          const changed = await tx.task.updateMany({
+            where: {
+              AND: [
+                { id: task.id, userId: task.userId },
+                LIVE_TASK_WHERE,
+                OPEN_BACKLOG_WHERE,
+              ],
+            },
+            data: {
+              status: 'expired',
+              isBacklog: false,
+              isExpired: true,
+            },
+          });
+
+          if (changed.count > 0 && task.taskType === 'revision') {
+            await tx.revision.updateMany({
+              where: { revisionTaskId: task.id, status: { not: 'completed' } },
+              data: { status: 'expired', completedAt: null },
+            });
+          }
+
+          return changed.count;
+        });
+
+        if (count > 0) {
+          totalExpired += count;
+          expiredByUser.set(task.userId, (expiredByUser.get(task.userId) || 0) + count);
+        }
+      }
     }
-    const expiredCount = result.count;
 
     for (const [userId, count] of expiredByUser.entries()) {
       await notificationService.create({
@@ -91,9 +106,9 @@ export async function runExpiryCron() {
       });
     }
 
-    logger.info(`💀 Expiry cron finished: ${expiredCount} tasks expired`);
+    logger.info(`💀 Expiry cron finished: ${totalExpired} tasks expired`);
 
-    return { expired: expiredCount };
+    return { expired: totalExpired };
   } catch (error) {
     logger.error('❌ Expiry cron failed:', error);
     throw error;
