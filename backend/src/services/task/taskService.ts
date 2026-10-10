@@ -7,6 +7,23 @@ import { resolveTimeZone, taskScheduleFromInput, todayKey } from '../../utils/da
 import { isOverdueLifecycleTask } from './taskLifecycle';
 import { resolvePlatformValue } from '../../utils/platform';
 
+/**
+ * Notes are stored exclusively in the `Note` model, accessible via `/api/tasks/:id/notes`.
+ * `Task` rows do not carry a notes payload.
+ */
+
+export function resolvePlatformForUpdate(
+  patch: { problemUrl?: string; platform?: string },
+  existing: { problemUrl: string | null; platform: string | null },
+): string {
+  if (patch.problemUrl !== undefined) {
+    // URL changed or was set → URL wins, same rule as create.
+    return resolvePlatformValue(patch.problemUrl, patch.platform || existing.platform);
+  }
+  // URL unchanged: respect explicit override if provided, else keep existing.
+  return patch.platform ?? existing.platform ?? 'custom';
+}
+
 const DIFFICULTIES = ['easy', 'medium', 'hard'];
 const TASK_TYPES = ['new'];
 
@@ -180,13 +197,21 @@ export const taskService = {
       });
     }
 
+    const hasPlatformChange = data.platform !== undefined || data.problemUrl !== undefined;
+    const resolvedPlatform = hasPlatformChange
+      ? resolvePlatformForUpdate(
+          { problemUrl: data.problemUrl, platform: data.platform },
+          { problemUrl: existing.problemUrl, platform: existing.platform }
+        )
+      : undefined;
+
     return taskRepository.updateTask(taskId, {
       ...(data.title && { title: data.title.trim() }),
       ...(data.topic && { topic: data.topic.trim() }),
       ...(data.difficulty && { difficulty: data.difficulty }),
-      ...(data.platform && { platform: data.platform }),
+      ...(resolvedPlatform !== undefined && { platform: resolvedPlatform }),
       ...(data.problemUrl !== undefined && {
-        problemUrl: data.problemUrl || null,
+        problemUrl: data.problemUrl?.trim() || null,
       }),
       ...(schedule && {
         scheduledDate: schedule.scheduledDate,

@@ -31,7 +31,7 @@ Mastering Data Structures & Algorithms for technical interviews requires consist
 - **Exams & Busy Days Manager**:
   - Add exams, quizzes, or travel days to auto-reduce problem load.
   - Preset chips (*Light 30%, Half 50%, Exam Day 60%, Heavy 80%, No Study 100%*) and quick date selectors (*Today, Tomorrow, +3 Days, +7 Days*).
-- **Dynamic Question Bank Source of Truth (`/api/v1/plans/topics`)**: Focus/Avoid chips and topic counts are fetched directly from the backend question bank endpoint, guaranteeing exact string matching with live problem counts.
+- **Dynamic Question Bank Source of Truth (`/api/plans/topics`)**: Focus/Avoid chips and topic counts are fetched directly from the backend question bank endpoint, guaranteeing exact string matching with live problem counts.
 - **Topic Normalization & Alias Safety Net**: Canonical `topicKey()` maps free-text AI prompt inputs (*"trees", "heaps", "dp"*) to exact canonical names (*"Binary Tree", "Heap", "Dynamic Programming"*).
 - **Flexible Pacing & Duration**: Select preset pace (*Relaxed, Moderate, Intensive*) or custom duration (1 to 365 days) with custom start date picker and buffer day options.
 - **AI Prompt Assist**: Type prompts like *"30 days plan from Striver Sheet with exam on Sept 15"* and let Gemini AI configure your settings.
@@ -115,7 +115,7 @@ Daily_Tracker/
 │       ├── data/                        # striverSheet.json, coderArmySheet.json, neetcodeSample.json
 │       ├── middleware/                  # Auth JWT, Timezone, and Error middleware
 │       ├── repositories/                # Prisma data access layer
-│       ├── routes/                      # API router endpoints (/api/v1/*)
+│       ├── routes/                      # API router endpoints (/api/*)
 │       ├── services/                    # Business logic & weighted scheduling engine
 │       └── utils/                       # DateKeys, Logger, Gemini client, Topic normalizer
 │
@@ -207,22 +207,22 @@ npm --prefix frontend run dev
 
 | Category | Method | Endpoint | Description |
 |---|---|---|---|
-| **Dashboard** | `GET` | `/api/v1/dashboard` | Aggregated dashboard metrics, vibe, hitlist, classes |
-| **Tasks** | `POST` | `/api/v1/tasks` | Create manual task |
-| | `POST` | `/api/v1/tasks/:id/complete` | Complete task (awards coins & streak) |
-| | `POST` | `/api/v1/tasks/:id/unrate` | Un-rate task (refunds coins & deletes 4 pending revisions) |
-| | `DELETE` | `/api/v1/tasks/:id` | Delete task |
-| **Plans** | `GET` | `/api/v1/plans/topics` | Fetch dynamic topic list & problem counts per sheet source |
-| | `POST` | `/api/v1/plans/preview` | Generate schedule preview without saving |
-| | `POST` | `/api/v1/plans/commit` | Commit new plan + batch task creation transaction |
-| | `GET` | `/api/v1/plans/active` | Get current active plan & scheduled tasks |
-| | `POST` | `/api/v1/plans/:id/archive` | Archive active plan |
-| | `POST` | `/api/v1/plans/:id/restore` | Restore archived plan |
-| | `DELETE` | `/api/v1/plans/:id` | Delete plan (deletes pending, preserves solved history) |
-| **POTD** | `GET` | `/api/v1/potd/today` | Fetch today's LeetCode POTD |
-| | `POST` | `/api/v1/potd/solve` | Complete POTD and update POTD streak |
-| **Classes** | `GET` | `/api/v1/classes` | Get semester weekly timetable |
-| | `POST` | `/api/v1/classes` | Update semester class timetable |
+| **Dashboard** | `GET` | `/api/dashboard` | Aggregated dashboard metrics, vibe, hitlist, classes |
+| **Tasks** | `POST` | `/api/tasks` | Create manual task |
+| | `POST` | `/api/tasks/:id/complete` | Complete task (awards coins & streak) |
+| | `POST` | `/api/tasks/:id/unrate` | Un-rate task (refunds coins & deletes 4 pending revisions) |
+| | `DELETE` | `/api/tasks/:id` | Delete task |
+| **Plans** | `GET` | `/api/plans/topics` | Fetch dynamic topic list & problem counts per sheet source |
+| | `POST` | `/api/plans/preview` | Generate schedule preview without saving |
+| | `POST` | `/api/plans/commit` | Commit new plan + batch task creation transaction |
+| | `GET` | `/api/plans/active` | Get current active plan & scheduled tasks |
+| | `POST` | `/api/plans/:id/archive` | Archive active plan |
+| | `POST` | `/api/plans/:id/restore` | Restore archived plan |
+| | `DELETE` | `/api/plans/:id` | Delete plan (deletes pending, preserves solved history) |
+| **POTD** | `GET` | `/api/potd/today` | Fetch today's LeetCode POTD |
+| | `POST` | `/api/potd/solve` | Complete POTD and update POTD streak |
+| **Classes** | `GET` | `/api/classes` | Get semester weekly timetable |
+| | `POST` | `/api/classes` | Update semester class timetable |
 | **Todo** | `GET` | `/api/todo?upcomingDays=14\|30` | Aggregated Todo workspace (today groups, upcoming, backlog, completed, inbox, counts) |
 | | `POST` | `/api/todo/tasks` | Create personal task (null date = Inbox) |
 | | `PATCH` | `/api/todo/tasks/:id` | Edit personal task title / schedule / unschedule |
@@ -234,9 +234,9 @@ npm --prefix frontend run dev
 | | `GET` | `/api/daily-challenges/cp31/skipped` | Skipped rungs in the current band |
 | | `POST` | `/api/daily-challenges/cp31/advance-band` | Confirm the next band (only when the current band is complete) |
 | | `GET` | `/api/daily-challenges/cp31/streak` | CP31 streak (derive-on-read; ≥1 solve/day) |
-| **Progress** | `GET` | `/api/v1/progress/heatmap` | Get 365-day solved contribution heatmap data |
-| | `GET` | `/api/v1/progress/topics` | Get topic progress percentages & difficulty stats |
-| | `GET` | `/api/v1/progress/activity` | Get recent activity log |
+| **Progress** | `GET` | `/api/progress/heatmap` | Get 365-day solved contribution heatmap data |
+| | `GET` | `/api/progress/topics` | Get topic progress percentages & difficulty stats |
+| | `GET` | `/api/progress/activity` | Get recent activity log |
 
 ---
 

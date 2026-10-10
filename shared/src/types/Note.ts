@@ -3,8 +3,8 @@ export interface Note {
   taskId: string;
   userId: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateNoteInput {

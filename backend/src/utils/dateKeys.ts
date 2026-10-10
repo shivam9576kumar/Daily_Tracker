@@ -5,8 +5,8 @@ import { ValidationError } from './error';
 const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly' | 'yearly';
-export const RECURRENCE_VALUES: Recurrence[] = ['daily', 'weekdays', 'weekly', 'monthly', 'yearly'];
+import { Recurrence, RECURRENCE_VALUES } from '@dsa-planner/shared';
+export { type Recurrence, RECURRENCE_VALUES };
 
 export function isValidDateKey(value: unknown): value is string {
   if (typeof value !== 'string' || !DATE_KEY_RE.test(value)) {

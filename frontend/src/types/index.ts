@@ -1,51 +1,84 @@
-export type Difficulty = 'easy' | 'medium' | 'hard';
-export type Rating = 'easy' | 'medium' | 'hard';
-export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal' | 'cp31';
-export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired' | 'skipped';
-export type Recurrence = 'daily' | 'weekdays' | 'weekly' | 'monthly' | 'yearly';
+// Re-export everything from the shared package. Frontend convenience
+// types that are purely UI-side (and not cross-boundary) live below
+// the re-export line.
 
-export interface Task {
-  id: string;
-  userId: string;
-  planId: string | null;
-  parentTaskId: string | null;
-  title: string;
-  topic: string;
-  difficulty: Difficulty | null;
-  platform: string | null;
-  problemUrl: string | null;
-  sourceUrl?: string | null;
-  taskType: TaskType;
-  status: TaskStatus;
-  scheduledDate: string | null;
-  scheduledDateKey?: string | null;
-  originalSolveDate: string | null;
-  completedAt: string | null;
-  rating: Rating | null;
-  revisionNumber: number;
-  isBacklog: boolean;
-  backlogSince: string | null;
-  isExpired: boolean;
-  notes: string | null;
-  potdDateKey?: string | null;
-  cp31ProblemId?: string | null;
-  skippedAt?: string | null;
-  questionBankId?: string | null;
-  recurrence?: Recurrence | null;
-  dueTime?: string | null;
-  durationMin?: number | null;
-  createdAt: string;
-  updatedAt: string;
-  revisions?: Task[];
-  parentTask?: Task | null;
-  recurrenceParentId?: string | null;
-  isPlanArchived?: boolean;
-}
+import {
+  Difficulty,
+  Platform,
+  Rating,
+  TaskStatus,
+  TaskType,
+  Recurrence,
+  RECURRENCE_VALUES,
+  REVISION_RULES,
+  BACKLOG_EXPIRY_DAYS,
+  DSA_TOPICS,
+  type Assignment,
+  type ClassSchedule,
+  type Note,
+  type Plan,
+  type Revision,
+  type Task,
+  type User,
+  type UserProfile,
+  type CreateAssignmentInput,
+  type CreateNoteInput,
+  type CreatePlanInput,
+  type CreateTaskInput,
+  type GeneratePlanInput,
+  type ParsedPlanInput,
+  type TopicAllocation,
+  type UpdateAssignmentInput,
+  type UpdateNoteInput,
+  type UpdateTaskInput,
+  type TaskWithRevisions,
+  type ProgressSummary,
+  type StreakInfo,
+  type DSATopic,
+} from '@dsa-planner/shared';
 
-export interface TaskMutationResult {
-  task: Task;
-  coinsDelta: number;
-}
+export {
+  // Enums
+  Difficulty,
+  Platform,
+  Rating,
+  TaskStatus,
+  TaskType,
+  Recurrence,
+  RECURRENCE_VALUES,
+  // Constants
+  REVISION_RULES,
+  BACKLOG_EXPIRY_DAYS,
+  DSA_TOPICS,
+  // Domain types
+  type Assignment,
+  type ClassSchedule,
+  type Note,
+  type Plan,
+  type Revision,
+  type Task,
+  type User,
+  type UserProfile,
+  // Type aliases already used in shared
+  type CreateAssignmentInput,
+  type CreateNoteInput,
+  type CreatePlanInput,
+  type CreateTaskInput,
+  type GeneratePlanInput,
+  type ParsedPlanInput,
+  type TopicAllocation,
+  type UpdateAssignmentInput,
+  type UpdateNoteInput,
+  type UpdateTaskInput,
+  type TaskWithRevisions,
+  type ProgressSummary,
+  type StreakInfo,
+  type DSATopic,
+};
+
+// UI-shape aliases that combine shared primitives into view-specific
+// shapes (kept here because they are not part of any API contract).
+export type { TaskMutationResult } from './taskMutationResult';
 
 export interface StatusOverview {
   totalQuestions: number;
@@ -64,27 +97,7 @@ export interface Vibe {
 
 export type AssignmentUrgency = 'today' | 'tomorrow' | 'future';
 
-export interface Assignment {
-  id: string;
-  userId?: string;
-  title: string;
-  description: string | null;
-  deadline: string;
-  status: 'pending' | 'completed';
-  completedAt?: string | null;
-  createdAt?: string;
-  updatedAt?: string;
-  urgency?: AssignmentUrgency;
-}
 
-export interface Note {
-  id: string;
-  taskId: string;
-  userId: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export interface CreateAssignmentPayload {
   title: string;
@@ -320,17 +333,7 @@ export interface GeneratePlanPayload {
   scheduleMode?: ScheduleMode;
 }
 
-export interface Plan {
-  id: string;
-  name: string;
-  source: string;
-  startDate: string;
-  endDate: string;
-  status: 'active' | 'archived' | 'completed';
-  weekdayCapacity?: number;
-  weekendCapacity?: number;
-  createdAt: string;
-}
+
 
 export interface ArchivedPlan extends Plan {
   progress: { total: number; solved: number; revPending: number };

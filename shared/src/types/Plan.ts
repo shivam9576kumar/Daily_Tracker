@@ -1,15 +1,15 @@
 export interface Plan {
   id: string;
-  userId: string;
+  userId?: string;
   name: string;
   source: string; // e.g., 'coderarmy', 'striver', 'neetcode', 'custom'
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   status: 'active' | 'completed' | 'archived';
-  weekdayCapacity: number;
-  weekendCapacity: number;
-  createdAt: Date;
-  updatedAt: Date;
+  weekdayCapacity?: number;
+  weekendCapacity?: number;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export interface CreatePlanInput {

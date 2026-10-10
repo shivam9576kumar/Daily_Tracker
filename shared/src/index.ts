@@ -1,35 +1,28 @@
 /**
- * Spaced repetition schedule based on difficulty rating.
- * Numbers represent days AFTER completion when revision is due.
+ * Single canonical entry point for all cross-boundary types, enums, and
+ * domain constants. The frontend re-exports from this file (see
+ * frontend/src/types/index.ts); the backend imports directly.
  */
-export const REVISION_RULES = {
-  easy: [14, 28], // 2 revisions
-  medium: [1, 3, 7, 14], // 4 revisions
-  hard: [1, 3, 7, 14, 28], // 5 revisions
-} as const;
 
-export const BACKLOG_EXPIRY_DAYS = 7;
+// ─── Enums ───
+export { Difficulty } from './enums/Difficulty';
+export { Platform } from './enums/Platform';
+export { Rating } from './enums/Rating';
+export { TaskStatus } from './enums/TaskStatus';
+export { TaskType } from './enums/TaskType';
+export { Recurrence, RECURRENCE_VALUES } from './enums/Recurrence';
 
-export type Difficulty = 'easy' | 'medium' | 'hard';
-export type Rating = 'easy' | 'medium' | 'hard';
-export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal' | 'cp31';
-export type TaskStatus = 'pending' | 'completed' | 'backlog' | 'expired' | 'skipped';
-export type Platform =
-  | 'leetcode'
-  | 'coderarmy'
-  | 'striver'
-  | 'neetcode'
-  | 'gfg'
-  | 'custom';
-
-// ─── Enums / Constants / Additional Types ───
+// ─── Constants ───
+export { REVISION_RULES, BACKLOG_EXPIRY_DAYS } from './constants/revisionRules';
 export { DSA_TOPICS } from './constants/topics';
 export type { DSATopic } from './constants/topics';
-export type { User, UserProfile } from './types/User';
-export type { Task, CreateTaskInput, UpdateTaskInput, TaskWithRevisions } from './types/Task';
+
+// ─── Domain types ───
 export type { Assignment, CreateAssignmentInput, UpdateAssignmentInput } from './types/Assignment';
-export type { Plan, CreatePlanInput, GeneratePlanInput, ParsedPlanInput, TopicAllocation } from './types/Plan';
-export type { Revision } from './types/Revision';
-export type { Note, CreateNoteInput, UpdateNoteInput } from './types/Note';
-export type { HeatmapDay, TopicProgressItem, StreakInfo, ProgressSummary } from './types/Progress';
 export type { ClassSchedule } from './types/ClassSchedule';
+export type { Note, CreateNoteInput, UpdateNoteInput } from './types/Note';
+export type { Plan, CreatePlanInput, GeneratePlanInput, ParsedPlanInput, TopicAllocation } from './types/Plan';
+export type { ProgressSummary, HeatmapDay, StreakInfo, TopicProgressItem } from './types/Progress';
+export type { Revision } from './types/Revision';
+export type { Task, CreateTaskInput, UpdateTaskInput, TaskWithRevisions } from './types/Task';
+export type { User, UserProfile } from './types/User';

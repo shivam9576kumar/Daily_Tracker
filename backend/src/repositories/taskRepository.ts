@@ -149,6 +149,8 @@ export const taskRepository = {
 
   /**
    * Get a single task by ID, ensuring it belongs to the user.
+   * Notes are stored exclusively in the `Note` model, accessible via `/api/tasks/:id/notes`.
+   * `Task` rows do not carry a notes payload.
    */
   async getTaskById(taskId: string, userId: string) {
     return prisma.task.findFirst({

@@ -1,8 +1,10 @@
-export enum TaskType {
-  NEW = 'new',
-  REVISION = 'revision',
-  ASSIGNMENT = 'assignment',
-  POTD = 'potd',
-  PERSONAL = 'personal',
-  CP31 = 'cp31',
-}
+export type TaskType = 'new' | 'revision' | 'assignment' | 'potd' | 'personal' | 'cp31';
+
+export const TaskType = {
+  NEW: 'new' as const,
+  REVISION: 'revision' as const,
+  ASSIGNMENT: 'assignment' as const,
+  POTD: 'potd' as const,
+  PERSONAL: 'personal' as const,
+  CP31: 'cp31' as const,
+};

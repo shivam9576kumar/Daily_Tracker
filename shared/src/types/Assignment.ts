@@ -1,13 +1,16 @@
+export type AssignmentUrgency = 'today' | 'tomorrow' | 'future';
+
 export interface Assignment {
   id: string;
-  userId: string;
+  userId?: string;
   title: string;
   description: string | null;
-  deadline: Date;
+  deadline: string;
   status: 'pending' | 'completed';
-  completedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
+  completedAt?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+  urgency?: AssignmentUrgency;
 }
 
 export interface CreateAssignmentInput {

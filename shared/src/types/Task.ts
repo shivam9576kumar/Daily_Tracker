@@ -3,40 +3,53 @@ import { TaskType } from '../enums/TaskType';
 import { Difficulty } from '../enums/Difficulty';
 import { Rating } from '../enums/Rating';
 import { Platform } from '../enums/Platform';
+import { Recurrence } from '../enums/Recurrence';
 
 export interface Task {
   id: string;
   userId: string;
   planId: string | null;
   parentTaskId: string | null;
+  recurrenceParentId?: string | null;     // Bug 4
   title: string;
   topic: string;
-  difficulty: Difficulty;
-  platform: Platform;
+  difficulty: Difficulty | null;          // nullable — matches current schema
+  platform: Platform | string | null;     // nullable — matches current schema
   problemUrl: string | null;
+  sourceUrl?: string | null;
   taskType: TaskType;
   status: TaskStatus;
-  scheduledDate: Date | null;
+  scheduledDate: string | null;
   scheduledDateKey?: string | null;
-  originalSolveDate: Date | null;
-  completedAt: Date | null;
+  originalSolveDate: string | null;
+  completedAt: string | null;
   rating: Rating | null;
   revisionNumber: number;
   isBacklog: boolean;
-  backlogSince: Date | null;
+  backlogSince: string | null;
   isExpired: boolean;
-  notes: string | null;
-  cp31ProblemId: string | null;
-  skippedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
+  notes: string | null;                   // Present in schema (see Section 1-C)
+  recurrence?: Recurrence | null;
+  dueTime?: string | null;                 // "HH:MM"
+  durationMin?: number | null;
+  potdDateKey?: string | null;
+  cp31ProblemId?: string | null;
+  isSkipped?: boolean;
+  skippedAt?: string | null;
+  isCp31Extra?: boolean;                   // Bug 5
+  questionBankId?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  revisions?: Task[];
+  parentTask?: Task | null;
+  isPlanArchived?: boolean;
 }
 
 export interface CreateTaskInput {
   title: string;
   topic: string;
-  difficulty: Difficulty;
-  platform: Platform;
+  difficulty?: Difficulty;
+  platform?: Platform | string;
   problemUrl?: string;
   taskType?: TaskType;
   scheduledDate: string; // ISO date string
@@ -47,7 +60,7 @@ export interface UpdateTaskInput {
   title?: string;
   topic?: string;
   difficulty?: Difficulty;
-  platform?: Platform;
+  platform?: Platform | string;
   problemUrl?: string;
   scheduledDate?: string;
   status?: TaskStatus;
