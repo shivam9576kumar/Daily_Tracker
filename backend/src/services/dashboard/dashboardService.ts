@@ -5,7 +5,7 @@ import { streakService } from '../progress/streakService';
 import { classesService } from '../classes/classesService';
 import { ensurePotdTaskForUser } from '../potd/potdService';
 import { computePotdStreak, type PotdStreakResult } from '../potd/potdStreakService';
-import { ensureCp31TasksForUser, emptyCp31State, listSkippedCp31, type Cp31State } from '../cp31/cp31Service';
+import { ensureCp31TasksForUser, emptyCp31State, listSkippedCp31, toPublicCp31State, type Cp31State } from '../cp31/cp31Service';
 import { computeCp31Streak, type Cp31StreakResult } from '../cp31/cp31StreakService';
 import { todayKey, addDaysToKey } from '../../utils/dateKeys';
 import { LIVE_TASK_WHERE, OPEN_BACKLOG_WHERE } from '../task/taskLifecycle';
@@ -29,10 +29,6 @@ export const dashboardService = {
         message: (err as Error)?.message,
       });
     }
-
-    const potdMeta = ensuredPotd.potd
-      ? { dateKey: ensuredPotd.potd.dateKey, stale: ensuredPotd.stale }
-      : null;
 
     let potdStreak: PotdStreakResult | null = null;
     try {
@@ -133,11 +129,13 @@ export const dashboardService = {
         completed: completedTasks,
       },
       classes: classesForWeek,
-      potd: potdMeta,
       potdStreak,
       dailyChallenges: {
         potd: { enabled: ensuredPotd.enabled },
-        cp31: { ...cp31State, skippedCount: cp31SkippedCount },
+        // toPublicCp31State strips internal fields (servedNow, served, pendingTaskIds)
+        // that must not appear in any public response. bandStatus is passed through
+        // unmodified ('complete-awaiting-confirm'), consistent with todoService.
+        cp31: { ...toPublicCp31State(cp31State), skippedCount: cp31SkippedCount },
       },
       cp31Streak,
     };

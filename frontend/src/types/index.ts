@@ -135,6 +135,8 @@ export interface DailyChallengeSettingsResponse {
     cp31PendingParked: number;
     cp31PendingRemoved?: number;
   };
+  /** Immediately-materialized CP31 state after a band-enable/switch. null when CP31 is off. */
+  cp31State: DailyChallengeMeta['cp31'] | null;
 }
 
 export interface TodoDailyChallenges {
@@ -161,7 +163,6 @@ export interface DashboardData {
     completed: Task[];
   };
   classes: ClassRow[];
-  potd?: { dateKey: string; stale: boolean } | null;
   potdStreak?: PotdStreak | null;
   cp31Streak?: Cp31StreakResult | null;
   dailyChallenges?: DailyChallengeMeta;
@@ -476,7 +477,7 @@ export interface DailyChallengeMeta {
     extrasUsedToday: number;
     extrasCap: number;
     canOneMore?: boolean;
-    bandStatus: 'none' | 'active' | 'complete' | 'complete-awaiting-confirm';
+    bandStatus: 'none' | 'active' | 'complete-awaiting-confirm';
     nextIndex?: number | null;
     nextBand?: number | null;
     skippedCount: number;

@@ -35,7 +35,9 @@ export default function DailyChallengesSection({
   // Don't render anything if CP31 is not enabled
   if (!cp31.enabled || !cp31.band) return null;
 
-  const isBandComplete = cp31.bandStatus === 'complete' || cp31.bandStatus === 'complete-awaiting-confirm';
+  // 'complete-awaiting-confirm' is the real value the backend ladder emits.
+  // 'complete' was previously produced by todoService as a remap, which has been removed (Bug 5).
+  const isBandComplete = cp31.bandStatus === 'complete-awaiting-confirm';
   const progressPct = cp31.bandSize > 0
     ? Math.round((cp31.solvedInBand / cp31.bandSize) * 100)
     : 0;

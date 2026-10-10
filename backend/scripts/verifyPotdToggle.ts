@@ -67,14 +67,14 @@ async function main() {
     check('setup: 2 unsolved potd rows', (await pendingPotd()) === 2);
 
     // 3. disable → unsolved removed, nothing created afterwards, streak.enabled=false
-    const off1 = await dailyChallengeSettingsService.update(uid, { potdEnabled: false });
+    const off1 = await dailyChallengeSettingsService.update(uid, { potdEnabled: false }, TZ);
     check('disable removes 2 unsolved rows', off1.changes.potdUnsolvedRemoved === 2 && (await pendingPotd()) === 0);
     const e2 = await ensurePotdTaskForUser(uid, TZ);
     check('ensure (off) → enabled=false, no task, no row', e2.enabled === false && e2.taskId === null && (await pendingPotd()) === 0);
     check('streak.enabled=false while off', (await computePotdStreak(uid, TZ)).enabled === false);
 
     // 4. same-day re-enable → re-materializes
-    await dailyChallengeSettingsService.update(uid, { potdEnabled: true });
+    await dailyChallengeSettingsService.update(uid, { potdEnabled: true }, TZ);
     const e3 = await ensurePotdTaskForUser(uid, TZ);
     check('re-enable same day recreates pending', e3.enabled && e3.taskId !== null && (await pendingPotd()) === 1);
 
@@ -82,7 +82,7 @@ async function main() {
     await taskCompletionService.completeTask(uid, e3.taskId!, undefined, TZ);
     check('solve POTD → +10 coins', (await coinsOf(uid)) === 10);
     const stOn = await computePotdStreak(uid, TZ);
-    const off2 = await dailyChallengeSettingsService.update(uid, { potdEnabled: false });
+    const off2 = await dailyChallengeSettingsService.update(uid, { potdEnabled: false }, TZ);
     check('disable after solve removes 0', off2.changes.potdUnsolvedRemoved === 0);
     const solvedRow = await prisma.task.findFirst({ where: { userId: uid, taskType: 'potd', status: 'completed' } });
     check('solved row survives disable', solvedRow !== null);
@@ -92,7 +92,7 @@ async function main() {
       stOff.currentStreak === stOn.currentStreak && stOff.totalSolved === stOn.totalSolved && stOff.enabled === false);
 
     // 6. re-enable with solved-today → ensure returns existing, no duplicate
-    await dailyChallengeSettingsService.update(uid, { potdEnabled: true });
+    await dailyChallengeSettingsService.update(uid, { potdEnabled: true }, TZ);
     const e4 = await ensurePotdTaskForUser(uid, TZ);
     check('re-enable → existing solved row, no dup',
       e4.taskId === solvedRow!.id && (await prisma.task.count({ where: { userId: uid, taskType: 'potd' } })) === 1);
@@ -100,7 +100,7 @@ async function main() {
     // 7. validation matrix
     const rejects = async (patch: Record<string, unknown>, label: string) => {
       let r = false;
-      try { await dailyChallengeSettingsService.update(uid, patch); } catch { r = true; }
+      try { await dailyChallengeSettingsService.update(uid, patch, TZ); } catch { r = true; }
       check(`rejects ${label}`, r);
     };
     await rejects({}, 'empty patch');
@@ -111,13 +111,15 @@ async function main() {
     await rejects({ cp31Band: 9999 }, 'unknown band');
     await rejects({ cp31Band: '1300' }, 'string band');
     await rejects({ cp31Enabled: true }, 'cp31 enable without band');
-    const ok1 = await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31DailyCount: 2 });
+    const ok1 = await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31DailyCount: 2 }, TZ);
     check('accepts band 1300 + count 2 (stored, inert)', ok1.settings.cp31Band === 1300 && ok1.settings.cp31DailyCount === 2);
-    const ok2 = await dailyChallengeSettingsService.update(uid, { cp31Enabled: true });
+    const ok2 = await dailyChallengeSettingsService.update(uid, { cp31Enabled: true }, TZ);
     check('cp31Enabled accepted once band set', ok2.settings.cp31Enabled === true);
-    check('no cp31 tasks materialize in Part B',
-      (await prisma.task.count({ where: { userId: uid, taskType: 'cp31' } })) === 0);
-    const ok3 = await dailyChallengeSettingsService.update(uid, { cp31Band: null, cp31Enabled: false });
+    // Bug 5 fix: enabling CP31 immediately materializes today's rung via ensureCp31TasksForUser.
+    // The old check (0 tasks) was based on pre-fix deferred-materialization behavior.
+    check('cp31 task materialized immediately on enable (Bug 5)',
+      (await prisma.task.count({ where: { userId: uid, taskType: 'cp31' } })) >= 1);
+    const ok3 = await dailyChallengeSettingsService.update(uid, { cp31Band: null, cp31Enabled: false }, TZ);
     check('can clear band when disabling cp31', ok3.settings.cp31Band === null && ok3.settings.cp31Enabled === false);
 
     // 8. dismissal survives a toggle cycle (user 2)
@@ -127,8 +129,8 @@ async function main() {
     const f1 = await ensurePotdTaskForUser(u2.id, TZ);
     check('user2 potd created', f1.taskId !== null);
     await dismissPotdForUser(u2.id, dateKey);
-    await dailyChallengeSettingsService.update(u2.id, { potdEnabled: false });
-    await dailyChallengeSettingsService.update(u2.id, { potdEnabled: true });
+    await dailyChallengeSettingsService.update(u2.id, { potdEnabled: false }, TZ);
+    await dailyChallengeSettingsService.update(u2.id, { potdEnabled: true }, TZ);
     const f2 = await ensurePotdTaskForUser(u2.id, TZ);
     check('dismissal respected after off→on', f2.enabled === true && f2.taskId === null);
   } finally {

@@ -3,7 +3,7 @@ import prisma from '../../config/database';
 import logger from '../../utils/logger';
 import { taskRepository } from '../../repositories/taskRepository';
 import { ensurePotdTaskForUser } from '../potd/potdService';
-import { cp31Service } from '../cp31/cp31Service';
+import { cp31Service, toPublicCp31State } from '../cp31/cp31Service';
 import {
   addDaysToKey,
   dateKeyInTz,
@@ -91,10 +91,21 @@ export const todoService = {
     const cp31State = await cp31Service.ensureCp31TasksForUser(userId, tz);
     const skippedTasks = await cp31Service.listSkippedCp31(userId, cp31State.band ?? undefined);
 
+    // bandStatus is passed through unmodified: 'complete-awaiting-confirm' is
+    // the real, correctly-named signal the ladder produces for a finished
+    // band (buildState never produces a separate 'complete' value — verified
+    // in Bug 5). A previous version remapped it to 'complete', which silently
+    // diverged from Dashboard's response for the identical underlying state.
+    //
+    // nextIndex is also passed through unmodified: buildState already applies
+    // the exact `(pending > 0 && !quotaDoneToday) ? null : nextIndex` rule
+    // when constructing cp31State.nextIndex, so recomputing it here was
+    // always a redundant no-op (confirmed in Bug 5 test section 9-H).
+    //
+    // toPublicCp31State strips internal fields (servedNow, served, pendingTaskIds)
+    // that must not appear in any public response.
     const cp31Meta: DailyChallengeMeta['cp31'] = {
-      ...cp31State,
-      bandStatus: cp31State.bandStatus === 'complete-awaiting-confirm' ? 'complete' : cp31State.bandStatus,
-      nextIndex: (cp31State.pendingCount > 0 && !cp31State.quotaDoneToday) ? null : cp31State.nextIndex,
+      ...toPublicCp31State(cp31State),
       skippedCount: skippedTasks.length,
     };
 

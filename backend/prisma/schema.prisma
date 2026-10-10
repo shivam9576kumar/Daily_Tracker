@@ -94,6 +94,16 @@ model Task {
   /// Set when a CP31 problem is skipped (status='skipped'); cleared on retry/solve.
   skippedAt         DateTime? @map("skipped_at")
   questionBankId    String?   @map("question_bank_id")
+  /// True only for CP31 rows materialized via the "+ One More" endpoint,
+  /// as opposed to the base daily-quota fill. Required to correctly derive
+  /// extrasUsedToday: an extra must consume its cap slot once served,
+  /// even if later skipped rather than solved. Without this flag, skipping
+  /// an extra instead of solving it lets a user bypass CP31_EXTRAS_CAP
+  /// indefinitely via a one-more/skip loop (see Bug 5 for full analysis).
+  /// @default(false) is safe for all historical rows — extrasUsedToday only
+  /// evaluates rows resolved today, so historical rows defaulting false
+  /// cannot retroactively distort any past day's cap enforcement.
+  isCp31Extra       Boolean   @default(false) @map("is_cp31_extra")
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @default(now()) @updatedAt @map("updated_at")
 

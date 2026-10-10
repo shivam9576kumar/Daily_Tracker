@@ -39,7 +39,7 @@ export interface DailyChallengeMeta {
     extrasUsedToday: number;
     extrasCap: number;
     canOneMore: boolean;
-    bandStatus: 'none' | 'active' | 'complete' | 'complete-awaiting-confirm';
+    bandStatus: 'none' | 'active' | 'complete-awaiting-confirm';
     nextIndex: number | null;
     nextBand: number | null;
     skippedCount: number;

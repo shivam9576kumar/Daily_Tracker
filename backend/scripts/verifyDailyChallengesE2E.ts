@@ -161,7 +161,7 @@ async function main() {
     /* ═══════════ 2. TIMEZONE MATRIX ═══════════ */
     for (const tz of [IST, LA, KIRI]) {
       const u = await mkUser(`tz-${tz.replace(/\\W/g, '')}`, tz);
-      await dailyChallengeSettingsService.update(u.id, { cp31Band: 1400, cp31Enabled: true });
+      await dailyChallengeSettingsService.update(u.id, { cp31Band: 1400, cp31Enabled: true }, tz);
       const td = await todoService.getTodo(u.id, tz);
       check(`${tz}: exactly 1 potd + 1 cp31 in Today`, td.today.cp31.length === 1 && td.today.potd.length === 1);
       check(`${tz}: cp31 key = local today`, td.today.cp31[0].scheduledDateKey === todayKey(tz));
@@ -187,60 +187,60 @@ async function main() {
     const S = await mkUser('state', IST);
     // POTD
     const p1 = await ensurePotdTaskForUser(S.id, IST);
-    const off1 = await dailyChallengeSettingsService.update(S.id, { potdEnabled: false });
+    const off1 = await dailyChallengeSettingsService.update(S.id, { potdEnabled: false }, IST);
     todo = await todoService.getTodo(S.id, IST);
     check('POTD off: pending removed, payload flag false, no potd row', off1.changes.potdUnsolvedRemoved === 1 && todo.dailyChallenges.potd.enabled === false && todo.today.potd.length === 0);
     check('POTD off: ensure returns enabled=false', (await ensurePotdTaskForUser(S.id, IST)).enabled === false);
-    await dailyChallengeSettingsService.update(S.id, { potdEnabled: true });
+    await dailyChallengeSettingsService.update(S.id, { potdEnabled: true }, IST);
     const p2 = await ensurePotdTaskForUser(S.id, IST);
     check('POTD on: same-day re-materialize', p2.taskId !== null && p1.taskId !== null);
     await taskCompletionService.completeTask(S.id, p2.taskId!, undefined, IST);
     const stBefore = await computePotdStreak(S.id, IST);
-    await dailyChallengeSettingsService.update(S.id, { potdEnabled: false });
+    await dailyChallengeSettingsService.update(S.id, { potdEnabled: false }, IST);
     const stOff = await computePotdStreak(S.id, IST);
     check('POTD off after solve: solved stays, coins & streak numbers untouched',
       (await prisma.task.count({ where: { userId: S.id, taskType: 'potd', status: 'completed' } })) === 1 && (await coinsOf(S.id)) === 10 &&
       stOff.enabled === false && stOff.currentStreak === stBefore.currentStreak && stOff.totalSolved === stBefore.totalSolved);
-    await dailyChallengeSettingsService.update(S.id, { potdEnabled: true });
+    await dailyChallengeSettingsService.update(S.id, { potdEnabled: true }, IST);
     check('POTD on: no duplicate row', (await prisma.task.count({ where: { userId: S.id, taskType: 'potd' } })) === 1);
     const S2 = await mkUser('state2', IST);
     await ensurePotdTaskForUser(S2.id, IST);
     await dismissPotdForUser(S2.id, potdKey);
-    await dailyChallengeSettingsService.update(S2.id, { potdEnabled: false });
-    await dailyChallengeSettingsService.update(S2.id, { potdEnabled: true });
+    await dailyChallengeSettingsService.update(S2.id, { potdEnabled: false }, IST);
+    await dailyChallengeSettingsService.update(S2.id, { potdEnabled: true }, IST);
     check('POTD dismissal survives off→on', (await ensurePotdTaskForUser(S2.id, IST)).taskId === null);
 
     // CP31 enable → note → disable (park) → resume → band switch memory
-    await dailyChallengeSettingsService.update(S.id, { cp31Band: 1300, cp31Enabled: true });
+    await dailyChallengeSettingsService.update(S.id, { cp31Band: 1300, cp31Enabled: true }, IST);
     const c01 = (await ensureCp31TasksForUser(S.id, IST)).served[0];
     await prisma.note.create({ data: { taskId: c01.id, userId: S.id, content: 'greedy + sort' } });
-    const off2 = await dailyChallengeSettingsService.update(S.id, { cp31Enabled: false });
+    const off2 = await dailyChallengeSettingsService.update(S.id, { cp31Enabled: false }, IST);
     todo = await todoService.getTodo(S.id, IST);
     check('CP31 off: parked 1, hidden, count consistent, note kept',
       off2.changes.cp31PendingParked === 1 && todo.today.cp31.length === 0 && todo.summary.today === expectedSummaryToday(todo) &&
       (await prisma.note.count({ where: { taskId: c01.id } })) === 1 && (await computeCp31Streak(S.id, IST)).enabled === false);
-    await dailyChallengeSettingsService.update(S.id, { cp31Enabled: true });
+    await dailyChallengeSettingsService.update(S.id, { cp31Enabled: true }, IST);
     todo = await todoService.getTodo(S.id, IST);
     check('CP31 resume: same #01 row returns, nothing new', todo.today.cp31.length === 1 && todo.today.cp31[0].id === c01.id);
-    await dailyChallengeSettingsService.update(S.id, { cp31Band: 1500 });
+    await dailyChallengeSettingsService.update(S.id, { cp31Band: 1500 }, IST);
     todo = await todoService.getTodo(S.id, IST);
     check('band switch 1500: #01 parked, 1500-01 served, difficulty hard',
       todo.today.cp31.length === 1 && todo.today.cp31[0].cp31ProblemId === 'cp31-1500-01' && todo.today.cp31[0].difficulty === 'hard' &&
       (await prisma.task.findUnique({ where: { id: c01.id } }))?.scheduledDateKey === null);
-    await dailyChallengeSettingsService.update(S.id, { cp31Band: 1300 });
+    await dailyChallengeSettingsService.update(S.id, { cp31Band: 1300 }, IST);
     todo = await todoService.getTodo(S.id, IST);
     check('switch back 1300: #01 resumes (per-band memory)', todo.today.cp31.length === 1 && todo.today.cp31[0].id === c01.id);
 
     // band complete → "Not now" state → advance
     const Bc = await mkUser('bandcomplete', IST);
-    await dailyChallengeSettingsService.update(Bc.id, { cp31Band: 1300, cp31Enabled: true });
+    await dailyChallengeSettingsService.update(Bc.id, { cp31Band: 1300, cp31Enabled: true }, IST);
     await seedCompletedBand(Bc.id, 1300, 30, IST);
     const last = (await ensureCp31TasksForUser(Bc.id, IST)).served[0];
     check('band 1300: serves only #31', last?.cp31ProblemId === 'cp31-1300-31');
     await taskCompletionService.completeTask(Bc.id, last.id, undefined, IST);
     todo = await todoService.getTodo(Bc.id, IST);
-    check('band complete: bandStatus complete, nextBand 1400, no rows served, canOneMore false',
-      todo.dailyChallenges.cp31.bandStatus === 'complete' && todo.dailyChallenges.cp31.nextBand === 1400 &&
+    check('band complete: bandStatus complete-awaiting-confirm, nextBand 1400, no rows served, canOneMore false',
+      todo.dailyChallenges.cp31.bandStatus === 'complete-awaiting-confirm' && todo.dailyChallenges.cp31.nextBand === 1400 &&
       todo.today.cp31.length === 0 && todo.dailyChallenges.cp31.canOneMore === false);
     check('"Not now" = repeated loads serve nothing', (await ensureCp31TasksForUser(Bc.id, IST)).served.length === 0);
     const adv = await advanceCp31Band(Bc.id, IST);
@@ -253,7 +253,7 @@ async function main() {
       source: 'striver', startDate: todayKey(IST), durationDays: 7, pace: 'custom', weekdayLoad: 2, weekendLoad: 2,
       topicQuotas: [{ topic: 'Arrays', count: 4 }], scheduleMode: 'balanced',
     });
-    await dailyChallengeSettingsService.update(X.id, { cp31Band: 1300, cp31Enabled: true });
+    await dailyChallengeSettingsService.update(X.id, { cp31Band: 1300, cp31Enabled: true }, IST);
     await personalTaskService.create(X.id, { title: 'read notes', scheduledDateKey: todayKey(IST) });
     todo = await todoService.getTodo(X.id, IST);
     check('one Today has plan + potd + cp31 + personal',
@@ -282,7 +282,7 @@ async function main() {
 
     /* ═══════════ 5. CRON IMMUNITY ═══════════ */
     const K = await mkUser('cron', IST);
-    await dailyChallengeSettingsService.update(K.id, { cp31Band: 1300, cp31Enabled: true });
+    await dailyChallengeSettingsService.update(K.id, { cp31Band: 1300, cp31Enabled: true }, IST);
     const k01 = (await ensureCp31TasksForUser(K.id, IST)).served[0];
     const yKey = addDaysToKey(todayKey(IST), -1);
     await setKey(k01.id, yKey);

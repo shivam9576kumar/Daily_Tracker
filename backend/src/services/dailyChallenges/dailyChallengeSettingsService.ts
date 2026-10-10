@@ -1,8 +1,9 @@
 import prisma from '../../config/database';
+import logger from '../../utils/logger';
 import { NotFoundError, ValidationError } from '../../utils/error';
 import { getCp31Bands } from '../plan/cp31SheetLoader';
 import { removeUnsolvedPotdTasks } from '../potd/potdService';
-import { removeUnsolvedCp31Tasks } from '../cp31/cp31Service';
+import { removeUnsolvedCp31Tasks, ensureCp31TasksForUser, toPublicCp31State, type Cp31PublicState } from '../cp31/cp31Service';
 
 export interface DailyChallengeSettings {
   potdEnabled: boolean;
@@ -25,6 +26,19 @@ export interface SettingsChangeReport {
   potdUnsolvedRemoved: number;
   cp31PendingParked: number;
   cp31PendingRemoved?: number;
+}
+
+export interface DailyChallengeSettingsResponse {
+  settings: DailyChallengeSettings;
+  changes: SettingsChangeReport;
+  /**
+   * CP31 state immediately after the settings change, if CP31 is enabled.
+   * This is populated by a best-effort ensureCp31TasksForUser call that runs
+   * after the settings transaction commits — fixing the previous behaviour
+   * where enabling/switching a band left the band empty until the next page load.
+   * null when CP31 is disabled or the post-update ensure call fails.
+   */
+  cp31State: Cp31PublicState | null;
 }
 
 const FIELDS = {
@@ -68,7 +82,8 @@ export const dailyChallengeSettingsService = {
   async update(
     userId: string,
     patch: DailyChallengeSettingsPatch,
-  ): Promise<{ settings: DailyChallengeSettings; changes: SettingsChangeReport }> {
+    tz: string,
+  ): Promise<DailyChallengeSettingsResponse> {
     const current = await prisma.user.findUnique({ where: { id: userId }, select: FIELDS });
     if (!current) throw new NotFoundError('User');
 
@@ -108,6 +123,32 @@ export const dailyChallengeSettingsService = {
       return { potdUnsolvedRemoved, cp31PendingParked, cp31PendingRemoved: cp31PendingParked };
     });
 
-    return { settings: await this.get(userId), changes };
+    // Best-effort immediate materialization for the (possibly new) band.
+    //
+    // This is intentionally a separate sequential call, NOT nested inside
+    // the settings transaction above. ensureCp31TasksForUser is explicitly
+    // documented as idempotent and safe to call on every dashboard/todo load,
+    // so running it here as a follow-up step is sufficient to fix
+    // "band left empty until next page load" without the complexity and
+    // risk of threading a shared transaction client through the entire
+    // CP31 ensure/materialize call graph (which also internally performs
+    // its own retry-on-P2002 logic that assumes an independent connection).
+    //
+    // If this call fails, the settings change itself has already committed
+    // successfully; the next Todo/Dashboard load will retry materialization
+    // via its own ensure call, so this failure is logged but non-fatal.
+    let cp31State: Cp31PublicState | null = null;
+    if (next.cp31Enabled && next.cp31Band !== null) {
+      try {
+        cp31State = toPublicCp31State(await ensureCp31TasksForUser(userId, tz));
+      } catch (err) {
+        logger.error('dailyChallengeSettingsService: post-update CP31 ensure failed', {
+          userId,
+          message: (err as Error)?.message,
+        });
+      }
+    }
+
+    return { settings: await this.get(userId), changes, cp31State };
   },
 };

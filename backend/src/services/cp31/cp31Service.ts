@@ -10,7 +10,13 @@ export const CP31_EXTRAS_CAP = 3;
 
 type DbClient = Prisma.TransactionClient | typeof prisma;
 
-export type Cp31BandStatus = 'none' | 'active' | 'complete' | 'complete-awaiting-confirm';
+/**
+ * 'none'                      — CP31 is disabled for this user.
+ * 'active'                    — Band is in progress.
+ * 'complete-awaiting-confirm' — Every problem in the band has been served and
+ *                              resolved (solved or skipped); user must confirm-advance.
+ */
+export type Cp31BandStatus = 'none' | 'active' | 'complete-awaiting-confirm';
 
 export interface Cp31Settings {
   enabled: boolean;
@@ -45,12 +51,25 @@ export interface Cp31State {
   bandStatus: Cp31BandStatus;
   nextIndex: number | null;
   nextBand: number | null;
-  /** Task ids created by THIS call (quota serves). */
+  /** Task ids created by THIS call (quota serves). Internal use only. */
   servedNow: string[];
-  /** Task objects served or unparked by THIS call. */
+  /** Task objects served or unparked by THIS call. Internal use only. */
   served: Task[];
-  /** All pending cp31 task ids (current band) after this call. */
+  /** All pending cp31 task ids (current band) after this call. Internal use only. */
   pendingTaskIds: string[];
+}
+
+/**
+ * Public-facing CP31 state: strips internal implementation fields that must
+ * not be serialized into Todo, Dashboard, or mutation-endpoint responses.
+ * ensureCp31TasksForUser and getCp31State continue to return the full Cp31State
+ * for internal consumers (services, tests).
+ */
+export type Cp31PublicState = Omit<Cp31State, 'servedNow' | 'served' | 'pendingTaskIds'>;
+
+export function toPublicCp31State(state: Cp31State): Cp31PublicState {
+  const { servedNow: _servedNow, served: _served, pendingTaskIds: _pendingTaskIds, ...publicState } = state;
+  return publicState;
 }
 
 export interface Cp31Overview {
@@ -129,8 +148,47 @@ function countSolvedToday(rows: Task[], tz: string, today: string): number {
   ).length;
 }
 
-/** Create the task row for a sheet problem. Race-safe via user_cp31_unique. */
-async function materialize(userId: string, p: Cp31Problem, today: string, tz: string): Promise<Task | null> {
+/**
+ * Counts CP31 rows in this band flagged isCp31Extra that were RESOLVED
+ * (solved or skipped) today, in the user's timezone. A still-pending
+ * extra carried over from a previous day is intentionally excluded:
+ * the existing `pending > 0` guard already fully blocks any new serve
+ * (base or extra) until it is resolved, making its cap contribution
+ * moot while it remains pending.
+ *
+ * This function is the core fix for the one-more/skip bypass exploit
+ * described in Bug 5. Previously, extrasUsedToday was derived as
+ * max(0, (pending + solvedToday) - dailyCount), which dropped back to 0
+ * whenever an extra was skipped (since skip never increments solvedToday).
+ * By tagging extras with isCp31Extra and counting resolved ones here,
+ * each extra permanently consumes a cap slot once served, regardless of
+ * whether it is later solved or skipped.
+ */
+function countExtrasUsedToday(rows: Task[], tz: string, today: string): number {
+  return rows.filter((r) => {
+    if (!r.isCp31Extra) return false;
+    if (r.status === 'completed' && r.completedAt && dateKeyInTz(r.completedAt, tz) === today) {
+      return true;
+    }
+    if (r.status === 'skipped' && r.skippedAt && dateKeyInTz(r.skippedAt, tz) === today) {
+      return true;
+    }
+    return false;
+  }).length;
+}
+
+/**
+ * Create the task row for a sheet problem. Race-safe via user_cp31_unique.
+ * @param isExtra — true only for rows served via the "+ One More" endpoint.
+ *                  Must be false (or default) for all base-quota fills.
+ */
+async function materialize(
+  userId: string,
+  p: Cp31Problem,
+  today: string,
+  tz: string,
+  isExtra: boolean = false,
+): Promise<Task | null> {
   const schedule = taskScheduleForKey(today, resolveTimeZone(tz));
   try {
     const created = await prisma.task.create({
@@ -148,6 +206,7 @@ async function materialize(userId: string, p: Cp31Problem, today: string, tz: st
         scheduledDate: schedule.scheduledDate,
         scheduledDateKey: schedule.scheduledDateKey,
         cp31ProblemId: p.id,
+        isCp31Extra: isExtra,
       },
     });
     return created;
@@ -161,11 +220,28 @@ async function materialize(userId: string, p: Cp31Problem, today: string, tz: st
   }
 }
 
+/**
+ * buildState now takes extrasUsedToday as an explicit input (computed by
+ * countExtrasUsedToday from the isCp31Extra flag) rather than deriving it
+ * inline from pending+solvedToday. The old derivation was the root cause of
+ * the cap-bypass exploit: skipping an extra left pending=0 and solvedToday
+ * unchanged, causing the formula to drop back to 0. The new approach is
+ * monotone: each resolved extra permanently counts toward the cap.
+ *
+ * The deficit formula for the BASE daily quota is intentionally unchanged
+ * (still solvedToday-based only). Skip-and-replace within the base quota
+ * must keep working: skipping a base rung creates a deficit and correctly
+ * triggers a replacement serve. This is separate from extras accounting.
+ */
 function buildState(
-  s: Cp31Settings, progress: Cp31BandProgress, solvedToday: number, servedNow: string[], served: Task[], pendingTaskIds: string[],
+  s: Cp31Settings,
+  progress: Cp31BandProgress,
+  solvedToday: number,
+  extrasUsedToday: number,
+  servedNow: string[],
+  served: Task[],
+  pendingTaskIds: string[],
 ): Cp31State {
-  const active = progress.pending + solvedToday;
-  const extrasUsedToday = Math.max(0, active - s.dailyCount);
   const quotaDoneToday = progress.pending === 0 && solvedToday >= s.dailyCount;
   const bandComplete = progress.nextIndex === null && progress.pending === 0;
   const bandStatus: Cp31BandStatus = bandComplete ? 'complete-awaiting-confirm' : 'active';
@@ -185,6 +261,7 @@ function buildState(
  * 1. Carry-over: pending rungs of the current band move to today (Option B).
  * 2. Unpark: restore parked pending rungs of current band to today.
  * 3. Serve `deficit` next rungs so that pending + solvedToday == dailyCount.
+ *    (deficit uses solvedToday only — the base quota formula is unchanged)
  */
 export async function ensureCp31TasksForUser(userId: string, tz: string): Promise<Cp31State> {
   const s = await readSettings(userId);
@@ -227,11 +304,14 @@ export async function ensureCp31TasksForUser(userId: string, tz: string): Promis
   let rows = await bandRows(userId, band);
   const first = summarize(band, rows);
   const solvedToday = countSolvedToday(rows, effectiveTz, today);
+  // Base quota deficit: unchanged — solvedToday-based only.
+  // Skip-and-replace within base quota must keep working.
   const deficit = Math.max(0, s.dailyCount - (first.progress.pending + solvedToday));
 
   const newlyMaterialized: Task[] = [];
   for (const p of first.unserved.slice(0, deficit)) {
-    const task = await materialize(userId, p, today, effectiveTz);
+    // isExtra = false for base-quota fills (explicit for clarity)
+    const task = await materialize(userId, p, today, effectiveTz, false);
     if (task) newlyMaterialized.push(task);
   }
 
@@ -245,7 +325,10 @@ export async function ensureCp31TasksForUser(userId: string, tz: string): Promis
   const servedNow = servedTasks.map((t) => t.id);
   const pendingTaskIds = rows.filter((r) => r.status === 'pending').map((r) => r.id);
 
-  return buildState(s, progress, solvedToday, servedNow, servedTasks, pendingTaskIds);
+  // Always use the freshest rows snapshot for extrasUsedToday (after any materialization)
+  const extrasUsedToday = countExtrasUsedToday(rows, effectiveTz, today);
+
+  return buildState(s, progress, solvedToday, extrasUsedToday, servedNow, servedTasks, pendingTaskIds);
 }
 
 export async function getCp31State(userId: string, tz: string): Promise<Cp31State> {
@@ -253,36 +336,55 @@ export async function getCp31State(userId: string, tz: string): Promise<Cp31Stat
 }
 
 /** One More: exactly one extra rung after today's quota is done. Cap = CP31_EXTRAS_CAP per day. */
-export async function serveOneMore(userId: string, tz: string): Promise<{ task: Task; taskId: string; state: Cp31State }> {
+export async function serveOneMore(
+  userId: string,
+  tz: string,
+): Promise<{ task: Task; state: Cp31PublicState }> {
   const effectiveTz = resolveTimeZone(tz);
   const before = await ensureCp31TasksForUser(userId, effectiveTz);
   if (!before.enabled || before.band === null) throw new ValidationError('CP31 is turned off');
   if (before.bandStatus === 'complete-awaiting-confirm') throw new ValidationError('This band is complete — confirm your next band first');
   if (before.bandStatus !== 'active') throw new ValidationError('CP31 band unavailable');
-  if (!before.quotaDoneToday) throw new ValidationError('Finish today’s CP31 problems first');
+  if (!before.quotaDoneToday) throw new ValidationError('Finish today\u2019s CP31 problems first');
   if (before.extrasUsedToday >= CP31_EXTRAS_CAP) throw new ValidationError('Great session. Come back tomorrow.');
   if (before.nextIndex === null) throw new ValidationError('No more problems in this band');
 
   const problem = getCp31Problems(before.band).find((p) => p.index === before.nextIndex);
   if (!problem) throw new ValidationError('Next problem not found in sheet');
 
-  const created = await materialize(userId, problem, todayKey(effectiveTz), effectiveTz);
+  // isExtra = true — this is the only call site that sets this flag.
+  // The isCp31Extra flag is what makes extrasUsedToday monotone on skip.
+  const created = await materialize(userId, problem, todayKey(effectiveTz), effectiveTz, true);
   if (!created) throw new ValidationError('Could not serve the next problem — try again');
 
   const afterState = await ensureCp31TasksForUser(userId, effectiveTz);
-  return { task: created, taskId: created.id, state: afterState };
+  return { task: created, state: toPublicCp31State(afterState) };
 }
 
-/** Skip: ladder advances past this rung. No coins. Retry-able. */
+/**
+ * Skip: ladder advances past this rung. No coins. Retry-able.
+ *
+ * IMPORTANT: Do NOT reintroduce a manual fallback-materialize block here.
+ * A previous version of this function had one, which bypassed CP31_EXTRAS_CAP:
+ * skipping an extra would trigger a silent re-serve, resetting extrasUsedToday
+ * to 0 and allowing infinite one-more/skip loops. The proper fix is:
+ *  - For the BASE quota: ensureCp31TasksForUser's own deficit calculation
+ *    already serves a replacement when this skip leaves the quota unmet.
+ *  - For EXTRAS: skipping an extra must NOT auto-serve another. The user
+ *    must re-request via "+ One More", which correctly enforces the cap via
+ *    countExtrasUsedToday (which now counts this skipped extra via isCp31Extra).
+ *
+ * tz is required (previously optional with a silent IST fallback — removed).
+ */
 export async function skipCp31Problem(
   userId: string,
   taskId: string,
-  tz?: string
-): Promise<{ skipped: Task; served: Task[]; state: Cp31State } & Task> {
+  tz: string,
+): Promise<{ skipped: Task; served: Task[]; state: Cp31PublicState }> {
   const task = await prisma.task.findFirst({ where: { id: taskId, userId, taskType: 'cp31' } });
   if (!task) throw new NotFoundError('CP31 task not found');
-  if (task.status === 'completed') throw new ValidationError('Solved problems can’t be skipped — undo the solve first');
-  
+  if (task.status === 'completed') throw new ValidationError('Solved problems can\u2019t be skipped — undo the solve first');
+
   const skipped = await prisma.task.update({
     where: { id: taskId },
     data: {
@@ -297,35 +399,20 @@ export async function skipCp31Problem(
     },
   });
 
-  const tzKey = resolveTimeZone(tz);
-  const today = todayKey(tzKey);
-  let state = await ensureCp31TasksForUser(userId, tzKey);
+  // ensureCp31TasksForUser's deficit calculation handles base-quota replacement;
+  // it correctly serves nothing when the base quota was already satisfied.
+  // Extras are never auto-replaced here — the user must call + One More explicitly.
+  const state = await ensureCp31TasksForUser(userId, resolveTimeZone(tz));
 
-  // If ensureCp31TasksForUser didn't serve a replacement (e.g. quota already satisfied by solvedToday),
-  // materialize the next unserved rung so that skipping this rung serves the next one
-  let served = state.served;
-  if (served.length === 0 && state.band !== null) {
-    const rows = await bandRows(userId, state.band);
-    const summary = summarize(state.band, rows);
-    const nextUnserved = summary.unserved[0];
-    if (nextUnserved) {
-      const nextTask = await materialize(userId, nextUnserved, today, tzKey);
-      if (nextTask) {
-        state = await ensureCp31TasksForUser(userId, tzKey);
-        served = [nextTask];
-      }
-    }
-  }
-
-  return { ...skipped, skipped, served, state };
+  return { skipped, served: state.served, state: toPublicCp31State(state) };
 }
 
 /** Retry a skipped rung: it becomes today's pending problem again. */
 export async function retrySkippedCp31(
   userId: string,
   taskId: string,
-  tz: string
-): Promise<{ task: Task; taskId: string; state: Cp31State } & Task> {
+  tz: string,
+): Promise<{ task: Task; state: Cp31PublicState }> {
   const task = await prisma.task.findFirst({ where: { id: taskId, userId, taskType: 'cp31' } });
   if (!task) throw new NotFoundError('CP31 task not found');
   if (task.status !== 'skipped') throw new ValidationError('Only skipped problems can be retried');
@@ -343,7 +430,7 @@ export async function retrySkippedCp31(
     },
   });
   const state = await ensureCp31TasksForUser(userId, effectiveTz);
-  return { ...retried, task: retried, taskId: retried.id, state };
+  return { task: retried, state: toPublicCp31State(state) };
 }
 export const retrySkippedCp31Problem = retrySkippedCp31;
 
@@ -359,39 +446,42 @@ export async function listSkippedCp31(userId: string, band?: number): Promise<Ta
   });
 }
 
-/** Confirm-to-advance. Default target = next higher band. Explicit band allowed (≠ current). */
+/**
+ * Confirm-to-advance: moves to the next band (or an explicitly chosen band).
+ *
+ * Previously had a `targetBandOrTz?: number | string` positional overload
+ * that conflated "explicit band" and "timezone" into one ambiguous argument,
+ * plus a `targetBandOrTz === undefined` escape hatch that returned a raw
+ * `number` instead of the documented object shape (used only by the old
+ * verifyCp31.ts Part C escape hatch). Both are removed.
+ *
+ * Now: tz is always required as the second parameter; optional target band
+ * is passed via a typed options object to avoid any ambiguity.
+ */
 export async function advanceCp31Band(
   userId: string,
-  targetBandOrTz?: number | string,
-  maybeTz?: string
-): Promise<any> {
+  tz: string,
+  options: { targetBand?: number } = {},
+): Promise<{ band: number; served: Task[]; state: Cp31PublicState }> {
   const s = await readSettings(userId);
   if (!s.enabled || s.band === null) throw new ValidationError('CP31 is turned off');
 
   const { progress } = summarize(s.band, await bandRows(userId, s.band));
   const complete = progress.nextIndex === null && progress.pending === 0;
   if (!complete) {
-    throw new ValidationError(`Band ${s.band} isn’t complete yet (${progress.solved + progress.skipped}/${progress.bandSize})`);
+    throw new ValidationError(`Band ${s.band} isn\u2019t complete yet (${progress.solved + progress.skipped}/${progress.bandSize})`);
   }
 
-  const explicitTarget = typeof targetBandOrTz === 'number' ? targetBandOrTz : undefined;
-  const tz = typeof targetBandOrTz === 'string' ? resolveTimeZone(targetBandOrTz) : resolveTimeZone(maybeTz);
-
   const bands = getCp31Bands().map((b) => b.band);
-  const next = explicitTarget ?? nextBandAfter(s.band);
-  if (next === null) throw new ValidationError('You’ve finished the highest band available — more bands coming soon');
+  const next = options?.targetBand ?? nextBandAfter(s.band);
+  if (next === null) throw new ValidationError('You\u2019ve finished the highest band available \u2014 more bands coming soon');
   if (!bands.includes(next)) throw new ValidationError(`Unknown band ${next}`);
   if (next === s.band) throw new ValidationError('Choose a different band');
 
   await prisma.user.update({ where: { id: userId }, data: { cp31Band: next } });
-  const state = await ensureCp31TasksForUser(userId, tz);
+  const state = await ensureCp31TasksForUser(userId, resolveTimeZone(tz));
 
-  // If called without arguments (Part C verification), return the number
-  if (targetBandOrTz === undefined) {
-    return next;
-  }
-
-  return { band: next, served: state.served, state };
+  return { band: next, served: state.served, state: toPublicCp31State(state) };
 }
 
 /** Toggle-off / band-change transition: park pending rows with null keys so notes survive. */
@@ -427,4 +517,5 @@ export const cp31Service = {
   parkUnsolvedCp31Tasks,
   removeUnsolvedCp31Tasks,
   getCp31Overview,
+  toPublicCp31State,
 };

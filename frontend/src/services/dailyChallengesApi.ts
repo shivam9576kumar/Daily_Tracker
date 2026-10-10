@@ -4,9 +4,13 @@ import type {
   DailyChallengeSettings,
   DailyChallengeSettingsPatch,
   DailyChallengeSettingsResponse,
+  DailyChallengeMeta,
   Task,
   Cp31StreakResult,
 } from '../types';
+
+/** Public CP31 state returned by mutation endpoints — mirrors Cp31PublicState from backend. */
+type Cp31State = DailyChallengeMeta['cp31'];
 
 export const dailyChallengesApi = {
   async getSettings(): Promise<DailyChallengeSettings> {
@@ -19,18 +23,18 @@ export const dailyChallengesApi = {
     return res.data.data;
   },
 
-  async oneMore(): Promise<{ task: Task; state: any }> {
-    const res = await api.post<ApiResponse<{ task: Task; state: any }>>('/daily-challenges/cp31/one-more');
+  async oneMore(): Promise<{ task: Task; state: Cp31State }> {
+    const res = await api.post<ApiResponse<{ task: Task; state: Cp31State }>>('/daily-challenges/cp31/one-more');
     return res.data.data;
   },
 
-  async skip(taskId: string): Promise<{ skipped: Task; served: Task[]; state: any }> {
-    const res = await api.post<ApiResponse<{ skipped: Task; served: Task[]; state: any }>>(`/daily-challenges/cp31/skip/${taskId}`);
+  async skip(taskId: string): Promise<{ skipped: Task; served: Task[]; state: Cp31State }> {
+    const res = await api.post<ApiResponse<{ skipped: Task; served: Task[]; state: Cp31State }>>(`/daily-challenges/cp31/skip/${taskId}`);
     return res.data.data;
   },
 
-  async retry(taskId: string): Promise<{ task: Task; state: any }> {
-    const res = await api.post<ApiResponse<{ task: Task; state: any }>>(`/daily-challenges/cp31/retry/${taskId}`);
+  async retry(taskId: string): Promise<{ task: Task; state: Cp31State }> {
+    const res = await api.post<ApiResponse<{ task: Task; state: Cp31State }>>(`/daily-challenges/cp31/retry/${taskId}`);
     return res.data.data;
   },
 
@@ -39,8 +43,8 @@ export const dailyChallengesApi = {
     return res.data.data;
   },
 
-  async advanceBand(): Promise<{ band: number; served: Task[]; state: any }> {
-    const res = await api.post<ApiResponse<{ band: number; served: Task[]; state: any }>>('/daily-challenges/cp31/advance-band');
+  async advanceBand(): Promise<{ band: number; served: Task[]; state: Cp31State }> {
+    const res = await api.post<ApiResponse<{ band: number; served: Task[]; state: Cp31State }>>('/daily-challenges/cp31/advance-band');
     return res.data.data;
   },
 

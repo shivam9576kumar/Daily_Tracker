@@ -52,9 +52,9 @@ const ops: { name: string; w: number; run: () => Promise<string> }[] = [
   { name: 'cp31OneMore', w: 3, run: async () => (await serveOneMore(uid, TZ)).task.cp31ProblemId ?? 'ok' },
   { name: 'cp31Skip', w: 2, run: async () => { const t = pick(await tasks({ taskType: 'cp31', status: 'pending' })); if (!t) return 'noop'; await skipCp31Problem(uid, t.id, TZ); return 'ok'; } },
   { name: 'cp31Retry', w: 1, run: async () => { const t = pick(await tasks({ taskType: 'cp31', status: 'skipped' })); if (!t) return 'noop'; await retrySkippedCp31Problem(uid, t.id, TZ); return 'ok'; } },
-  { name: 'togglePotd', w: 1, run: async () => { const s = await dailyChallengeSettingsService.get(uid); await dailyChallengeSettingsService.update(uid, { potdEnabled: !s.potdEnabled }); return String(!s.potdEnabled); } },
-  { name: 'toggleCp31', w: 1, run: async () => { const s = await dailyChallengeSettingsService.get(uid); await dailyChallengeSettingsService.update(uid, s.cp31Enabled ? { cp31Enabled: false } : { cp31Enabled: true, cp31Band: pick(getCp31Bands())!.band }); return String(!s.cp31Enabled); } },
-  { name: 'switchBand', w: 1, run: async () => { const b = pick(getCp31Bands())!.band; await dailyChallengeSettingsService.update(uid, { cp31Band: b }); return String(b); } },
+  { name: 'togglePotd', w: 1, run: async () => { const s = await dailyChallengeSettingsService.get(uid); await dailyChallengeSettingsService.update(uid, { potdEnabled: !s.potdEnabled }, TZ); return String(!s.potdEnabled); } },
+  { name: 'toggleCp31', w: 1, run: async () => { const s = await dailyChallengeSettingsService.get(uid); await dailyChallengeSettingsService.update(uid, s.cp31Enabled ? { cp31Enabled: false } : { cp31Enabled: true, cp31Band: pick(getCp31Bands())!.band }, TZ); return String(!s.cp31Enabled); } },
+  { name: 'switchBand', w: 1, run: async () => { const b = pick(getCp31Bands())!.band; await dailyChallengeSettingsService.update(uid, { cp31Band: b }, TZ); return String(b); } },
 ];
 const totalW = ops.reduce((s, o) => s + o.w, 0);
 const pickOp = () => { let r = rnd() * totalW; for (const o of ops) { r -= o.w; if (r <= 0) return o; } return ops[ops.length - 1]; };
@@ -66,7 +66,7 @@ async function main() {
   const seeded = !(await prisma.potdCache.findUnique({ where: { dateKey } }));
   if (seeded) await prisma.potdCache.create({ data: { dateKey, title: 'Fuzz POTD', titleSlug: 'fuzz', difficulty: 'easy', url: 'https://leetcode.com/problems/two-sum/', topicTags: ['Array'], questionId: '1' } });
   uid = (await prisma.user.create({ data: { googleId: `fuzz-${Date.now()}`, email, name: 'Fuzz', coins: 0, timezone: TZ } })).id;
-  await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31Enabled: true, cp31DailyCount: 2 });
+  await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31Enabled: true, cp31DailyCount: 2 }, TZ);
 
   const hist: Record<string, number> = {};
   console.log(`seed=${SEED} steps=${STEPS}`);

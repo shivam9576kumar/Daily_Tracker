@@ -58,7 +58,7 @@ async function main() {
     check('today.cp31 is empty array', Array.isArray(todo1.today.cp31) && todo1.today.cp31.length === 0);
 
     // 2. Enable CP31 band 1300
-    await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31Enabled: true });
+    await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31Enabled: true }, TZ);
     const todo2 = await todoService.getTodo(uid, TZ, 14);
 
     check('dailyChallenges.cp31.enabled is true after enable', todo2.dailyChallenges.cp31.enabled === true);
@@ -80,14 +80,16 @@ async function main() {
 
     // 4. One-More action endpoint simulation (serve index 02)
     const om1 = await cp31Service.serveOneMore(uid, TZ);
-    check('oneMore serves index 02', om1.state.pendingTaskIds.length === 1);
+    // om1.state is Cp31PublicState — internal pendingTaskIds stripped; use om1.task.id
+    check('oneMore returns task and state', om1.task !== null && typeof om1.state === 'object');
 
     const todoOm1 = await todoService.getTodo(uid, TZ, 14);
     check('today.cp31 contains index 02', todoOm1.today.cp31.length === 1 && todoOm1.today.cp31[0].cp31ProblemId === 'cp31-1300-02');
 
     // 5. Skip cp31-1300-02
-    const skippedTask = await cp31Service.skipCp31Problem(uid, om1.taskId);
-    check('skipProblem sets status skipped and skippedAt timestamp', skippedTask.status === 'skipped' && skippedTask.skippedAt !== null);
+    // skipCp31Problem now requires tz and returns { skipped, served, state }
+    const skipResult = await cp31Service.skipCp31Problem(uid, om1.task.id, TZ);
+    check('skipProblem sets status skipped and skippedAt timestamp', skipResult.skipped.status === 'skipped' && skipResult.skipped.skippedAt !== null);
 
     const todoSkip = await todoService.getTodo(uid, TZ, 14);
     check('today.cp31 is empty after skip', todoSkip.today.cp31.length === 0);
@@ -95,18 +97,18 @@ async function main() {
 
     // 6. One-More cap test (serve 3 completed extras, 4th extra rejected)
     const om2 = await cp31Service.serveOneMore(uid, TZ); // extra #1 completed today
-    await taskCompletionService.completeTask(uid, om2.taskId, 'medium', TZ);
+    await taskCompletionService.completeTask(uid, om2.task.id, 'medium', TZ);
 
     const om3 = await cp31Service.serveOneMore(uid, TZ); // extra #2 completed today
-    await taskCompletionService.completeTask(uid, om3.taskId, 'medium', TZ);
+    await taskCompletionService.completeTask(uid, om3.task.id, 'medium', TZ);
 
     const om4 = await cp31Service.serveOneMore(uid, TZ); // extra #3 completed today
-    await taskCompletionService.completeTask(uid, om4.taskId, 'medium', TZ);
+    await taskCompletionService.completeTask(uid, om4.task.id, 'medium', TZ);
 
     await rejects(() => cp31Service.serveOneMore(uid, TZ), '4th One More (cap 3 reached)');
 
     // 7. Advance band test (incomplete band fails, complete band succeeds)
-    await rejects(() => cp31Service.advanceCp31Band(uid), 'advance-band when incomplete');
+    await rejects(() => cp31Service.advanceCp31Band(uid, TZ), 'advance-band when incomplete');
 
     // Complete rest of band synthetically
     const existingTasks = await prisma.task.findMany({ where: { userId: uid, taskType: 'cp31' } });
@@ -133,8 +135,9 @@ async function main() {
     const todoComplete = await todoService.getTodo(uid, TZ, 14);
     check('bandStatus is complete-awaiting-confirm when all 31 rows created', todoComplete.dailyChallenges.cp31.bandStatus === 'complete-awaiting-confirm');
 
-    const nextBand = await cp31Service.advanceCp31Band(uid);
-    check('advanceBand updates band to 1400', nextBand === 1400);
+    // advanceCp31Band now always returns { band, served, state } — no raw-number escape hatch
+    const advResult = await cp31Service.advanceCp31Band(uid, TZ);
+    check('advanceBand updates band to 1400', advResult.band === 1400);
 
     const todoAdvanced = await todoService.getTodo(uid, TZ, 14);
     check('after advanceBand, new band is 1400 and index 01 is served in today.cp31', todoAdvanced.dailyChallenges.cp31.band === 1400 && todoAdvanced.today.cp31[0].cp31ProblemId === 'cp31-1400-01');

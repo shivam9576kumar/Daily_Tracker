@@ -21,7 +21,10 @@ export const dailyChallengesController = {
   async updateSettings(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      sendSuccess(res, await dailyChallengeSettingsService.update(user.id, req.body ?? {}));
+      // getTz(req) threads the user's timezone so the service can immediately
+      // materialize today's CP31 rung after a band-enable/switch, without
+      // requiring a follow-up Todo or Dashboard page load.
+      sendSuccess(res, await dailyChallengeSettingsService.update(user.id, req.body ?? {}, getTz(req)));
     } catch (err) {
       next(err);
     }
@@ -31,8 +34,9 @@ export const dailyChallengesController = {
   async oneMore(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const result = await cp31Service.serveOneMore(user.id, getTz(req));
-      sendSuccess(res, { task: result.task, state: result.state }, 200);
+      const { task, state } = await cp31Service.serveOneMore(user.id, getTz(req));
+      // state is already Cp31PublicState — no internal fields leak through.
+      sendSuccess(res, { task, state });
     } catch (err) {
       next(err);
     }
@@ -42,8 +46,13 @@ export const dailyChallengesController = {
   async skip(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const result = await cp31Service.skipCp31Problem(user.id, req.params.taskId as string, getTz(req));
-      sendSuccess(res, { skipped: result.skipped ?? result, served: result.served ?? [], state: result.state });
+      const { skipped, served, state } = await cp31Service.skipCp31Problem(
+        user.id,
+        req.params.taskId as string,
+        getTz(req),
+      );
+      // Return shape is now unambiguous — no defensive result.skipped ?? result needed.
+      sendSuccess(res, { skipped, served, state });
     } catch (err) {
       next(err);
     }
@@ -53,8 +62,13 @@ export const dailyChallengesController = {
   async retry(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const result = await cp31Service.retrySkippedCp31(user.id, req.params.taskId as string, getTz(req));
-      sendSuccess(res, { task: result.task ?? result, state: result.state });
+      const { task, state } = await cp31Service.retrySkippedCp31(
+        user.id,
+        req.params.taskId as string,
+        getTz(req),
+      );
+      // Return shape is now unambiguous — no defensive result.task ?? result needed.
+      sendSuccess(res, { task, state });
     } catch (err) {
       next(err);
     }
@@ -75,8 +89,10 @@ export const dailyChallengesController = {
   async advanceBand(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
-      const result = await cp31Service.advanceCp31Band(user.id, getTz(req));
-      sendSuccess(res, { band: result.band, served: result.served, state: result.state });
+      // advanceCp31Band now has a single consistent return shape.
+      // tz is required; optional targetBand goes via options object.
+      const { band, served, state } = await cp31Service.advanceCp31Band(user.id, getTz(req));
+      sendSuccess(res, { band, served, state });
     } catch (err) {
       next(err);
     }

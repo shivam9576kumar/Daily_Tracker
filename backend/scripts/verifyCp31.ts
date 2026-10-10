@@ -52,11 +52,11 @@ async function main() {
     const s0 = await ensureCp31TasksForUser(uid, TZ);
     check('off → enabled=false, bandStatus none, no rows', !s0.enabled && s0.bandStatus === 'none' && (await cp31()).length === 0);
 
-    // 2. Enable 1300 (count 1) → serves #1 exactly once
-    await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31Enabled: true });
+    // 2. Enable 1300 (count 1) → serves #1 exactly once (immediately materialized in update)
+    const en1 = await dailyChallengeSettingsService.update(uid, { cp31Band: 1300, cp31Enabled: true }, TZ);
     const s1 = await ensureCp31TasksForUser(uid, TZ);
     const r1 = await cp31();
-    check('enable → serves cp31-1300-01', s1.servedNow.length === 1 && r1.length === 1 && r1[0].cp31ProblemId === 'cp31-1300-01');
+    check('enable → serves cp31-1300-01', (en1.cp31State?.pendingCount ?? 0) >= 1 && r1.length === 1 && r1[0].cp31ProblemId === 'cp31-1300-01');
     check('row shape: planId null, platform codeforces, key today, topic CF 1300',
       r1[0].planId === null && r1[0].platform === 'codeforces' && r1[0].scheduledDateKey === today && r1[0].topic === 'CF 1300');
     const s1b = await ensureCp31TasksForUser(uid, TZ);
@@ -83,10 +83,10 @@ async function main() {
     // 5. One More ×3 (must solve between), 4th rejected
     for (let i = 2; i <= 4; i++) {
       const om = await serveOneMore(uid, TZ);
-      const t = await prisma.task.findUnique({ where: { id: om.taskId } });
+      const t = await prisma.task.findUnique({ where: { id: om.task.id } });
       check(`One More #${i - 1} serves cp31-1300-0${i}`, t?.cp31ProblemId === `cp31-1300-0${i}` && !om.state.canOneMore);
       await rejects(() => serveOneMore(uid, TZ), `One More while #${i} pending`);
-      await taskCompletionService.completeTask(uid, om.taskId, undefined, TZ);
+      await taskCompletionService.completeTask(uid, om.task.id, undefined, TZ);
       expectedCoins += 10;
     }
     const s4 = await ensureCp31TasksForUser(uid, TZ);
@@ -101,7 +101,7 @@ async function main() {
     check('next day serves #5; extras reset', s5.servedNow.length === 1 && t5?.status === 'pending' && s5.extrasUsedToday === 0);
 
     // 7. Skip #5 → ladder advances to #6; retry #5 → pending today
-    await skipCp31Problem(uid, t5!.id);
+    await skipCp31Problem(uid, t5!.id, TZ);
     const s6 = await ensureCp31TasksForUser(uid, TZ);
     const t6 = await prisma.task.findFirst({ where: { userId: uid, cp31ProblemId: 'cp31-1300-06' } });
     const skipped = await listSkippedCp31(uid);
@@ -133,24 +133,24 @@ async function main() {
     const s7 = await ensureCp31TasksForUser(uid, TZ);
     check('band complete → awaiting confirm, nothing served', s7.bandStatus === 'complete-awaiting-confirm' && s7.servedNow.length === 0 && s7.nextBand === 1400);
     await rejects(() => serveOneMore(uid, TZ), 'One More on complete band');
-    await rejects(() => advanceCp31Band(uid, 9999), 'advance to unknown band');
-    const nb = await advanceCp31Band(uid);
+    await rejects(() => advanceCp31Band(uid, TZ, { targetBand: 9999 }), 'advance to unknown band');
+    const advResult = await advanceCp31Band(uid, TZ);
     const s8 = await ensureCp31TasksForUser(uid, TZ);
     const t1400 = await prisma.task.findFirst({ where: { userId: uid, cp31ProblemId: 'cp31-1400-01' } });
-    check('advance → 1400, serves cp31-1400-01', nb === 1400 && s8.band === 1400 && t1400?.status === 'pending');
+    check('advance → 1400, serves cp31-1400-01', advResult.band === 1400 && s8.band === 1400 && t1400?.status === 'pending');
 
     // 10. Disable → pending removed/parked, history intact, coins unchanged
-    const off = await dailyChallengeSettingsService.update(uid, { cp31Enabled: false });
+    const off = await dailyChallengeSettingsService.update(uid, { cp31Enabled: false }, TZ);
     const s9 = await ensureCp31TasksForUser(uid, TZ);
     check('disable removes 1 pending, ensure off, coins same',
       off.changes.cp31PendingRemoved === 1 && !s9.enabled && (await cp31({ status: 'pending', scheduledDateKey: { not: null } })).length === 0 && (await coinsOf(uid)) === expectedCoins);
     check('completed + skipped rows survive disable', (await cp31({ status: 'completed' })).length === 6 && (await cp31({ status: 'skipped' })).length === rest.length);
 
     // 11. Re-enable same band → resume re-serves cp31-1400-01
-    await dailyChallengeSettingsService.update(uid, { cp31Enabled: true });
+    const reEn = await dailyChallengeSettingsService.update(uid, { cp31Enabled: true }, TZ);
     const s10 = await ensureCp31TasksForUser(uid, TZ);
     const t1400b = await prisma.task.findFirst({ where: { userId: uid, cp31ProblemId: 'cp31-1400-01' } });
-    check('re-enable resumes at cp31-1400-01', s10.enabled && s10.band === 1400 && t1400b?.status === 'pending' && s10.servedNow.length === 1);
+    check('re-enable resumes at cp31-1400-01', s10.enabled && s10.band === 1400 && t1400b?.status === 'pending' && (reEn.cp31State?.pendingCount ?? 0) === 1);
 
     // 12. Per-band memory: solve 1400-01/02, switch to 1500, switch back → next is #3
     await taskCompletionService.completeTask(uid, t1400b!.id, undefined, TZ); expectedCoins += 10;
@@ -159,10 +159,11 @@ async function main() {
     const t1400c = await prisma.task.findFirst({ where: { userId: uid, cp31ProblemId: 'cp31-1400-02' } });
     check('serves 1400-02', s11.servedNow.length === 1 && t1400c?.status === 'pending');
     await taskCompletionService.completeTask(uid, t1400c!.id, undefined, TZ); expectedCoins += 10;
-    const sw1 = await dailyChallengeSettingsService.update(uid, { cp31Band: 1500 });
+    const sw1 = await dailyChallengeSettingsService.update(uid, { cp31Band: 1500 }, TZ);
     const s12 = await ensureCp31TasksForUser(uid, TZ);
-    check('switch to 1500 (nothing pending removed) serves 1500-01', sw1.changes.cp31PendingRemoved === 0 && s12.band === 1500 && s12.servedNow.length === 1);
-    const sw2 = await dailyChallengeSettingsService.update(uid, { cp31Band: 1400 });
+    const t1500 = await prisma.task.findFirst({ where: { userId: uid, cp31ProblemId: 'cp31-1500-01' } });
+    check('switch to 1500 (nothing pending removed) serves 1500-01', sw1.changes.cp31PendingRemoved === 0 && s12.band === 1500 && t1500?.status === 'pending');
+    const sw2 = await dailyChallengeSettingsService.update(uid, { cp31Band: 1400 }, TZ);
     const s13 = await ensureCp31TasksForUser(uid, TZ);
     check('switch back removes pending 1500-01, 1400 memory nextIndex=3 (quota already done today)',
       sw2.changes.cp31PendingRemoved === 1 && s13.band === 1400 && s13.nextIndex === 3 && s13.solvedInBand === 2 && s13.servedNow.length === 0);
