@@ -156,50 +156,45 @@ npm install
 
 ### 2. Configure Environment Variables
 
-Create a `.env` file inside `backend/`:
+Create `.env` at root or inside `backend/` using `.env.example`:
 
 ```env
-# backend/.env
-PORT=5000
+PORT=3001
 NODE_ENV=development
-DATABASE_URL="postgresql://postgres:password@localhost:5432/daily_tracker?schema=public"
-JWT_SECRET="your_jwt_secret_key_here"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/daily_tracker?connection_limit=10&pool_timeout=20"
+DIRECT_URL="postgresql://postgres:password@localhost:5432/daily_tracker"
+JWT_SECRET="your_jwt_secret_key_at_least_32_chars_long"
 
-# Optional: Google Gemini API Key for natural language plan prompt assist
+# Google Gemini AI (Required for AI Planner)
 GEMINI_API_KEY="your_gemini_api_key_here"
+GEMINI_MODEL="gemini-2.5-flash"
 ```
 
 ---
 
-### 3. Setup Database Schema (Prisma)
+### 3. Database Workflow & Migrations
 
-```bash
-cd backend
-
-# Run database migrations to create tables
-npx prisma migrate dev --name init
-
-# Generate Prisma Client
-npx prisma generate
-```
+- **Local Development:** Run `npm run db:migrate` (`prisma migrate dev`) to create and apply migrations against your local database.
+- **Production Deployments:** Handled automatically during `render-build` via `npm run db:migrate:deploy` (`prisma migrate deploy`).
+- **`db:push` Caution:** `db:push` is for throwaway prototypes only and **must never be run against production**.
+- **Adding a Migration:** Modify `backend/prisma/schema.prisma`, execute `npm run db:migrate` locally, and commit the newly generated migration folder. **Never rename or edit a migration that has already been applied anywhere.**
 
 ---
 
 ### 4. Run Locally (Development Servers)
 
-From the root directory:
+- **Local development:** Run `npm run dev` from the root workspace.
+- Open `http://localhost:5173`.
+- In development, leave `VITE_API_URL` empty in `frontend/.env`: requests go to `/api` and Vite proxies them to `http://localhost:3001` (configured via `VITE_DEV_API_PROXY`).
 
-**Terminal 1 (Backend Server):**
-```bash
-npm --prefix backend run dev
-# 🚀 Server running on http://localhost:5000
-```
+---
 
-**Terminal 2 (Frontend Client):**
-```bash
-npm --prefix frontend run dev
-# 🚀 App running on http://localhost:5173
-```
+### 5. AI Planner Graceful Degradation
+
+The AI Study Planner requires **both** `GEMINI_API_KEY` and `GEMINI_MODEL` (select a model reported by the Gemini `ListModels` API, such as `gemini-2.5-flash`). If either variable is missing or unconfigured:
+- The server boots normally without errors.
+- AI endpoints (`/api/plans/ai-parse`, `/api/plans/ai-conversation`) gracefully return `503 AI_DISABLED`.
+- The frontend hides the AI chat and seamlessly falls back to the manual plan wizard.
 
 ---
 

@@ -20,16 +20,19 @@ function validateTimezone(tz: string): string {
 
 const defaultTimezone = validateTimezone(process.env.DEFAULT_TIMEZONE || 'Asia/Kolkata');
 
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const IS_PROD = NODE_ENV === 'production';
+
 export const env = {
   // Server
   PORT: parseInt(process.env.PORT || '3001', 10),
-  NODE_ENV: process.env.NODE_ENV || 'development',
+  NODE_ENV,
 
   // Database
   DATABASE_URL: process.env.DATABASE_URL || '',
 
   // JWT
-  JWT_SECRET: process.env.JWT_SECRET || 'dev-secret-change-me',
+  JWT_SECRET: process.env.JWT_SECRET || (IS_PROD ? '' : 'dev-secret-change-me'),
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
 
   // Google OAuth
@@ -41,10 +44,10 @@ export const env = {
 
   // Gemini AI
   GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
-  GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-3.6-flash',
-  GEMINI_MODEL_FALLBACKS: (
-    process.env.GEMINI_MODEL_FALLBACKS || 'gemini-1.5-flash-latest,gemini-2.0-flash-exp,gemini-1.5-pro-latest'
-  )
+  // No hardcoded default: the operator must choose a model that ListModels reports.
+  GEMINI_MODEL: (process.env.GEMINI_MODEL || '').trim(),
+  // Fallbacks are opt-in only. Empty by default.
+  GEMINI_MODEL_FALLBACKS: (process.env.GEMINI_MODEL_FALLBACKS || '')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean),
@@ -56,8 +59,8 @@ export const env = {
   DEFAULT_TIMEZONE: defaultTimezone,
 
   // Helpers
-  isDev: (process.env.NODE_ENV || 'development') === 'development',
-  isProd: process.env.NODE_ENV === 'production',
+  isDev: NODE_ENV === 'development',
+  isProd: IS_PROD,
 } as const;
 
 /**
@@ -72,6 +75,29 @@ export function assertProductionConfig(e: typeof env = env): void {
     throw new Error(
       'FRONTEND_URL is not configured for production (still the localhost default). ' +
       'Set FRONTEND_URL to your deployed frontend origin(s) before starting in production.'
+    );
+  }
+}
+
+const WEAK_JWT_SECRETS = new Set(['', 'dev-secret-change-me', 'changeme']);
+
+/**
+ * Refuses to start in production with secrets that are missing or known-weak.
+ * Separate from assertProductionConfig so Bug 6's FRONTEND_URL test is unaffected.
+ */
+export function assertProductionSecrets(e: typeof env = env): void {
+  if (!e.isProd) return;
+
+  const problems: string[] = [];
+  if (!e.DATABASE_URL) {
+    problems.push('DATABASE_URL is required');
+  }
+  if (WEAK_JWT_SECRETS.has(e.JWT_SECRET) || e.JWT_SECRET.length < 32) {
+    problems.push('JWT_SECRET must be set to a random value of at least 32 characters');
+  }
+  if (problems.length > 0) {
+    throw new Error(
+      'Refusing to start in production:\n - ' + problems.join('\n - ')
     );
   }
 }

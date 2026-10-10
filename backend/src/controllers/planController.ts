@@ -14,6 +14,9 @@ import { planService } from '../services/plan/planService';
 import { geminiPlanParser } from '../services/ai/geminiPlanParser';
 import { sendSuccess } from '../utils/response';
 import { ValidationError } from '../utils/error';
+import { env } from '../config/env';
+import { isAiEnabled } from '../config/ai';
+import logger from '../utils/logger';
 
 function buildPlannerContext(
   timezone: string,
@@ -49,6 +52,12 @@ function buildPlannerContext(
 }
 
 export const planController = {
+  /** GET /api/plans/ai-status → { enabled, model } */
+  aiStatus(_req: Request, res: Response) {
+    const enabled = isAiEnabled();
+    sendSuccess(res, { enabled, model: enabled ? env.GEMINI_MODEL : null });
+  },
+
   async aiConversation(req: Request, res: Response, next: NextFunction) {
     try {
       const user = getAuthUser(req);
@@ -79,11 +88,22 @@ export const planController = {
         Boolean(activePlan)
       );
 
-      const result = await geminiPlanChat.process({
-        messages,
-        draft,
-        context,
-      });
+      let result;
+      try {
+        result = await geminiPlanChat.process({
+          messages,
+          draft,
+          context,
+        });
+      } catch (err: any) {
+        logger.error('geminiPlanChat.process error:', err);
+        res.status(502).json({
+          success: false,
+          error: 'The AI service encountered an error. Please try again later or use the manual wizard.',
+          code: 'AI_PROVIDER_ERROR',
+        });
+        return;
+      }
 
       sendSuccess(res, result);
     } catch (err) {
@@ -94,7 +114,18 @@ export const planController = {
   async aiParse(req: Request, res: Response, next: NextFunction) {
     try {
       const { prompt } = req.body;
-      const parsed = await geminiPlanParser.parsePrompt(prompt || '');
+      let parsed;
+      try {
+        parsed = await geminiPlanParser.parsePrompt(prompt || '');
+      } catch (err: any) {
+        logger.error('geminiPlanParser.parsePrompt error:', err);
+        res.status(502).json({
+          success: false,
+          error: 'The AI service encountered an error. Please try again later or use the manual wizard.',
+          code: 'AI_PROVIDER_ERROR',
+        });
+        return;
+      }
       sendSuccess(res, parsed);
     } catch (err) {
       next(err);

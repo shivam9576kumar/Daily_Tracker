@@ -8,6 +8,9 @@ import { env } from './config/env';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import { timezoneMiddleware } from './middleware/timezoneMiddleware';
 import { sendSuccess } from './utils/response';
+import prisma from './config/database';
+import logger from './utils/logger';
+import { checkDatabaseReady } from './services/health/readiness';
 
 // Route imports
 import authRoutes from './routes/authRoutes';
@@ -83,6 +86,19 @@ app.get('/api/health', (_req, res) => {
     status: 'ok',
     timestamp: new Date().toISOString(),
     environment: env.NODE_ENV,
+  });
+});
+
+// Liveness (unchanged): process is up.
+// Readiness: database answers within 2s. Responds WITHOUT the error text.
+app.get('/api/health/ready', async (_req, res) => {
+  const db = await checkDatabaseReady(() => prisma.$queryRaw`SELECT 1`);
+  if (!db.ok) {
+    logger.warn('readiness: database check failed', { error: db.error });
+  }
+  res.status(db.ok ? 200 : 503).json({
+    success: db.ok,
+    data: { status: db.ok ? 'ready' : 'degraded', database: { ok: db.ok, latencyMs: db.latencyMs } },
   });
 });
 

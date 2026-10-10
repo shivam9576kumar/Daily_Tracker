@@ -21,6 +21,8 @@ import {
   calculateRatingBonus,
   applyCoinRefund,
 } from '../../config/rewards';
+import logger from '../../utils/logger';
+import { TX_OPTIONS } from '../../config/transaction';
 
 export interface TaskMutationResult {
   task: Task;
@@ -47,9 +49,6 @@ const REVISION_INTERVALS: Record<Rating, readonly number[]> = {
   medium: [1, 3, 7, 14],
   hard:   [1, 3, 7, 14, 28],
 };
-
-/** Tokyo RTTs are huge; default Prisma tx timeout (5s) is far too low. */
-const TX_OPTIONS = { maxWait: 15_000, timeout: 60_000 } as const;
 
 function parseRating(value: unknown): Rating {
   if (typeof value === 'string' && (RATINGS as readonly string[]).includes(value as Rating)) return value as Rating;
@@ -191,6 +190,7 @@ export const taskCompletionService = {
         : (isFirstSolve ? COIN_REWARDS.solve : 0) +
           (rating ? bonusFor(rating) - bonusFor(task.rating) : 0);
 
+    const txStarted = Date.now();
     const result = await prisma.$transaction(async (tx) => {
       const updated = await tx.task.update({
         where: { id: taskId },
@@ -272,6 +272,10 @@ export const taskCompletionService = {
 
       return updated;
     }, TX_OPTIONS);
+    const txElapsed = Date.now() - txStarted;
+    if (txElapsed > 3_000) {
+      logger.warn('slow task transaction', { op: 'completeTask', taskId, elapsedMs: txElapsed });
+    }
     invalidateUserCache(userId);
     return makeMutationResult(result, coinDelta);
   },
@@ -287,6 +291,7 @@ export const taskCompletionService = {
     const task = await prisma.task.findFirst({ where: { id: taskId, userId } });
     if (!task) throw new NotFoundError('Task');
 
+    const txStarted = Date.now();
     const result = await prisma.$transaction(async (tx) => {
       // Step 1: Count completed revisions BEFORE deleting them
       const doneRevs = await tx.task.count({
@@ -329,6 +334,10 @@ export const taskCompletionService = {
       }
       return { updated, totalRefund };
     }, TX_OPTIONS);
+    const txElapsed = Date.now() - txStarted;
+    if (txElapsed > 3_000) {
+      logger.warn('slow task transaction', { op: 'unrateTask', taskId, elapsedMs: txElapsed });
+    }
     invalidateUserCache(userId);
     return makeMutationResult(result.updated, result.totalRefund === 0 ? 0 : -result.totalRefund);
   },
@@ -349,6 +358,7 @@ export const taskCompletionService = {
     const maxRetries = 5;
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
+        const txStarted = Date.now();
         const result = await prisma.$transaction(
           async (tx) => {
             const task = await tx.task.findFirst({ where: { id: taskId, userId } });
@@ -438,10 +448,13 @@ export const taskCompletionService = {
           },
           {
             isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-            maxWait: 15_000,
-            timeout: 60_000,
+            ...TX_OPTIONS,
           },
         );
+        const txElapsed = Date.now() - txStarted;
+        if (txElapsed > 3_000) {
+          logger.warn('slow task transaction', { op: 'undoTask', taskId, elapsedMs: txElapsed });
+        }
 
         invalidateUserCache(userId);
         return makeMutationResult(result.updated, result.totalRefund === 0 ? 0 : -result.totalRefund);

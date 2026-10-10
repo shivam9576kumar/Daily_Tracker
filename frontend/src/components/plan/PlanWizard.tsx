@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AIPlanChat from './AIPlanChat';
 import PromptAssist from './PromptAssist';
@@ -33,10 +33,24 @@ export default function PlanWizard() {
   const toast = useUIStore((s) => s.toast);
 
   const [mode, setMode] = useState<'ai' | 'manual'>('ai');
+  const [aiEnabled, setAiEnabled] = useState<boolean | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [committing, setCommitting] = useState(false);
   const [archiveModalOpen, setArchiveModalOpen] = useState(false);
+
+  useEffect(() => {
+    planApi.getAiStatus()
+      .then((status) => {
+        setAiEnabled(status.enabled);
+        if (!status.enabled) {
+          setMode('manual');
+        }
+      })
+      .catch(() => {
+        // Fallback to enabled if check fails
+      });
+  }, []);
 
   // Form state
   const [source, setSource] = useState<PlanSource>('neetcode150');
@@ -93,7 +107,13 @@ export default function PlanWizard() {
 
       toast('✨ AI populated your plan settings! Please review before generating.', 'success');
       clearPreview();
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.response?.data?.code === 'AI_DISABLED') {
+        toast('The AI planner is unavailable on this server. Use the manual wizard.', 'error');
+        setAiEnabled(false);
+        setMode('manual');
+        return;
+      }
       toast(getErrorMessage(err) || 'AI could not understand. Please fill manually.', 'error');
     } finally {
       setAiLoading(false);
@@ -251,24 +271,39 @@ export default function PlanWizard() {
       </div>
 
       {mode === 'ai' ? (
-        <>
-          <AIPlanChat
-            onGeneratePreview={(payload) => handleGeneratePreview(payload)}
-            onCommit={() => handleCommit()}
-            onTweakManually={handleTweakManually}
-            onPlanDraftChanged={handleAIPlanDraftChanged}
-            previewLoaded={previewLoaded}
-          />
-          {previewData && (
-            <div style={{ marginTop: 24 }}>
-              <PlanPreview
-                preview={previewData}
-                onCommit={() => handleCommit()}
-                committing={committing}
-              />
-            </div>
-          )}
-        </>
+        aiEnabled === false ? (
+          <div className="card" style={{ padding: '24px', textAlign: 'center' }}>
+            <p style={{ color: 'var(--text-secondary, #6b7280)', marginBottom: '16px' }}>
+              The AI planner is unavailable on this server. Use the manual wizard.
+            </p>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => setMode('manual')}
+            >
+              Use Manual Wizard
+            </button>
+          </div>
+        ) : (
+          <>
+            <AIPlanChat
+              onGeneratePreview={(payload) => handleGeneratePreview(payload)}
+              onCommit={() => handleCommit()}
+              onTweakManually={handleTweakManually}
+              onPlanDraftChanged={handleAIPlanDraftChanged}
+              previewLoaded={previewLoaded}
+            />
+            {previewData && (
+              <div style={{ marginTop: 24 }}>
+                <PlanPreview
+                  preview={previewData}
+                  onCommit={() => handleCommit()}
+                  committing={committing}
+                />
+              </div>
+            )}
+          </>
+        )
       ) : (
         <>
           <ol className="wizard-steps" aria-label="Plan wizard progress">

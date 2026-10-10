@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { planApi } from '../../services/planApi';
 import {
   draftToPlanPayload,
@@ -35,6 +35,19 @@ export default function AIPlanChat({
   const [action, setAction] = useState<AIAction>('none');
   const [warnings, setWarnings] = useState<string[]>([]);
   const [assumptions, setAssumptions] = useState<string[]>([]);
+  const [disabledMessage, setDisabledMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    planApi.getAiStatus()
+      .then((status) => {
+        if (!status.enabled) {
+          setDisabledMessage('The AI planner is unavailable on this server. Use the manual wizard.');
+        }
+      })
+      .catch(() => {
+        // Leave chat available if network check fails
+      });
+  }, []);
 
   const send = async () => {
     if (!input.trim() || loading) return;
@@ -85,7 +98,11 @@ export default function AIPlanChat({
           content: res.reply,
         },
       ]);
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.response?.data?.code === 'AI_DISABLED') {
+        setDisabledMessage('The AI planner is unavailable on this server. Use the manual wizard.');
+        return;
+      }
       setMessages([
         ...newMessages,
         { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' },
@@ -94,6 +111,23 @@ export default function AIPlanChat({
       setLoading(false);
     }
   };
+
+  if (disabledMessage) {
+    return (
+      <div className="card" style={{ padding: '24px', textAlign: 'center' }}>
+        <p style={{ color: 'var(--text-secondary, #6b7280)', marginBottom: '16px' }}>
+          {disabledMessage}
+        </p>
+        <button
+          type="button"
+          className="btn-primary"
+          onClick={() => onTweakManually(draft ?? ({} as AIDraft))}
+        >
+          Use Manual Wizard
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="ai-chat card">

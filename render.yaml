@@ -3,6 +3,7 @@ services:
     name: dsa-tracker-app
     runtime: node
     plan: free
+    healthCheckPath: /api/health/ready
     buildCommand: npm install --include=dev && npm run render-build
     startCommand: npm start
     envVars:
@@ -10,14 +11,18 @@ services:
         value: production
       - key: DATABASE_URL
         sync: false
+      - key: DIRECT_URL
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: GEMINI_API_KEY
         sync: false
+      - key: GEMINI_MODEL
+        sync: false
       - key: DEFAULT_TIMEZONE
         value: Asia/Kolkata
       - key: FRONTEND_URL
-        value: https://dsa-tracker-app.onrender.com
+        sync: false
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET

@@ -14,7 +14,10 @@ const BROWSER_TZ = (() => {
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
-  timeout: 60_000, // was 20s; rate can legitimately take several seconds on cold DB
+  // Default for ordinary reads and writes. Long operations (AI, plan commit)
+  // pass their own timeout per request. A hung request should fail in
+  // seconds, not hold a spinner for a minute.
+  timeout: 15_000,
 });
 
 // Attach JWT and X-Timezone to every request

@@ -20,9 +20,10 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-prisma.$connect()
-  .then(() => logger.info('✅ Connected to PostgreSQL via Prisma'))
-  .catch((err) => logger.error('❌ Database connection failed', err));
-
+/**
+ * Prisma connects lazily on the first query. server.ts connects explicitly
+ * at boot so startup failures are visible and exit the process.
+ * Do not connect at import time.
+ */
 export default prisma;
 export { prisma };

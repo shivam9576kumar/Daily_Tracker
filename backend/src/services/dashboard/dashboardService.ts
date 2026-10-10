@@ -1,3 +1,4 @@
+import type { Task } from '@prisma/client';
 import { taskRepository } from '../../repositories/taskRepository';
 import prisma from '../../config/database';
 import logger from '../../utils/logger';
@@ -11,50 +12,45 @@ import { todayKey, addDaysToKey } from '../../utils/dateKeys';
 import { LIVE_TASK_WHERE, OPEN_BACKLOG_WHERE } from '../task/taskLifecycle';
 
 /**
+ * Runs an optional read/write and degrades to a fallback on failure.
+ * Matches the existing try/catch-and-continue behavior for POTD/CP31/streaks.
+ */
+async function settle<T>(label: string, fn: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await fn();
+  } catch (err) {
+    logger.warn(`dashboardService: ${label} failed, continuing`, { message: (err as Error)?.message });
+    return fallback;
+  }
+}
+
+/**
  * Dashboard service — aggregates all data for GET /api/dashboard/today
  * in a single call, avoiding 10+ separate API requests from the frontend.
  */
 export const dashboardService = {
   async getDashboardData(userId: string, tz: string) {
-    let ensuredPotd: Awaited<ReturnType<typeof ensurePotdTaskForUser>> = {
-      enabled: true,
-      taskId: null,
-      potd: null,
-      stale: false,
-    };
-    try {
-      ensuredPotd = await ensurePotdTaskForUser(userId, tz);
-    } catch (err) {
-      logger.warn('dashboardService: POTD ensure failed, continuing without it', {
-        message: (err as Error)?.message,
-      });
-    }
+    // PHASE 1 — writes, sequential, degrade on failure (unchanged semantics)
+    const ensuredPotd = await settle('POTD ensure', () => ensurePotdTaskForUser(userId, tz), {
+      enabled: true, taskId: null, potd: null, stale: false,
+    });
+    const cp31State = await settle('CP31 ensure', () => ensureCp31TasksForUser(userId, tz), emptyCp31State());
 
-    let potdStreak: PotdStreakResult | null = null;
-    try {
-      potdStreak = await computePotdStreak(userId, tz);
-    } catch (err) {
-      logger.warn('dashboardService: POTD streak computation failed', {
-        message: (err as Error)?.message,
-      });
-    }
-
-    let cp31State: Cp31State = emptyCp31State();
-    let cp31Streak: Cp31StreakResult | null = null;
-    let cp31SkippedCount = 0;
-    try {
-      cp31State = await ensureCp31TasksForUser(userId, tz);
-      cp31Streak = await computeCp31Streak(userId, tz);
-      const skipped = await listSkippedCp31(userId, cp31State.band ?? undefined);
-      cp31SkippedCount = skipped.length;
-    } catch (err) {
-      logger.warn('dashboardService: CP31 ensure/streak failed, continuing', {
-        message: (err as Error)?.message,
-      });
-    }
-
-    // Run queries in small batches to stay well under the pool size limit (15)
-    const [todaysTasks, totalQuestions, user, activePlan] = await Promise.all([
+    // PHASE 2 — reads, one concurrent batch
+    const [
+      todaysTasks,
+      totalQuestions,
+      user,
+      activePlan,
+      backlogCount,
+      expiredCount,
+      streaks,
+      pendingAssignments,
+      classesForWeek,
+      potdStreak,
+      cp31Streak,
+      cp31Skipped,
+    ] = await Promise.all([
       taskRepository.getTodaysTasks(userId, tz, ensuredPotd.potd?.dateKey ?? null),
       // Total unique problems actually solved (new tasks + potd + cp31, not revisions)
       prisma.task.count({
@@ -68,9 +64,6 @@ export const dashboardService = {
         where: { userId, status: 'active' },
         select: { id: true, name: true },
       }),
-    ]);
-
-    const [backlogCount, expiredCount, streaks, pendingAssignments, classesForWeek] = await Promise.all([
       // Backlog: canonical open backlog count
       prisma.task.count({
         where: {
@@ -96,6 +89,9 @@ export const dashboardService = {
         orderBy: { deadline: 'asc' },
       }),
       classesService.list(userId).catch(() => []),
+      settle('POTD streak', () => computePotdStreak(userId, tz), null as PotdStreakResult | null),
+      settle('CP31 streak', () => computeCp31Streak(userId, tz), null as Cp31StreakResult | null),
+      settle('CP31 skipped', () => listSkippedCp31(userId, cp31State.band ?? undefined), [] as Task[]),
     ]);
 
     const pendingTasks = todaysTasks.filter((t) => t.status !== 'completed');
@@ -135,7 +131,7 @@ export const dashboardService = {
         // toPublicCp31State strips internal fields (servedNow, served, pendingTaskIds)
         // that must not appear in any public response. bandStatus is passed through
         // unmodified ('complete-awaiting-confirm'), consistent with todoService.
-        cp31: { ...toPublicCp31State(cp31State), skippedCount: cp31SkippedCount },
+        cp31: { ...toPublicCp31State(cp31State), skippedCount: cp31Skipped.length },
       },
       cp31Streak,
     };

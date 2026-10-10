@@ -2,11 +2,14 @@ import { Router } from 'express';
 import { authMiddleware } from '../middleware/authMiddleware';
 import { planController } from '../controllers/planController';
 
+import { requireAiEnabled } from '../middleware/aiEnabledMiddleware';
+
 const router = Router();
 router.use(authMiddleware);
 
-router.post('/ai-parse', planController.aiParse);
-router.post('/ai-conversation', planController.aiConversation);
+router.get('/ai-status', planController.aiStatus);
+router.post('/ai-parse', requireAiEnabled(), planController.aiParse);
+router.post('/ai-conversation', requireAiEnabled(), planController.aiConversation);
 router.post('/preview', planController.preview);
 router.post('/commit', planController.commit);
 
