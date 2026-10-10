@@ -73,7 +73,10 @@ export default function DailyChallengesMenu() {
 
         {open && (
           <div className="dc-menu__panel" role="dialog" aria-label="Daily challenges">
-            <div className="dc-menu__title">Daily challenges</div>
+            <div className="dc-menu__title">
+              Daily challenges
+              {saving && <span className="spinner" aria-label="Saving" style={{ width: 14, height: 14, marginLeft: 8, display: 'inline-block' }} />}
+            </div>
 
             {/* POTD row */}
             <div className="dc-row">
@@ -89,7 +92,7 @@ export default function DailyChallengesMenu() {
                 aria-checked={potdOn}
                 aria-label="Toggle LeetCode POTD"
                 className={`dc-switch${potdOn ? ' is-on' : ''}`}
-                disabled={loading || saving}
+                disabled={loading}
                 onClick={() => void setPotdEnabled(!potdOn)}
               >
                 <span className="dc-switch__thumb" aria-hidden="true" />
@@ -124,7 +127,7 @@ export default function DailyChallengesMenu() {
                 aria-checked={cp31On}
                 aria-label="Toggle Codeforces CP31"
                 className={`dc-switch${cp31On ? ' is-on' : ''}`}
-                disabled={loading || saving}
+                disabled={loading}
                 onClick={handleCp31Toggle}
               >
                 <span className="dc-switch__thumb" aria-hidden="true" />
@@ -139,7 +142,7 @@ export default function DailyChallengesMenu() {
                   <button
                     type="button"
                     className="dc-stepper__btn"
-                    disabled={loading || saving || cp31DailyCount <= 1}
+                    disabled={loading || cp31DailyCount <= 1}
                     onClick={() => void setCp31DailyCount(Math.max(1, cp31DailyCount - 1))}
                     aria-label="Decrease daily count"
                   >
@@ -149,7 +152,7 @@ export default function DailyChallengesMenu() {
                   <button
                     type="button"
                     className="dc-stepper__btn"
-                    disabled={loading || saving || cp31DailyCount >= 3}
+                    disabled={loading || cp31DailyCount >= 3}
                     onClick={() => void setCp31DailyCount(Math.min(3, cp31DailyCount + 1))}
                     aria-label="Increase daily count"
                   >

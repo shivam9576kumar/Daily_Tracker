@@ -213,7 +213,7 @@
 }
 
 .option-card:hover {
-  border-color: var(--brand-border);
+  border-color: var(--brand-soft-border);
 }
 
 .option-card:focus-visible {
@@ -379,7 +379,7 @@
 }
 
 .chip:hover {
-  border-color: var(--brand-border);
+  border-color: var(--brand-soft-border);
   color: var(--text-primary);
 }
 
@@ -923,7 +923,7 @@
   display: flex; flex-direction: column; gap: 4px;
   transition: border-color var(--transition-fast), background var(--transition-fast);
 }
-.topic-mode__btn:hover { border-color: var(--brand-border); }
+.topic-mode__btn:hover { border-color: var(--brand-soft-border); }
 .topic-mode__btn.is-active { background: var(--brand-tint); border: 2px solid var(--brand); padding: 13px 15px; }
 .topic-mode__btn:focus-visible { outline: 0; box-shadow: var(--focus-ring); }
 .topic-mode__desc { font: 400 13px/1.4 var(--font-sans); color: var(--text-secondary); }

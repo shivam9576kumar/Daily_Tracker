@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { todoApi, type UpcomingRange } from '../services/todoApi';
-import { dailyChallengesApi } from '../services/dailyChallengesApi';
 import { getErrorMessage } from '../services/api';
+import { createLatestGate } from '../utils/latestGate';
 import type { TodoResponse } from '../types';
 
 interface TodoState {
@@ -11,11 +11,9 @@ interface TodoState {
   upcomingDays: UpcomingRange;
   fetch: (silent?: boolean) => Promise<void>;
   setUpcomingDays: (days: UpcomingRange) => Promise<void>;
-  cp31OneMore: () => Promise<void>;
-  cp31Skip: (taskId: string) => Promise<void>;
-  cp31Retry: (taskId: string) => Promise<void>;
-  cp31AdvanceBand: () => Promise<void>;
 }
+
+const gate = createLatestGate();
 
 export const useTodoStore = create<TodoState>((set, get) => ({
   data: null,
@@ -24,11 +22,14 @@ export const useTodoStore = create<TodoState>((set, get) => ({
   upcomingDays: 14,
 
   fetch: async (silent = false) => {
+    const token = gate.begin();
     if (!silent) set({ loading: true, error: null });
     try {
       const data = await todoApi.get(get().upcomingDays, { silent });
+      if (!gate.isLatest(token)) return;
       set({ data, loading: false, error: null });
     } catch (err) {
+      if (!gate.isLatest(token)) return;
       set({ error: getErrorMessage(err), loading: false });
     }
   },
@@ -36,42 +37,6 @@ export const useTodoStore = create<TodoState>((set, get) => ({
   setUpcomingDays: async (days) => {
     if (get().upcomingDays === days) return;
     set({ upcomingDays: days });
-    await get().fetch(true); // silent refetch — no full-page spinner
-  },
-
-  cp31OneMore: async () => {
-    try {
-      await dailyChallengesApi.oneMore();
-      await get().fetch(true);
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  cp31Skip: async (taskId: string) => {
-    try {
-      await dailyChallengesApi.skip(taskId);
-      await get().fetch(true);
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  cp31Retry: async (taskId: string) => {
-    try {
-      await dailyChallengesApi.retry(taskId);
-      await get().fetch(true);
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  cp31AdvanceBand: async () => {
-    try {
-      await dailyChallengesApi.advanceBand();
-      await get().fetch(true);
-    } catch (err) {
-      throw err;
-    }
+    await get().fetch(true);
   },
 }));

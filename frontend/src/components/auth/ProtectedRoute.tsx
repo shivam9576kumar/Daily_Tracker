@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children }: Props) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'var(--color-bg-primary)',
+        background: 'var(--bg-page)',
       }}>
         <div className="spinner" />
       </div>

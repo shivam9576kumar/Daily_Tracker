@@ -143,7 +143,7 @@ export default function TodoPage() {
 
   const applyDateToTask = useCallback(
     async (selection: DateSelection) => {
-      if (!dateTarget) return;
+      if (!dateTarget || dateTarget.taskType !== 'personal') return;
       try {
         await todoApi.updatePersonal(dateTarget.id, {
           scheduledDateKey: selection.dateKey,
@@ -194,12 +194,12 @@ export default function TodoPage() {
         <TodoTaskRow
           key={t.id}
           task={t}
-          busy={actions.busyId === t.id}
+          busy={actions.isBusy(t.id)}
           onOpen={(sel) => setSelectedTaskId(sel.id)}
           onToggleSolved={actions.toggleSolved}
           onRate={actions.rate}
           onUnrate={actions.unrate}
-          onSetDate={handleSetDate}
+          onSetDate={t.taskType === 'personal' ? handleSetDate : undefined}
         />
       ))}
     </div>
@@ -323,16 +323,16 @@ export default function TodoPage() {
             <TodoSection title="Today’s Study Plan" count={t.plan.length}>
               {renderTasks(t.plan)}
             </TodoSection>
-            <TodoSection title="Daily Challenge" count={t.potd.length} tone="brand">
-              {renderTasks(t.potd)}
-            </TodoSection>
+            {/* POTD and CP31 rows are owned by DailyChallengesSection (Decision D1). Do not render them here. */}
             <DailyChallengesSection
               meta={data.dailyChallenges}
+              potd={t.potd}
+              cp31={t.cp31}
               onOpenTask={(sel) => setSelectedTaskId(sel.id)}
               onToggleSolved={actions.toggleSolved}
               onRate={actions.rate}
               onUnrate={actions.unrate}
-              busy={actions.busyId}
+              isBusy={actions.isBusy}
             />
             <TodoSection title="Revisions Due" count={t.revisions.length}>
               {renderTasks(t.revisions)}

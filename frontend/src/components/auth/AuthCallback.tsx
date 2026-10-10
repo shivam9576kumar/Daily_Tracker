@@ -50,8 +50,8 @@ export default function AuthCallback() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'var(--color-bg-primary)',
-      color: 'var(--color-text-secondary)',
+      background: 'var(--bg-page)',
+      color: 'var(--text-secondary)',
     }}>
       {error ? `Sign-in failed: ${error}` : 'Signing you in...'}
     </div>

@@ -63,7 +63,7 @@ export default function TaskDrawer({ taskId, onClose, onChanged }: Props) {
 
   if (!taskId) return null;
 
-  const busy = !!task && (actions.busyId === task.id || deleting);
+  const busy = !!task && (actions.isBusy(task.id) || deleting);
   const completed = task?.status === 'completed';
   const isNew = task?.taskType === 'new';
   const isRevision = task?.taskType === 'revision';
