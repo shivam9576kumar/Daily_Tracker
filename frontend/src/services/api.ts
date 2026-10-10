@@ -33,8 +33,14 @@ api.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401) {
       tokenStorage.clear();
-      if (!window.location.pathname.startsWith('/login')) {
-        window.location.href = '/login';
+      // Decoupled from authStore via a DOM event to avoid a circular
+      // import (authStore.ts already imports this module).
+      window.dispatchEvent(new CustomEvent('auth:session-expired'));
+
+      const isSilent = (err.config as any)?.silent === true;
+      if (!isSilent && !window.location.pathname.startsWith('/login')) {
+        const next = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.href = `/login?next=${next}`;
       }
     }
     const message =

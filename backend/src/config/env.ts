@@ -59,3 +59,20 @@ export const env = {
   isDev: (process.env.NODE_ENV || 'development') === 'development',
   isProd: process.env.NODE_ENV === 'production',
 } as const;
+
+/**
+ * Fails loudly at startup if a production deployment is still using the
+ * localhost default — this previously failed silently, producing a
+ * confusing browser-side CORS error for real users instead of an
+ * obvious deployment misconfiguration at boot time.
+ */
+export function assertProductionConfig(e: typeof env = env): void {
+  const firstOrigin = e.FRONTEND_URL.split(',')[0]?.trim();
+  if (e.isProd && firstOrigin === 'http://localhost:5173') {
+    throw new Error(
+      'FRONTEND_URL is not configured for production (still the localhost default). ' +
+      'Set FRONTEND_URL to your deployed frontend origin(s) before starting in production.'
+    );
+  }
+}
+

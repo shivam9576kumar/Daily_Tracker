@@ -34,9 +34,31 @@ app.use(
 );
 
 // ─── CORS ───
+const allowedOrigins = env.FRONTEND_URL.split(',').map((s) => s.trim()).filter(Boolean);
+
+/**
+ * Requests with no Origin header (server-to-server calls, curl, same-origin
+ * navigation) are not subject to CORS in the first place and are allowed
+ * through unconditionally — this mirrors standard CORS middleware practice
+ * and is not a security gap.
+ *
+ * Exported for direct unit testing without spinning up an HTTP server.
+ */
+export function isAllowedOrigin(origin: string | undefined, frontendUrlConfig: string = env.FRONTEND_URL): boolean {
+  if (!origin) return true;
+  const origins = frontendUrlConfig.split(',').map((s) => s.trim()).filter(Boolean);
+  return origins.includes(origin);
+}
+
 app.use(
   cors({
-    origin: env.FRONTEND_URL || true,
+    origin(origin, callback) {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} is not allowed by CORS`));
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Timezone'],

@@ -26,7 +26,7 @@ export const useTodoStore = create<TodoState>((set, get) => ({
   fetch: async (silent = false) => {
     if (!silent) set({ loading: true, error: null });
     try {
-      const data = await todoApi.get(get().upcomingDays);
+      const data = await todoApi.get(get().upcomingDays, { silent });
       set({ data, loading: false, error: null });
     } catch (err) {
       set({ error: getErrorMessage(err), loading: false });

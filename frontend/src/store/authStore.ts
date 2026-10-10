@@ -16,8 +16,9 @@ interface AuthState {
   isLoading: boolean;
   isAuthenticated: boolean;
 
-  setToken: (token: string) => void;
+  setToken: (token: string) => Promise<void>;
   fetchUser: () => Promise<void>;
+  clearSession: () => void;
   logout: () => void;
   initialize: () => Promise<void>;
 }
@@ -28,9 +29,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isLoading: true,
   isAuthenticated: false,
 
-  setToken: (token: string) => {
+  setToken: async (token: string) => {
     tokenStorage.set(token);
-    set({ token, isAuthenticated: true });
+    set({ token });
+    await get().fetchUser();
   },
 
   fetchUser: async () => {
@@ -43,9 +45,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
+  clearSession: () => {
+    set({ user: null, token: null, isAuthenticated: false });
+  },
+
   logout: () => {
     tokenStorage.clear();
-    set({ user: null, token: null, isAuthenticated: false });
+    get().clearSession();
     window.location.href = '/login';
   },
 
@@ -59,3 +65,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 }));
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('auth:session-expired', () => {
+    useAuthStore.getState().clearSession();
+  });
+}
+

@@ -8,7 +8,7 @@ interface PlanState {
   archived: ArchivedPlan[];
   loading: boolean;
   error: string | null;
-  fetchActive: () => Promise<void>;
+  fetchActive: (options?: { silent?: boolean }) => Promise<void>;
   fetchArchived: () => Promise<void>;
 }
 
@@ -18,10 +18,10 @@ export const usePlanStore = create<PlanState>((set) => ({
   loading: false,
   error: null,
 
-  fetchActive: async () => {
-    set({ loading: true, error: null });
+  fetchActive: async (options?: { silent?: boolean }) => {
+    set({ loading: true, error: null }); // NOTE: loading-flash behavior is Bug 9's scope — not modified here.
     try {
-      const data = await planApi.getActive();
+      const data = await planApi.getActive({ silent: options?.silent });
       set({ data, loading: false });
     } catch (err) {
       set({ error: getErrorMessage(err), loading: false });

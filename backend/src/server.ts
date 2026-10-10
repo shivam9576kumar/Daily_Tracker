@@ -1,11 +1,12 @@
 import app from './app';
-import { env } from './config/env';
+import { env, assertProductionConfig } from './config/env';
 import { prisma } from './config/database';
 import { initCronJobs } from './cron';
 import logger from './utils/logger';
 
 async function main() {
   try {
+    assertProductionConfig();
     // Test database connection
     await prisma.$connect();
     logger.info('✅ Connected to PostgreSQL');

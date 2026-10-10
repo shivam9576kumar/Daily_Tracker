@@ -24,4 +24,10 @@ export const authApi = {
   async logout() {
     await api.post('/auth/logout');
   },
+
+  /** Exchange short-lived OAuth code for JWT */
+  async exchangeCode(code: string): Promise<{ token: string }> {
+    const res = await api.post('/auth/exchange', { code });
+    return res.data.data;
+  },
 };

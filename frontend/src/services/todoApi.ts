@@ -4,9 +4,10 @@ import type { ApiResponse, Recurrence, Task, TodoResponse } from '../types';
 export type UpcomingRange = 14 | 30;
 
 export const todoApi = {
-  async get(upcomingDays: UpcomingRange = 14): Promise<TodoResponse> {
+  async get(upcomingDays: UpcomingRange = 14, options?: { silent?: boolean }): Promise<TodoResponse> {
     const res = await api.get<ApiResponse<TodoResponse>>('/todo', {
       params: { upcomingDays },
+      silent: options?.silent,
     });
     return res.data.data;
   },

@@ -2,7 +2,7 @@ import { googleOAuthConfig } from '../../config/googleOAuth';
 import prisma from '../../config/database';
 import logger from '../../utils/logger';
 
-interface GoogleUserInfo {
+export interface GoogleUserInfo {
   sub: string;      // Google ID
   email: string;
   name: string;
@@ -69,32 +69,53 @@ export async function handleGoogleCallback(code: string) {
 /**
  * Upsert: find existing user by Google ID or create a new one.
  */
-async function findOrCreateUser(googleUser: GoogleUserInfo) {
-  const existing = await prisma.user.findUnique({
-    where: { googleId: googleUser.sub },
-  });
+export async function findOrCreateUser(googleUser: GoogleUserInfo) {
+  const existing = await prisma.user.findUnique({ where: { googleId: googleUser.sub } });
 
   if (existing) {
-    // Update profile info in case it changed
-    return prisma.user.update({
-      where: { id: existing.id },
-      data: {
-        name: googleUser.name,
-        email: googleUser.email,
-        avatarUrl: googleUser.picture,
-      },
-    });
+    try {
+      return await prisma.user.update({
+        where: { id: existing.id },
+        data: {
+          name: googleUser.name,
+          email: googleUser.email,
+          avatarUrl: googleUser.picture,
+        },
+      });
+    } catch (err: any) {
+      if (err?.code === 'P2002') {
+        // A different account already owns this email (e.g. the user
+        // changed their Google account's email to one already present
+        // in our system under a different googleId). This only affects
+        // a cosmetic profile-refresh field — do not block login over it.
+        logger.warn('findOrCreateUser: email conflict on profile refresh, keeping existing email', {
+          userId: existing.id,
+          attemptedEmail: googleUser.email,
+        });
+        return existing;
+      }
+      throw err;
+    }
   }
 
-  // Create new user
   logger.info(`Creating new user: ${googleUser.email}`);
-  return prisma.user.create({
-    data: {
-      googleId: googleUser.sub,
-      email: googleUser.email,
-      name: googleUser.name,
-      avatarUrl: googleUser.picture,
-      coins: 0,
-    },
-  });
+  try {
+    return await prisma.user.create({
+      data: {
+        googleId: googleUser.sub,
+        email: googleUser.email,
+        name: googleUser.name,
+        avatarUrl: googleUser.picture,
+        coins: 0,
+      },
+    });
+  } catch (err: any) {
+    if (err?.code === 'P2002') {
+      // Concurrent first-time sign-in race: another request created
+      // this user between our findUnique and create calls.
+      const race = await prisma.user.findUnique({ where: { googleId: googleUser.sub } });
+      if (race) return race;
+    }
+    throw err;
+  }
 }

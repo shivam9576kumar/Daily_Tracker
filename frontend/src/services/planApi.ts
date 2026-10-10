@@ -6,8 +6,8 @@ export const planApi = {
     const res = await api.post('/plans/ai-conversation', payload);
     return res.data.data;
   },
-  async getActive(): Promise<ActivePlanResponse> {
-    const res = await api.get<ApiResponse<ActivePlanResponse>>('/plans/active');
+  async getActive(options?: { silent?: boolean }): Promise<ActivePlanResponse> {
+    const res = await api.get<ApiResponse<ActivePlanResponse>>('/plans/active', { silent: options?.silent });
     return res.data.data;
   },
   async getArchived(): Promise<ArchivedPlan[]> {

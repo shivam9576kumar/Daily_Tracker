@@ -3,6 +3,7 @@ import {
   googleLogin,
   googleCallback,
   demoLogin,
+  exchangeAuthCode,
   getMe,
   logout,
 } from '../controllers/authController';
@@ -14,6 +15,7 @@ const router = Router();
 router.get('/google', googleLogin);
 router.get('/google/callback', googleCallback);
 router.post('/demo', demoLogin);
+router.post('/exchange', exchangeAuthCode);
 
 // Protected routes
 router.get('/me', authMiddleware, getMe);

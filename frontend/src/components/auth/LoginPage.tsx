@@ -10,7 +10,6 @@ import './auth.css';
 export default function LoginPage() {
   const navigate = useNavigate();
   const setToken = useAuthStore((s) => s.setToken);
-  const fetchUser = useAuthStore((s) => s.fetchUser);
   const toast = useUIStore((s) => s.toast);
   const [loading, setLoading] = useState(false);
 
@@ -18,8 +17,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const data = await authApi.demoLogin();
-      setToken(data.token);
-      await fetchUser();
+      await setToken(data.token);
       navigate('/');
     } catch (err) {
       toast(getErrorMessage(err), 'error');

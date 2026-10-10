@@ -6,10 +6,11 @@ import {
 import { generateToken } from '../services/auth/jwtService';
 import { getAuthUser } from '../middleware/authMiddleware';
 import { sendSuccess, sendError } from '../utils/response';
+import { UnauthorizedError } from '../utils/error';
 import { env } from '../config/env';
 import logger from '../utils/logger';
-
 import { prisma } from '../config/database';
+import { createExchangeCode, consumeExchangeCode } from '../services/auth/exchangeCodeService';
 
 /**
  * GET /api/auth/google
@@ -32,19 +33,27 @@ export function googleLogin(_req: Request, res: Response) {
  */
 export async function demoLogin(_req: Request, res: Response, next: NextFunction) {
   try {
-    let user = await prisma.user.findFirst({
-      where: { email: 'demo@dsatracker.com' },
-    });
+    const DEMO_GOOGLE_ID = 'demo-student-id';
+    const DEMO_EMAIL = 'demo@dsatracker.com';
+
+    let user = await prisma.user.findUnique({ where: { googleId: DEMO_GOOGLE_ID } });
 
     if (!user) {
-      user = await prisma.user.create({
-        data: {
-          googleId: 'demo-student-id',
-          email: 'demo@dsatracker.com',
-          name: 'Demo Student',
-          coins: 100,
-        },
-      });
+      try {
+        user = await prisma.user.create({
+          data: {
+            googleId: DEMO_GOOGLE_ID,
+            email: DEMO_EMAIL,
+            name: 'Demo Student',
+            coins: 100,
+          },
+        });
+      } catch (err: any) {
+        if (err?.code === 'P2002') {
+          user = await prisma.user.findUnique({ where: { googleId: DEMO_GOOGLE_ID } });
+        }
+        if (!user) throw err;
+      }
     }
 
     const token = generateToken({ userId: user.id, email: user.email });
@@ -67,7 +76,7 @@ export async function demoLogin(_req: Request, res: Response, next: NextFunction
 
 /**
  * GET /api/auth/google/callback
- * Handles the OAuth callback, exchanges code, creates user, returns JWT.
+ * Handles the OAuth callback, exchanges code, creates user, returns exchange code.
  */
 export async function googleCallback(
   req: Request,
@@ -86,13 +95,39 @@ export async function googleCallback(
 
     logger.info(`User logged in: ${user.email}`);
 
-    // Redirect to frontend with token
+    // The real JWT never appears in the URL, browser history, referrer
+    // headers, or server access logs — only this short-lived, single-use
+    // opaque code does. See Bug 6 for the full rationale.
+    const exchangeCode = createExchangeCode(token);
+
     const hostOrigin = `${req.protocol}://${req.get('host')}`;
     const baseUrl = (env.FRONTEND_URL && !env.FRONTEND_URL.includes('localhost'))
       ? env.FRONTEND_URL
       : (env.isProd ? hostOrigin : env.FRONTEND_URL);
 
-    res.redirect(`${baseUrl}/auth/callback?token=${token}`);
+    res.redirect(`${baseUrl}/auth/callback?code=${exchangeCode}`);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * POST /api/auth/exchange
+ * Trades a short-lived, single-use code (received via the OAuth
+ * callback redirect) for the real JWT, over a JSON POST body instead
+ * of a URL query string.
+ */
+export async function exchangeAuthCode(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { code } = req.body ?? {};
+    if (!code || typeof code !== 'string') {
+      return sendError(res, 'Missing exchange code', 400);
+    }
+    const token = consumeExchangeCode(code);
+    if (!token) {
+      return sendError(res, 'Exchange code is invalid or expired', 400);
+    }
+    sendSuccess(res, { token });
   } catch (error) {
     next(error);
   }
@@ -100,18 +135,17 @@ export async function googleCallback(
 
 /**
  * GET /api/auth/me
- * Returns the current authenticated user's profile.
+ * Returns the current authenticated user's profile with fresh data from DB.
  */
 export async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = getAuthUser(req);
-    sendSuccess(res, {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      avatarUrl: user.avatarUrl,
-      coins: user.coins,
+    const authUser = getAuthUser(req); // identity/ownership check only
+    const fresh = await prisma.user.findUnique({
+      where: { id: authUser.id },
+      select: { id: true, email: true, name: true, avatarUrl: true, coins: true },
     });
+    if (!fresh) throw new UnauthorizedError('User not found');
+    sendSuccess(res, fresh);
   } catch (error) {
     next(error);
   }
@@ -125,3 +159,4 @@ export async function getMe(req: Request, res: Response, next: NextFunction) {
 export function logout(_req: Request, res: Response) {
   sendSuccess(res, { message: 'Logged out successfully' });
 }
+

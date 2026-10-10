@@ -17,7 +17,7 @@ export const useDashboardStore = create<DashboardState>((set) => ({
   fetch: async (silent = false) => {
     if (!silent) set({ loading: true, error: null });
     try {
-      const data = await dashboardApi.getToday();
+      const data = await dashboardApi.getToday({ silent });
       set({ data, loading: false, error: null });
     } catch (err) {
       set({ error: getErrorMessage(err), loading: false });

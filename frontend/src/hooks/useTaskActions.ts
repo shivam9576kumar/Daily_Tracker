@@ -4,6 +4,7 @@ import { getErrorMessage } from '../services/api';
 import { useUIStore } from '../store/uiStore';
 import { usePlanStore } from '../store/planStore';
 import { useTodoStore } from '../store/todoStore';
+import { useDashboardStore } from '../store/dashboardStore';
 import type { Rating, Task, TaskMutationResult } from '../types';
 
 type Kind = 'success' | 'info' | 'error';
@@ -30,9 +31,10 @@ export function useTaskActions(onChanged: () => void | Promise<void>) {
         const result = await call();
         toast(message(result), kind);
         await onChanged();
-        // Keep active plan & roadmap revisions synchronized
-        usePlanStore.getState().fetchActive().catch(() => {});
+        // Keep active plan, roadmap revisions & dashboard synchronized
+        usePlanStore.getState().fetchActive({ silent: true }).catch(() => {});
         useTodoStore.getState().fetch(true).catch(() => {});
+        useDashboardStore.getState().fetch(true).catch(() => {});
         return result;
       } catch (err) {
         toast(getErrorMessage(err), 'error');
